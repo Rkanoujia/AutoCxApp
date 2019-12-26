@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "329161602113",
+    "firebase_url": "https://afm2020-auto-cx.firebaseio.com",
+    "project_id": "afm2020-auto-cx",
+    "storage_bucket": "afm2020-auto-cx.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:329161602113:android:8789c20f0d041d5b7702c0",
+        "android_client_info": {
+          "package_name": "com.avaal.com.afm2020autoCx"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "329161602113-qlurgs4lkc3f48sj62esfve7depno0g1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.avaal.com.afm2020autoCx",
+            "certificate_hash": "3c06bf08997b32b6d3c4a5ffb3ee9f24418dd5ef"
+          }
+        },
+        {
+          "client_id": "329161602113-sie2qcbs5dncb0pgng28mngki55hqh8n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-qTVP2MdAIf5hwtFyyZfiEenf6cr8jC8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "329161602113-sie2qcbs5dncb0pgng28mngki55hqh8n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

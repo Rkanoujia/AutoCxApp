@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="5dp"
+    android:paddingTop="5dp">
+    <FrameLayout
+        android:elevation="2dp"
+        android:id="@+id/item"
+        android:layout_margin="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_margin="3dp"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+<ImageView
+    android:layout_marginStart="5dp"
+    android:id="@+id/vehicle_img"
+    android:layout_width="50dp"
+    android:layout_height="50dp" />
+
+        <LinearLayout
+            android:id="@+id/list_item"
+            android:layout_marginStart="10dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textColor="@android:color/black"
+                android:id="@+id/vin_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textColor="@android:color/black"
+                android:id="@+id/make_v"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textColor="@android:color/black"
+                android:id="@+id/model_v"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+        <TextView
+            android:layout_margin="5dp"
+            android:id="@+id/delete_"
+            android:layout_gravity="end|bottom"
+            android:drawableTop="@mipmap/delete1"
+            android:drawableTint="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+</FrameLayout>

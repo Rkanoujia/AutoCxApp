@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#333333</color>
+
+    <color name="colorPrimaryDark">#b21e33</color>
+    <color name="colorAccent">#008c57</color>
+    <color name="buttonColor">#ff2b4a</color>
+    <color name="selecteColor">#00fff4</color>
+    <color name="blue">#1e87f5</color>
+    <color name="black">#000000</color>
+    <color name="gray">#EFEFEF</color>
+    <color name="enroute">#1DA3DA</color>
+    <color name="textColor">#222539</color>
+    <color name="orange">#FFA07A</color>
+    <color name="red">#fe0000</color>
+    <color name="selectColor">#ffa000</color>
+    <color name="dot_inactive_screen1">#ffa000</color>
+    <color name="dot_inactive_screen2">#008c57</color>
+    <color name="dot_inactive_screen3">#0e1e49</color>
+    <color name="green">#008c57</color>
+    <!-- dots active colors -->
+    <color name="dot_active_screen1">#f9c772</color>
+    <color name="dot_active_screen2">#74f7c5</color>
+    <color name="dot_active_screen3">#3a67e0</color>
+    <array name="array_dot_active">
+        <item>@color/dot_active_screen1</item>
+        <item>@color/dot_active_screen2</item>
+        <item>@color/dot_active_screen3</item>
+        <item>@color/dot_active_screen1</item>
+        <item>@color/dot_active_screen2</item>
+    </array>
+    <array name="array_dot_inactive">
+        <item>@color/dot_inactive_screen1</item>
+        <item>@color/dot_inactive_screen2</item>
+        <item>@color/dot_inactive_screen3</item>
+        <item>@color/dot_inactive_screen1</item>
+        <item>@color/dot_inactive_screen2</item>
+
+    </array>
+    <color name="textPrimaryDark">#95aab4</color>
+    <color name="textPrimary">#f5f5f5</color>
+    <color name="errorText">#ff7878</color>
+<color name="dashback">#32A2E6</color>
+    <color name="menu_color">#32A2E6</color>
+    <color name="splash_bg">#57A0E0</color>
+</resources>

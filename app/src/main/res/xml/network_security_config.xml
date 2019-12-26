@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">afm2020.com</domain>
+        <domain includeSubdomains="true">192.168.1.20</domain>
+        <domain includeSubdomains="true">www.autocarbrands.com</domain>
+        <domain includeSubdomains="true">delhi.avaaloffice.com</domain>
+
+    </domain-config>
+<!--<domain-config cleartextTrafficPermitted="true">-->
+    <!--<domain includeSubdomains="true">delhiserver:2021</domain>-->
+    <!--<domain includeSubdomains="true">delhi.avaaloffice.com:2020</domain>-->
+<!--</domain-config>-->
+<!--<base-config cleartextTrafficPermitted="false" />-->
+</network-security-config>

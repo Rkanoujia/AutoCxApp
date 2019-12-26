@@ -1,0 +1,14 @@
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+<shortcut
+    android:shortcutId="Create_Load"
+    android:enabled="true"
+    android:icon="@drawable/ic_action_add"
+    android:shortcutLongLabel="@string/shortcut_label_create_new_task"
+    android:shortcutShortLabel="@string/shortcut_label_new_task"
+    android:shortcutDisabledMessage="@string/shortcut_label_disabled" >
+    <intent
+        android:action="android.intent.action.VIEW"
+        android:targetClass="com.avaal.com.afm2020autoCx.CreateTripType"
+        android:targetPackage="com.avaal.com.afm2020autoCx" />
+</shortcut>
+</shortcuts>

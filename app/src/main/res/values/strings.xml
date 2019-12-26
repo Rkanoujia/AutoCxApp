@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name">AFM Auto Cx</string>
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="copyright_2017_avaal_technology_solution_inc_all_right_reserved">Copyright © 2019 Avaal Technology Solutions Inc. All Rights Reserved.</string>
+    <string name="title_activity_dash_board_bottom_menu">DashBoardBottomMenu</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dispatched Loads</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="ok">OK</string>
+    <string name="permission_camera_rationale">Access to the camera is needed for detection</string>
+    <string name="no_camera_permission">This application cannot run because it does not have the camera permission.  The application will now exit.</string>
+    <string name="low_storage_error">Face detector dependencies cannot be downloaded due to low device storage</string>
+    <string name="title_activity_main">Barcode Reader Sample</string>
+    <string name="barcode_header">Click &quot;Read Barcode&quot; to read a barcode</string>
+    <string name="read_barcode">Read Barcode</string>
+    <string name="auto_focus">Auto Focus</string>
+    <string name="use_flash">Use Flash</string>
+    <string name="barcode_success">Barcode read successfully</string>
+    <string name="barcode_failure">No barcode captured</string>
+    <string name="barcode_error">"Error reading barcode: %1$s"</string>
+    <string name="name">AFM Auto Customer App \n \n</string>
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="shortcut_label_create_new_task">Add Trip</string>
+    <string name="shortcut_label_new_task">new task</string>
+    <string name="shortcut_label_disabled">disable</string>
+    <string name="pickup_date">Pickup Date</string>
+    <string name="delivery_date">Delivery Date</string>
+    <string name="title_activity_new_maps">Map</string>
+    <string name="title_fingerprint">One-touch Sign In</string>
+
+    <string name="desc_fingerprint">Please place your fingertip on the scanner to verify your identity</string>
+
+    <string name="note">(Fingerprint sign in makes your app login much faster. Your device should have at least one fingerprint registered in device settings)</string>
+
+    <string name="title_activity_home">Fingerprint</string>
+
+    <string name="activity_home_desc">You have successfully logged in with fingerprint authentication</string>
+
+    <string name="activity_home_note">Close and re-open the app to see the fingerprint auth screen again</string>
+    <string name="request_permission">This sample needs camera permission.</string>
+    <string name="camera_error">This device doesn\'t support Camera2 API.</string>
+    <string name="title_activity_new_map">Map</string>
+    <string name="more_apps_for_avaal">More Apps for AVAAL</string>
+</resources>

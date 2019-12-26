@@ -1,0 +1,57 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="2dp"
+    android:fitsSystemWindows="true"
+    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <FrameLayout
+                android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize">
+                <TextView
+                    android:layout_marginStart="15dp"
+                    android:id="@+id/back"
+                    android:layout_gravity="center_vertical"
+                    android:drawableTint="@color/colorWhite"
+                    android:drawableLeft="@drawable/ic_action_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="DashBoard"
+                    android:textColor="@android:color/white"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/home_"
+                    android:layout_marginRight="15dp"
+                    android:drawableTint="@color/colorWhite"
+                    android:layout_gravity="end|center"
+                    android:drawableLeft="@mipmap/ic_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </FrameLayout>
+            <!--<View-->
+                <!--android:visibility="gone"-->
+                <!--android:background="@drawable/create_trip_header"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="15dp"/>-->
+
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

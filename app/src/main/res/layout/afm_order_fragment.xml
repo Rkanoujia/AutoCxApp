@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <FrameLayout
+        android:id="@+id/main_fram"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:background="@color/gray"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/swipeRefreshLayout"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/_order_list"
+                    android:elevation="2dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fadeScrollbars="true"
+                    android:scrollbarSize="3dp"
+                    android:scrollbarThumbVertical="@android:color/white"
+                    android:scrollbars="vertical" />
+            </android.support.v4.widget.SwipeRefreshLayout>
+
+        </LinearLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/add_trip"
+            android:layout_width="wrap_content"
+            android:tint="@color/colorWhite"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:layout_height="wrap_content"
+            app:fabSize="normal"
+            android:layout_gravity="bottom|end"
+            android:layout_marginRight="@dimen/fab_margin"
+            app:layout_anchor="@id/_vehicle_list"
+            app:layout_behavior="extra.FAB_Hide_on_Scroll"
+            app:layout_anchorGravity="bottom|right|end"
+            app:backgroundTint="@color/blue"
+            app:srcCompat="@mipmap/filter" />
+        <extra.BottomSheetLayout
+            android:id="@+id/bottom_sheet1"
+            android:layout_width="match_parent"
+            style="@style/Animation.Design.BottomSheetDialog"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            app:ft_container_gravity="center"
+            app:ft_color="@color/blue">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+                <LinearLayout
+                    android:id="@+id/all_li"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:textColor="@color/colorWhite"
+                        android:text="All"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/all_ic"
+                        android:drawableTint="@color/colorWhite"
+                        android:drawableLeft="@drawable/ic_action_confirm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/confirm_li"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:textColor="@color/colorWhite"
+                        android:text="Confirmed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:visibility="invisible"
+                        android:id="@+id/confirm_ic"
+                        android:drawableTint="@color/colorWhite"
+                        android:drawableLeft="@drawable/ic_action_confirm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/dispatch_li"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:textColor="@color/colorWhite"
+                        android:text="Dispatched"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:visibility="invisible"
+                        android:id="@+id/dispatch_ic"
+                        android:drawableTint="@color/colorWhite"
+                        android:drawableLeft="@drawable/ic_action_confirm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/enroute_li"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:textColor="@color/colorWhite"
+                        android:text="Enroute"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:visibility="invisible"
+                        android:id="@+id/enroute_ic"
+                        android:drawableTint="@color/colorWhite"
+                        android:drawableLeft="@drawable/ic_action_confirm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/delivered_li"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:textColor="@color/colorWhite"
+                        android:text="Delivered"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:visibility="invisible"
+                        android:id="@+id/delivered_ic"
+                        android:drawableTint="@color/colorWhite"
+                        android:drawableLeft="@drawable/ic_action_confirm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/canceled_li"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:textColor="@color/colorWhite"
+                        android:text="Canceled"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:visibility="invisible"
+                        android:id="@+id/canceled_ic"
+                        android:drawableTint="@color/colorWhite"
+                        android:drawableLeft="@drawable/ic_action_confirm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+            </LinearLayout>
+        </extra.BottomSheetLayout>
+    </FrameLayout>
+
+</android.support.design.widget.CoordinatorLayout>

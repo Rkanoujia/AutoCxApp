@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/new_manu"
+        android:layout_width="wrap_content"
+        android:tint="@color/colorWhite"
+       android:layout_gravity="bottom|end"
+        android:layout_height="wrap_content"
+        app:fabSize="normal"
+        android:layout_marginRight="35dp"
+        android:layout_marginBottom="10dp"
+        app:layout_anchorGravity="bottom|right"
+        app:backgroundTint="@color/menu_color"
+        app:srcCompat="@mipmap/menu" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:background="@color/gray"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<FrameLayout
+    android:background="@drawable/bottom_round"
+    android:layout_width="match_parent"
+    android:layout_height="200dp">
+    <TextView
+        android:id="@+id/name"
+        android:layout_marginStart="20dp"
+         android:layout_marginBottom="20dp"
+        android:layout_gravity="center_vertical"
+        android:textSize="22dp"
+        android:textColor="@color/colorWhite"
+        android:text="Total Outstanding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_margin="20dp"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="22dp"
+            android:textColor="@color/colorWhite"
+            android:text="Your Total Outstanding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/out_standing"
+            android:textStyle="bold"
+            android:textSize="24dp"
+            android:textColor="@color/colorWhite"
+            android:text="$ 0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</FrameLayout>
+        <LinearLayout
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="20dp"
+            android:padding="1dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/round_corners"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.CardView
+                android:layout_weight="1"
+                android:id="@+id/status"
+                app:cardCornerRadius="5dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/status_txt"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="14dp"
+                    android:textColor="@color/colorWhite"
+                    android:padding="3dp"
+                    android:text="Order Status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                android:id="@+id/account"
+                app:cardCornerRadius="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/colorWhite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/account_txt"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="14dp"
+                    android:textColor="@color/colorPrimary"
+                    android:padding="3dp"
+                    android:text="Accounting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </android.support.v7.widget.CardView>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_margin="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/account_li"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+              <LinearLayout
+                  android:orientation="vertical"
+                  android:layout_marginEnd="10dp"
+                  android:background="@drawable/new_dashboard_button"
+                  android:gravity="center"
+                  android:layout_weight="1"
+                  android:layout_width="match_parent"
+                  android:layout_height="150dp">
+                  <TextView
+                      android:id="@+id/total_ord"
+                      android:textColor="@color/colorPrimary"
+                      android:text="0"
+                      android:textSize="22dp"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content" />
+                  <TextView
+                      android:textColor="@color/colorPrimary"
+                      android:text="Total Order"
+                      android:textSize="13dp"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content" />
+              </LinearLayout>
+              <LinearLayout
+                  android:orientation="vertical"
+                  android:layout_marginStart="10dp"
+                  android:background="@drawable/new_dashboard_button"
+                  android:gravity="center"
+                  android:layout_weight="1"
+                  android:layout_width="match_parent"
+                  android:layout_height="150dp">
+                  <TextView
+                      android:id="@+id/invoice"
+                      android:textColor="@color/colorPrimary"
+                      android:text="0"
+                      android:textSize="22dp"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content" />
+                  <TextView
+                      android:textColor="@color/colorPrimary"
+                      android:text="Total Invoiced"
+                      android:textSize="13dp"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content" />
+              </LinearLayout>
+          </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/new_dashboard_button"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp">
+                    <TextView
+                        android:id="@+id/paid"
+                        android:textColor="@color/colorPrimary"
+                        android:text="0"
+                        android:textSize="22dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:textColor="@color/colorPrimary"
+                        android:text="Total Paid"
+                        android:textSize="13dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/new_dashboard_button"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp">
+                    <TextView
+                        android:id="@+id/outstanding_amt"
+                        android:textColor="@color/colorPrimary"
+                        android:text="0"
+                        android:textSize="22dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+
+                        android:textColor="@color/colorPrimary"
+                        android:text="Total Outstanding"
+                        android:textSize="13dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/status_li"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/new_dashboard_button"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp">
+                        <TextView
+                            android:id="@+id/trip_pending"
+                            android:textColor="@color/colorPrimary"
+                            android:text="0"
+                            android:textSize="22dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:textColor="@color/colorPrimary"
+                            android:text="Trip Pending"
+                            android:textSize="13dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_marginStart="10dp"
+                        android:background="@drawable/new_dashboard_button"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp">
+                        <TextView
+                            android:id="@+id/total_enroute"
+                            android:textColor="@color/colorPrimary"
+                            android:text="0"
+                            android:textSize="22dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/quicksand"
+                            android:text="Trip EnRoute"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="13dp" />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/new_dashboard_button"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp">
+                        <TextView
+                            android:id="@+id/Shipped_vehicle"
+                            android:textColor="@color/colorPrimary"
+                            android:text="0"
+                            android:textSize="22dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:textColor="@color/colorPrimary"
+                            android:text="Total Shipped Vehicle"
+
+                            android:textSize="13dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_marginStart="10dp"
+                        android:background="@drawable/new_dashboard_button"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp">
+                        <TextView
+                            android:id="@+id/total_recieve_vehicle"
+                            android:textColor="@color/colorPrimary"
+                            android:text="0"
+                            android:textSize="22dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Total Received Vehicle"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="13dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout android:layout_margin="18dp"
+            android:background="@color/colorWhite"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"></LinearLayout>
+    </LinearLayout>
+    </ScrollView>
+</FrameLayout>

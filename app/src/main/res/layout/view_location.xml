@@ -1,0 +1,254 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:minHeight="150dp"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+    <LinearLayout
+        android:elevation="5dp"
+        android:id="@+id/cancel"
+        android:layout_margin="5dp"
+        android:layout_gravity="end"
+        android:gravity="center"
+        android:background="@drawable/circle"
+        android:layout_width="30dp"
+        android:layout_height="30dp" >
+        <ImageView
+            android:src="@drawable/ic_action_close"
+            android:tint="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_marginRight="35dp"
+    android:layout_width="match_parent"
+    android:padding="10dp"
+    android:layout_marginBottom="10dp"
+    android:layout_height="wrap_content">
+
+<LinearLayout
+    android:layout_marginTop="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:textSize="15dp"
+        android:text="Name "
+        android:textColor="@color/colorPrimary"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginEnd="10dp"
+        android:textSize="20dp"
+        android:text=":"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/loc_name"
+        android:textSize="20dp"
+        android:text=""
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>
+    <!--<TextView-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:text="Address"-->
+        <!--android:textColor="@color/black"-->
+        <!--android:textSize="10dp"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content" />-->
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="15dp"
+            android:text="Address  "
+            android:textColor="@color/colorPrimary"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginEnd="10dp"
+            android:textSize="20dp"
+            android:text=":"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/loc_address"
+        android:textSize="15dp"
+        android:text=""
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    </LinearLayout>
+    <!--<TextView-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:text="Country"-->
+        <!--android:textColor="@color/black"-->
+        <!--android:textSize="10dp"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content" />-->
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="15dp"
+            android:text="Country "
+            android:textColor="@color/colorPrimary"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginEnd="10dp"
+            android:textSize="20dp"
+            android:text=":"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/loc_country"
+        android:textSize="15dp"
+        android:text=""
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    </LinearLayout>
+    <!--<TextView-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:text="State"-->
+        <!--android:textColor="@color/black"-->
+        <!--android:textSize="10dp"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content" />-->
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="15dp"
+            android:text="State  "
+            android:textColor="@color/colorPrimary"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginEnd="10dp"
+            android:textSize="20dp"
+            android:text=":"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    <TextView
+
+        android:id="@+id/loc_state"
+        android:textSize="15dp"
+        android:text=""
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    </LinearLayout>
+    <!--<TextView-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:text="City"-->
+        <!--android:textColor="@color/black"-->
+        <!--android:textSize="10dp"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content" />-->
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="15dp"
+            android:text="City "
+            android:textColor="@color/colorPrimary"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginEnd="10dp"
+            android:textSize="20dp"
+            android:text=":"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/loc_city"
+        android:textSize="15dp"
+        android:text=""
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    </LinearLayout>
+    <!--<TextView-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:text="Zip Code"-->
+        <!--android:textColor="@color/black"-->
+        <!--android:textSize="10dp"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content" />-->
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="15dp"
+            android:text="Zip Code "
+            android:textColor="@color/colorPrimary"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginEnd="10dp"
+            android:textSize="20dp"
+            android:text=":"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    <TextView
+
+        android:id="@+id/loc_zip"
+        android:textSize="15dp"
+        android:text=""
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    </LinearLayout>
+    <!--<TextView-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:text="Contact person"-->
+        <!--android:textColor="@color/black"-->
+        <!--android:textSize="10dp"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content" />-->
+    <TextView
+        android:visibility="gone"
+        android:layout_marginTop="5dp"
+        android:id="@+id/loc_contact_prsion"
+        android:textSize="13dp"
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <!--<TextView-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:text="Mobile"-->
+        <!--android:textColor="@color/black"-->
+        <!--android:textSize="10dp"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content" />-->
+    <TextView
+        android:visibility="invisible"
+        android:layout_marginTop="5dp"
+        android:id="@+id/loc_email"
+        android:textSize="13dp"
+    android:textColor="@color/black"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+
+</LinearLayout>
+</FrameLayout>

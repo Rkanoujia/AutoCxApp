@@ -1,0 +1,35 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:minHeight="150dp"
+    android:orientation="vertical">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:id="@+id/image_url"
+        android:minHeight="600dp"
+        android:minWidth="300dp"
+        android:fitsSystemWindows="true"
+        android:elevation="2dp"
+        android:layout_height="wrap_content"
+        />
+    <ImageView
+        android:id="@+id/delete_view"
+        android:layout_gravity="end"
+        android:padding="10dp"
+        android:elevation="4dp"
+        android:background="@drawable/ovel"
+        android:backgroundTint="@color/colorWhite"
+        android:src="@mipmap/delete1"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"/>
+    <Button
+        android:layout_gravity="bottom|center"
+        android:elevation="2dp"
+        android:id="@+id/ok"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="OK" />
+</FrameLayout>

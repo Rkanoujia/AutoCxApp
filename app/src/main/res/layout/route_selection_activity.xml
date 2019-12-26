@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/main_selection"
+    android:elevation="5dp"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/save_li"
+            android:orientation="vertical">
+
+            <include
+                layout="@layout/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+               >
+
+                <LinearLayout
+                    android:id="@+id/click_scr"
+                    android:paddingBottom="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        android:id="@+id/fram1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <TextView
+                            android:textStyle="italic|bold"
+                            android:id="@+id/type"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:elevation="3dp"
+                            android:gravity="center"
+                            android:padding="2dp"
+                            android:text="Inter Provincial"
+                            android:textColor="@color/textColor"
+                            android:textSize="14dp" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginStart="10dp"
+                            android:background="@android:color/white"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight=".9"
+                                android:elevation="3dp"
+                                android:gravity="end|center_vertical">
+
+                                <View
+                                    android:id="@+id/from"
+                                    android:layout_width="55dp"
+                                    android:layout_height="55dp"
+                                    android:layout_marginRight="5dp"
+                                    android:background="@mipmap/cn" />
+
+
+                            </LinearLayout>
+
+                            <FrameLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+
+                                <View
+                                    android:layout_width="10dp"
+                                    android:layout_height="10dp"
+                                    android:layout_gravity="start|center"
+                                    android:background="@drawable/ovel"
+                                    android:backgroundTint="@color/dot_inactive_screen2"
+                                    android:elevation="2dp" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0.5dp"
+                                    android:layout_gravity="center"
+                                    android:background="@android:color/darker_gray" />
+
+                                <View
+                                    android:layout_width="10dp"
+                                    android:layout_height="10dp"
+                                    android:layout_gravity="end|center"
+                                    android:background="@drawable/ovel"
+                                    android:backgroundTint="@android:color/holo_red_light"
+                                    android:elevation="2dp" />
+
+                            </FrameLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="start|center_vertical">
+
+                                <View
+                                    android:id="@+id/to"
+                                    android:layout_width="55dp"
+                                    android:layout_height="55dp"
+                                    android:layout_marginStart="5dp"
+                                    android:background="@mipmap/cn" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </FrameLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:background="@android:color/white"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:text="Requested Pickup"
+                                    android:textColor="@android:color/black"
+                                    android:textSize="15dp" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:background="@drawable/round_corners"
+                                    android:gravity="center_vertical"
+                                    android:padding="10dp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:text="Date:"
+                                        android:textColor="@color/textColor" />
+
+                                    <TextView
+                                        android:id="@+id/pickup_date"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="end"
+                                        android:drawableRight="@mipmap/ic_calender"
+                                        android:gravity="center"
+                                        android:textColor="@color/textColor" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginTop="10dp"
+                                    android:background="@drawable/round_corners"
+                                    android:gravity="center_vertical"
+                                    android:padding="10dp">
+                                    <!--<TextView-->
+                                    <!--android:layout_marginStart="10dp"-->
+                                    <!--android:textColor="@color/dot_inactive_screen2"-->
+                                    <!--android:text="Welldone Tech Park"-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content" />-->
+                                    <AutoCompleteTextView
+                                        android:id="@+id/pickup_spinner"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:background="@null"
+                                        android:hint="Location"
+                                        android:inputType="text"
+                                        android:soundEffectsEnabled="true"
+                                        android:textColor="@color/textColor"
+                                        android:textSize="13dp"></AutoCompleteTextView>
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginTop="10dp"
+                                    android:background="@drawable/round_corners"
+                                    android:gravity="center_vertical"
+                                    android:padding="10dp">
+
+                                    <EditText
+                                        android:id="@+id/pickup_remark"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:background="@null"
+                                        android:hint="Remarks"
+                                        android:inputType="text"
+                                        android:lines="1"
+                                        android:textColor="@color/textColor"
+                                        android:textSize="13dp" />
+
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="5"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:id="@+id/add"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_marginTop="16dp"
+                                    android:tint="@color/colorWhite"
+                                    android:background="@drawable/ovel"
+                                    android:backgroundTint="@color/textColor"
+                                    android:src="@drawable/ic_action_add" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!--<LinearLayout-->
+                            <!--android:id="@+id/linear_yard"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_margin="10dp"-->
+                            <!--android:background="@android:color/white"-->
+                            <!--android:orientation="horizontal"-->
+                            <!--android:visibility="gone">-->
+
+                            <!--<LinearLayout-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:layout_marginBottom="10dp"-->
+                                <!--android:layout_weight="1"-->
+                                <!--android:orientation="vertical">-->
+
+                                <!--<TextView-->
+
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_margin="10dp"-->
+                                    <!--android:text="Yard"-->
+                                    <!--android:textColor="@android:color/black"-->
+                                    <!--android:textSize="15dp" />-->
+
+                                <!--<LinearLayout-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_marginEnd="10dp"-->
+                                    <!--android:layout_marginStart="10dp"-->
+                                    <!--android:background="@drawable/round_corners"-->
+                                    <!--android:gravity="center_vertical"-->
+                                    <!--android:padding="10dp">-->
+
+                                    <!--<TextView-->
+                                        <!--android:layout_width="wrap_content"-->
+                                        <!--android:layout_height="wrap_content"-->
+                                        <!--android:layout_marginStart="10dp"-->
+                                        <!--android:text="Yard Date:"-->
+                                        <!--android:textColor="@color/colorPrimary" />-->
+
+                                    <!--<TextView-->
+                                        <!--android:id="@+id/yard_date"-->
+                                        <!--android:layout_width="match_parent"-->
+                                        <!--android:layout_height="wrap_content"-->
+                                        <!--android:layout_gravity="end"-->
+                                        <!--android:drawableRight="@drawable/ic_action_calender"-->
+                                        <!--android:gravity="center" />-->
+
+                                <!--</LinearLayout>-->
+
+                                <!--<LinearLayout-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_marginEnd="10dp"-->
+                                    <!--android:layout_marginStart="10dp"-->
+                                    <!--android:layout_marginTop="10dp"-->
+                                    <!--android:background="@drawable/round_corners"-->
+                                    <!--android:gravity="center_vertical"-->
+                                    <!--android:padding="10dp">-->
+                                    <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+                                    <!--&lt;!&ndash;android:layout_marginStart="10dp"&ndash;&gt;-->
+                                    <!--&lt;!&ndash;android:textColor="@color/dot_inactive_screen2"&ndash;&gt;-->
+                                    <!--&lt;!&ndash;android:text="Welldone Tech Park"&ndash;&gt;-->
+                                    <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+                                    <!--&lt;!&ndash;android:layout_height="wrap_content" />&ndash;&gt;-->
+                                    <!--<AutoCompleteTextView-->
+                                        <!--android:id="@+id/yard_spinner"-->
+                                        <!--android:layout_width="match_parent"-->
+                                        <!--android:layout_height="wrap_content"-->
+                                        <!--android:layout_marginStart="10dp"-->
+                                        <!--android:background="@null"-->
+                                        <!--android:hint="Location"-->
+                                        <!--android:soundEffectsEnabled="true"-->
+                                        <!--android:textColor="@color/dot_inactive_screen2"-->
+                                        <!--android:textSize="13dp"></AutoCompleteTextView>-->
+
+
+                                <!--</LinearLayout>-->
+
+                                <!--<LinearLayout-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_marginEnd="10dp"-->
+                                    <!--android:layout_marginStart="10dp"-->
+                                    <!--android:layout_marginTop="10dp"-->
+                                    <!--android:background="@drawable/round_corners"-->
+                                    <!--android:gravity="center_vertical"-->
+                                    <!--android:padding="10dp">-->
+
+                                    <!--<EditText-->
+                                        <!--android:id="@+id/yard_remark"-->
+                                        <!--android:layout_width="match_parent"-->
+                                        <!--android:layout_height="wrap_content"-->
+                                        <!--android:layout_marginStart="10dp"-->
+                                        <!--android:background="@null"-->
+                                        <!--android:hint="Remark"-->
+                                        <!--android:inputType="textMultiLine"-->
+                                        <!--android:textColor="@color/colorPrimary"-->
+                                        <!--android:textSize="13dp" />-->
+
+
+                                <!--</LinearLayout>-->
+                            <!--</LinearLayout>-->
+
+                            <!--<LinearLayout-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="match_parent"-->
+                                <!--android:layout_weight="5"-->
+                                <!--android:gravity="center"-->
+                                <!--android:visibility="gone">-->
+
+                                <!--<ImageView-->
+
+                                    <!--android:layout_width="30dp"-->
+                                    <!--android:layout_height="30dp"-->
+                                    <!--android:background="@drawable/ovel"-->
+                                    <!--android:src="@drawable/ic_action_add" />-->
+                            <!--</LinearLayout>-->
+                        <!--</LinearLayout>-->
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:background="@android:color/white"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:text="Requested Delivery"
+                                    android:textColor="@android:color/black"
+                                    android:textSize="15dp" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:background="@drawable/round_corners"
+                                    android:gravity="center_vertical"
+                                    android:padding="10dp">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:text="Date:"
+                                        android:textColor="@color/textColor" />
+
+                                    <TextView
+                                        android:id="@+id/delivery_date"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="end"
+                                        android:drawableRight="@mipmap/ic_calender"
+                                        android:gravity="center"
+                                        android:textColor="@color/textColor" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginTop="10dp"
+                                    android:background="@drawable/round_corners"
+                                    android:gravity="center_vertical"
+                                    android:padding="10dp">
+                                    <!--<TextView-->
+                                    <!--android:layout_marginStart="10dp"-->
+                                    <!--android:textColor="@android:color/holo_red_light"-->
+                                    <!--android:text="Welldone Tech Park"-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content" />-->
+                                    <AutoCompleteTextView
+                                        android:id="@+id/delivery_spinner"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:background="@null"
+                                        android:hint="Location"
+                                        android:inputType="textCapSentences"
+                                        android:textColor="@color/textColor"
+                                        android:textSize="13dp"
+                                        android:tooltipText="Welldone Tech Park"></AutoCompleteTextView>
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginTop="10dp"
+                                    android:background="@drawable/round_corners"
+                                    android:gravity="center_vertical"
+                                    android:padding="10dp">
+
+                                    <EditText
+                                        android:id="@+id/delivery_remark"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:background="@null"
+                                        android:hint="Remarks"
+                                        android:inputType="text"
+                                        android:lines="1"
+                                        android:textColor="@color/textColor"
+                                        android:textSize="13dp" />
+
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="5"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:id="@+id/add1"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_marginTop="16dp"
+                                    android:background="@drawable/ovel"
+                                    android:backgroundTint="@color/textColor"
+                                    android:tint="@color/colorWhite"
+                                    android:src="@drawable/ic_action_add" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    <LinearLayout android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp">
+
+
+                    </LinearLayout>
+                    <LinearLayout android:orientation="vertical"
+                        android:id="@+id/linear"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp">
+                        <EditText
+                            android:background="@android:color/white"
+                            android:id="@+id/text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v4.widget.NestedScrollView>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/save_li"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/colorPrimary"
+            android:soundEffectsEnabled="true">
+
+            <TextView
+                android:id="@+id/save_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/green"
+
+                android:clickable="true"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Save"
+                android:textColor="@android:color/white"
+                android:textSize="18dp"
+                android:visibility="gone" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorWhite" />
+
+            <TextView
+                android:id="@+id/next_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/blue"
+                android:clickable="true"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Next"
+                android:textColor="@android:color/white"
+                android:textSize="18dp" />
+        </LinearLayout>
+    </RelativeLayout>
+</FrameLayout>

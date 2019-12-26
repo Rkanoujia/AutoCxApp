@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <FrameLayout
+        android:id="@+id/list_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <include
+                layout="@layout/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <View
+                android:layout_marginTop="10dp"
+                android:background="@color/textColor"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"/>
+            <LinearLayout
+                android:background="@color/colorWhite"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:id="@+id/order_id_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:gravity="center"
+                    android:textColor="@android:color/black" />
+                <View
+                    android:background="@color/textColor"
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"/>
+                <TextView android:gravity="center"
+                    android:layout_weight="1"
+                    android:id="@+id/status_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="5dp"
+                    android:text="Start Trip"
+                    android:textColor="@android:color/black"
+                    />
+
+
+            </LinearLayout>
+            <View
+                android:background="@color/textColor"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"/>
+            <FrameLayout
+                android:background="@color/colorWhite"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:elevation="4dp">
+
+                <FrameLayout
+                    android:elevation="2dp"
+                    android:layout_gravity="bottom|center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white">
+
+
+
+                    <LinearLayout
+                        android:id="@+id/items_"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:layout_gravity="bottom|end">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/left_corner_round_linear"
+                            android:backgroundTint="@color/colorPrimary"
+                            android:paddingBottom="3dp"
+                            android:paddingEnd="3dp"
+                            android:paddingStart="3dp"
+                            android:paddingTop="3dp"
+                            android:src="@drawable/ic_action_car"
+                            android:textColor="@android:color/white" />
+
+                        <TextView
+                            android:id="@+id/vehicle_num_order"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/right_corner_round"
+                            android:backgroundTint="@color/gray"
+                            android:gravity="center"
+                            android:paddingLeft="9dp"
+                            android:paddingRight="10dp"
+                            android:textColor="@android:color/black"
+                            android:textSize="13dp" />
+                    </LinearLayout>
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/white">
+
+                    <TextView
+                        android:textColor="@color/textColor"
+                        android:id="@+id/type_order_"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:elevation="3dp"
+                        android:textSize="11dp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center">
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            android:background="@android:color/white">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/_from_order"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_horizontal"
+                                    android:text="Montreal"
+                                    android:textColor="@color/dot_inactive_screen2" />
+
+                                <TextView
+                                    android:id="@+id/from_address_order"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:gravity="center"
+                                    android:maxLines="2"
+                                    android:text="125 Calixa-Lavallee Quebec H1S 3E8"
+                                    android:textColor="@android:color/black"
+                                    android:textSize="11dp" />
+
+                                <TextView
+                                    android:id="@+id/from_date_order"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:textSize="11dp" />
+
+                                <TextView
+                                    android:id="@+id/from_time_order"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:textSize="11dp" />
+                            </LinearLayout>
+
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1.5"
+                            android:background="@android:color/white">
+
+
+                            <View
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"
+                                android:layout_gravity="start|center_vertical"
+                                android:background="@drawable/ovel"
+                                android:backgroundTint="@color/dot_inactive_screen2"
+                                android:elevation="2dp" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0.5dp"
+                                android:layout_gravity="center"
+                                android:layout_margin="5dp"
+                                android:background="@android:color/darker_gray" />
+
+                            <View
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"
+                                android:layout_gravity="end|center"
+                                android:background="@drawable/ovel"
+                                android:backgroundTint="@android:color/holo_red_light"
+                                android:elevation="2dp" />
+
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            android:background="@android:color/white">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/_to_order"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_horizontal"
+                                    android:text="New Yark"
+                                    android:textColor="@android:color/holo_red_light" />
+
+                                <TextView
+                                    android:id="@+id/to_address_order"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:gravity="center"
+                                    android:maxLines="2"
+                                    android:text="125 Calixa-Lavallee Quebec H1S 3E8"
+                                    android:textColor="@android:color/black"
+                                    android:textSize="11dp" />
+
+                                <TextView
+                                    android:id="@+id/to_date_order"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:textSize="11dp" />
+
+                                <TextView
+                                    android:id="@+id/to_time_order"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:textSize="11dp" />
+                            </LinearLayout>
+
+                        </FrameLayout>
+                    </LinearLayout>
+                </FrameLayout>
+
+            </FrameLayout>
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_margin="5dp"-->
+                <!--android:background="@drawable/round_corner_white_bg"-->
+                <!--android:padding="3dp">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/trip_status"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center"-->
+                    <!--android:padding="5dp"-->
+                    <!--android:text="Trips Status"-->
+                    <!--android:textColor="@color/colorPrimary" />-->
+
+                <!--<View-->
+                    <!--android:layout_width="0.5dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:background="@android:color/white" />-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/item_status"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:background="@color/colorPrimary"-->
+                    <!--android:gravity="center"-->
+                    <!--android:padding="5dp"-->
+                    <!--android:text="Items Status"-->
+                    <!--android:textColor="@android:color/white" />-->
+
+            <!--</LinearLayout>-->
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/_item_list"
+                android:layout_margin="3dp"
+                android:visibility="gone"
+                android:elevation="2dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbarSize="3dp"
+                android:scrollbarThumbVertical="@android:color/white"
+                android:scrollbars="vertical" />
+            <View
+                android:layout_marginTop="10dp"
+                android:background="@android:color/black"
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/_trip_list"
+                android:elevation="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fadeScrollbars="true"
+                android:scrollbarSize="3dp"
+                android:scrollbarThumbVertical="@android:color/white"
+                android:scrollbars="vertical" />
+            </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+    </FrameLayout>
+</android.support.constraint.ConstraintLayout>

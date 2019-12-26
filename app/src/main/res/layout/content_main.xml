@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.avaal.com.afm2020autoCx.MainActivity"
+    tools:showIn="@layout/app_bar_main">
+
+    <!--<Button-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="?attr/selectableItemBackground"-->
+        <!--android:text="New Button"-->
+        <!--/>-->
+
+    <!--<Button-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@drawable/ripple_effect"-->
+        <!--android:text="New Button2"-->
+        <!--/>-->
+    <RelativeLayout
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/lay1"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+        <LinearLayout
+            android:padding="5dp"
+            android:gravity="center_horizontal"
+             android:layout_weight="1"
+             android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:background="#008000"
+                android:elevation="3dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <TextView
+                android:textColor="@android:color/white"
+                android:gravity="center_horizontal"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackground"
+                android:text="Trips Pending"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:padding="5dp"
+            android:gravity="center_horizontal"
+            android:clickable="true"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:background="#2796ea"
+                android:elevation="3dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <TextView
+                android:textColor="@android:color/white"
+                android:gravity="center_horizontal"
+                android:text="Trips EnRoute"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackground"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/lay2"
+        android:layout_below="@+id/lay1"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+        <LinearLayout
+            android:padding="5dp"
+            android:gravity="center_horizontal"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:textColor="@android:color/white"
+                android:gravity="center_horizontal"
+                android:background="#ff7f50"
+                android:text="Total Shipped"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <LinearLayout
+            android:padding="5dp"
+            android:gravity="center_horizontal"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:textColor="@android:color/white"
+                android:gravity="center_horizontal"
+                android:background="#008000"
+                android:text="Total Received"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/lay3"
+            android:layout_below="@+id/lay2"
+            android:layout_width="match_parent"
+            android:layout_height="80dp">
+            <LinearLayout
+                android:padding="5dp"
+                android:gravity="center_horizontal"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:textColor="@android:color/white"
+                    android:gravity="center_horizontal"
+                    android:background="#2796ea"
+                    android:text="My Profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+            <LinearLayout
+                android:padding="5dp"
+                android:gravity="center_horizontal"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:textColor="@android:color/white"
+                    android:gravity="center_horizontal"
+                    android:background="#ff7f50"
+                    android:text="Call"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+        </LinearLayout>
+        <ss.com.bannerslider.views.BannerSlider
+            android:id="@+id/banner_slider1"
+            android:layout_below="@+id/lay3"
+            android:layout_width="match_parent"
+            app:interval="7000"
+            app:indicatorSize="10dp"
+            app:loopSlides="true"
+            app:selected_slideIndicator="@drawable/selected_slide_indicator"
+            app:unselected_slideIndicator="@drawable/unselected_slide_indicator"
+            app:defaultIndicators="dash"
+            android:layout_margin="5dp"
+            android:elevation="5dp"
+            app:animateIndicators="true"
+            android:layout_height="200dp"
+            />
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>

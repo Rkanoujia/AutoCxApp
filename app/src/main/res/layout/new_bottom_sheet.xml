@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:orientation="vertical"
+    android:padding="5dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_vertical"
+        android:weightSum="2">
+
+        <TextView
+            android:textSize="11dp"
+            android:id="@+id/invent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:drawableTop="@mipmap/inventry"
+            android:drawableTint="@color/blue"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="Inventory"
+            android:minWidth="100dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <View
+            android:background="@color/gray"
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:textSize="11dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/new_vin"
+            android:minWidth="100dp"
+            android:drawableTop="@mipmap/add_vih"
+            android:drawableTint="@color/blue"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="New"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
