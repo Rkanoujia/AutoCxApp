@@ -606,7 +606,7 @@ public class VehicleListActivity extends AppCompatActivity {
                 hideAnimation();
                 try {
                     if (getdata.satus) {
-                        new Util().sendAlert(VehicleListActivity.this,orderId+" New Customer Order has been received","Shipped");
+                        new Util().sendAlert(VehicleListActivity.this," Customer Order  Reference #: "+orderId+" has been received","Shipped");
                         MDToast mdToast = MDToast.makeText(VehicleListActivity.this, "Shipped Load Successfully", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                         mdToast.show();
                         overridePendingTransition(R.anim.fadein, R.anim.fadeout);

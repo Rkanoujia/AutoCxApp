@@ -971,7 +971,7 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
             mdToast.show();
             return;
         }
-        imageType = "BillOfSell";
+        imageType = "BillOfSale";
         imgId=billId;
         try {
             cameraOpen();
@@ -1221,7 +1221,7 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
             return;
         }
         try {
-            popUp(billUrl,billId,"BillOfSell");
+            popUp(billUrl,billId,"BillOfSale");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1463,7 +1463,7 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
 //                        vinNo.setText(dropdata.data.vin);
 
                         if(dropdata.make==null){
-                            MDToast mdToast = MDToast.makeText(AddVehicleActivity.this, "No data found from VIN database", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
+                            MDToast mdToast = MDToast.makeText(AddVehicleActivity.this, "VIN Number does not exists", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
                             mdToast.show();
                             year.setEnabled(true);
                             year.setClickable(true);
@@ -1684,20 +1684,24 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
 
                 VehicleInfoModel dropdata = response.body();
                 hideAnimation();
-                if (dropdata.status) {
-                      if(getIntent().getStringExtra("IsAdd")!=null){
-                          if(getIntent().getStringExtra("IsAdd").equalsIgnoreCase("true")){
-                              MDToast mdToast = MDToast.makeText(AddVehicleActivity.this, "vehicle added successfully", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
-                              mdToast.show();
-                          }else{
-                              MDToast mdToast = MDToast.makeText(AddVehicleActivity.this, "vehicle has been updated successfully", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
-                              mdToast.show();
-                          }
-                      }else{
-                          MDToast mdToast = MDToast.makeText(AddVehicleActivity.this, "vehicle has been updated successfully", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
-                          mdToast.show();
-                      }
-                      finish();
+                try {
+                    if (dropdata.status) {
+                        if (getIntent().getStringExtra("IsAdd") != null) {
+                            if (getIntent().getStringExtra("IsAdd").equalsIgnoreCase("true")) {
+                                MDToast mdToast = MDToast.makeText(AddVehicleActivity.this, "vehicle added successfully", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+                                mdToast.show();
+                            } else {
+                                MDToast mdToast = MDToast.makeText(AddVehicleActivity.this, "vehicle has been updated successfully", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+                                mdToast.show();
+                            }
+                        } else {
+                            MDToast mdToast = MDToast.makeText(AddVehicleActivity.this, "vehicle has been updated successfully", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+                            mdToast.show();
+                        }
+                        finish();
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
             }
 
@@ -1725,12 +1729,15 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
 
                 VehicleInfoModel dropdata = response.body();
                 hideAnimation();
-
-                if (dropdata.status) {
+                       try {
+                           if (dropdata.status) {
 //                    MDToast mdToast = MDToast.makeText(AddVehicleActivity.this, ""+dropdata.Message, MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
 //                    mdToast.show();
 //                    back();
-                }
+                           }
+                       }catch (Exception e){
+                           e.printStackTrace();
+                       }
             }
 
             @Override
@@ -1967,235 +1974,253 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
             public void onResponse(Call<GetVehicleIdListModel> call, Response<GetVehicleIdListModel> response) {
 
                 GetVehicleIdListModel getdata = response.body();
-                if (getdata.satus) {
+                try {
+                    if (getdata.satus) {
 // GetVehicleIdListModel tripDetails;
-                    final ArrayList<GetVehicleIdListModel.datavalue> getdata3 = getdata.dataV;
-                    if (getdata3.equals("null")) {
-                        hideAnimation();
-                    }
+                        final ArrayList<GetVehicleIdListModel.datavalue> getdata3 = getdata.dataV;
+                        if (getdata3.equals("null")) {
+                            hideAnimation();
+                        }
 
-                    if (getdata3.size() == 0) {
-                        hideAnimation();
-                    }
+                        if (getdata3.size() == 0) {
+                            hideAnimation();
+                        }
 
 
-                    for (int i = 0; getdata3.size() > i; i++) {
-                        if (getdata3.get(i).ItemCode.equalsIgnoreCase(getIntent().getStringExtra("VehicleId"))) {
-                            try {
-                                save_vehicle.setClickable(false);
-                                save_vehicle.setEnabled(false);
-                                preInspection = false;
-                                inventory=getdata3.get(i).isInventory;
-                                vinNo.setText(getdata3.get(i).vinNumber);
-                                year.setText(getdata3.get(i).year);
-                                make.setText(getdata3.get(i).makeV);
-                                model.setText(getdata3.get(i).model);
-                                color_txt.setText(getdata3.get(i).Color);
-                                oemStr = getdata3.get(i).oem;
-                                if (getdata3.get(i).oem.equalsIgnoreCase("true")) {
-                                    oem_tag_txt.setSelection(1);
-                                    getAFMImages("OEMTag");
-                                } else
-                                    oem_tag_txt.setSelection(0);
-
-                                releaseFormStr=getdata3.get(i).releasefrom;
-                                if (getdata3.get(i).releasefrom.equalsIgnoreCase("true")) {
-                                    release_form_txt.setSelection(1);
-                                    getAFMImages("ReleaseForm");
-                                } else
-                                    release_form_txt.setSelection(0);
-
-                                getAFMImages("MileageValue");
-                                tpmsStr = getdata3.get(i).tpms;
-                                dieselStr = getdata3.get(i).diesel;
-                                speedoStr = getdata3.get(i).speedoConversion;
-                                titleconvStr = getdata3.get(i).titleConversion;
-                                billStr = getdata3.get(i).billOfSale;
-                                titleStr = getdata3.get(i).title;
-                                if(getdata3.get(i).mileageUnit!=null) {
-                                    if (getdata3.get(i).mileageUnit.equalsIgnoreCase("2")) {
-                                        millage_spinner.setSelection(2);
-//                                    getImages("MileageValue");
-                                    } else if (getdata3.get(i).mileageUnit.equalsIgnoreCase("1")) {
-                                        millage_spinner.setSelection(1);
-//                                    getImages("MileageValue");
+                        for (int i = 0; getdata3.size() > i; i++) {
+                            if (getdata3.get(i).ItemCode.equalsIgnoreCase(getIntent().getStringExtra("VehicleId"))) {
+                                try {
+                                    save_vehicle.setClickable(false);
+                                    save_vehicle.setEnabled(false);
+                                    preInspection = false;
+                                    inventory = getdata3.get(i).isInventory;
+                                    vinNo.setText(getdata3.get(i).vinNumber);
+                                    year.setText(getdata3.get(i).year);
+                                    make.setText(getdata3.get(i).makeV);
+                                    model.setText(getdata3.get(i).model);
+                                    oemStr = getdata3.get(i).oem;
+                                    color_txt.setText(getdata3.get(i).Color);
+                                    if (getdata3.get(i).oem.equalsIgnoreCase("true")) {
+                                        oem_tag_txt.setSelection(1);
+                                        getAFMImages("OEMTag");
                                     } else
-                                        millage_spinner.setSelection(0);
-                                }
-                                millage_txt.setText(getdata3.get(i).mileageValue);
-                                if (getdata3.get(i).tpms.equalsIgnoreCase("true")) {
-                                    tpms_txt.setSelection(1);
+                                        oem_tag_txt.setSelection(0);
+
+                                    releaseFormStr = getdata3.get(i).releasefrom;
+                                    if (getdata3.get(i).releasefrom.equalsIgnoreCase("true")) {
+                                        release_form_txt.setSelection(1);
+                                        getAFMImages("ReleaseForm");
+                                    } else
+                                        release_form_txt.setSelection(0);
+
+                                    getAFMImages("MileageValue");
+                                    tpmsStr = getdata3.get(i).tpms;
+                                    dieselStr = getdata3.get(i).diesel;
+                                    speedoStr = getdata3.get(i).speedoConversion;
+                                    titleconvStr = getdata3.get(i).titleConversion;
+                                    billStr = getdata3.get(i).billOfSale;
+                                    titleStr = getdata3.get(i).title;
+                                    miliage = getdata3.get(i).mileageUnit;
+//                            if (getdata3.get(i).mileageUnit.equalsIgnoreCase("2")) {
+//                                millage_spinner.setSelection(2);
+////                                    getImages("MileageValue");
+//                            } else if (getdata3.get(i).mileageUnit.equalsIgnoreCase("1")) {
+//                                millage_spinner.setSelection(1);
+////                                    getImages("MileageValue");
+//                            } else
+//                                millage_spinner.setSelection(0);
+                                    final int posi = i;
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            millage_spinner.setSelection(milegeCode.indexOf(getdata3.get(posi).mileageUnit));
+                                        }
+                                    }, 1000);
+
+                                    currency_spinner.setSelection(currency.indexOf(getdata3.get(posi).DeclaredCurrency));
+
+
+                                    millage_txt.setText(getdata3.get(i).mileageValue);
+                                    if (getdata3.get(i).tpms.equalsIgnoreCase("true")) {
+                                        tpms_txt.setSelection(1);
+
+                                    } else
+                                        tpms_txt.setSelection(0);
+
                                     getAFMImages("TPMS");
-                                } else
-                                    tpms_txt.setSelection(0);
-                                declared_txt.setText(getdata3.get(i).declareValue);
-                                if(getdata3.get(i).buildMonth !=null) {
-                                    if (!getdata3.get(i).buildMonth.equalsIgnoreCase(""))
-                                        build_month.setSelection(Integer.parseInt(getdata3.get(i).buildMonth));
-                                }
+                                    declared_txt.setText("" + getdata3.get(i).declareValue);
+                                    if (getdata3.get(i).buildMonth != null)
+                                        if (!getdata3.get(i).buildMonth.equalsIgnoreCase(""))
+                                            build_month.setSelection(Integer.parseInt(getdata3.get(i).buildMonth));
 //                                if (!getdata3.get(i).buildYear.equalsIgnoreCase(""))
 //                                    build_year.setSelection(listBuildYaer.indexOf(getdata3.get(i).buildYear));
-                                if (getdata3.get(i).buildYear == null)
-                                    build_year.setText("");
-                                else
-                                    build_year.setText(getdata3.get(i).buildYear);
-                                gvwr_txt.setText(getdata3.get(i).gvwrValue);
-                                getAFMImages("TitleConversionFront");
+                                    if (getdata3.get(i).buildYear == null)
+                                        build_year.setText("");
+                                    else
+                                        build_year.setText(getdata3.get(i).buildYear);
+                                    gvwr_txt.setText(getdata3.get(i).gvwrValue);
+
 //                                if(getdata3.get(i).gvwrUnit.)
-                                if (getdata3.get(i).diesel.equalsIgnoreCase("true")) {
-                                    diesel_txt.setSelection(1);
+                                    if (getdata3.get(i).diesel.equalsIgnoreCase("true")) {
+                                        diesel_txt.setSelection(1);
 
-                                } else
-                                    diesel_txt.setSelection(0);
-                                getAFMImages("TitleConversionBack");
-                                if (getdata3.get(i).speedoConversion.equalsIgnoreCase("true"))
-                                    speedo_txt.setSelection(1);
-                                else
-                                    speedo_txt.setSelection(0);
-                                if (getdata3.get(i).titleConversion.equalsIgnoreCase("true")) {
-                                    title_conv_txt.setSelection(1);
+                                    } else
+                                        diesel_txt.setSelection(0);
+                                    getAFMImages("TitleConversionFront");
+                                    getAFMImages("TitleConversionBack");
+                                    if (getdata3.get(i).speedoConversion.equalsIgnoreCase("true"))
+                                        speedo_txt.setSelection(1);
+                                    else
+                                        speedo_txt.setSelection(0);
+                                    if (getdata3.get(i).titleConversion.equalsIgnoreCase("true")) {
+                                        title_conv_txt.setSelection(1);
 
+                                    } else
+                                        title_conv_txt.setSelection(0);
+                                    getAFMImages("IRSNumber");
+                                    if (getdata3.get(i).trackingConfig != null) {
+                                        if (!getdata3.get(i).trackingConfig.equalsIgnoreCase("")) {
+                                            tracking_txt.setText(getdata3.get(i).trackingConfig);
 
-                                } else
-                                    title_conv_txt.setSelection(0);
-                                getAFMImages("IRSNumber");
-                                if (getdata3.get(i).trackingConfig != null) {
-                                    if (!getdata3.get(i).trackingConfig.equalsIgnoreCase("")) {
-                                        tracking_txt.setText(getdata3.get(i).trackingConfig);
+                                        }
 
                                     }
-
-                                }
 //                                if (getdata3.get(i).trackingConfig.equalsIgnoreCase("Y")) {
 //                                    tracking_txt.setSelection(1);
 //                                    getImages("IRS Number");
 //                                }
 //                                else
 //                                    tracking_txt.setSelection(0);
-//                                getAFMImages("TitleBack");
+                                    qWvrUnit = getdata3.get(i).gvwrUnit;
 
-                                if (getdata3.get(i).billOfSale.equalsIgnoreCase("true")) {
-                                    bill_txt.setSelection(1);
-                                    getAFMImages("BillOfSell");
-                                } else
-                                    bill_txt.setSelection(0);
-                                if (getdata3.get(i).title.equalsIgnoreCase("true")) {
-                                    title_txt.setSelection(1);
+                                    if (getdata3.get(i).billOfSale.equalsIgnoreCase("true")) {
+                                        bill_txt.setSelection(1);
+                                        getAFMImages("BillOfSale");
+                                    } else
+                                        bill_txt.setSelection(0);
+                                    if (getdata3.get(i).title.equalsIgnoreCase("true")) {
+                                        title_txt.setSelection(1);
 
-                                } else
-                                    title_txt.setSelection(0);
-//                                getAFMImages("TitleFront");
-                                qWvrUnit=getdata3.get(i).gvwrUnit;
+                                    } else
+                                        title_txt.setSelection(0);
+                                    getAFMImages("TitleFront");
+                                    getAFMImages("TitleBack");
 //                                runOnUiThread(new Runnable() {
 //                                    @Override
 //                                    public void run() {
-                                final int posi = i;
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        gvwr_spinner.setSelection(listValueGvwrId.indexOf(getdata3.get(posi).gvwrUnit));
-                                    }
-                                }, 2000);
+
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            gvwr_spinner.setSelection(listValueGvwrId.indexOf(getdata3.get(posi).gvwrUnit));
+                                        }
+                                    }, 1000);
 
 //                                    }
 //                                });
 
-                                getAFMImages("RecallSheet1");
-                                getAFMImages("RecallSheet2");
+                                    getAFMImages("RecallSheet1");
+                                    getAFMImages("RecallSheet2");
 
 
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-
-
-                            save_vehicle.setClickable(false);
-                            save_vehicle.setEnabled(false);
-                            save_vehicle.setText("Update");
-
-                            save_vehicle.setVisibility(View.GONE);
-                            saveBol.setText("View Pre-Inspections");
-                            year.setEnabled(false);
-                            year.setClickable(false);
-                            make.setEnabled(false);
-                            make.setClickable(false);
-                            model.setEnabled(false);
-                            model.setClickable(false);
-                            vinNo.setClickable(false);
-                                    vinNo.setEnabled(false);
-                            color_txt.setClickable(false);
-                            color_txt.setEnabled(false);
-                            oem_tag_txt.setClickable(false);
-                            oem_tag_txt.setEnabled(false);
-                            millage_spinner.setClickable(false);
-                            millage_spinner.setEnabled(false);
-                            millage_txt.setClickable(false);
-                            millage_txt.setEnabled(false);
-                            tpms_txt.setClickable(false);
-                            tpms_txt.setEnabled(false);
-                            declared_txt.setClickable(false);
-                            declared_txt.setEnabled(false);
-                            build_month.setClickable(false);
-                            build_month.setEnabled(false);
-                            build_year.setClickable(false);
-                            build_year.setEnabled(false);
-                            gvwr_txt.setClickable(false);
-                            gvwr_txt.setEnabled(false);
-                            diesel_txt.setClickable(false);
-                            diesel_txt.setEnabled(false);
-                            speedo_txt.setClickable(false);
-                            speedo_txt.setEnabled(false);
-                            title_conv_txt.setClickable(false);
-                            title_conv_txt.setEnabled(false);
-                            tracking_txt.setClickable(false);
-                            tracking_txt.setEnabled(false);
-                            bill_txt.setClickable(false);
-                            bill_txt.setEnabled(false);
-                            title_txt.setClickable(false);
-                            title_txt.setEnabled(false);
-                            gvwr_spinner.setClickable(false);
-                            gvwr_spinner.setEnabled(false);
-                            scan.setClickable(false);
-                            scan.setEnabled(false);
-                            title_txt_img.setClickable(false);
-                            title_txt_img.setEnabled(false);
-                            title_conv_txt_img.setClickable(false);
-                            title_conv_txt_img.setEnabled(false);
-                            oem_tag_txt_img.setClickable(false);
-                            oem_tag_txt_img.setEnabled(false);
-                            millage_txt_img.setClickable(false);
-                            millage_txt_img.setEnabled(false);
-                            tpms_txt_img.setClickable(false);
-                            tpms_txt_img.setEnabled(false);
-                            bill_txt_img.setClickable(false);
-                            bill_txt_img.setEnabled(false);
-                            tracking_txt_img.setClickable(false);
-                            tracking_txt_img.setEnabled(false);
-                            recall1_txt_img.setClickable(false);
-                            recall2_txt_img1.setEnabled(false);
-                            currency_spinner.setEnabled(false);
-                            currency_spinner.setClickable(false);
-                            release_form_txt.setClickable(false);
-                            release_form_txt.setEnabled(false);
-                            release_form_txt_img.setClickable(false);
-                            release_form_txt_img.setEnabled(false);
-
-                        }
-                        if (i == getdata3.size() - 1) {
-                            new Handler().postDelayed(new Runnable() {
-                                public void run() {
-                                    hideAnimation();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
-                            }, 6000);
+
+
+                                save_vehicle.setClickable(false);
+                                save_vehicle.setEnabled(false);
+                                save_vehicle.setText("Update");
+
+                                save_vehicle.setVisibility(View.GONE);
+                                saveBol.setText("View Pre-Inspections");
+                                year.setEnabled(false);
+                                year.setClickable(false);
+                                make.setEnabled(false);
+                                make.setClickable(false);
+                                model.setEnabled(false);
+                                model.setClickable(false);
+                                vinNo.setClickable(false);
+                                vinNo.setEnabled(false);
+                                color_txt.setClickable(false);
+                                color_txt.setEnabled(false);
+                                oem_tag_txt.setClickable(false);
+                                oem_tag_txt.setEnabled(false);
+                                millage_spinner.setClickable(false);
+                                millage_spinner.setEnabled(false);
+                                millage_txt.setClickable(false);
+                                millage_txt.setEnabled(false);
+                                tpms_txt.setClickable(false);
+                                tpms_txt.setEnabled(false);
+                                declared_txt.setClickable(false);
+                                declared_txt.setEnabled(false);
+                                build_month.setClickable(false);
+                                build_month.setEnabled(false);
+                                build_year.setClickable(false);
+                                build_year.setEnabled(false);
+                                gvwr_txt.setClickable(false);
+                                gvwr_txt.setEnabled(false);
+                                diesel_txt.setClickable(false);
+                                diesel_txt.setEnabled(false);
+                                speedo_txt.setClickable(false);
+                                speedo_txt.setEnabled(false);
+                                title_conv_txt.setClickable(false);
+                                title_conv_txt.setEnabled(false);
+                                tracking_txt.setClickable(false);
+                                tracking_txt.setEnabled(false);
+                                bill_txt.setClickable(false);
+                                bill_txt.setEnabled(false);
+                                title_txt.setClickable(false);
+                                title_txt.setEnabled(false);
+                                gvwr_spinner.setClickable(false);
+                                gvwr_spinner.setEnabled(false);
+                                scan.setClickable(false);
+                                scan.setEnabled(false);
+                                title_txt_img.setClickable(false);
+                                title_txt_img.setEnabled(false);
+                                title_conv_txt_img.setClickable(false);
+                                title_conv_txt_img.setEnabled(false);
+                                title_conv_txt_img1.setClickable(false);
+                                title_conv_txt_img1.setEnabled(false);
+                                oem_tag_txt_img.setClickable(false);
+                                oem_tag_txt_img.setEnabled(false);
+                                millage_txt_img.setClickable(false);
+                                millage_txt_img.setEnabled(false);
+                                tpms_txt_img.setClickable(false);
+                                tpms_txt_img.setEnabled(false);
+                                bill_txt_img.setClickable(false);
+                                bill_txt_img.setEnabled(false);
+                                tracking_txt_img.setClickable(false);
+                                tracking_txt_img.setEnabled(false);
+                                recall1_txt_img.setClickable(false);
+                                recall2_txt_img1.setEnabled(false);
+                                currency_spinner.setEnabled(false);
+                                currency_spinner.setClickable(false);
+                                release_form_txt.setClickable(false);
+                                release_form_txt.setEnabled(false);
+                                release_form_txt_img.setClickable(false);
+                                release_form_txt_img.setEnabled(false);
+
+                            }
+                            if (i == getdata3.size() - 1) {
+                                new Handler().postDelayed(new Runnable() {
+                                    public void run() {
+                                        hideAnimation();
+                                    }
+                                }, 6000);
+                            }
                         }
-                    }
 //                    Intent i=new Intent(VehicleListActivity.this,AddVehicleActivity.class);
 //                    i.putExtra("VehicleId",getdata.data.temOdId);
 ////                    i.putExtra("orderType",orderType);
 //                    startActivity(i);
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }finally {
+                    hideAnimation();
                 }
-                hideAnimation();
+
             }
             @Override
             public void onFailure(Call<GetVehicleIdListModel> call, Throwable t) {
@@ -2236,8 +2261,8 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
                                     year.setText(getdata3.get(i).year);
                                     make.setText(getdata3.get(i).makeV);
                                     model.setText(getdata3.get(i).model);
-                                    color_txt.setText(getdata3.get(i).Color);
                                     oemStr = getdata3.get(i).oem;
+                                    color_txt.setText(getdata3.get(i).Color);
                                     if (getdata3.get(i).oem.equalsIgnoreCase("true")) {
                                         oem_tag_txt.setSelection(1);
                                         getImages("OEMTag");
@@ -2258,27 +2283,37 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
                                     titleconvStr = getdata3.get(i).titleConversion;
                                     billStr = getdata3.get(i).billOfSale;
                                     titleStr = getdata3.get(i).title;
-                                    if (getdata3.get(i).mileageUnit != null) {
-                                        if (getdata3.get(i).mileageUnit.equalsIgnoreCase("2")) {
-                                            millage_spinner.setSelection(2);
-//                                    getImages("MileageValue");
-                                        } else if (getdata3.get(i).mileageUnit.equalsIgnoreCase("1")) {
-                                            millage_spinner.setSelection(1);
-//                                    getImages("MileageValue");
-                                        } else
-                                            millage_spinner.setSelection(0);
-                                    }
+                                    miliage=getdata3.get(i).mileageUnit;
+//                            if (getdata3.get(i).mileageUnit.equalsIgnoreCase("2")) {
+//                                millage_spinner.setSelection(2);
+////                                    getImages("MileageValue");
+//                            } else if (getdata3.get(i).mileageUnit.equalsIgnoreCase("1")) {
+//                                millage_spinner.setSelection(1);
+////                                    getImages("MileageValue");
+//                            } else
+//                                millage_spinner.setSelection(0);
+                                    final int posi = i;
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            millage_spinner.setSelection(milegeCode.indexOf(getdata3.get(posi).mileageUnit));
+                                        }
+                                    }, 1000);
+
+                                    currency_spinner.setSelection(currency.indexOf(getdata3.get(posi).DeclaredCurrency));
+
+
+
                                     millage_txt.setText(getdata3.get(i).mileageValue);
                                     if (getdata3.get(i).tpms.equalsIgnoreCase("true")) {
                                         tpms_txt.setSelection(1);
                                         getImages("TPMS");
                                     } else
                                         tpms_txt.setSelection(0);
-                                    declared_txt.setText("" + getdata3.get(i).declareValue);
-                                    if (getdata3.get(i).buildMonth != null) {
+                                    declared_txt.setText(""+getdata3.get(i).declareValue);
+                                    if(getdata3.get(i).buildMonth!=null)
                                         if (!getdata3.get(i).buildMonth.equalsIgnoreCase(""))
                                             build_month.setSelection(Integer.parseInt(getdata3.get(i).buildMonth));
-                                    }
 //                                if (!getdata3.get(i).buildYear.equalsIgnoreCase(""))
 //                                    build_year.setSelection(listBuildYaer.indexOf(getdata3.get(i).buildYear));
                                     if (getdata3.get(i).buildYear == null)
@@ -2286,13 +2321,14 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
                                     else
                                         build_year.setText(getdata3.get(i).buildYear);
                                     gvwr_txt.setText(getdata3.get(i).gvwrValue);
-                                    getImages("TitleConversionFront");
+
 //                                if(getdata3.get(i).gvwrUnit.)
                                     if (getdata3.get(i).diesel.equalsIgnoreCase("true")) {
                                         diesel_txt.setSelection(1);
 
                                     } else
                                         diesel_txt.setSelection(0);
+                                    getImages("TitleConversionFront");
                                     getImages("TitleConversionBack");
                                     if (getdata3.get(i).speedoConversion.equalsIgnoreCase("true"))
                                         speedo_txt.setSelection(1);
@@ -2300,7 +2336,6 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
                                         speedo_txt.setSelection(0);
                                     if (getdata3.get(i).titleConversion.equalsIgnoreCase("true")) {
                                         title_conv_txt.setSelection(1);
-
 
                                     } else
                                         title_conv_txt.setSelection(0);
@@ -2318,11 +2353,11 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
 //                                }
 //                                else
 //                                    tracking_txt.setSelection(0);
-                                    getImages("TitleBack");
+                                    qWvrUnit=getdata3.get(i).gvwrUnit;
 
                                     if (getdata3.get(i).billOfSale.equalsIgnoreCase("true")) {
                                         bill_txt.setSelection(1);
-                                        getImages("BillOfSell");
+                                        getImages("BillOfSale");
                                     } else
                                         bill_txt.setSelection(0);
                                     if (getdata3.get(i).title.equalsIgnoreCase("true")) {
@@ -2331,17 +2366,17 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
                                     } else
                                         title_txt.setSelection(0);
                                     getImages("TitleFront");
-                                    qWvrUnit = getdata3.get(i).gvwrUnit;
+                                    getImages("TitleBack");
 //                                runOnUiThread(new Runnable() {
 //                                    @Override
 //                                    public void run() {
-                                    final int posi = i;
+
                                     new Handler().postDelayed(new Runnable() {
                                         @Override
                                         public void run() {
                                             gvwr_spinner.setSelection(listValueGvwrId.indexOf(getdata3.get(posi).gvwrUnit));
                                         }
-                                    }, 2000);
+                                    }, 1000);
 
 //                                    }
 //                                });
@@ -2364,7 +2399,7 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
                                         model.setClickable(false);
                                     } else {
                                         save_vehicle.setVisibility(View.GONE);
-                                        saveBol.setText("View BOL");
+                                        saveBol.setText("View Pre-Inspection");
                                         year.setEnabled(false);
                                         year.setClickable(false);
                                         make.setEnabled(false);
@@ -2373,6 +2408,8 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
                                         model.setClickable(false);
                                         vinNo.setClickable(false);
                                         vinNo.setEnabled(false);
+                                        color_txt.setClickable(false);
+                                        color_txt.setEnabled(false);
                                         oem_tag_txt.setClickable(false);
                                         oem_tag_txt.setEnabled(false);
                                         millage_spinner.setClickable(false);
@@ -2409,6 +2446,8 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
                                         title_txt_img.setEnabled(false);
                                         title_conv_txt_img.setClickable(false);
                                         title_conv_txt_img.setEnabled(false);
+                                        title_conv_txt_img1.setClickable(false);
+                                        title_conv_txt_img1.setEnabled(false);
                                         oem_tag_txt_img.setClickable(false);
                                         oem_tag_txt_img.setEnabled(false);
                                         millage_txt_img.setClickable(false);
@@ -2421,6 +2460,12 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
                                         tracking_txt_img.setEnabled(false);
                                         recall1_txt_img.setClickable(false);
                                         recall2_txt_img1.setEnabled(false);
+                                        currency_spinner.setEnabled(false);
+                                        currency_spinner.setClickable(false);
+                                        release_form_txt.setClickable(false);
+                                        release_form_txt.setEnabled(false);
+                                        release_form_txt_img.setClickable(false);
+                                        release_form_txt_img.setEnabled(false);
                                     }
 
                                 } catch (Exception e) {
@@ -2550,6 +2595,7 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
 //        if(uri==null){
 //            return;
 //        }
+
         final File f = new File(imageFilePath);
         File f1 = f.getAbsoluteFile();
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
@@ -2568,9 +2614,9 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
             Bitmap second = addText(thumbnail);
             thumbnail.recycle();
             filetemdata = bitmapToBase64(second);
-            saveImage(second, fileName);
+//            saveImage(second, fileName);
             second.recycle();
-            size = filetemdata.length();
+
             System.gc();
         }catch (OutOfMemoryError e){
             e.printStackTrace();
@@ -2615,6 +2661,7 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
                     if (getdata.status) {
                         if(f.exists())
                             f.delete();
+                           System.gc();
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -2665,7 +2712,7 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
                                     titleConvId1 = getdata.imageId;
 //                                title_conv_txt.setVisibility(View.GONE);
                                     title_conv_txt_img_view1.setVisibility(View.VISIBLE);
-                                } else if (imageType.equalsIgnoreCase("BillOfSell")) {
+                                } else if (imageType.equalsIgnoreCase("BillOfSale")) {
                                     billUrl = getdata.docUrl.replace("DelhiServer", "192.168.1.20");
                                     bill_txt.setSelection(1);
                                     billId = getdata.imageId;
@@ -2937,7 +2984,7 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
                                 titleConvId1=dropdata.dataValuer.get(0).docId;
     //                                title_conv_txt.setVisibility(View.GONE);
                                 title_conv_txt_img_view1.setVisibility(View.VISIBLE);
-                            } else if (dropdata.dataValuer.get(0).doctype.equalsIgnoreCase("BillOfSell")) {
+                            } else if (dropdata.dataValuer.get(0).doctype.equalsIgnoreCase("BillOfSale")) {
                                 billUrl = dropdata.dataValuer.get(0).DocURL.replace("DelhiServer", "192.168.1.20");
     //                                bill_txt_img.setVisibility(View.GONE);
                                 billId=dropdata.dataValuer.get(0).docId;
@@ -3037,7 +3084,7 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
                                 titleConvId1=dropdata.dataValuer.get(0).docId;
                                 //                                title_conv_txt.setVisibility(View.GONE);
                                 title_conv_txt_img_view1.setVisibility(View.VISIBLE);
-                            } else if (dropdata.dataValuer.get(0).doctype.equalsIgnoreCase("BillOfSell")) {
+                            } else if (dropdata.dataValuer.get(0).doctype.equalsIgnoreCase("BillOfSale")) {
                                 billUrl = dropdata.dataValuer.get(0).DocURL.replace("DelhiServer", "192.168.1.20");
                                 //                                bill_txt_img.setVisibility(View.GONE);
                                 billId=dropdata.dataValuer.get(0).docId;
@@ -3132,7 +3179,7 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
                             tpms_txt.setSelection(0);
                             tpmsId="0";
                             tpms_txt_img_view.setVisibility(View.GONE);
-                        }  else if (type.equalsIgnoreCase("BillOfSell")) {
+                        }  else if (type.equalsIgnoreCase("BillOfSale")) {
                             billUrl = "";
                             billStr="false";
 //                                bill_txt_img.setVisibility(View.GONE);
@@ -3251,7 +3298,7 @@ void getInventoryVehicle(){
                                 oem_tag_txt.setSelection(0);
 
                                     releaseFormStr = getdata3.get(i).releasefrom;
-                            if (getdata3.get(i).releasefrom.equalsIgnoreCase("Y")) {
+                            if (getdata3.get(i).releasefrom.equalsIgnoreCase("true")) {
                                 release_form_txt.setSelection(1);
                                 getImages("ReleaseForm");
                             } else
@@ -3338,7 +3385,7 @@ void getInventoryVehicle(){
 
                             if (getdata3.get(i).billOfSale.equalsIgnoreCase("true")) {
                                 bill_txt.setSelection(1);
-                                getImages("BillOfSell");
+                                getImages("BillOfSale");
                             } else
                                 bill_txt.setSelection(0);
                             if (getdata3.get(i).title.equalsIgnoreCase("true")) {

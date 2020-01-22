@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AFM Auto Cx</string>
+    <string name="app_name">AFM Cx</string>
     <string name="next">NEXT</string>
     <string name="skip">SKIP</string>
     <string name="start">GOT IT</string>
@@ -47,5 +47,5 @@
     <string name="request_permission">This sample needs camera permission.</string>
     <string name="camera_error">This device doesn\'t support Camera2 API.</string>
     <string name="title_activity_new_map">Map</string>
-    <string name="more_apps_for_avaal">More Apps for AVAAL</string>
+    <string name="more_apps_for_avaal">More Apps of AVAAL</string>
 </resources>

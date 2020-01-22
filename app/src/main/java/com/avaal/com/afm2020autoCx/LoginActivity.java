@@ -11,11 +11,13 @@ import android.hardware.fingerprint.FingerprintManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -23,6 +25,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.avaal.com.afm2020autoCx.models.LoginModel;
@@ -113,7 +116,8 @@ public class LoginActivity extends AppCompatActivity implements FingerprintHelpe
 try {
     if (prf.getStringData("userName") != null) {
         userName.setText(prf.getStringData("userName"));
-        corporateId.setText(prf.getStringData("corporateId"));
+        corporateId.setText(prf.getStringData("corporateId").toUpperCase());
+
         if (prf.getBoolData("remember")) {
             remember.setChecked(true);
             password.setText(prf.getStringData("password"));
@@ -129,6 +133,29 @@ try {
 }catch (Exception e){
              e.printStackTrace();
 }
+
+        userName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus)
+                    userName.setSelection(userName.getText().length());
+            }
+        });
+        corporateId.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus)
+                    corporateId.setSelection(corporateId.getText().length());
+            }
+        });
+        password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus)
+                    password.setSelection(password.getText().length());
+            }
+        });
+
 //        editTextField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 //
 //            @Override
@@ -244,14 +271,23 @@ void driverApp(){
                                 prf.saveBoolData("remember", true);
                             } else
                                 prf.saveBoolData("remember", false);
+
                             getProfile();
+
 //                        Intent j = new Intent(LoginActivity.this, DashBoardBottomMenu.class);
 //                        j.putExtra("open", "home");
 //                        j.putExtra("AuthKey", login.datavalue.authkey);
 //                        startActivity(j);
 //                        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 //                        finish();
-                            onIsfingerprint();
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // do stuff
+                                    onIsfingerprint();
+                                }
+                            }, 500);
+
 
 
                         } else {
@@ -293,6 +329,8 @@ void driverApp(){
                     }
                 }catch (Exception e){
                    e.printStackTrace();
+                    MDToast mdToast = MDToast.makeText(LoginActivity.this, "Cx01-Server Communication Error" , MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
+                    mdToast.show();
                }
 
             }
@@ -300,6 +338,8 @@ void driverApp(){
             @Override
             public void onFailure(Call<LoginModel> call, Throwable t) {
                 call.cancel();
+                MDToast mdToast = MDToast.makeText(LoginActivity.this, "Cx01-Server Communication Error" , MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
+                mdToast.show();
                 hideAnimation();
             }
         });
@@ -320,47 +360,46 @@ void forget(){
 
      final KeyguardManager km = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
 
-
-         if (km.isKeyguardSecure()) {
-                 new AlertDialog.Builder(this)
-                         .setMessage("Are you want to Login with Phone Authentication ?")
-
-                         // Specifying a listener allows you to take an action before dismissing the dialog.
-                         // The dialog is automatically dismissed when a dialog button is clicked.
-                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                             public void onClick(DialogInterface dialog, int which) {
-                                 // Continue with delete operation
-                                 Intent i = null;
-                                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                                     i = km.createConfirmDeviceCredentialIntent("Lock "+getResources().getString(R.string.app_name), "confirm your Screen lock pattern, PIN or password");
-                                 }
-                                 startActivityForResult(i, CODE_AUTHENTICATION_VERIFICATION);
-                             }
-                         })
-
-                         // A null listener allows the button to dismiss the dialog and take no further action.
-                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                             @Override
-                             public void onClick(DialogInterface dialog, int which) {
-
-                                 prf.saveBoolData("IsFingerprint", false);
-                                 Intent j = new Intent(LoginActivity.this, NewDashBoardActivity.class);
-                                 j.putExtra("open", "home");
-                                 startActivity(j);
-                                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-                                 finish();
-
-                             }
-                         })
-                         .show();
-             } else {
-                 prf.saveBoolData("IsFingerprint", false);
-                 Intent j = new Intent(LoginActivity.this, NewDashBoardActivity.class);
-                 j.putExtra("open", "home");
-                 startActivity(j);
-                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-                 finish();
-             }
+     prf.saveBoolData("IsFingerprint", false);
+     new Util().myIntent(LoginActivity.this, NewDashBoardActivity.class);
+//         if (km.isKeyguardSecure()) {
+//                 new AlertDialog.Builder(this)
+//                         .setMessage("Are you want to Login with Phone Authentication ?")
+//
+//                         // Specifying a listener allows you to take an action before dismissing the dialog.
+//                         // The dialog is automatically dismissed when a dialog button is clicked.
+//                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+//                             public void onClick(DialogInterface dialog, int which) {
+//                                 // Continue with delete operation
+//                                 Intent i = null;
+//                                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+//                                     i = km.createConfirmDeviceCredentialIntent("Lock "+getResources().getString(R.string.app_name), "confirm your Screen lock pattern, PIN or password");
+//                                 }
+//                                 startActivityForResult(i, CODE_AUTHENTICATION_VERIFICATION);
+//                             }
+//                         })
+//
+//                         // A null listener allows the button to dismiss the dialog and take no further action.
+//                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+//                             @Override
+//                             public void onClick(DialogInterface dialog, int which) {
+//
+//                                 prf.saveBoolData("IsFingerprint", false);
+//                                 new Util().myIntent(LoginActivity.this, NewDashBoardActivity.class);
+//
+//                             }
+//                         })
+//                         .show();
+//             } else {
+//                 prf.saveBoolData("IsFingerprint", false);
+//                 new Util().myIntent(LoginActivity.this, NewDashBoardActivity.class);
+////                 Intent j = new Intent(LoginActivity.this, NewDashBoardActivity.class);
+////                 j.putExtra("open", "home");
+////             j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+////                 startActivity(j);
+////                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+////                 finish();
+//             }
 
 
  }

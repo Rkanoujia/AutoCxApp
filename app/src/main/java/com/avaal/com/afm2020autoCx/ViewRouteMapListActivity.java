@@ -90,20 +90,22 @@ public class ViewRouteMapListActivity extends AppCompatActivity {
 
         vehicle_num_order.setText(getIntent().getStringExtra("vehicle_num"));
         type_order_.setText(getIntent().getStringExtra("type"));
-        from_address_order.setText(getIntent().getStringExtra("from_address"));
+
         from_date_order.setText(new Util().getUtcToCurrentTime(getIntent().getStringExtra("from_date")));
         from_time_order.setText(getIntent().getStringExtra("from_time"));
 
-        to_address_order.setText(getIntent().getStringExtra("to_address"));
+
         to_date_order.setText(new Util().getUtcToCurrentTime(getIntent().getStringExtra("to_date")));
         to_time_order.setText(getIntent().getStringExtra("to_time"));
         Gson gson = new Gson();
         if ( getIntent().getStringExtra("ModelClass") != null) {
             OrderListModel.datavalue1 listObject = gson.fromJson(getIntent().getStringExtra("ModelClass"), new TypeToken<OrderListModel.datavalue1>() {
             }.getType());
+            from_address_order.setText(listObject.pickupCity+", \n"+listObject.pickupstateCode+", "+listObject.PickupCountryCode+", "+listObject.pickupZip);
+            to_address_order.setText(listObject.dropCity+", \n"+listObject.dropSateCode+", "+listObject.DeliveryCountryCode+", "+listObject.dropZip);
             _from_order.setText(listObject.PickupName);
             _to_order.setText(listObject.dropName);
-            order_id_order.setText("Order#."+listObject.SavedOrderNumber);
+            order_id_order.setText("Order# "+listObject.SavedOrderNumber);
 
             if(listObject.PickupCountryCode.equalsIgnoreCase("CA") && listObject.DeliveryCountryCode.equalsIgnoreCase("CA"))
                 type_order_.setText("Inter Provincial");

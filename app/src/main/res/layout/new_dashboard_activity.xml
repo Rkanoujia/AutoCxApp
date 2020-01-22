@@ -84,7 +84,7 @@
                     android:textSize="14dp"
                     android:textColor="@color/colorWhite"
                     android:padding="3dp"
-                    android:text="Order Status"
+                    android:text="Load Status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </android.support.v7.widget.CardView>
@@ -124,6 +124,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
               <LinearLayout
+                  android:id="@+id/totl_order"
                   android:orientation="vertical"
                   android:layout_marginEnd="10dp"
                   android:background="@drawable/new_dashboard_button"
@@ -140,12 +141,13 @@
                       android:layout_height="wrap_content" />
                   <TextView
                       android:textColor="@color/colorPrimary"
-                      android:text="Total Order"
+                      android:text="Total Orders"
                       android:textSize="13dp"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content" />
               </LinearLayout>
               <LinearLayout
+                  android:id="@+id/total_invoice"
                   android:orientation="vertical"
                   android:layout_marginStart="10dp"
                   android:background="@drawable/new_dashboard_button"
@@ -173,6 +175,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <LinearLayout
+                    android:id="@+id/total_paid"
                     android:orientation="vertical"
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/new_dashboard_button"
@@ -229,6 +232,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <LinearLayout
+                        android:id="@+id/pending_loads"
                         android:orientation="vertical"
                         android:layout_marginEnd="10dp"
                         android:background="@drawable/new_dashboard_button"
@@ -245,12 +249,13 @@
                             android:layout_height="wrap_content" />
                         <TextView
                             android:textColor="@color/colorPrimary"
-                            android:text="Trip Pending"
+                            android:text="Loads Pending"
                             android:textSize="13dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
                     <LinearLayout
+                        android:id="@+id/enroute_loads"
                         android:orientation="vertical"
                         android:layout_marginStart="10dp"
                         android:background="@drawable/new_dashboard_button"
@@ -270,7 +275,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/quicksand"
-                            android:text="Trip EnRoute"
+                            android:text="Loads EnRoute"
                             android:textColor="@color/colorPrimary"
                             android:textSize="13dp" />
                     </LinearLayout>
@@ -296,8 +301,7 @@
                             android:layout_height="wrap_content" />
                         <TextView
                             android:textColor="@color/colorPrimary"
-                            android:text="Total Shipped Vehicle"
-
+                            android:text="Total Shipped Vehicles"
                             android:textSize="13dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
@@ -321,7 +325,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Total Received Vehicle"
+                            android:text="Total Received Vehicles"
                             android:textColor="@color/colorPrimary"
                             android:textSize="13dp" />
                     </LinearLayout>
@@ -329,7 +333,6 @@
             </LinearLayout>
         </LinearLayout>
         <LinearLayout android:layout_margin="18dp"
-            android:background="@color/colorWhite"
             android:layout_width="match_parent"
             android:layout_height="150dp"></LinearLayout>
     </LinearLayout>

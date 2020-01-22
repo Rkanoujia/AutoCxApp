@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
 
     android:id="@+id/login_scre"
@@ -207,6 +208,7 @@
                                         android:background="@android:color/white" />
 
                                     <EditText
+
                                         android:id="@+id/user_name"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
@@ -259,6 +261,7 @@
                                         app:passwordToggleTint="@color/colorPrimary">
 
                                         <EditText
+
                                             android:id="@+id/paswrd"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
@@ -289,11 +292,12 @@
                                     android:theme="@style/SwitchTheme" />
 
                                 <TextView
+                                    android:layout_marginStart="5dp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Remember me"
-                                    android:textColor="@color/blue"
-                                    android:textStyle="italic" />
+                                    android:textColor="@color/colorPrimary"
+                                     />
                             </LinearLayout>
 
 
@@ -306,8 +310,8 @@
                                 android:layout_alignParentRight="true"
                                 android:layout_marginTop="15dp"
                                 android:text="Forgot Password? "
-                                android:textColor="@color/blue"
-                                android:textStyle="italic" />
+                                android:textColor="@color/colorPrimary"
+                                 />
                         </RelativeLayout>
 
                         <TextView
@@ -357,16 +361,12 @@
                     android:layout_marginEnd="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-                    <LinearLayout
-                        android:backgroundTint="@color/colorWhite"
-                        android:background="@drawable/circle"
-                        android:layout_width="52dp"
-                        android:layout_height="52dp">
+
                         <ImageView
                             android:src="@drawable/driver_icon"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
-                    </LinearLayout>
+                            android:layout_width="52dp"
+                            android:layout_height="52dp" />
+
                     <TextView
                         android:textSize="11dp"
                         android:textColor="@color/colorWhite"
@@ -381,17 +381,12 @@
                     android:layout_marginStart="30dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-                    <LinearLayout
-                        android:backgroundTint="@color/colorWhite"
-                        android:background="@drawable/circle"
-                        android:layout_width="52dp"
-                        android:layout_height="52dp">
+
                         <ImageView
                             android:src="@drawable/afm2020_icon"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
+                            android:layout_width="52dp"
+                            android:layout_height="52dp" />
 
-                    </LinearLayout>
                     <TextView
                         android:textSize="11dp"
                         android:textColor="@color/colorWhite"

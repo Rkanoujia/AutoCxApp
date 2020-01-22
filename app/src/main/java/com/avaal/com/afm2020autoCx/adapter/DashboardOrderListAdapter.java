@@ -49,6 +49,7 @@ public class DashboardOrderListAdapter extends RecyclerView.Adapter<DashboardOrd
         public TextView id, from,to,title,from_address,to_address,vehicle_num,from_date,to_date,from_time,to_time,typ_,track,cancelation,pickup_name,delivery_name,order_lbl;
         LinearLayout full_item;
         FrameLayout fram_cancel;
+        View view1;
 //        public ImageView typeicon;
 
         public MyViewHolder(View view) {
@@ -72,7 +73,7 @@ public class DashboardOrderListAdapter extends RecyclerView.Adapter<DashboardOrd
             pickup_name=(TextView)view.findViewById(R.id.pickup_name);
             delivery_name=(TextView)view.findViewById(R.id.delivery_name);
             order_lbl=(TextView) view.findViewById(R.id.order_lbl);
-//            full_item=(LinearLayout)view.findViewById(R.id.full_item);
+            view1=(View)view.findViewById(R.id.view1);
 //            typeicon=(ImageView)view.findViewById(R.id.vehicle_img);
 
         }
@@ -113,14 +114,22 @@ public class DashboardOrderListAdapter extends RecyclerView.Adapter<DashboardOrd
 
         if(tripList.get(position).status.equalsIgnoreCase("TripStarted"))
             holder.title.setTextColor(context.getResources().getColor(R.color.blue));
-        else  if(tripList.get(position).status.equalsIgnoreCase("Dispatched"))
-            holder.title.setTextColor(context.getResources().getColor(R.color.dot_inactive_screen1));
-        else  if(tripList.get(position).status.equalsIgnoreCase("Enroute"))
-            holder.title.setTextColor(context.getResources().getColor(R.color.enroute));
-        else  if(tripList.get(position).status.equalsIgnoreCase("Delivered"))
-            holder.title.setTextColor(context.getResources().getColor(R.color.dot_inactive_screen2));
-        else  if(tripList.get(position).status.equalsIgnoreCase("Confirmed"))
+        else  if(tripList.get(position).status.equalsIgnoreCase("Dispatched")) {
+            holder.view1.setBackgroundColor(context.getResources().getColor(R.color.blue));
             holder.title.setTextColor(context.getResources().getColor(R.color.blue));
+        }else  if(tripList.get(position).status.equalsIgnoreCase("QUOTED")) {
+            holder.view1.setBackgroundColor(context.getResources().getColor(R.color.orange));
+            holder.title.setTextColor(context.getResources().getColor(R.color.orange));
+        }else  if(tripList.get(position).status.equalsIgnoreCase("Delivered")) {
+            holder.view1.setBackgroundColor(context.getResources().getColor(R.color.black));
+            holder.title.setTextColor(context.getResources().getColor(R.color.black));
+        } else  if(tripList.get(position).status.equalsIgnoreCase("Confirmed")) {
+            holder.view1.setBackgroundColor(context.getResources().getColor(R.color.green));
+            holder.title.setTextColor(context.getResources().getColor(R.color.green));
+        }else  if(tripList.get(position).status.equalsIgnoreCase("CANCELLED")) {
+            holder.view1.setBackgroundColor(context.getResources().getColor(R.color.orange));
+            holder.title.setTextColor(context.getResources().getColor(R.color.orange));
+        }
 
         holder.order_lbl.setText("Order# ");
 
@@ -130,7 +139,10 @@ public class DashboardOrderListAdapter extends RecyclerView.Adapter<DashboardOrd
         holder.to.setText(tripList.get(position).dropCity+", "+tripList.get(position).dropSateCode+", "+tripList.get(position).DeliveryCountryCode);
         holder.from_address.setText(tripList.get(position).pickupZip);
         holder.to_address.setText(tripList.get(position).dropZip);
-        holder.vehicle_num.setText(tripList.get(position).vehiclecount);
+        if(tripList.get(position).vehiclecount.equalsIgnoreCase("1"))
+        holder.vehicle_num.setText(tripList.get(position).vehiclecount+" Vehicle");
+        else
+            holder.vehicle_num.setText(tripList.get(position).vehiclecount+" Vehicles");
         holder.from_date.setText(new Util().getUtcToCurrentTime(tripList.get(position).PickupDateTime));
         holder.to_date.setText(new Util().getUtcToCurrentTime(tripList.get(position).DropDateTime));
         holder.from_time.setText("");
@@ -251,6 +263,7 @@ public class DashboardOrderListAdapter extends RecyclerView.Adapter<DashboardOrd
                 }
                 confirm.setEnabled(false);
                 confirm.setClickable(false);
+                confirm.setVisibility(View.INVISIBLE);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     confirm.setCompoundDrawableTintList(ColorStateList.valueOf(Color.GRAY));
                 }
@@ -261,8 +274,10 @@ public class DashboardOrderListAdapter extends RecyclerView.Adapter<DashboardOrd
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         track.setCompoundDrawableTintList(ColorStateList.valueOf(Color.GRAY));
                     }
+                    track.setVisibility(View.INVISIBLE);
                 }
                 else {
+                    track.setVisibility(View.VISIBLE);
 //                    track.setVisibility(View.VISIBLE);
                     track.setClickable(true);
                     track.setEnabled(true);

@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 
+import android.support.annotation.UiThread;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +26,9 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
+import java.util.Calendar;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -72,7 +76,7 @@ public class NewDashBoardActivity extends AppCompatActivity {
     @BindView(R.id.out_standing)
             TextView out_standing;
 
-
+    String message="";
     PreferenceManager prf;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,18 +84,32 @@ public class NewDashBoardActivity extends AppCompatActivity {
         setContentView(R.layout.new_dashboard_activity);
         ButterKnife.bind(this);
         prf=new PreferenceManager(this);
-        name.setText("Hi, "+prf.getStringData("Name"));
+        Calendar c = Calendar.getInstance();
+        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
+
+        if(timeOfDay >= 0 && timeOfDay < 12){
+            message= "Good Morning !";
+        }else if(timeOfDay >= 12 && timeOfDay < 16){
+            message= "Good Afternoon !";
+        }else if(timeOfDay >= 16 && timeOfDay < 21){
+            message="Good Evening !";
+        }
+       /* else if(timeOfDay >= 21 && timeOfDay < 24){
+            message= "Good Night !";
+        }*/
+
+
+        name.setText("Hi, "+message+"\n"+prf.getStringData("Name"));
         new Handler().postDelayed(new Runnable() {
 
             @Override
             public void run() {
-                name.setText("Hi, "+prf.getStringData("Name"));
+                name.setText("Hi, "+message+"\n"+prf.getStringData("Name"));
             }
         }, 1000 );
         getDashboardData();
         if(prf.getStringData("mainMenuTutorial").equalsIgnoreCase(""))
         tutorial();
-
 
 
     }
@@ -118,7 +136,46 @@ public class NewDashBoardActivity extends AppCompatActivity {
         startActivity(new Intent(this,NewMenuActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
-
+  @OnClick(R.id.pending_loads)
+  void pending_loads(){
+      Intent j = new Intent(this, NewOrderListActivity.class);
+//        j.putExtra("AuthKey", getActivity().getIntent().getStringExtra("AuthKey"));
+      j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+      startActivity(j);
+      overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+  }
+    @OnClick(R.id.enroute_loads)
+    void enroute_loads(){
+        Intent j = new Intent(this, NewOrderListActivity.class);
+        j.putExtra("AFMOrder", "ggd");
+        j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(j);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+    }
+    @OnClick(R.id.total_invoice)
+    void total_invoice(){
+        Intent j = new Intent(this, NewOrderListActivity.class);
+        j.putExtra("AFMOrder", "ggd");
+        j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(j);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+    }
+    @OnClick(R.id.total_paid)
+    void total_paid(){
+        Intent j = new Intent(this, NewOrderListActivity.class);
+        j.putExtra("AFMOrder", "ggd");
+        j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(j);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+    }
+    @OnClick(R.id.totl_order)
+    void totalOrder(){
+        Intent j = new Intent(this, NewOrderListActivity.class);
+        j.putExtra("AFMOrder", "err");
+        j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(j);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+    }
     void getDashboardData(){
         APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
         PreferenceManager prf=new PreferenceManager(this);
@@ -128,25 +185,31 @@ public class NewDashBoardActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<DashBoardModel> call, Response<DashBoardModel> response) {
 
-                DashBoardModel getdata = response.body();
+                final DashBoardModel getdata = response.body();
                 try {
                     if (getdata.status) {
 // GetVehicleIdListModel tripDetails;
+                        runOnUiThread(new Runnable(){
+                            @Override
+                            public void run(){
+                                // change UI elements here
+
                         trip_pending.setText(""+getdata.data.saveLoad);
                         total_enroute.setText(""+getdata.data.TripsEnroute);
                         Shipped_vehicle.setText(""+getdata.data.TotalShippedVehicle);
                         total_recieve_vehicle.setText(""+getdata.data.TotalReceivedVehicle);
-                        outstanding_amt.setText(""+(getdata.data.invoiced-getdata.data.paid));
+                        outstanding_amt.setText(""+(getdata.data.TotalOutstanding));
                         invoice.setText(""+getdata.data.invoiced);
                         paid.setText(""+getdata.data.paid);
                         if(getdata.data.Outstanding!=null || !getdata.data.Outstanding.equalsIgnoreCase("null"))
                         out_standing.setText(""+getdata.data.Outstanding);
                         else
                             out_standing.setText("$ 0");
-                        int ordr=getdata.data.saveLoad+getdata.data.TripsEnroute+getdata.data.DispatchedOrder;
-                        Log.e("order",""+ordr);
-                        total_ord.setText(""+ordr);
-
+//                        int ordr=getdata.data.saveLoad+getdata.data.TripsEnroute+getdata.data.DispatchedOrder;
+//                        Log.e("order",""+ordr);
+                        total_ord.setText(""+getdata.data.TotalOrder);
+                            }
+                        });
 //                    Intent i=new Intent(VehicleListActivity.this,AddVehicleActivity.class);
 //                    i.putExtra("VehicleId",getdata.data.temOdId);
 ////                    i.putExtra("orderType",orderType);
@@ -177,7 +240,7 @@ public class NewDashBoardActivity extends AppCompatActivity {
                         .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
                         .dimColor(R.color.black)            // If set, will dim behind the view with 30% opacity of the given color
                         .drawShadow(true)                   // Whether to draw a drop shadow or not
-                        .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
+                        .cancelable(true)                  // Whether tapping outside the outer circle dismisses the view
                         .tintTarget(true)                   // Whether to tint the target view's color
                         .transparentTarget(true)           // Specify whether the target is transparent (displays the content underneath)
 //                        .icon(Drawable)                     // Specify a custom drawable to draw as the target

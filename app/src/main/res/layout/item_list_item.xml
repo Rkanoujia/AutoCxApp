@@ -4,8 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <RelativeLayout
+        android:layout_margin="5dp"
+        android:padding="2dp"
+        android:background="@drawable/round_corners"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <TextView
+            android:elevation="2dp"
+            android:layout_margin="5dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="3dp"
+            android:padding="2dp"
+            android:drawableTint="@color/blue"
+            android:drawableLeft="@mipmap/info"
+            android:textColor="@android:color/black"
+            android:id="@+id/info_"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     <LinearLayout
         android:id="@+id/linear1"
         android:gravity="center_vertical"
@@ -27,21 +42,12 @@
         <TextView
             android:layout_margin="3dp"
             android:gravity="center_horizontal"
-            android:layout_weight="1.5"
+            android:layout_weight="1"
             android:textColor="@android:color/black"
             android:id="@+id/status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        <TextView
-            android:layout_marginRight="3dp"
-            android:padding="2dp"
-            android:drawableTint="@color/blue"
-            android:drawableLeft="@mipmap/info"
-            android:layout_weight="2"
-            android:textColor="@android:color/black"
-            android:id="@+id/info_"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+
     </LinearLayout>
         <LinearLayout
             android:layout_below="@+id/linear1"

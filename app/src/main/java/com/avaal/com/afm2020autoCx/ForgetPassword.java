@@ -2,6 +2,7 @@ package com.avaal.com.afm2020autoCx;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.avaal.com.afm2020autoCx.models.ForgetPasswordModel;
@@ -19,6 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import extra.LoaderScreen;
+import extra.MyImage;
 import extra.PreferenceManager;
 import extra.Util;
 import retrofit2.Call;
@@ -69,6 +72,16 @@ public class ForgetPassword extends AppCompatActivity {
        }catch (Exception e){
            e.printStackTrace();
        }
+
+        ImageView bg_image = (ImageView) findViewById(R.id.bg_Img);
+
+//        bg_image.setAlpha(0.6f);
+        bg_image.setImageBitmap(new MyImage().decodeSampledBitmapFromResource(getResources(), R.drawable.login_bg, 500, 1000));
+        ImageView logo_image = (ImageView) findViewById(R.id.logo_img);
+
+//        bg_image.setAlpha(0.6f);
+        logo_image.setImageBitmap(new MyImage().decodeSampledBitmapFromResource(getResources(), R.drawable.login_logo, 277, 119));
+
 //        if(prf.getStringData("userName")!=null) {
 //            userName.setText(prf.getStringData("userName"));
 ////        password.setText("Avaal@123");
@@ -110,6 +123,25 @@ public class ForgetPassword extends AppCompatActivity {
         startActivity(j);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         super.onBackPressed();
+    }
+
+    @OnClick(R.id.driver_app)
+    void driverApp(){
+        final String appPackageName = "com.avaal.com.afmdriver"; // getPackageName() from Context or Activity object
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+        } catch (android.content.ActivityNotFoundException anfe) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+        }
+    }
+    @OnClick(R.id.emanifest_app)
+    void emanifestApp(){
+        final String appPackageName = "com.avaal.com.aceacilookup"; // getPackageName() from Context or Activity object
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+        } catch (android.content.ActivityNotFoundException anfe) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+        }
     }
 //
     @OnClick(R.id.forget)

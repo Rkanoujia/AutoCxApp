@@ -146,6 +146,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
                 android:background="@null"
+                android:maxLength="250"
                 android:textSize="14dp"
                 android:imeOptions="actionNext"
                 android:enabled="false"
@@ -180,6 +181,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
                 android:textSize="14dp"
+                android:maxLength="250"
                 android:background="@null"
                 android:imeOptions="actionNext"
                 android:singleLine="true"
@@ -219,6 +221,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="7dp"
                         android:background="@null"
+                        android:maxLength="20"
                         android:textSize="14dp"
                         android:elevation="1dp"
                         android:lines="1"
@@ -415,7 +418,7 @@
                 android:fontFamily="@font/open_sans"
                 android:textSize="10dp"
                 android:layout_marginTop="10dp"
-                android:text="Bill of Sell"
+                android:text="Bill of Sale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         <FrameLayout

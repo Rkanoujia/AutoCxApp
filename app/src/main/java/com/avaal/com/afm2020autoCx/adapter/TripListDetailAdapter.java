@@ -10,10 +10,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.avaal.com.afm2020autoCx.InventoryVehicleListActivity;
 import com.avaal.com.afm2020autoCx.MapsActivity;
 import com.avaal.com.afm2020autoCx.NewMapsActivity;
 import com.avaal.com.afm2020autoCx.R;
 import com.avaal.com.afm2020autoCx.models.TripListModel;
+import com.valdesekamdem.library.mdtoast.MDToast;
 
 import java.util.ArrayList;
 
@@ -72,7 +74,7 @@ public class TripListDetailAdapter extends RecyclerView.Adapter<TripListDetailAd
 //        Picasso.with(context).load("http://www.car-logos.org/wp-content/uploads/2011/09/"+(tripList.get(position).makeV).toLowerCase()+".png").into(holder.typeicon);
         if(tripList.get(position).tripStatus!=null)
         holder.trip_status.setText(tripList.get(position).tripStatus);
-        holder. trip_no.setText("Trip#."+tripList.get(position).tripNumber);
+        holder. trip_no.setText("Trip# "+tripList.get(position).tripNumber);
 
 
         if(tripList.get(position).carrierName==null || tripList.get(position).carrierName.equalsIgnoreCase("")) {
@@ -119,11 +121,16 @@ public class TripListDetailAdapter extends RecyclerView.Adapter<TripListDetailAd
         holder.current_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(context, MapsActivity.class);
-                intent.putExtra("lat",tripList.get(position).carrierLatitude);
-                intent.putExtra("lon",tripList.get(position).carrierLongitude);
-                intent.putExtra("Add",""+tripList.get(position).carrierAddress);
-                context.startActivity(intent);
+                if(tripList.get(position).carrierAddress.trim().length()!=0) {
+                    Intent intent = new Intent(context, MapsActivity.class);
+                    intent.putExtra("lat", tripList.get(position).carrierLatitude);
+                    intent.putExtra("lon", tripList.get(position).carrierLongitude);
+                    intent.putExtra("Add", "" + tripList.get(position).carrierAddress);
+                    context.startActivity(intent);
+                }else{
+                    MDToast mdToast = MDToast.makeText(context, "Location Not Found", MDToast.LENGTH_LONG, MDToast.TYPE_INFO);
+                    mdToast.show();
+                }
             }
         });
         if(tripList.get(position).tripStatus!=null)

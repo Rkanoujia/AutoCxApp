@@ -1,6 +1,7 @@
 package com.avaal.com.afm2020autoCx.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -73,27 +74,29 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.MyView
 //        if(!tripList.get(position).makeV.equalsIgnoreCase("null"))
 //        String[] logo=(tripList.get(position).makeV).toLowerCase().split(" ");
         try {
-       holder.vin_num1.setText(tripList.get(position).itemVin);
+       holder.vin_num1.setText("VIN # "+tripList.get(position).itemVin);
        if(tripList.get(position).DeliveryDate!=null && !tripList.get(position).DeliveryDate.equalsIgnoreCase("0001-01-01T00:00:00"))
             holder.delivery_date.setText(new Util().getUtcToCurrentTime(tripList.get(position).DeliveryDate));
        else
-           holder.delivery_date.setText("");
+           holder.delivery_date.setText("Not Delivered");
 
             if(tripList.get(position).PickupDate!=null && !tripList.get(position).PickupDate.equalsIgnoreCase("0001-01-01T00:00:00"))
             holder.pickup_date.setText(new Util().getUtcToCurrentTime(tripList.get(position).PickupDate));
             else
-                holder.pickup_date.setText("");
-//       if(tripList.get(position).itemDrop.equalsIgnoreCase("Yes")) {
-//           holder.status.setText("Dropped");
-//           holder.status.setTextColor(context.getResources().getColor(R.color.colorPrimary));
-//           holder.info_.setVisibility(View.VISIBLE);
-//
-//       }
-//       else {
+                holder.pickup_date.setText("Not Picked");
+            holder.status.setText(tripList.get(position).itemStatus);
+            holder.status.setTextColor(context.getResources().getColor(R.color.colorAccent));
+       if(tripList.get(position).itemDrop) {
+                holder.status.setText("Dropped");
+                holder.status.setTextColor(context.getResources().getColor(R.color.red));
+                holder.info_.setVisibility(View.VISIBLE);
+
+            }
+       else {
            holder.status.setTextColor(context.getResources().getColor(R.color.colorAccent));
-           holder.info_.setVisibility(View.INVISIBLE);
-           holder.status.setText(tripList.get(position).itemStatus);
-//       }
+           holder.info_.setVisibility(View.GONE);
+
+       }
 
         }catch (Exception e){
             e.printStackTrace();
@@ -127,7 +130,11 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.MyView
 
                 ToolTip toolTip = new ToolTip.Builder()
                         .withText("  "+tripList.get(position).itemMessage+"  ")
-                        .withTextSize(45)
+                        .withTextSize(25)
+                         .withPadding(5,5,5,5)
+                        .withCornerRadius(8f)
+                        .withTextColor(Color.WHITE)
+                        .withBackgroundColor(Color.DKGRAY)
                         .build();
                 ToolTipView toolTipView = new ToolTipView.Builder(context)
                         .withAnchor(view)

@@ -55,10 +55,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.
 //                scheduleJob();
 //                sendNotification(remoteMessage.getNotification().getBody());
-                if(remoteMessage.getData().get("ContentType")==null)
-                sendNotification(remoteMessage.getData().get("message"),remoteMessage.getData().get("type"),"",remoteMessage.getData().get("id"));
+                if (remoteMessage.getData().get("ContentType") == null)
+                    sendNotification(remoteMessage.getData().get("message"), remoteMessage.getData().get("type"), "", remoteMessage.getData().get("id"));
                 else
-                    sendNotification(remoteMessage.getData().get("message"),remoteMessage.getData().get("type"),remoteMessage.getData().get("ContentType"),remoteMessage.getData().get("id"));
+                    sendNotification(remoteMessage.getData().get("message"), remoteMessage.getData().get("type"), remoteMessage.getData().get("ContentType"), remoteMessage.getData().get("id"));
                 if (remoteMessage.getData().get("type").equalsIgnoreCase("logout")) {
 
                     Intent dialogIntent = new Intent(this, LoginActivity.class);
@@ -139,93 +139,55 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      *
      * @param messageBody FCM message body received.
      */
-    private void sendNotification(String messageBody,String type,String content,String order) {
+    private void sendNotification(String messageBody, String type, String content, String order) {
         Intent intent = null;
-        if(type.equalsIgnoreCase("Logout")) {
-             intent = new Intent(this, LoginActivity.class);
+        if (type.equalsIgnoreCase("Logout")) {
+            intent = new Intent(this, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-           
-        }else if(content.equalsIgnoreCase("Tracking")) {
 
-            if(type.equalsIgnoreCase("Dispatched")) {
-                intent = new Intent(this, DashBoardBottomMenu.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.putExtra("open","pending");
-                intent.putExtra("orderId",""+order);
-//            startActivity(dialogIntent);
-
-            }else if(type.equalsIgnoreCase("Enroute")) {
-                intent = new Intent(this, DashBoardBottomMenu.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.putExtra("open","enroute");
-                intent.putExtra("orderId",""+order);
-//            startActivity(dialogIntent);
-            }else if(type.equalsIgnoreCase("Delivered")) {
-                intent = new Intent(this, DashBoardBottomMenu.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.putExtra("open","Delivered");
-                intent.putExtra("orderId",""+order);
-//            startActivity(dialogIntent);
-
-            }else{
-                intent = new Intent(this, DashBoardBottomMenu.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.putExtra("open","pending");
-                intent.putExtra("orderId",""+order);
-            }
-
-        }else if(type.equalsIgnoreCase("Dispatched")) {
-            intent = new Intent(this, DashBoardBottomMenu.class);
+        } else if (type.equalsIgnoreCase("OrderConfirm")) {
+            intent = new Intent(this, NewOrderListActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent.putExtra("open","pending");
+            intent.putExtra("AFMOrder", "err");
+            intent.putExtra("orderId", "" + order);
+//            startActivity(dialogIntent);
+        } else {
+            intent = new Intent(this, SplashActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.putExtra("open", "home");
 //            startActivity(dialogIntent);
 
-        }else if(type.equalsIgnoreCase("Enroute")) {
-            intent = new Intent(this, DashBoardBottomMenu.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent.putExtra("open","enroute");
-//            startActivity(dialogIntent);
-        }else if(type.equalsIgnoreCase("Confirmed")) {
-            intent = new Intent(this, DashBoardBottomMenu.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent.putExtra("open","ship");
-//            startActivity(dialogIntent);
-
-        }else if(type.equalsIgnoreCase("Delivered")) {
-            intent = new Intent(this, DashBoardBottomMenu.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent.putExtra("open","Delivered");
-//            startActivity(dialogIntent);
-
-        }else{
-            intent = new Intent(this, DashBoardBottomMenu.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent.putExtra("open","home");
-        }
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
-        String channelId = getString(R.string.default_notification_channel_id);
-        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder =
-                new NotificationCompat.Builder(this, channelId)
-                        .setSmallIcon(R.mipmap.notification)
-                        .setContentTitle("AFM Auto Customer")
-                        .setContentText(messageBody)
-                        .setAutoCancel(true)
-                        .setSound(defaultSoundUri)
-                        .setContentIntent(pendingIntent);
-
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        // Since android Oreo notification channel is needed.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(channelId,
-                    "Channel human readable title",
-                    NotificationManager.IMPORTANCE_DEFAULT);
-            notificationManager.createNotificationChannel(channel);
         }
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+
+
+
+    PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+            PendingIntent.FLAG_ONE_SHOT);
+    String channelId = getString(R.string.default_notification_channel_id);
+    Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+    NotificationCompat.Builder notificationBuilder =
+            new NotificationCompat.Builder(this, channelId)
+                    .setSmallIcon(R.drawable.notifi_icon)
+                    .setContentTitle("AFM Auto Customer")
+                    .setContentText(messageBody)
+                    .setAutoCancel(true)
+                    .setSound(defaultSoundUri)
+                    .setContentIntent(pendingIntent);
+
+    NotificationManager notificationManager =
+            (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+    // Since android Oreo notification channel is needed.
+        if(Build.VERSION.SDK_INT >=Build.VERSION_CODES.O)
+
+    {
+        NotificationChannel channel = new NotificationChannel(channelId,
+                "Channel human readable title",
+                NotificationManager.IMPORTANCE_DEFAULT);
+        notificationManager.createNotificationChannel(channel);
     }
+
+        notificationManager.notify(0 /* ID of notification */,notificationBuilder.build());
+}
 }

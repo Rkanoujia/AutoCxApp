@@ -205,7 +205,7 @@ public class Util {
 
         PreferenceManager prf = new PreferenceManager(activity);
         APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
-        Call<ForAddModel> call1 = apiInterface.saveAlerts("0","0","","App","Web","CustomerAPP","NotificationBoard","Customer",""+prf.getStringData("userCode"),""+prf.getStringData("userName"),"General",""+title,"","All","","All","User",""+message,"Mobile",""+ prf.getStringData("userName"),new Util().getDateTime(),""+prf.getStringData("corporateId"),"bearer "+prf.getStringData("accessToken"),"application/x-www-form-urlencoded");
+        Call<ForAddModel> call1 = apiInterface.saveAlerts("0","0","","App","Web","CustomerAPP","NotificationBoard","Customer",""+prf.getStringData("userCode"),""+prf.getStringData("userName"),"General",""+title,"","All","","","User",""+message,"Mobile",""+ prf.getStringData("userName"),new Util().getDateTime(),""+prf.getStringData("corporateId"),"bearer "+prf.getStringData("accessToken"),"application/x-www-form-urlencoded");
 
         call1.enqueue(new Callback<ForAddModel>() {
             @Override

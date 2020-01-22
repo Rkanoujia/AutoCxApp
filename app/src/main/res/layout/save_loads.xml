@@ -7,12 +7,50 @@
         android:id="@+id/main_fram"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:elevation="2dp"
+            android:gravity="center_horizontal"
+            android:id="@+id/new_vehicle"
+            android:visibility="gone"
+            android:layout_margin="20dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <TextView
+            android:textAlignment="center"
+            android:elevation="1dp"
+            android:textSize="18dp"
+            android:textColor="@color/colorPrimary"
+            android:text="No more loads. Let’s get started and "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+            <TextView
+                android:textAlignment="center"
+                android:elevation="1dp"
+                android:textSize="18dp"
+                android:textColor="@color/blue"
+                android:text="click here "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+
+                android:textAlignment="center"
+                android:elevation="1dp"
+                android:textSize="18dp"
+                android:textColor="@color/colorPrimary"
+                android:text="to book a new load"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
     <LinearLayout
         android:background="@color/gray"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefreshLayout"
             android:layout_marginBottom="5dp"

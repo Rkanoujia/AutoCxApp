@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.avaal.com.afm2020autoCx.APIClient;
@@ -65,6 +66,8 @@ public class LoadsFragment extends Fragment {
     TextView allIcon;
     @BindView(R.id.bottom_sheet1)
     BottomSheetLayout mBottomSheetLayout;
+    @BindView(R.id.new_vehicle)
+    LinearLayout new_vehicle;
     APIInterface apiInterface;
     String filterString="";
     public LoadsFragment() {
@@ -122,6 +125,10 @@ public class LoadsFragment extends Fragment {
                 hideAnimation();
                 try {
                     if (getdata.satus) {
+                        if(getdata.dataValue.size()==0){
+                            new_vehicle.setVisibility(View.VISIBLE);
+                        }else
+                            new_vehicle.setVisibility(View.GONE);
 // GetVehicleIdListModel tripDetails;
                         ArrayList<OrderListModel.datavalue1> getdata3 = getdata.dataValue;
                         OrderListAdapter adapterd = new OrderListAdapter(getdata3, getActivity());
@@ -131,6 +138,7 @@ public class LoadsFragment extends Fragment {
 ////                    i.putExtra("orderType",orderType);
 //                    startActivity(i);
                     }else{
+                        new_vehicle.setVisibility(View.VISIBLE);
                         ArrayList<OrderListModel.datavalue1> getdata3 = getdata.dataValue;
                         OrderListAdapter adapterd = new OrderListAdapter(getdata3, getActivity());
                         recyclerView.setAdapter(adapterd);
@@ -147,6 +155,14 @@ public class LoadsFragment extends Fragment {
                 mdToast.show();
             }
         });
+    }
+    @OnClick(R.id.new_vehicle)
+    void  new_vehicle(){
+        Intent j = new Intent(getActivity(), CreateTripType.class);
+        j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        j.putExtra("AuthKey", getActivity().getIntent().getStringExtra("AuthKey"));
+        startActivity(j);
+        getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 @OnClick(R.id.ship_li)
 void shipfilter(){

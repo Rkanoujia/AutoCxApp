@@ -212,10 +212,8 @@ public class RouteSelectionActivity extends AppCompatActivity {
         Date c = Calendar.getInstance().getTime();
 
 
-
-
-        deliveydate.setText(sdf.format(c)+" "+String.format("%02d:%02d", 12, 00)+" "+ "PM");
-        pickupdate.setText(sdf.format(c)+" "+String.format("%02d:%02d", 12, 00)+" "+ "PM");
+        deliveydate.setText(sdf.format(c)+" "+String.format("%02d:%02d", 12, 00)+" "+ "AM");
+        pickupdate.setText(sdf.format(c)+" "+String.format("%02d:%02d", 12, 00)+" "+ "AM");
         if(getIntent().getStringExtra("from").equalsIgnoreCase("CA") && getIntent().getStringExtra("to").equalsIgnoreCase("CA")){
             type.setText("Inter Provincial");
             orderType="InterProvincial";
@@ -367,7 +365,7 @@ public class RouteSelectionActivity extends AppCompatActivity {
 //                                    weekopen.setText(hourOfDay+":"+minute); //You set the time for the EditText created
                             }
                         }, mHour, mMinute, true);
-                pickupdate.setText(sdf.format(pCalendar.getTime())+" "+String.format("%02d:%02d", 12, 00) + " "+"PM");
+                pickupdate.setText(sdf.format(pCalendar.getTime())+" "+String.format("%02d:%02d", 12, 00) + " "+"AM");
 //                tpd.show();
             }
 
@@ -434,14 +432,14 @@ public class RouteSelectionActivity extends AppCompatActivity {
                                 }
 //                                deliveydate.setText(sdf.format(coCalendar.getTime())+" "+String.format("%02d:%02d:00", hourOfDay, minute));
 //                                    weekopen.setText(hourOfDay+":"+minute); //You set the time for the EditText created
-                                deliveydate.setText(sdf.format(coCalendar.getTime())+" "+String.format("%02d:%02d", 12, 00)+" "+ "PM");
+                                deliveydate.setText(sdf.format(coCalendar.getTime())+" "+String.format("%02d:%02d", 12, 00)+" "+ "AM");
 
 
 
                             }
                         }, mHour, mMinute, false
                 );
-                deliveydate.setText(sdf.format(coCalendar.getTime())+" "+String.format("%02d:%02d", 12, 00)+" "+ "PM");
+                deliveydate.setText(sdf.format(coCalendar.getTime())+" "+String.format("%02d:%02d", 12, 00)+" "+ "AM");
 //                tpd.show();
             }
 
@@ -556,6 +554,7 @@ public class RouteSelectionActivity extends AppCompatActivity {
             mdToast.show();
             return;
         }
+        prf.saveStringData("OrderType",orderType);
         next=true;
         if(!prf.getStringData("OrderStatus").equalsIgnoreCase("Saved")){
 

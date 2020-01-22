@@ -22,7 +22,7 @@
         <item name="windowActionBar">true</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:fontFamily">@font/quicksand</item>
+        <item name="android:fontFamily">@font/open_sans</item>
     </style>
     <style name="AppTheme.NoActionBar1">
         <item name="android:statusBarColor">@color/dashback</item>
@@ -34,6 +34,6 @@
         <item name="windowActionBar">false</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:fontFamily">@font/quicksand</item>
+        <item name="android:fontFamily">@font/open_sans</item>
     </style>
 </resources>

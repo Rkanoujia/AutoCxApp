@@ -47,24 +47,27 @@ public class NewOrderListActivity extends AppCompatActivity {
 //        bg_image.setAlpha(0.6f
         title.setText("Orders");
         adapter = new TabAdapter(getSupportFragmentManager());
-        adapter.addFragment(new LoadsFragment(), "My Order");
-        adapter.addFragment(new AfmOrderFragment(), "AFM Order");
+        adapter.addFragment(new LoadsFragment(), "My Loads");
+        adapter.addFragment(new AfmOrderFragment(), "AFM Orders");
 //        adapter.addFragment(new FragmentOne(), "Shipment");
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+        if(getIntent().getStringExtra("AFMOrder")!=null)
+        viewPager.setCurrentItem(1);
     }
     @Override
     public void onBackPressed() {
         // Write your code here
-        new Util().myIntent(NewOrderListActivity.this,NewMenuActivity.class);
-//        super.onBackPressed();
+//        new Util().myIntent(NewOrderListActivity.this,NewMenuActivity.class);
+        super.onBackPressed();
     }
 
     @OnClick(R.id.back)
     void back(){
-        new Util().myIntent(NewOrderListActivity.this,NewMenuActivity.class);
+//        finish();
+//        new Util().myIntent(NewOrderListActivity.this,NewMenuActivity.class);
 
-//        super.onBackPressed();
+        super.onBackPressed();
     }
     @OnClick(R.id.home_)
     void home(){

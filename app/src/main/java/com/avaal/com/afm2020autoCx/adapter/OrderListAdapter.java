@@ -115,20 +115,23 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
 //        if(tripList.get(position).orderId.length()>0)
 //            holder.title.setVisibility(View.GONE);
       if(tripList.get(position).status.equalsIgnoreCase(""))
-        holder.title.setText("Saved");
+        holder.title.setText("SAVED");
       else
-          holder.title.setText(tripList.get(position).status);
+          holder.title.setText(tripList.get(position).status.toUpperCase());
 
         if(tripList.get(position).status.equalsIgnoreCase("Saved"))
             holder.title.setTextColor(context.getResources().getColor(R.color.textPrimaryDark));
         else
             holder.title.setTextColor(context.getResources().getColor(R.color.blue));
 
-        holder.from.setText(tripList.get(position).pickupState+", "+tripList.get(position).pickupstateCode+", "+tripList.get(position).PickupCountryCode);
-        holder.to.setText(tripList.get(position).dropState+", "+tripList.get(position).dropSateCode+", "+tripList.get(position).DeliveryCountryCode);
+        holder.from.setText(tripList.get(position).pickupCity+", "+tripList.get(position).pickupstateCode+", "+tripList.get(position).PickupCountryCode);
+        holder.to.setText(tripList.get(position).dropCity+", "+tripList.get(position).dropSateCode+", "+tripList.get(position).DeliveryCountryCode);
         holder.from_address.setText(tripList.get(position).pickupZip);
         holder.to_address.setText(tripList.get(position).dropZip);
-        holder.vehicle_num.setText(tripList.get(position).vehiclecount);
+        if(tripList.get(position).vehiclecount.equalsIgnoreCase("1"))
+            holder.vehicle_num.setText(tripList.get(position).vehiclecount+" Vehicle");
+        else
+            holder.vehicle_num.setText(tripList.get(position).vehiclecount+" Vehicles");
         holder.from_date.setText(new Util().getUtcToCurrentTime(tripList.get(position).PickupDateTime));
         holder.to_date.setText(new Util().getUtcToCurrentTime(tripList.get(position).DropDateTime));
         holder.from_time.setText("");
@@ -288,6 +291,11 @@ if(tripList.get(position).orderType!=null) {
               track.setEnabled(false);
               track.setClickable(false);
               track.setCompoundDrawableTintList(ColorStateList.valueOf(Color.GRAY));
+          }else{
+              confirm.setEnabled(false);
+              confirm.setClickable(false);
+              track.setEnabled(false);
+              track.setClickable(false);
           }
       }
 
@@ -362,7 +370,7 @@ if(tripList.get(position).orderType!=null) {
 
               AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
               // Setting Dialog Message
-              alertDialog.setMessage("Are you sure you want to Ship Order?");
+              alertDialog.setMessage("Do you want to ship the load?");
               // Setting Positive "Yes" Button
               alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                   public void onClick(DialogInterface dialog, int which) {
@@ -556,7 +564,7 @@ if(tripList.get(position).orderType!=null) {
                 GetVehicleIdModel getdata = response.body();
                 try {
                     if (getdata.satus) {
-                        new Util().sendAlert((Activity) context,OrderId+" New Customer Order has been received","Shipped");
+                        new Util().sendAlert((Activity) context," Customer Order  Reference #: "+OrderId+" has been received","Shipped");
                         MDToast mdToast = MDToast.makeText(context, "Load Shipped  Success", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                         mdToast.show();
                         tripList.get(position).status="Shipped";

@@ -214,13 +214,12 @@ j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //                prf.saveStringData("corporateId", "");
 //                prf.saveStringData("password", "");
 //                prf.saveBoolData("remember", false);
+                             new Util().myIntent(NewMenuActivity.this, LoginActivity.class);
 
-                        Intent j = new Intent(NewMenuActivity.this, LoginActivity.class);
-                        j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //        j.putExtra("AuthKey", getActivity().getIntent().getStringExtra("AuthKey"));
-                        startActivity(j);
-                        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-                        finishAffinity();
+
+
+
 
 //                    Picasso.with(this).load("https://images.unsplash.com/photo-450037586774-00cb81edd142?auto=format&fit=crop&w=750&q=80").error(R.drawable.R.drawable.noprofile).into(front_right);
 //                    Picasso.with(this).load("https://images.unsplash.com/photo-504196606672-aef5c9cefc92?auto=format&fit=crop&w=750&q=80").error(R.drawable.ic_camera).into(back_left);

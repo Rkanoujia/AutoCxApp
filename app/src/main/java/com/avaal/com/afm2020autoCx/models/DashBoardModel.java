@@ -35,6 +35,10 @@ public class DashBoardModel {
         public int paid;
         @SerializedName("TotalInvoiced")
         public int invoiced;
+        @SerializedName("TotalOutstanding")
+        public int TotalOutstanding;
+        @SerializedName("TotalOrder")
+        public int TotalOrder;
     }
     public DashBoardModel(String authKey,String customerId){
         this.authKey=authKey;

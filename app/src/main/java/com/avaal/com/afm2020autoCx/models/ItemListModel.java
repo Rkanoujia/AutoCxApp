@@ -20,12 +20,12 @@ public class ItemListModel {
     public class ItemDetail{
         @SerializedName("VinNumber")
         public String itemVin;
-        @SerializedName("Remarks")
+        @SerializedName("Notes")
         public String itemMessage;
         @SerializedName("ItemStatus")
         public String itemStatus;
-        @SerializedName("Dropped")
-        public String itemDrop;
+        @SerializedName("IsDropped")
+        public Boolean itemDrop;
         @SerializedName("PickupDepartDate")
         public String PickupDate;
 

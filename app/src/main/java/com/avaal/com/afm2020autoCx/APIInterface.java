@@ -90,15 +90,6 @@ public interface APIInterface {
     Call<LookUpModel> getGetMstLookUpDataDropDown(@Query("DDLType") String DDLType, @Query("IsCacheRequired") Boolean IsCacheRequired, @Query("UserCode") String UserCode, @Query("Filter1") String Filter1, @Query("Filter2") String Filter2, @Query("CorporateId") String CorporateId, @Header("Authorization") String authorization, @Header("Content-Type") String contentType);
 
 
-    @POST("/api/CarrierCustLoc/AddEditLocationYard")
-    Call<AddLocationModel> locationAdd(@Body AddLocationModel user);
-
-    @POST("/api/AddNewDataCode/AddCityZip")
-    Call<AddCityZipModel> addCityZip(@Body AddCityZipModel user);
-
-    @POST("/api/CarrierCustLoc/GetLocation")
-    Call<GetLocationDetailModel> getLocationDetail(@Body GetLocationDetailModel user);
-
 //    @Headers("Content-Type: application/json; charset=utf-8")
     @GET("/api/CustomerApp/GetVehicleInformation")
     Call<VinDetailModel> getVinDetail(@Query("VinNumber") String VinNumber,@Header("Authorization") String authorization, @Header("Content-Type") String contentType);
@@ -200,8 +191,6 @@ Call<OrderListModel> getOrderList(@Query("Status") String Status,@Query("Corpora
     @POST("/api/CustomerApp/DeleteTempOrder")
     Call<RemoveOrderModel> removeOrder(@Field("Id") String Id,@Field("CustomerCode") String CustomerCode,@Field("CorporateId") String CorporateId,@Header("Authorization") String authorization, @Header("Content-Type") String contentType);
 
-    @POST("/api/CarrierCustLoc/GetLocation")
-    Call<LocationDetailModel> getlocationDetail(@Body LocationDetailModel user);
 
 
     @FormUrlEncoded

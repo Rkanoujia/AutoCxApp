@@ -936,7 +936,7 @@ try {
                                 rooffileId = getdata.dataValuer.get(i).docId;
                                 progressCircle_progressBar5.setVisibility(View.VISIBLE);
                             }else if (!getdata.dataValuer.get(i).doctype.equalsIgnoreCase("OEMTag") && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("TitleFront") && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("TitleBack") && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("MileageValue")
-                                    && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("BillOfSell") && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("TitleConversionBack") && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("TitleConversionFront") && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("TPMS")
+                                    && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("BillOfSale") && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("TitleConversionBack") && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("TitleConversionFront") && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("TPMS")
                                     && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("IRSNumber")&& !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("RecallSheet1")&& !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("RecallSheet2")&& !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("ReleaseForm")) {
 
                                 image = new HashMap<>();
@@ -948,32 +948,33 @@ try {
                                 _image_list.setAdapter(adapterd);
                             }
                         }
-                        if (!prf.getStringData("OrderStatus").equalsIgnoreCase("saved")) {
-                            front_left.setClickable(false);
-                            front_left.setEnabled(false);
-                            front_right.setClickable(false);
-                            front_right.setEnabled(false);
-                            back_left.setClickable(false);
-                            back_left.setEnabled(false);
-                            back_right.setClickable(false);
-                            back_right.setEnabled(false);
-                            windshield.setClickable(false);
-                            windshield.setEnabled(false);
-                            roof.setClickable(false);
-                            roof.setEnabled(false);
-                            add_extra.setVisibility(View.GONE);
-                            img_type.setClickable(false);
-                            img_type.setEnabled(false);
-                            title.setText("View Images");
-                        }else {
-                            saveLinear.setVisibility(View.VISIBLE);
-                        }
+
 
 //                    Picasso.with(this).load("https://images.unsplash.com/photo-503454537195-1dcabb73ffb9?auto=format&fit=crop&w=750&q=80").error(R.drawable.ic_camera).into(front_left);
 //                    Picasso.with(this).load("https://images.unsplash.com/photo-450037586774-00cb81edd142?auto=format&fit=crop&w=750&q=80").error(R.drawable.ic_camera).into(front_right);
 //                    Picasso.with(this).load("https://images.unsplash.com/photo-504196606672-aef5c9cefc92?auto=format&fit=crop&w=750&q=80").error(R.drawable.ic_camera).into(back_left);
 //                    Picasso.with(this).load("https://images.unsplash.com/photo-500395235658-f87dff62cbf3?auto=format&fit=crop&w=750&q=80").error(R.drawable.ic_camera).into(back_right);
 
+                    }
+                    if (!prf.getStringData("OrderStatus").equalsIgnoreCase("Saved")) {
+                        front_left.setClickable(false);
+                        front_left.setEnabled(false);
+                        front_right.setClickable(false);
+                        front_right.setEnabled(false);
+                        back_left.setClickable(false);
+                        back_left.setEnabled(false);
+                        back_right.setClickable(false);
+                        back_right.setEnabled(false);
+                        windshield.setClickable(false);
+                        windshield.setEnabled(false);
+                        roof.setClickable(false);
+                        roof.setEnabled(false);
+                        add_extra.setVisibility(View.GONE);
+                        img_type.setClickable(false);
+                        img_type.setEnabled(false);
+                        title.setText("View Images");
+                    }else {
+                        saveLinear.setVisibility(View.VISIBLE);
                     }
 
                 }catch (Exception e){
@@ -1043,9 +1044,8 @@ try {
                                 rooffileId = getdata.dataValuer.get(i).docId;
                                 progressCircle_progressBar5.setVisibility(View.VISIBLE);
                             }else if (!getdata.dataValuer.get(i).doctype.equalsIgnoreCase("OEMTag") && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("TitleFront") && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("TitleBack") && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("MileageValue")
-                                    && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("BillOfSell") && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("TitleConversionBack") && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("TitleConversionFront") && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("TPMS")
+                                    && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("BillOfSale") && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("TitleConversionBack") && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("TitleConversionFront") && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("TPMS")
                                     && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("IRSNumber")&& !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("RecallSheet1")&& !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("RecallSheet2")&& !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("ReleaseForm")) {
-
                                 image = new HashMap<>();
                                 image.put("imageUrl", getdata.dataValuer.get(i).DocURL);
                                 image.put("imageName", getdata.dataValuer.get(i).FileName);
@@ -1056,22 +1056,7 @@ try {
                             }
                         }
 
-                        front_left.setClickable(false);
-                        front_left.setEnabled(false);
-                        front_right.setClickable(false);
-                        front_right.setEnabled(false);
-                        back_left.setClickable(false);
-                        back_left.setEnabled(false);
-                        back_right.setClickable(false);
-                        back_right.setEnabled(false);
-                        windshield.setClickable(false);
-                        windshield.setEnabled(false);
-                        roof.setClickable(false);
-                        roof.setEnabled(false);
-                        add_extra.setVisibility(View.GONE);
-                        img_type.setClickable(false);
-                        img_type.setEnabled(false);
-                        title.setText("View Images");
+
 
 
 //                    Picasso.with(this).load("https://images.unsplash.com/photo-503454537195-1dcabb73ffb9?auto=format&fit=crop&w=750&q=80").error(R.drawable.ic_camera).into(front_left);
@@ -1080,7 +1065,22 @@ try {
 //                    Picasso.with(this).load("https://images.unsplash.com/photo-500395235658-f87dff62cbf3?auto=format&fit=crop&w=750&q=80").error(R.drawable.ic_camera).into(back_right);
 
                     }
-
+                    front_left.setClickable(false);
+                    front_left.setEnabled(false);
+                    front_right.setClickable(false);
+                    front_right.setEnabled(false);
+                    back_left.setClickable(false);
+                    back_left.setEnabled(false);
+                    back_right.setClickable(false);
+                    back_right.setEnabled(false);
+                    windshield.setClickable(false);
+                    windshield.setEnabled(false);
+                    roof.setClickable(false);
+                    roof.setEnabled(false);
+                    add_extra.setVisibility(View.GONE);
+                    img_type.setClickable(false);
+                    img_type.setEnabled(false);
+                    title.setText("View Images");
                 }catch (Exception e){
                     e.printStackTrace();
 

@@ -20,7 +20,8 @@ public class APIClient {
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
         retrofit = new Retrofit.Builder()
 //                .baseUrl("http://192.168.1.20:2021")
-//                .baseUrl("http://delhi.avaaloffice.com:2020")
+//                .baseUrl("http://beta.afmsuite.com:8081")
+//                .baseUrl("http://delhi.avaaloffice.com:2021")
                 .baseUrl("http://afm2020.com:8081")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
