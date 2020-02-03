@@ -71,6 +71,7 @@ public class ForgetPassword extends AppCompatActivity {
            userName.setText(prf.getStringData("userName"));
        }catch (Exception e){
            e.printStackTrace();
+           new Util().sendSMTPMail(ForgetPassword.this,null,"CxE004",e,"");
        }
 
         ImageView bg_image = (ImageView) findViewById(R.id.bg_Img);
@@ -188,12 +189,14 @@ public class ForgetPassword extends AppCompatActivity {
                 }
                 }catch (Exception e){
                     e.printStackTrace();
+                    new Util().sendSMTPMail(ForgetPassword.this,null,"CxE004",e,"");
                 }
             }
 
             @Override
             public void onFailure(Call<ForgetPasswordModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail(ForgetPassword.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
     }

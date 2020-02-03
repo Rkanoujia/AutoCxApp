@@ -13,6 +13,7 @@
     <color name="textColor">#222539</color>
     <color name="orange">#FFA07A</color>
     <color name="red">#fe0000</color>
+    <color name="dark_red">#990000</color>
     <color name="selectColor">#ffa000</color>
     <color name="dot_inactive_screen1">#ffa000</color>
     <color name="dot_inactive_screen2">#008c57</color>

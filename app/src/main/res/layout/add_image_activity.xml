@@ -35,9 +35,91 @@
                         android:layout_width="match_parent"
                         android:layout_height="200dp">
                         <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <!--<View-->
+                            <!--android:alpha=".4"-->
+                            <!--android:background="@drawable/cam_pic"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="match_parent"/>-->
+                            <TextView
+                                android:padding="3dp"
+                                android:backgroundTint="@color/black"
+                                android:background="@drawable/round_linear"
+                                android:textColor="@android:color/white"
+                                android:textSize="11dp"
+                                android:layout_margin="5dp"
+                                android:gravity="start|center_vertical"
+
+                                android:text="Front Right Angle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="25dp" />
+                            <ImageView
+                                android:visibility="gone"
+                                android:layout_marginEnd="10dp"
+                                android:layout_gravity="end"
+                                android:src="@drawable/view_img"
+                                android:tint="@android:color/black"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </FrameLayout>
+                        <FrameLayout
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
+                            <FrameLayout
+                                android:elevation="4dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+                                <FrameLayout
+                                    android:backgroundTint="@color/black"
+                                    android:alpha="0.2"
+                                    android:background="@drawable/round_linear"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"/>
+
+                                <LinearLayout
+                                    android:layout_gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content">
+                                    <ImageView
+                                        android:padding="5dp"
+                                        android:backgroundTint="@color/green"
+                                        android:background="@drawable/circle"
+                                        android:src="@drawable/view_img"
+                                        android:visibility="gone"
+                                        android:layout_gravity="end"
+                                        android:tint="@android:color/white"
+                                        android:id="@+id/front_right_imageview"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp" />
+                                    <ImageView
+                                        android:backgroundTint="@color/orange"
+                                        android:padding="5dp"
+                                        android:background="@drawable/circle"
+                                        android:src="@mipmap/takephoto"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_gravity="end"
+                                        android:tint="@android:color/white"
+                                        android:id="@+id/front_right_imageedit"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp" />
+                                    <ImageView
+                                        android:visibility="gone"
+                                        android:backgroundTint="@color/dark_red"
+                                        android:padding="5dp"
+                                        android:background="@drawable/circle"
+                                        android:src="@mipmap/delete"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_gravity="end"
+                                        android:tint="@android:color/white"
+                                        android:id="@+id/front_right_imagedelete"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp" />
+                                </LinearLayout>
+                            </FrameLayout>
+
+
                             <ProgressBar
                                 android:id="@+id/progressCircle_progressBar1"
                                 android:layout_width="wrap_content"
@@ -45,17 +127,29 @@
                                 android:layout_gravity="center"
                                 android:indeterminate="true"/>
                             <ImageView
+                                android:scaleType="centerCrop"
                                 android:layout_gravity="center"
                                 android:elevation="3dp"
                                 android:minWidth="32dp"
                                 android:minHeight="32dp"
                                 android:id="@+id/front_right"
-                                android:maxHeight="150dp"
-                                android:maxWidth="150dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
                         </FrameLayout>
+
+
+                    </LinearLayout>
+                    <View
+                        android:background="@android:color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"/>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp">
                         <FrameLayout
+
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
                             <!--<View-->
@@ -65,37 +159,80 @@
                             <!--android:layout_height="match_parent"/>-->
                             <TextView
                                 android:textSize="11dp"
-                                android:layout_marginStart="10dp"
+                                android:layout_margin="5dp"
                                 android:gravity="start|center_vertical"
-                                android:textColor="@android:color/black"
-                                android:text="Front Right Angle"
-                                android:layout_width="match_parent"
-                                android:layout_height="30dp" />
+                                android:padding="3dp"
+                                android:backgroundTint="@color/black"
+                                android:background="@drawable/round_linear"
+                                android:textColor="@android:color/white"
+                                android:text="Back Left Angle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="25dp" />
                             <ImageView
                                 android:visibility="gone"
                                 android:layout_marginEnd="10dp"
                                 android:layout_gravity="end"
-                                android:src="@drawable/ic_action_eye"
+                                android:src="@drawable/view_img"
                                 android:tint="@android:color/black"
-                                android:id="@+id/front_right_imageview"
+
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
                         </FrameLayout>
-
-                    </LinearLayout>
-                    <View
-                        android:background="@android:color/holo_green_dark"
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"/>
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_weight="1"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp">
                         <FrameLayout
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
+                            <FrameLayout
+                                android:elevation="4dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+                                <FrameLayout
+                                    android:backgroundTint="@color/black"
+                                    android:alpha="0.2"
+                                    android:background="@drawable/round_linear"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"/>
+
+                                <LinearLayout
+                                    android:layout_gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content">
+                                    <ImageView
+                                        android:padding="5dp"
+                                        android:backgroundTint="@color/green"
+                                        android:background="@drawable/circle"
+                                        android:src="@drawable/view_img"
+                                        android:visibility="gone"
+                                        android:layout_gravity="end"
+                                        android:tint="@android:color/white"
+                                        android:id="@+id/back_left_imageview"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp" />
+                                    <ImageView
+                                        android:backgroundTint="@color/orange"
+                                        android:padding="5dp"
+                                        android:background="@drawable/circle"
+                                        android:src="@mipmap/takephoto"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_gravity="end"
+                                        android:tint="@android:color/white"
+                                        android:id="@+id/back_left_imageedit"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp" />
+                                    <ImageView
+                                        android:visibility="gone"
+                                        android:backgroundTint="@color/dark_red"
+                                        android:padding="5dp"
+                                        android:background="@drawable/circle"
+                                        android:src="@mipmap/delete"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_gravity="end"
+                                        android:tint="@android:color/white"
+                                        android:id="@+id/back_left_imagedelete"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp" />
+                                </LinearLayout>
+                            </FrameLayout>
                         <ProgressBar
                             android:id="@+id/progressCircle_progressBar2"
                             android:layout_width="wrap_content"
@@ -103,16 +240,27 @@
                             android:layout_gravity="center"
                             android:indeterminate="true"/>
                         <ImageView
+                            android:scaleType="centerCrop"
                             android:layout_gravity="center"
                             android:elevation="3dp"
                             android:id="@+id/back_left"
                             android:minWidth="32dp"
                             android:minHeight="32dp"
-                            android:maxHeight="150dp"
-                            android:maxWidth="150dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
                         </FrameLayout>
+
+
+                    </LinearLayout>
+                    <View
+                        android:background="@android:color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"/>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp">
                         <FrameLayout
 
                             android:layout_width="match_parent"
@@ -124,37 +272,80 @@
                             <!--android:layout_height="match_parent"/>-->
                             <TextView
                                 android:textSize="11dp"
-                                android:layout_marginStart="10dp"
+                                android:layout_margin="5dp"
                                 android:gravity="start|center_vertical"
-                                android:textColor="@android:color/black"
-                                android:text="Back Left Angle"
-                                android:layout_width="match_parent"
-                                android:layout_height="30dp" />
+                                android:padding="3dp"
+                                android:backgroundTint="@color/black"
+                                android:background="@drawable/round_linear"
+                                android:textColor="@android:color/white"
+                                android:text="Roof"
+                                android:layout_width="wrap_content"
+                                android:layout_height="25dp" />
                             <ImageView
                                 android:visibility="gone"
                                 android:layout_marginEnd="10dp"
                                 android:layout_gravity="end"
                                 android:src="@drawable/ic_action_eye"
                                 android:tint="@android:color/black"
-                                android:id="@+id/back_left_imageview"
+
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
                         </FrameLayout>
-
-                    </LinearLayout>
-                    <View
-                        android:background="@android:color/holo_green_dark"
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"/>
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_weight="1"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp">
                         <FrameLayout
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
+                            <FrameLayout
+                                android:elevation="4dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+                                <FrameLayout
+                                    android:backgroundTint="@color/black"
+                                    android:alpha="0.2"
+                                    android:background="@drawable/round_linear"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"/>
+
+                                <LinearLayout
+                                    android:layout_gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content">
+                                    <ImageView
+                                        android:padding="5dp"
+                                        android:backgroundTint="@color/green"
+                                        android:background="@drawable/circle"
+                                        android:src="@drawable/view_img"
+                                        android:visibility="gone"
+                                        android:layout_gravity="end"
+                                        android:tint="@android:color/white"
+                                        android:id="@+id/roof_imageview"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp" />
+                                    <ImageView
+                                        android:backgroundTint="@color/orange"
+                                        android:padding="5dp"
+                                        android:background="@drawable/circle"
+                                        android:src="@mipmap/takephoto"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_gravity="end"
+                                        android:tint="@android:color/white"
+                                        android:id="@+id/roof_imageedit"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp" />
+                                    <ImageView
+                                        android:visibility="gone"
+                                        android:backgroundTint="@color/dark_red"
+                                        android:padding="5dp"
+                                        android:background="@drawable/circle"
+                                        android:src="@mipmap/delete"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_gravity="end"
+                                        android:tint="@android:color/white"
+                                        android:id="@+id/roof_imagedelete"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp" />
+                                </LinearLayout>
+                            </FrameLayout>
                             <ProgressBar
                                 android:id="@+id/progressCircle_progressBar5"
                                 android:layout_width="wrap_content"
@@ -162,50 +353,23 @@
                                 android:layout_gravity="center"
                                 android:indeterminate="true"/>
                             <ImageView
+                                android:scaleType="centerCrop"
                                 android:layout_gravity="center"
                                 android:elevation="3dp"
                                 android:id="@+id/roof"
                                 android:minWidth="32dp"
                                 android:minHeight="32dp"
-                                android:maxHeight="150dp"
-                                android:maxWidth="150dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-                        </FrameLayout>
-                        <FrameLayout
-
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-                            <!--<View-->
-                            <!--android:alpha=".4"-->
-                            <!--android:background="@drawable/cam_pic"-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="match_parent"/>-->
-                            <TextView
-                                android:textSize="11dp"
-                                android:layout_marginStart="10dp"
-                                android:gravity="start|center_vertical"
-                                android:textColor="@android:color/black"
-                                android:text="Roof"
                                 android:layout_width="match_parent"
-                                android:layout_height="30dp" />
-                            <ImageView
-                                android:visibility="gone"
-                                android:layout_marginEnd="10dp"
-                                android:layout_gravity="end"
-                                android:src="@drawable/ic_action_eye"
-                                android:tint="@android:color/black"
-                                android:id="@+id/roof_imageview"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="match_parent" />
                         </FrameLayout>
+
 
 
                     </LinearLayout>
                 </LinearLayout>
                 <View
-                    android:background="@android:color/holo_green_dark"
-                    android:layout_width="0.5dp"
+                    android:background="@android:color/white"
+                    android:layout_width="8dp"
                     android:layout_height="match_parent"/>
                 <LinearLayout
                     android:orientation="vertical"
@@ -217,11 +381,91 @@
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="200dp">
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <!--<View-->
+                            <!--android:alpha=".4"-->
+                            <!--android:background="@drawable/cam_pic"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="match_parent"/>-->
+                            <TextView
+                                android:padding="3dp"
+                                android:backgroundTint="@color/black"
+                                android:background="@drawable/round_linear"
+                                android:textColor="@android:color/white"
+                                android:textSize="11dp"
+                                android:layout_margin="5dp"
+                                android:gravity="start|center_vertical"
+                                android:text="Front Left Angle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="25dp" />
+
+                            <ImageView
+                                android:visibility="gone"
+                                android:layout_marginEnd="10dp"
+                                android:layout_gravity="end"
+                                android:src="@drawable/ic_action_eye"
+                                android:tint="@android:color/black"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </FrameLayout>
 
                         <FrameLayout
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
+                            <FrameLayout
+                                android:elevation="4dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+                                <FrameLayout
+                                    android:backgroundTint="@color/black"
+                                    android:alpha="0.2"
+                                    android:background="@drawable/round_linear"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"/>
+
+                                <LinearLayout
+                                    android:layout_gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content">
+                                    <ImageView
+                                        android:padding="5dp"
+                                        android:backgroundTint="@color/green"
+                                        android:background="@drawable/circle"
+                                        android:src="@drawable/view_img"
+                                        android:visibility="gone"
+                                        android:layout_gravity="end"
+                                        android:tint="@android:color/white"
+                                        android:id="@+id/front_left_imageview"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp" />
+                                    <ImageView
+                                        android:backgroundTint="@color/orange"
+                                        android:padding="5dp"
+                                        android:background="@drawable/circle"
+                                        android:src="@mipmap/takephoto"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_gravity="end"
+                                        android:tint="@android:color/white"
+                                        android:id="@+id/front_left_imageedit"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp" />
+                                    <ImageView
+                                        android:visibility="gone"
+                                        android:backgroundTint="@color/dark_red"
+                                        android:padding="5dp"
+                                        android:background="@drawable/circle"
+                                        android:src="@mipmap/delete"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_gravity="end"
+                                        android:tint="@android:color/white"
+                                        android:id="@+id/front_left_imagedelete"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp" />
+                                </LinearLayout>
+                            </FrameLayout>
                             <ProgressBar
                                 android:id="@+id/progressCircle_progressBar"
                                 android:layout_width="wrap_content"
@@ -229,16 +473,29 @@
                                 android:layout_gravity="center"
                                 android:indeterminate="true"/>
                             <ImageView
+                                android:scaleType="centerCrop"
                                 android:layout_gravity="center"
                                 android:elevation="2dp"
                                 android:minWidth="32dp"
                                 android:minHeight="32dp"
                                 android:id="@+id/front_left"
-                                android:maxHeight="150dp"
-                                android:maxWidth="150dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
                         </FrameLayout>
+
+
+
+                    </LinearLayout>
+
+                    <View
+                        android:background="@android:color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"/>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp">
                         <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
@@ -249,41 +506,81 @@
                             <!--android:layout_height="match_parent"/>-->
                             <TextView
                                 android:textSize="11dp"
-                                android:layout_marginStart="10dp"
+                                android:layout_margin="5dp"
                                 android:gravity="start|center_vertical"
-                                android:textColor="@android:color/black"
-                                android:text="Front Left Angle"
-                                android:layout_width="match_parent"
-                                android:layout_height="30dp" />
-
+                                android:padding="3dp"
+                                android:backgroundTint="@color/black"
+                                android:background="@drawable/round_linear"
+                                android:textColor="@android:color/white"
+                                android:text="Back Right Angle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="25dp" />
                             <ImageView
                                 android:visibility="gone"
                                 android:layout_marginEnd="10dp"
                                 android:layout_gravity="end"
                                 android:src="@drawable/ic_action_eye"
                                 android:tint="@android:color/black"
-                                android:id="@+id/front_left_imageview"
+
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
                         </FrameLayout>
-
-
-
-                    </LinearLayout>
-
-                    <View
-                        android:background="@android:color/holo_green_dark"
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"/>
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_weight="1"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp">
                         <FrameLayout
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
+                            <FrameLayout
+                                android:elevation="4dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+                                <FrameLayout
+                                    android:backgroundTint="@color/black"
+                                    android:alpha="0.2"
+                                    android:background="@drawable/round_linear"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"/>
+
+                                <LinearLayout
+                                    android:layout_gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content">
+                                    <ImageView
+                                        android:padding="5dp"
+                                        android:backgroundTint="@color/green"
+                                        android:background="@drawable/circle"
+                                        android:src="@drawable/view_img"
+                                        android:visibility="gone"
+
+                                        android:layout_gravity="end"
+                                        android:tint="@android:color/white"
+                                        android:id="@+id/back_right_imageview"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp" />
+                                    <ImageView
+                                        android:backgroundTint="@color/orange"
+                                        android:padding="5dp"
+                                        android:background="@drawable/circle"
+                                        android:src="@mipmap/takephoto"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_gravity="end"
+                                        android:tint="@android:color/white"
+                                        android:id="@+id/back_right_imageedit"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp" />
+                                    <ImageView
+                                        android:visibility="gone"
+                                        android:backgroundTint="@color/dark_red"
+                                        android:padding="5dp"
+                                        android:background="@drawable/circle"
+                                        android:src="@mipmap/delete"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_gravity="end"
+                                        android:tint="@android:color/white"
+                                        android:id="@+id/back_right_imagedelete"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp" />
+                                </LinearLayout>
+                            </FrameLayout>
                         <ProgressBar
                             android:id="@+id/progressCircle_progressBar3"
                             android:layout_width="wrap_content"
@@ -291,75 +588,28 @@
                             android:layout_gravity="center"
                             android:indeterminate="true"/>
                         <ImageView
+                            android:scaleType="centerCrop"
                             android:layout_gravity="center"
                             android:elevation="3dp"
                             android:id="@+id/back_right"
                             android:minWidth="32dp"
                             android:minHeight="32dp"
-                            android:maxHeight="150dp"
-                            android:maxWidth="150dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
                         </FrameLayout>
 
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-                            <!--<View-->
-                                <!--android:alpha=".4"-->
-                                <!--android:background="@drawable/cam_pic"-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="match_parent"/>-->
-                            <TextView
-                                android:textSize="11dp"
-                                android:layout_marginStart="10dp"
-                                android:gravity="start|center_vertical"
-                                android:textColor="@android:color/black"
-                                android:text="Back Right Angle"
-                                android:layout_width="match_parent"
-                                android:layout_height="30dp" />
-                            <ImageView
-                                android:visibility="gone"
-                                android:layout_marginEnd="10dp"
-                                android:layout_gravity="end"
-                                android:src="@drawable/ic_action_eye"
-                                android:tint="@android:color/black"
-                                android:id="@+id/back_right_imageview"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-                        </FrameLayout>
+
                     </LinearLayout>
                     <View
-                        android:background="@android:color/holo_green_dark"
+                        android:background="@android:color/white"
                         android:layout_width="match_parent"
-                        android:layout_height="0.5dp"/>
+                        android:layout_height="8dp"/>
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="200dp">
-
-                        <FrameLayout
-                            android:layout_weight="1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-                            <ProgressBar
-                                android:id="@+id/progressCircle_progressBar4"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:indeterminate="true"/>
-                            <ImageView
-                                android:layout_gravity="center"
-                                android:elevation="3dp"
-                                android:id="@+id/windshield"
-                                android:minWidth="32dp"
-                                android:minHeight="32dp"
-                                android:maxHeight="150dp"
-                                android:maxWidth="150dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-                        </FrameLayout>
                         <FrameLayout
 
                             android:layout_width="match_parent"
@@ -371,22 +621,97 @@
                             <!--android:layout_height="match_parent"/>-->
                             <TextView
                                 android:textSize="11dp"
-                                android:layout_marginStart="10dp"
+                                android:layout_margin="5dp"
                                 android:gravity="start|center_vertical"
-                                android:textColor="@android:color/black"
+                                android:padding="3dp"
+                                android:backgroundTint="@color/black"
+                                android:background="@drawable/round_linear"
+                                android:textColor="@android:color/white"
                                 android:text="Windshield"
-                                android:layout_width="match_parent"
-                                android:layout_height="30dp" />
+                                android:layout_width="wrap_content"
+                                android:layout_height="25dp" />
                             <ImageView
                                 android:visibility="gone"
                                 android:layout_marginEnd="10dp"
                                 android:layout_gravity="end"
-                                android:src="@drawable/ic_action_eye"
+                                android:src="@drawable/view_img"
                                 android:tint="@android:color/black"
-                                android:id="@+id/windshield_imageview"
+
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
                         </FrameLayout>
+                        <FrameLayout
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <FrameLayout
+                                android:elevation="4dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+                                <FrameLayout
+                                    android:backgroundTint="@color/black"
+                                    android:alpha="0.2"
+                                    android:background="@drawable/round_linear"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"/>
+
+                                <LinearLayout
+                                    android:layout_gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content">
+                                    <ImageView
+                                        android:padding="5dp"
+                                        android:backgroundTint="@color/green"
+                                        android:background="@drawable/circle"
+                                        android:src="@drawable/view_img"
+                                        android:visibility="gone"
+                                        android:layout_gravity="end"
+                                        android:tint="@android:color/white"
+                                        android:id="@+id/windshield_imageview"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp" />
+                                    <ImageView
+                                        android:backgroundTint="@color/orange"
+                                        android:padding="5dp"
+                                        android:background="@drawable/circle"
+                                        android:src="@mipmap/takephoto"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_gravity="end"
+                                        android:tint="@android:color/white"
+                                        android:id="@+id/windshield_imageedit"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp" />
+                                    <ImageView
+                                        android:visibility="gone"
+                                        android:backgroundTint="@color/dark_red"
+                                        android:padding="5dp"
+                                        android:background="@drawable/circle"
+                                        android:src="@mipmap/delete"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_gravity="end"
+                                        android:tint="@android:color/white"
+                                        android:id="@+id/windshield_imagedelete"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp" />
+                                </LinearLayout>
+                            </FrameLayout>
+                            <ProgressBar
+                                android:id="@+id/progressCircle_progressBar4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:indeterminate="true"/>
+                            <ImageView
+                                android:scaleType="centerCrop"
+                                android:layout_gravity="center"
+                                android:elevation="3dp"
+                                android:id="@+id/windshield"
+                                android:minWidth="32dp"
+                                android:minHeight="32dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+                        </FrameLayout>
+
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

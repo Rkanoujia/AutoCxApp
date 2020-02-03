@@ -1,9 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:map="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/map"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".NewMapsActivity" />
+<RelativeLayout
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools">
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".NewMapsActivity" />
+    <ImageView
+        android:id="@+id/pin_"
+         android:rotation="45"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/car_marker"
+        android:text="TextView" />
+
+    <TextView
+        android:layout_above="@+id/done"
+        android:id="@+id/dragg_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#8c000000"
+        android:gravity="center_horizontal"
+        android:padding="20dp"
+        android:text="Please drag map to your address.."
+        android:textColor="#ffffff"
+        android:textSize="18dp" />
+    <TextView
+        android:id="@+id/done"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/green"
+        android:gravity="center_horizontal"
+        android:padding="15dp"
+        android:text="Done"
+        android:textColor="@color/colorWhite"
+        android:textSize="18dp" />
+</RelativeLayout>

@@ -5,19 +5,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.StrictMode;
 import android.util.Log;
 
 import com.avaal.com.afm2020autoCx.APIClient;
 import com.avaal.com.afm2020autoCx.APIInterface;
+import com.avaal.com.afm2020autoCx.BuildConfig;
 import com.avaal.com.afm2020autoCx.NewDashBoardActivity;
 import com.avaal.com.afm2020autoCx.R;
 import com.avaal.com.afm2020autoCx.models.ForAddModel;
+import com.valdesekamdem.library.mdtoast.MDToast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,6 +29,17 @@ import java.util.regex.Pattern;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 /**
  * Created by dell pc on 19-03-2018.
@@ -267,5 +282,80 @@ public class Util {
         Matcher matcher = pattern.matcher(text1);
         return matcher.matches();
     }
+    public void sendSMTPMail(Activity activity,Throwable messageTxt,String code,Exception e,String url){
 
+        MDToast mdToast = MDToast.makeText(activity, "" + code, MDToast.LENGTH_LONG, MDToast.TYPE_ERROR);
+        mdToast.show();
+//        if(BuildConfig.DEBUG){
+//            return;
+//        }
+        StringBuilder error = new StringBuilder();
+        if(e!=null) {
+            StackTraceElement[] exc = e.getStackTrace();
+
+            for (int i = 0; exc.length > i; i++) {
+                error.append(exc[i]);
+                error.append("\n");
+            }
+        }else{
+            StackTraceElement[] exc =messageTxt.getStackTrace();
+
+            for (int i = 0; exc.length > i; i++) {
+                error.append(exc[i]);
+                error.append("\n");
+            }
+        }
+//
+        String from = activity.getString(R.string.recipient);
+
+        // Get system properties
+        Properties properties = System.getProperties();
+        // Setup mail server
+        properties.setProperty("mail.smtps.host", "smtp.1and1.com");
+//        properties.setProperty("mail.smtps.port", "587");
+        properties.setProperty("mail.smtps.auth", "true");
+        properties.setProperty("mail.user", activity.getString(R.string.recipient));
+        properties.setProperty("mail.password", activity.getString(R.string.paswrd));
+        properties.setProperty("mail.smtp.starttls.enable","true");
+        properties.setProperty("mail.smtp.socketFactory.port", activity.getString(R.string.port));
+        properties.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        properties.setProperty("mail.smtp.socketFactory.fallback", "false");
+        //properties.put("mail.debug", "true");
+          PreferenceManager prf=new PreferenceManager(activity);
+        // Get the default Session object.
+        Session session = Session.getDefaultInstance(properties);
+
+        try{
+            MimeMessage message = new MimeMessage(session);
+
+            // Set From: header field of the header.
+            message.setFrom(new InternetAddress(from));
+
+            // Set To: header field of the header.
+            message.addRecipient(Message.RecipientType.TO,
+                    new InternetAddress(activity.getString(R.string.recipient)));
+            message.addRecipient(Message.RecipientType.CC,
+                    new InternetAddress(activity.getString(R.string.cc)));
+
+            message.setSubject("AFM Cx App Exception");
+            message.setText("UserName: "+prf.getStringData("userName")+"("+prf.getStringData("corporateId")+")\n"+url+"\n"+activity+"\n"+error);
+            if (android.os.Build.VERSION.SDK_INT > 9)
+            {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
+            Transport trnsport;
+            trnsport = session.getTransport("smtps");
+            trnsport.connect(null, properties.getProperty("mail.password"));
+            message.saveChanges();
+            trnsport.sendMessage(message, message.getAllRecipients());
+            trnsport.close();
+            Log.e("mail send", "Done");
+            System.out.println("Sent message successfully....");
+        }catch (MessagingException mex) {
+            mex.printStackTrace();
+        }
+
+
+    }
 }

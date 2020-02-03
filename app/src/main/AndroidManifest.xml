@@ -99,11 +99,6 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
-            android:name=".DashBoardBottomMenu"
-            android:label="@string/title_activity_dash_board_bottom_menu"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".CreateTripType"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />

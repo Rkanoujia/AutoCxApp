@@ -136,11 +136,13 @@ public class EnrouteTripActivity extends AppCompatActivity {
                 }catch (Exception e)
                 {
                     e.printStackTrace();
+                    new Util().sendSMTPMail(EnrouteTripActivity.this,null,"CxE004",e,"");
                 }
             }
             @Override
             public void onFailure(Call<OrderListModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail(EnrouteTripActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
     }

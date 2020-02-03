@@ -94,7 +94,10 @@ public class GetVehicleIdListModel
         public String DeclaredCurrency;
         @SerializedName("ItemCode")
         public String ItemCode;
-
+        @SerializedName("Latitude")
+        public String Latitude;
+        @SerializedName("Longitude")
+        public String Longitude;
         public datavalue() {}
 
         public Boolean getSelect()

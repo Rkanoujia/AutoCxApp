@@ -169,6 +169,7 @@ public class YardsFragment extends Fragment {
                 call.cancel();
                 MDToast mdToast = MDToast.makeText(getActivity(), "Some Technical Issue", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                 mdToast.show();
+                new Util().sendSMTPMail(getActivity(),t,"CxE001",null,""+call.request().url());
             }
         });
     }
@@ -230,6 +231,7 @@ public class YardsFragment extends Fragment {
             @Override
             public void onFailure(Call<AppSettingModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail(getActivity(),t,"CxE001",null,""+call.request().url());
             }
         });
     }

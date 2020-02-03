@@ -214,7 +214,8 @@ j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //                prf.saveStringData("corporateId", "");
 //                prf.saveStringData("password", "");
 //                prf.saveBoolData("remember", false);
-                             new Util().myIntent(NewMenuActivity.this, LoginActivity.class);
+                        finishAffinity();
+                        new Util().myIntent(NewMenuActivity.this, LoginActivity.class);
 
 //        j.putExtra("AuthKey", getActivity().getIntent().getStringExtra("AuthKey"));
 
@@ -234,6 +235,7 @@ j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             @Override
             public void onFailure(Call<LogoutModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail(NewMenuActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
     }

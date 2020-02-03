@@ -78,3 +78,13 @@
 public *;
 }
 -keeppackagenames org.jsoup.nodes
+-dontshrink
+-keep class javax.** {*;}
+-keep class com.sun.** {*;}
+-keep class myjava.** {*;}
+-keep class org.apache.harmony.** {*;}
+-keep public class Mail {*;}
+-dontwarn java.awt.**
+-dontwarn java.beans.Beans
+-dontwarn javax.security.**
+-dontwarn java.awt.**,javax.activation.**,java.beans.**

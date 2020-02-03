@@ -183,26 +183,23 @@ public class RouteSelectionActivity extends AppCompatActivity {
 
 
         prf.saveStringData("vehicleList", null);
-        if(!prf.getStringData("OrderStatus").equalsIgnoreCase("Saved")){
-            pickupdate.setEnabled(false);
-            pickupdate.setClickable(false);
-            deliveydate.setEnabled(false);
-            deliveydate.setClickable(false);
-            pickupSpin.setEnabled(false);
-            pickupSpin.setClickable(false);
-            deliverySpin.setEnabled(false);
-            deliverySpin.setClickable(false);
-            pickup_remark.setEnabled(false);
-            pickup_remark.setClickable(false);
-            delivery_remark.setEnabled(false);
-            delivery_remark.setClickable(false);
-//            add.setClickable(false);
-//            add.setEnabled(false);
-//            add1.setClickable(false);
-//            add1.setEnabled(false);
-            save_btn.setVisibility(View.GONE);
-
-        }
+//        if(!prf.getStringData("OrderStatus").equalsIgnoreCase("Saved")){
+//            pickupdate.setEnabled(false);
+//            pickupdate.setClickable(false);
+//            deliveydate.setEnabled(false);
+//            deliveydate.setClickable(false);
+//            pickupSpin.setEnabled(false);
+//            pickupSpin.setClickable(false);
+//            deliverySpin.setEnabled(false);
+//            deliverySpin.setClickable(false);
+//            pickup_remark.setEnabled(false);
+//            pickup_remark.setClickable(false);
+//            delivery_remark.setEnabled(false);
+//            delivery_remark.setClickable(false);
+//
+//            save_btn.setVisibility(View.GONE);
+//
+//        }
         pickupLocation(getIntent().getStringExtra("from"));
         deliveryLocation(getIntent().getStringExtra("to"));
         yardLocation();
@@ -556,7 +553,7 @@ public class RouteSelectionActivity extends AppCompatActivity {
         }
         prf.saveStringData("OrderType",orderType);
         next=true;
-        if(!prf.getStringData("OrderStatus").equalsIgnoreCase("Saved")){
+        if(!prf.getStringData("OrderStatus").equalsIgnoreCase("Saved") && !prf.getStringData("OrderStatus").equalsIgnoreCase("Shipped")){
 
             Intent i=new Intent(this,VehicleListActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -939,6 +936,7 @@ public class RouteSelectionActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<DropDownModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail(RouteSelectionActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
     }
@@ -972,6 +970,7 @@ public class RouteSelectionActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<DropDownModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail(RouteSelectionActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
     }
@@ -1003,6 +1002,7 @@ public class RouteSelectionActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<DropDownModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail(RouteSelectionActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
     }
@@ -1154,7 +1154,6 @@ public class RouteSelectionActivity extends AppCompatActivity {
                         PreferenceManager prf = new PreferenceManager(RouteSelectionActivity.this);
                         prf.saveStringData("OrderId", getRespone.tempOrderId);
                         prf.saveStringData("OrderType", "" + type.getText());
-                        prf.saveStringData("OrderStatus", "Saved");
                         prf.saveStringData("When", "add");
                         if(next) {
                             Intent i = new Intent(RouteSelectionActivity.this, VehicleListActivity.class);
@@ -1181,6 +1180,7 @@ public class RouteSelectionActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<RouteSelectionModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail(RouteSelectionActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
     }
@@ -1268,7 +1268,7 @@ public class RouteSelectionActivity extends AppCompatActivity {
             deliverySpin.dismissDropDown();
 //                       pickupSpin.setText(pickupLocationName.get(pickupLocationId.indexOf(getdata.dataValue.pickupId)));
 //                       deliverySpin.setText(deliveryLocationName.get(deliveryLocationId.indexOf(getdata.dataValue.dropId)));
-            if(prf.getStringData("OrderStatus").equalsIgnoreCase("Saved")){
+            if(prf.getStringData("OrderStatus").equalsIgnoreCase("Saved") || prf.getStringData("OrderStatus").equalsIgnoreCase("Shipped")){
                 save_btn.setText("Update");
                 save_btn.setVisibility(View.VISIBLE);
             }
@@ -1334,7 +1334,7 @@ public class RouteSelectionActivity extends AppCompatActivity {
                        deliverySpin.dismissDropDown();
 //                       pickupSpin.setText(pickupLocationName.get(pickupLocationId.indexOf(getdata.dataValue.pickupId)));
 //                       deliverySpin.setText(deliveryLocationName.get(deliveryLocationId.indexOf(getdata.dataValue.dropId)));
-                       if(prf.getStringData("OrderStatus").equalsIgnoreCase("Saved")){
+                       if(prf.getStringData("OrderStatus").equalsIgnoreCase("Saved")|| prf.getStringData("OrderStatus").equalsIgnoreCase("Shipped")){
                            save_btn.setText("Update");
                            save_btn.setVisibility(View.VISIBLE);
                        }
@@ -1362,6 +1362,7 @@ public class RouteSelectionActivity extends AppCompatActivity {
            @Override
            public void onFailure(Call<OrderDetailModel> call, Throwable t) {
                call.cancel();
+               new Util().sendSMTPMail(RouteSelectionActivity.this,t,"CxE001",null,""+call.request().url().toString());
                MDToast mdToast = MDToast.makeText(RouteSelectionActivity.this, "Some Technical Issue", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                mdToast.show();
                hideAnimation();
@@ -1447,6 +1448,7 @@ public class RouteSelectionActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<PrimaryInfoDetailModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail(RouteSelectionActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
 

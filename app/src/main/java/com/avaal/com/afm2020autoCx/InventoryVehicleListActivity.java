@@ -168,7 +168,6 @@ public class InventoryVehicleListActivity extends AppCompatActivity {
     @OnClick(R.id.add_vehicle)
     void addNewVehicle(){
         showAnimation();
-        prf.saveStringData("OrderStatus", "saved");
         prf.saveStringData("OrderId", " ");
         Util util=new Util();
         if(util.isNetworkAvailable(this)) {
@@ -224,7 +223,7 @@ public class InventoryVehicleListActivity extends AppCompatActivity {
     //                    paramAnonymousl.putExtra("VehicleId", paramAnonymousb.data.temOdId);
     //                    paramAnonymousl.putExtra("VehicleType", "true");
     //                    paramAnonymousl.putExtra("vihiclevinList", InventoryListActivity.this.list);
-                        prf.saveStringData("OrderStatus", "saved");
+//                        prf.saveStringData("OrderStatus", "saved");
                         Intent i=new Intent(InventoryVehicleListActivity.this,AddVehicleActivity.class);
                         i.putExtra("VehicleId",getdata.oredrId);
                         i.putExtra("OrderId","0");
@@ -242,6 +241,7 @@ public class InventoryVehicleListActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<GetInvVehicleModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail(InventoryVehicleListActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
     }
@@ -292,6 +292,7 @@ public class InventoryVehicleListActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<GetVehicleIdListModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail(InventoryVehicleListActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
     }
@@ -697,7 +698,8 @@ public class InventoryVehicleListActivity extends AppCompatActivity {
                     Intent intent = new Intent(InventoryVehicleListActivity.this, AddImageActivity.class);
                     intent.putExtra("VehicleId", ""+tripList.get(position).vehiocleId);
                     intent.putExtra("Vin", ""+tripList.get(position).vinNumber);
-                    prf.saveStringData("OrderStatus", "saved");
+                    intent.putExtra("IsInventry", "1");
+//                    prf.saveStringData("OrderStatus", "saved");
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivityForResult(intent,10001);
                 }
@@ -711,10 +713,11 @@ public class InventoryVehicleListActivity extends AppCompatActivity {
                     Intent intent=new Intent(context,AddVehicleActivity.class);
                     intent.putExtra("VehicleId",tripList.get(position).vehiocleId);
                     intent.putExtra("OrderId","0");
-                    prf.saveStringData("OrderStatus", "saved");
+//                    prf.saveStringData("OrderStatus", "saved");
 //                    intent.putExtra("ForInventory", "false");
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intent.putExtra("VehicleType", "true");
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
 
 
                     context.startActivity(intent);
@@ -776,6 +779,7 @@ public class InventoryVehicleListActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<RemoveVehicleModel> call, Throwable t) {
                     call.cancel();
+                    new Util().sendSMTPMail(InventoryVehicleListActivity.this,t,"CxE001",null,""+call.request().url().toString());
                 }
             });
         }

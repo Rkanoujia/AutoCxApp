@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.avaal.com.afm2020autoCx.APIClient;
 import com.avaal.com.afm2020autoCx.APIInterface;
 import com.avaal.com.afm2020autoCx.CreateTripType;
+import com.avaal.com.afm2020autoCx.LoginActivity;
 import com.avaal.com.afm2020autoCx.R;
 import com.avaal.com.afm2020autoCx.adapter.DashboardOrderListAdapter;
 import com.avaal.com.afm2020autoCx.adapter.OrderListAdapter;
@@ -224,8 +225,7 @@ public class AfmOrderFragment extends Fragment {
             public void onFailure(Call<OrderListModel> call, Throwable t) {
                 call.cancel();
                 hideAnimation();
-                MDToast mdToast = MDToast.makeText(getActivity(), "Some Technical Issue", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
-                mdToast.show();
+                new Util().sendSMTPMail(getActivity(),t,"CxE001",null,""+call.request().url().toString());
             }
         });
     }

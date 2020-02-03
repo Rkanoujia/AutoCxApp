@@ -260,6 +260,7 @@ public class SplashActivity extends AppCompatActivity {
                     }
                 }catch (Exception e){
                     e.printStackTrace();
+                    new Util().sendSMTPMail(SplashActivity.this,null,"CxE001",e,"");
                 }
 
             }
@@ -267,6 +268,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<LoginModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail(SplashActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
 

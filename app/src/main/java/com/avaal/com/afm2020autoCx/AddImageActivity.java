@@ -133,6 +133,34 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
     ImageView add_image;
     @BindView(R.id.add_extra)
     LinearLayout add_extra;
+
+    @BindView(R.id.front_left_imageedit)
+    ImageView front_left_imageedit;
+    @BindView(R.id.front_right_imageedit)
+    ImageView front_right_imageedit;
+    @BindView(R.id.back_left_imageedit)
+    ImageView back_left_imageedit;
+    @BindView(R.id.back_right_imageedit)
+    ImageView back_right_imageedit;
+    @BindView(R.id.windshield_imageedit)
+    ImageView windshield_imageedit;
+    @BindView(R.id.roof_imageedit)
+    ImageView roof_imageedit;
+
+    @BindView(R.id.front_left_imagedelete)
+    ImageView front_left_imagedelete;
+    @BindView(R.id.front_right_imagedelete)
+    ImageView front_right_imagedelete;
+    @BindView(R.id.back_left_imagedelete)
+    ImageView back_left_imagedelete;
+    @BindView(R.id.back_right_imagedelete)
+    ImageView back_right_imagedelete;
+    @BindView(R.id.windshield_imagedelete)
+    ImageView windshield_imagedelete;
+    @BindView(R.id.roof_imagedelete)
+    ImageView roof_imagedelete;
+
+
     private FrameLayout mainlayout;
     private UploadScreen loaderScreen;
     private View loaderView;
@@ -165,12 +193,12 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 //        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        Picasso.with(this).load("https://images.unsplash.com/photo-503454537195-1dcabb73ffb9?auto=format&fit=crop&w=750&q=80").memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.mipmap.takephoto).into(front_left);
-        Picasso.with(this).load("https://images.unsplash.com/photo-450037586774-00cb81edd142?auto=format&fit=crop&w=750&q=80").error(R.mipmap.takephoto).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).into(front_right);
-        Picasso.with(this).load("https://images.unsplash.com/photo-504196606672-aef5c9cefc92?auto=format&fit=crop&w=750&q=80").error(R.mipmap.takephoto).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).into(back_left);
-        Picasso.with(this).load("https://images.unsplash.com/photo-500395235658-f87dff62cbf3?auto=format&fit=crop&w=750&q=80").error(R.mipmap.takephoto).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).into(back_right);
-        Picasso.with(this).load("https://images.unsplash.com/photo-500395235658-f87dff62cbf3?auto=format&fit=crop&w=750&q=80").error(R.mipmap.takephoto).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).into(windshield);
-        Picasso.with(this).load("https://images.unsplash.com/photo-500395235658-f87dff62cbf3?auto=format&fit=crop&w=750&q=80").error(R.mipmap.takephoto).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).into(roof);
+        Picasso.with(this).load("https://images.unsplash.com/photo-503454537195-1dcabb73ffb9?auto=format&fit=crop&w=750&q=80").memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(front_left);
+        Picasso.with(this).load("https://images.unsplash.com/photo-450037586774-00cb81edd142?auto=format&fit=crop&w=750&q=80").error(R.drawable.no_img_found).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).into(front_right);
+        Picasso.with(this).load("https://images.unsplash.com/photo-504196606672-aef5c9cefc92?auto=format&fit=crop&w=750&q=80").error(R.drawable.no_img_found).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).into(back_left);
+        Picasso.with(this).load("https://images.unsplash.com/photo-500395235658-f87dff62cbf3?auto=format&fit=crop&w=750&q=80").error(R.drawable.no_img_found).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).into(back_right);
+        Picasso.with(this).load("https://images.unsplash.com/photo-500395235658-f87dff62cbf3?auto=format&fit=crop&w=750&q=80").error(R.drawable.no_img_found).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).into(windshield);
+        Picasso.with(this).load("https://images.unsplash.com/photo-500395235658-f87dff62cbf3?auto=format&fit=crop&w=750&q=80").error(R.drawable.no_img_found).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).into(roof);
         Picasso.with(AddImageActivity.this).load("https://images.unsplash.com/photo-504196606672-aef5c9cefc92?auto=format&fit=crop&w=750&q=80").error(R.mipmap.takephoto).into(add_image);
 
         title.setText("Pre-Inspections");
@@ -230,15 +258,24 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
 
         prf=new PreferenceManager(this);
 try {
-    if (prf.getStringData("OrderStatus").equalsIgnoreCase("saved") || prf.getStringData("OrderStatus").equalsIgnoreCase("shipped") ) {
-        showAnimation();
-        getImages(vehicleId);
-        saveLinear.setVisibility(View.VISIBLE);
+    if(getIntent().getStringExtra("IsInventry")!=null  ){
+        if(getIntent().getStringExtra("IsInventry").equalsIgnoreCase("1")) {
+            showAnimation();
+            getImages(vehicleId);
+            saveLinear.setVisibility(View.VISIBLE);
+        }
+    }
+    else{
+        if (prf.getStringData("OrderStatus").equalsIgnoreCase("saved") || prf.getStringData("OrderStatus").equalsIgnoreCase("shipped")) {
+            showAnimation();
+            getImages(vehicleId);
+            saveLinear.setVisibility(View.VISIBLE);
 
-    } else {
-        showAnimation();
-        getAFMImages(vehicleId);
+        } else {
+            showAnimation();
+            getAFMImages(vehicleId);
 
+        }
     }
 
 }catch (Exception e)
@@ -304,7 +341,7 @@ try {
     void back(){
         super.onBackPressed();
     }
-    @OnClick(R.id.front_left)
+    @OnClick(R.id.front_left_imageedit)
     void front(){
         imageside="FrontLeftAngleView";
         Util util=new Util();
@@ -316,7 +353,7 @@ try {
         opencamera();
 
     }
-    @OnClick(R.id.front_right)
+    @OnClick(R.id.front_right_imageedit)
     void frontright(){
         imageside="FrontRightAngleView";
         Util util=new Util();
@@ -378,7 +415,7 @@ try {
 
     }
 
-    @OnClick(R.id.back_left)
+    @OnClick(R.id.back_left_imageedit)
     void backleft(){
         imageside="BackLeftAngleView";
         Util util=new Util();
@@ -389,7 +426,7 @@ try {
         }
         opencamera();
     }
-    @OnClick(R.id.windshield)
+    @OnClick(R.id.windshield_imageedit)
     void windshield(){
         imageside="Windshield";
         Util util=new Util();
@@ -400,7 +437,7 @@ try {
         }
         opencamera();
     }
-    @OnClick(R.id.roof)
+    @OnClick(R.id.roof_imageedit)
     void roof(){
         imageside="Roof";
         Util util=new Util();
@@ -468,7 +505,169 @@ try {
     void  roof_img(){
         popUp(rooffileUrl,rooffileId,"Roof");
     }
-    @OnClick(R.id.back_right)
+
+
+    @OnClick(R.id.back_left_imagedelete)
+    void  back_left_delete(){
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddImageActivity.this);
+        // Setting Dialog Message
+        alertDialog.setMessage("Are you sure you want delete this?");
+        // Setting Positive "Yes" Button
+        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Write your code here to invoke YES event
+                deleteImg(backLeftfileId,"BackLeftAngleView");
+                dialog.dismiss();
+
+
+            }
+        });
+        // Setting Negative "NO" Button
+        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Write your code here to invoke NO event
+                dialog.cancel();
+            }
+        });
+        // Showing Alert Message
+        alertDialog.show();
+
+
+
+
+    }
+    @OnClick(R.id.back_right_imagedelete)
+    void  back_right_delete(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddImageActivity.this);
+        // Setting Dialog Message
+        alertDialog.setMessage("Are you sure you want delete this?");
+        // Setting Positive "Yes" Button
+        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Write your code here to invoke YES event
+                deleteImg(backRightfileId,"BackRightAngleView");
+                dialog.dismiss();
+
+            }
+        });
+        // Setting Negative "NO" Button
+        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Write your code here to invoke NO event
+                dialog.cancel();
+            }
+        });
+        // Showing Alert Message
+        alertDialog.show();
+
+    }
+    @OnClick(R.id.front_left_imagedelete)
+    void  front_left_delete(){
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddImageActivity.this);
+        // Setting Dialog Message
+        alertDialog.setMessage("Are you sure you want delete this?");
+        // Setting Positive "Yes" Button
+        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Write your code here to invoke YES event
+                deleteImg(frontLeftfileId,"FrontLeftAngleView");
+                dialog.dismiss();
+
+            }
+        });
+        // Setting Negative "NO" Button
+        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Write your code here to invoke NO event
+                dialog.cancel();
+            }
+        });
+        // Showing Alert Message
+        alertDialog.show();
+
+    }
+    @OnClick(R.id.front_right_imagedelete)
+    void  front_right_delete(){
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddImageActivity.this);
+        // Setting Dialog Message
+        alertDialog.setMessage("Are you sure you want delete this?");
+        // Setting Positive "Yes" Button
+        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Write your code here to invoke YES event
+                deleteImg(frontRightfileId,"FrontRightAngleView");
+                dialog.dismiss();
+
+            }
+        });
+        // Setting Negative "NO" Button
+        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Write your code here to invoke NO event
+                dialog.cancel();
+            }
+        });
+        // Showing Alert Message
+        alertDialog.show();
+
+    }
+    @OnClick(R.id.windshield_imagedelete)
+    void  windshield_img_delete(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddImageActivity.this);
+        // Setting Dialog Message
+        alertDialog.setMessage("Are you sure you want delete this?");
+        // Setting Positive "Yes" Button
+        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Write your code here to invoke YES event
+                deleteImg(windshieldfileId,"Windshield");
+                dialog.dismiss();
+
+            }
+        });
+        // Setting Negative "NO" Button
+        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Write your code here to invoke NO event
+                dialog.cancel();
+            }
+        });
+        // Showing Alert Message
+        alertDialog.show();
+
+    }
+    @OnClick(R.id.roof_imagedelete)
+    void  roof_img_delete(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddImageActivity.this);
+        // Setting Dialog Message
+        alertDialog.setMessage("Are you sure you want delete this?");
+        // Setting Positive "Yes" Button
+        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Write your code here to invoke YES event
+                deleteImg(rooffileId,"Roof");
+                dialog.dismiss();
+
+
+            }
+        });
+        // Setting Negative "NO" Button
+        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Write your code here to invoke NO event
+                dialog.cancel();
+            }
+        });
+        // Showing Alert Message
+        alertDialog.show();
+
+    }
+
+
+    @OnClick(R.id.back_right_imageedit)
     void backright(){
         imageside="BackRightAngleView";
         Util util=new Util();
@@ -732,19 +931,21 @@ try {
                             if(f.exists())
                                 f.delete();
                System.gc();
+
                             saveLinear.setVisibility(View.VISIBLE);
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     if (imageside.equalsIgnoreCase("BackRightAngleView")) {
                                         back_right_imageview.setVisibility(View.VISIBLE);
+                                        back_right_imagedelete.setVisibility(View.VISIBLE);
                                         progressCircle_progressBar3.setVisibility(View.VISIBLE);
                                         backRightfileId = getdata.imageId;
                                         backRightfileUrl = getdata.docUrl.replace("DelhiServer", "192.168.1.20");
                                       runOnUiThread(new Runnable() {
                                           @Override
                                           public void run() {
-                                              Picasso.with(AddImageActivity.this).load(backRightfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.ic_camera).into(back_right);
+                                              Picasso.with(AddImageActivity.this).load(backRightfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(back_right);
 
                                           }
                                       });
@@ -753,13 +954,14 @@ try {
                                         roof();
                                     } else if (imageside.equalsIgnoreCase("BackLeftAngleView")) {
                                         back_left_imageview.setVisibility(View.VISIBLE);
+                                        back_left_imagedelete.setVisibility(View.VISIBLE);
                                         progressCircle_progressBar2.setVisibility(View.VISIBLE);
                                         backLeftfileId = getdata.imageId;
                                         backLeftfileUrl = getdata.docUrl.replace("DelhiServer", "192.168.1.20");
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
-                                                Picasso.with(AddImageActivity.this).load(backLeftfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.ic_camera).into(back_left);
+                                                Picasso.with(AddImageActivity.this).load(backLeftfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(back_left);
                                             }
                                         });
 
@@ -768,13 +970,14 @@ try {
                                         backright();
                                     } else if (imageside.equalsIgnoreCase("FrontRightAngleView")) {
                                         front_right_imageview.setVisibility(View.VISIBLE);
+                                        front_right_imagedelete.setVisibility(View.VISIBLE);
                                         progressCircle_progressBar1.setVisibility(View.VISIBLE);
                                         frontRightfileId = getdata.imageId;
                                         frontRightfileUrl = getdata.docUrl.replace("DelhiServer", "192.168.1.20");
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
-                                                Picasso.with(AddImageActivity.this).load(frontRightfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.ic_camera).into(front_right);
+                                                Picasso.with(AddImageActivity.this).load(frontRightfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(front_right);
 
                                             }
                                         });
@@ -783,12 +986,13 @@ try {
                                        front();
                                     } else if (imageside.equalsIgnoreCase("FrontLeftAngleView")) {
                                         front_left_imageview.setVisibility(View.VISIBLE);
+                                        front_left_imagedelete.setVisibility(View.VISIBLE);
                                         progressCircle_progressBar.setVisibility(View.VISIBLE);
                                         frontLeftfileUrl = getdata.docUrl.replace("DelhiServer", "192.168.1.20");
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
-                                                Picasso.with(AddImageActivity.this).load(frontLeftfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.ic_camera).into(front_left);
+                                                Picasso.with(AddImageActivity.this).load(frontLeftfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(front_left);
 
                                             }
                                         });
@@ -797,12 +1001,13 @@ try {
                                         backleft();
                                     } else if (imageside.equalsIgnoreCase("Windshield")) {
                                         windshield_imageview.setVisibility(View.VISIBLE);
+                                        windshield_imagedelete.setVisibility(View.VISIBLE);
                                         progressCircle_progressBar4.setVisibility(View.VISIBLE);
                                         windshieldfileUrl = getdata.docUrl.replace("DelhiServer", "192.168.1.20");
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
-                                                Picasso.with(AddImageActivity.this).load(windshieldfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.ic_camera).into(windshield);
+                                                Picasso.with(AddImageActivity.this).load(windshieldfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(windshield);
 
                                             }
                                         });
@@ -810,12 +1015,13 @@ try {
 
                                     }else if (imageside.equalsIgnoreCase("Roof")) {
                                         roof_imageview.setVisibility(View.VISIBLE);
+                                        roof_imagedelete.setVisibility(View.VISIBLE);
                                         progressCircle_progressBar5.setVisibility(View.VISIBLE);
                                         rooffileUrl = getdata.docUrl.replace("DelhiServer", "192.168.1.20");
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
-                                                Picasso.with(AddImageActivity.this).load(rooffileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.ic_camera).into(roof);
+                                                Picasso.with(AddImageActivity.this).load(rooffileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(roof);
 
                                             }
                                         });
@@ -867,13 +1073,14 @@ try {
             @Override
             public void onFailure(Call<SaveImageModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail(AddImageActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
     }
     private String bitmapToBase64(Bitmap bitmap) {
                System.gc();
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream.toByteArray();
         return Base64.encodeToString(byteArray, Base64.NO_WRAP);
     }
@@ -894,47 +1101,130 @@ try {
                     if (getdata.status) {
                         ExtraImageList = new ArrayList<>();
                         ExtraImageList.clear();
+
+                        if(getdata.dataValuer.size()==0){
+                            front_right();
+
+                        }
+
+
                         for (int i = 0; getdata.dataValuer.size() > i; i++) {
                             System.gc();
                             if (getdata.dataValuer.get(i).doctype.equalsIgnoreCase("FrontLeftAngleView")) {
                                 frontLeftfileUrl = getdata.dataValuer.get(i).DocURL.replace("DelhiServer", "192.168.1.20");
-                                Picasso.with(AddImageActivity.this).load(frontLeftfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.ic_camera).into(front_left);
-                                frontLeftfileId = getdata.dataValuer.get(i).docId;
-                                progressCircle_progressBar.setVisibility(View.VISIBLE);
                                 front_left_imageview.setVisibility(View.VISIBLE);
+                                front_left_imagedelete.setVisibility(View.VISIBLE);
+                                progressCircle_progressBar.setVisibility(View.VISIBLE);
+                                Picasso.with(AddImageActivity.this).load(frontLeftfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(front_left, new com.squareup.picasso.Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        progressCircle_progressBar.setVisibility(View.INVISIBLE);
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        progressCircle_progressBar.setVisibility(View.INVISIBLE);
+                                    }
+                                });
+                                frontLeftfileId = getdata.dataValuer.get(i).docId;
+
+
 
                             } else if (getdata.dataValuer.get(i).doctype.equalsIgnoreCase("FrontRightAngleView")) {
                                 frontRightfileUrl = getdata.dataValuer.get(i).DocURL.replace("DelhiServer", "192.168.1.20");
                                 progressCircle_progressBar1.setVisibility(View.VISIBLE);
                                 frontRightfileId = getdata.dataValuer.get(i).docId;
-                                Picasso.with(AddImageActivity.this).load(frontRightfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.ic_camera).into(front_right);
+                                front_right_imagedelete.setVisibility(View.VISIBLE);
                                 front_right_imageview.setVisibility(View.VISIBLE);
+                                Picasso.with(AddImageActivity.this).load(frontRightfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(front_right, new com.squareup.picasso.Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        progressCircle_progressBar1.setVisibility(View.INVISIBLE);
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        progressCircle_progressBar1.setVisibility(View.INVISIBLE);
+                                    }
+                                });
+
                             } else if (getdata.dataValuer.get(i).doctype.equalsIgnoreCase("BackLeftAngleView")) {
                                 backLeftfileUrl = getdata.dataValuer.get(i).DocURL.replace("DelhiServer", "192.168.1.20");
-                                Picasso.with(AddImageActivity.this).load(backLeftfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.ic_camera).into(back_left);
                                 progressCircle_progressBar2.setVisibility(View.VISIBLE);
+                                back_left_imagedelete.setVisibility(View.VISIBLE);
+                                Picasso.with(AddImageActivity.this).load(backLeftfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(back_left, new com.squareup.picasso.Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        progressCircle_progressBar2.setVisibility(View.INVISIBLE);
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        progressCircle_progressBar2.setVisibility(View.INVISIBLE);
+                                    }
+                                });
+
                                 back_left_imageview.setVisibility(View.VISIBLE);
                                 backLeftfileId = getdata.dataValuer.get(i).docId;
                             } else if (getdata.dataValuer.get(i).doctype.equalsIgnoreCase("BackRightAngleView")) {
                                 backRightfileUrl = getdata.dataValuer.get(i).DocURL.replace("DelhiServer", "192.168.1.20");
-                                Picasso.with(AddImageActivity.this).load(backRightfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.ic_camera).into(back_right);
+                                progressCircle_progressBar3.setVisibility(View.VISIBLE);
+                                back_right_imagedelete.setVisibility(View.VISIBLE);
+                                Picasso.with(AddImageActivity.this).load(backRightfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(back_right, new com.squareup.picasso.Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        progressCircle_progressBar3.setVisibility(View.INVISIBLE);
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        progressCircle_progressBar3.setVisibility(View.INVISIBLE);
+                                    }
+                                });
                                 back_right_imageview.setVisibility(View.VISIBLE);
                                 backRightfileId = getdata.dataValuer.get(i).docId;
-                                progressCircle_progressBar3.setVisibility(View.VISIBLE);
+
                             }
                             else if (getdata.dataValuer.get(i).doctype.equalsIgnoreCase("Windshield")) {
                                 windshieldfileUrl = getdata.dataValuer.get(i).DocURL.replace("DelhiServer", "192.168.1.20");
-                                Picasso.with(AddImageActivity.this).load(windshieldfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.ic_camera).into(windshield);
+                                progressCircle_progressBar4.setVisibility(View.VISIBLE);
+                                windshield_imagedelete.setVisibility(View.VISIBLE);
+
+                                Picasso.with(AddImageActivity.this).load(windshieldfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(windshield, new com.squareup.picasso.Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        progressCircle_progressBar4.setVisibility(View.INVISIBLE);
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        progressCircle_progressBar4.setVisibility(View.INVISIBLE);
+                                    }
+                                });
                                 windshield_imageview.setVisibility(View.VISIBLE);
                                 windshieldfileId = getdata.dataValuer.get(i).docId;
-                                progressCircle_progressBar4.setVisibility(View.VISIBLE);
+
                             }
                             else if (getdata.dataValuer.get(i).doctype.equalsIgnoreCase("Roof")) {
                                 rooffileUrl = getdata.dataValuer.get(i).DocURL.replace("DelhiServer", "192.168.1.20");
-                                Picasso.with(AddImageActivity.this).load(rooffileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.ic_camera).into(roof);
+                                progressCircle_progressBar5.setVisibility(View.VISIBLE);
+                                roof_imagedelete.setVisibility(View.VISIBLE);
+
+                                Picasso.with(AddImageActivity.this).load(rooffileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(roof, new com.squareup.picasso.Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        progressCircle_progressBar5.setVisibility(View.INVISIBLE);
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        progressCircle_progressBar5.setVisibility(View.INVISIBLE);
+
+                                    }
+                                });
                                 roof_imageview.setVisibility(View.VISIBLE);
                                 rooffileId = getdata.dataValuer.get(i).docId;
-                                progressCircle_progressBar5.setVisibility(View.VISIBLE);
+
                             }else if (!getdata.dataValuer.get(i).doctype.equalsIgnoreCase("OEMTag") && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("TitleFront") && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("TitleBack") && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("MileageValue")
                                     && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("BillOfSale") && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("TitleConversionBack") && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("TitleConversionFront") && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("TPMS")
                                     && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("IRSNumber")&& !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("RecallSheet1")&& !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("RecallSheet2")&& !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("ReleaseForm")) {
@@ -956,26 +1246,36 @@ try {
 //                    Picasso.with(this).load("https://images.unsplash.com/photo-500395235658-f87dff62cbf3?auto=format&fit=crop&w=750&q=80").error(R.drawable.ic_camera).into(back_right);
 
                     }
-                    if (!prf.getStringData("OrderStatus").equalsIgnoreCase("Saved")) {
-                        front_left.setClickable(false);
+//                    if (!prf.getStringData("OrderStatus").equalsIgnoreCase("Saved")) {
+
+//                        front_left_imagedelete.setVisibility(View.GONE);
+//                        front_right_imagedelete.setVisibility(View.GONE);
+//                        back_left_imagedelete.setVisibility(View.GONE);
+//                        back_right_imagedelete.setVisibility(View.GONE);
+//                        windshield_imagedelete.setVisibility(View.GONE);
+//                        roof_imagedelete.setVisibility(View.GONE);
+
+                        front_left_imageedit.setVisibility(View.VISIBLE);
                         front_left.setEnabled(false);
-                        front_right.setClickable(false);
+                        front_right_imageedit.setVisibility(View.VISIBLE);
                         front_right.setEnabled(false);
-                        back_left.setClickable(false);
+                        back_left_imageedit.setVisibility(View.VISIBLE);
                         back_left.setEnabled(false);
-                        back_right.setClickable(false);
+                        back_right_imageedit.setVisibility(View.VISIBLE);
                         back_right.setEnabled(false);
-                        windshield.setClickable(false);
+                        windshield_imageedit.setVisibility(View.VISIBLE);
                         windshield.setEnabled(false);
-                        roof.setClickable(false);
+                        roof_imageedit.setVisibility(View.VISIBLE);
                         roof.setEnabled(false);
-                        add_extra.setVisibility(View.GONE);
-                        img_type.setClickable(false);
-                        img_type.setEnabled(false);
-                        title.setText("View Images");
-                    }else {
-                        saveLinear.setVisibility(View.VISIBLE);
-                    }
+                        add_extra.setVisibility(View.VISIBLE);
+                        img_type.setClickable(true);
+                        img_type.setEnabled(true);
+//                        title.setText("View Images");
+//                    }else {
+//
+//
+//
+//                    }
 
                 }catch (Exception e){
                     e.printStackTrace();
@@ -987,6 +1287,7 @@ try {
             @Override
             public void onFailure(Call<GetImageModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail(AddImageActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
     }
@@ -1006,43 +1307,116 @@ try {
                             System.gc();
                             if (getdata.dataValuer.get(i).doctype.equalsIgnoreCase("FrontLeftAngleView")) {
                                 frontLeftfileUrl = getdata.dataValuer.get(i).DocURL.replace("DelhiServer", "192.168.1.20");
-                                Picasso.with(AddImageActivity.this).load(frontLeftfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.ic_camera).into(front_left);
-                                frontLeftfileId = getdata.dataValuer.get(i).docId;
-                                progressCircle_progressBar.setVisibility(View.VISIBLE);
                                 front_left_imageview.setVisibility(View.VISIBLE);
+                                progressCircle_progressBar.setVisibility(View.VISIBLE);
+                                Picasso.with(AddImageActivity.this).load(frontLeftfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(front_left, new com.squareup.picasso.Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        progressCircle_progressBar.setVisibility(View.INVISIBLE);
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        progressCircle_progressBar.setVisibility(View.INVISIBLE);
+
+                                    }
+                                });
+                                frontLeftfileId = getdata.dataValuer.get(i).docId;
+
+
 
                             } else if (getdata.dataValuer.get(i).doctype.equalsIgnoreCase("FrontRightAngleView")) {
                                 frontRightfileUrl = getdata.dataValuer.get(i).DocURL.replace("DelhiServer", "192.168.1.20");
                                 progressCircle_progressBar1.setVisibility(View.VISIBLE);
                                 frontRightfileId = getdata.dataValuer.get(i).docId;
-                                Picasso.with(AddImageActivity.this).load(frontRightfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.ic_camera).into(front_right);
                                 front_right_imageview.setVisibility(View.VISIBLE);
+                                Picasso.with(AddImageActivity.this).load(frontRightfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(front_right, new com.squareup.picasso.Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        progressCircle_progressBar1.setVisibility(View.INVISIBLE);
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        progressCircle_progressBar1.setVisibility(View.INVISIBLE);
+                                    }
+                                });
+
                             } else if (getdata.dataValuer.get(i).doctype.equalsIgnoreCase("BackLeftAngleView")) {
                                 backLeftfileUrl = getdata.dataValuer.get(i).DocURL.replace("DelhiServer", "192.168.1.20");
-                                Picasso.with(AddImageActivity.this).load(backLeftfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.ic_camera).into(back_left);
-                                progressCircle_progressBar2.setVisibility(View.VISIBLE);
                                 back_left_imageview.setVisibility(View.VISIBLE);
+                                progressCircle_progressBar2.setVisibility(View.VISIBLE);
+                                Picasso.with(AddImageActivity.this).load(backLeftfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(back_left, new com.squareup.picasso.Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        progressCircle_progressBar2.setVisibility(View.INVISIBLE);
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        progressCircle_progressBar2.setVisibility(View.INVISIBLE);
+
+                                    }
+                                });
+
+
                                 backLeftfileId = getdata.dataValuer.get(i).docId;
                             } else if (getdata.dataValuer.get(i).doctype.equalsIgnoreCase("BackRightAngleView")) {
                                 backRightfileUrl = getdata.dataValuer.get(i).DocURL.replace("DelhiServer", "192.168.1.20");
-                                Picasso.with(AddImageActivity.this).load(backRightfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.ic_camera).into(back_right);
+                                progressCircle_progressBar3.setVisibility(View.VISIBLE);
+                                Picasso.with(AddImageActivity.this).load(backRightfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(back_right, new com.squareup.picasso.Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        progressCircle_progressBar3.setVisibility(View.INVISIBLE);
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        progressCircle_progressBar3.setVisibility(View.INVISIBLE);
+
+                                    }
+                                });
                                 back_right_imageview.setVisibility(View.VISIBLE);
                                 backRightfileId = getdata.dataValuer.get(i).docId;
-                                progressCircle_progressBar3.setVisibility(View.VISIBLE);
+
                             }
                             else if (getdata.dataValuer.get(i).doctype.equalsIgnoreCase("Windshield")) {
                                 windshieldfileUrl = getdata.dataValuer.get(i).DocURL.replace("DelhiServer", "192.168.1.20");
-                                Picasso.with(AddImageActivity.this).load(windshieldfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.ic_camera).into(windshield);
+                                progressCircle_progressBar4.setVisibility(View.VISIBLE);
+                                Picasso.with(AddImageActivity.this).load(windshieldfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(windshield, new com.squareup.picasso.Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        progressCircle_progressBar4.setVisibility(View.INVISIBLE);
+                                    }
+
+
+                                    @Override
+                                    public void onError() {
+                                        progressCircle_progressBar4.setVisibility(View.INVISIBLE);
+                                    }
+                                });
                                 windshield_imageview.setVisibility(View.VISIBLE);
                                 windshieldfileId = getdata.dataValuer.get(i).docId;
-                                progressCircle_progressBar4.setVisibility(View.VISIBLE);
+
                             }
                             else if (getdata.dataValuer.get(i).doctype.equalsIgnoreCase("Roof")) {
                                 rooffileUrl = getdata.dataValuer.get(i).DocURL.replace("DelhiServer", "192.168.1.20");
-                                Picasso.with(AddImageActivity.this).load(rooffileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.ic_camera).into(roof);
+                                progressCircle_progressBar5.setVisibility(View.VISIBLE);
+                                Picasso.with(AddImageActivity.this).load(rooffileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(roof, new com.squareup.picasso.Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        progressCircle_progressBar5.setVisibility(View.INVISIBLE);
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        progressCircle_progressBar5.setVisibility(View.INVISIBLE);
+
+                                    }
+                                });
                                 roof_imageview.setVisibility(View.VISIBLE);
                                 rooffileId = getdata.dataValuer.get(i).docId;
-                                progressCircle_progressBar5.setVisibility(View.VISIBLE);
+
                             }else if (!getdata.dataValuer.get(i).doctype.equalsIgnoreCase("OEMTag") && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("TitleFront") && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("TitleBack") && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("MileageValue")
                                     && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("BillOfSale") && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("TitleConversionBack") && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("TitleConversionFront") && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("TPMS")
                                     && !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("IRSNumber")&& !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("RecallSheet1")&& !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("RecallSheet2")&& !getdata.dataValuer.get(i).doctype.equalsIgnoreCase("ReleaseForm")) {
@@ -1065,6 +1439,21 @@ try {
 //                    Picasso.with(this).load("https://images.unsplash.com/photo-500395235658-f87dff62cbf3?auto=format&fit=crop&w=750&q=80").error(R.drawable.ic_camera).into(back_right);
 
                     }
+                    front_left_imageedit.setVisibility(View.GONE);
+                    front_right_imageedit.setVisibility(View.GONE);
+                    back_left_imageedit.setVisibility(View.GONE);
+                    back_right_imageedit.setVisibility(View.GONE);
+                    windshield_imageedit.setVisibility(View.GONE);
+                    roof_imageedit.setVisibility(View.GONE);
+
+                    front_left_imagedelete.setVisibility(View.GONE);
+                    front_right_imagedelete.setVisibility(View.GONE);
+                    back_left_imagedelete.setVisibility(View.GONE);
+                    back_right_imagedelete.setVisibility(View.GONE);
+                    windshield_imagedelete.setVisibility(View.GONE);
+                    roof_imagedelete.setVisibility(View.GONE);
+
+
                     front_left.setClickable(false);
                     front_left.setEnabled(false);
                     front_right.setClickable(false);
@@ -1091,6 +1480,7 @@ try {
             @Override
             public void onFailure(Call<GetImageModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail(AddImageActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
     }
@@ -1212,46 +1602,52 @@ try {
                         if(type.equalsIgnoreCase("BackRightAngleView")){
                             backRightfileUrl="";
                             progressCircle_progressBar3.setVisibility(View.GONE);
-                            back_right_imageview.setVisibility(View.INVISIBLE);
+                            back_right_imageview.setVisibility(View.GONE);
+                            back_right_imagedelete.setVisibility(View.GONE);
                             backRightfileId="0";
-                            Picasso.with(AddImageActivity.this).load("https://images.unsplash.com/photo-503454537195-1dcabb73ffb9?auto=format&fit=crop&w=750&q=80").error(R.mipmap.takephoto).into(back_right);
+                            Picasso.with(AddImageActivity.this).load("https://images.unsplash.com/photo-503454537195-1dcabb73ffb9?auto=format&fit=crop&w=750&q=80").error(R.drawable.no_img_found).into(back_right);
 
                         }
                         else if(type.equalsIgnoreCase("BackLeftAngleView")){
                             backLeftfileUrl="";
                             progressCircle_progressBar2.setVisibility(View.GONE);
-                            back_left_imageview.setVisibility(View.INVISIBLE);
+                            back_left_imageview.setVisibility(View.GONE);
+                            back_left_imagedelete.setVisibility(View.GONE);
                             backLeftfileId="0";
-                            Picasso.with(AddImageActivity.this).load("https://images.unsplash.com/photo-503454537195-1dcabb73ffb9?auto=format&fit=crop&w=750&q=80").error(R.mipmap.takephoto).into(back_left);
+                            Picasso.with(AddImageActivity.this).load("https://images.unsplash.com/photo-503454537195-1dcabb73ffb9?auto=format&fit=crop&w=750&q=80").error(R.drawable.no_img_found).into(back_left);
 
                         }else if(type.equalsIgnoreCase("FrontRightAngleView")){
                             frontRightfileUrl="";
                             progressCircle_progressBar1.setVisibility(View.GONE);
-                            front_right_imageview.setVisibility(View.INVISIBLE);
+                            front_right_imageview.setVisibility(View.GONE);
+                            front_right_imagedelete.setVisibility(View.GONE);
                             frontRightfileId="0";
-                            Picasso.with(AddImageActivity.this).load("https://images.unsplash.com/photo-503454537195-1dcabb73ffb9?auto=format&fit=crop&w=750&q=80").error(R.mipmap.takephoto).into(front_right);
+                            Picasso.with(AddImageActivity.this).load("https://images.unsplash.com/photo-503454537195-1dcabb73ffb9?auto=format&fit=crop&w=750&q=80").error(R.drawable.no_img_found).into(front_right);
 
                         }else if(type.equalsIgnoreCase("FrontLeftAngleView")){
                              frontLeftfileUrl="";
                             progressCircle_progressBar.setVisibility(View.GONE);
-                            front_left_imageview.setVisibility(View.INVISIBLE);
+                            front_left_imageview.setVisibility(View.GONE);
+                            front_left_imagedelete.setVisibility(View.GONE);
                        frontLeftfileId="0";
-                            Picasso.with(AddImageActivity.this).load("https://images.unsplash.com/photo-503454537195-1dcabb73ffb9?auto=format&fit=crop&w=750&q=80").error(R.mipmap.takephoto).into(front_left);
+                            Picasso.with(AddImageActivity.this).load("https://images.unsplash.com/photo-503454537195-1dcabb73ffb9?auto=format&fit=crop&w=750&q=80").error(R.drawable.no_img_found).into(front_left);
 
                         }else if(type.equalsIgnoreCase("Windshield")){
                             windshieldfileUrl="";
                             windshieldfileId="0";
-                            windshield_imageview.setVisibility(View.INVISIBLE);
+                            windshield_imageview.setVisibility(View.GONE);
+                            windshield_imagedelete.setVisibility(View.GONE);
                             progressCircle_progressBar4.setVisibility(View.GONE);
-                            Picasso.with(AddImageActivity.this).load("https://images.unsplash.com/photo-503454537195-1dcabb73ffb9?auto=format&fit=crop&w=750&q=80").error(R.mipmap.takephoto).into(windshield);
+                            Picasso.with(AddImageActivity.this).load("https://images.unsplash.com/photo-503454537195-1dcabb73ffb9?auto=format&fit=crop&w=750&q=80").error(R.drawable.no_img_found).into(windshield);
 
                         }
                         else if(type.equalsIgnoreCase("Roof")){
                             rooffileUrl="";
                             rooffileId="0";
-                            roof_imageview.setVisibility(View.INVISIBLE);
+                            roof_imageview.setVisibility(View.GONE);
+                            roof_imagedelete.setVisibility(View.GONE);
                             progressCircle_progressBar5.setVisibility(View.GONE);
-                            Picasso.with(AddImageActivity.this).load("https://images.unsplash.com/photo-503454537195-1dcabb73ffb9?auto=format&fit=crop&w=750&q=80").error(R.mipmap.takephoto).into(roof);
+                            Picasso.with(AddImageActivity.this).load("https://images.unsplash.com/photo-503454537195-1dcabb73ffb9?auto=format&fit=crop&w=750&q=80").error(R.drawable.no_img_found).into(roof);
 
                         }
                     }
@@ -1261,6 +1657,7 @@ try {
             @Override
             public void onFailure(Call<RemoveImageModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail(AddImageActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
     }
@@ -1309,16 +1706,16 @@ try {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ContentValues values = new ContentValues();
-        values.put(MediaStore.Images.Media.TITLE, image_name);
-        values.put(MediaStore.Images.Media.DESCRIPTION, image_name);
-        values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis ());
-        values.put(MediaStore.Images.ImageColumns.BUCKET_ID, file.toString().toLowerCase(Locale.US).hashCode());
-        values.put(MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME, file.getName().toLowerCase(Locale.US));
-        values.put("_data", file.getAbsolutePath());
-
-        ContentResolver cr = getContentResolver();
-        cr.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+//        ContentValues values = new ContentValues();
+//        values.put(MediaStore.Images.Media.TITLE, image_name);
+//        values.put(MediaStore.Images.Media.DESCRIPTION, image_name);
+//        values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis ());
+//        values.put(MediaStore.Images.ImageColumns.BUCKET_ID, file.toString().toLowerCase(Locale.US).hashCode());
+//        values.put(MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME, file.getName().toLowerCase(Locale.US));
+//        values.put("_data", file.getAbsolutePath());
+//
+//        ContentResolver cr = getContentResolver();
+//        cr.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
     }
     @Override
     public void onCheckLatLongListner(Location location1) {

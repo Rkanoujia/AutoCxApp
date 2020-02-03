@@ -288,14 +288,14 @@ if(tripList.get(position).orderType!=null) {
 
               confirm.setEnabled(false);
               confirm.setClickable(false);
-              track.setEnabled(false);
-              track.setClickable(false);
-              track.setCompoundDrawableTintList(ColorStateList.valueOf(Color.GRAY));
+              track.setEnabled(true);
+              track.setClickable(true);
+//              track.setCompoundDrawableTintList(ColorStateList.valueOf(Color.GRAY));
           }else{
               confirm.setEnabled(false);
               confirm.setClickable(false);
-              track.setEnabled(false);
-              track.setClickable(false);
+              track.setEnabled(true);
+              track.setClickable(true);
           }
       }
 
@@ -380,6 +380,7 @@ if(tripList.get(position).orderType!=null) {
                           saveLoad(tripList.get(position).orderId, position);
                       } catch (Exception e) {
                           e.printStackTrace();
+                          new Util().sendSMTPMail((Activity) context,null,"CxE004",e,"");
                       }
                   }
               });
@@ -549,6 +550,7 @@ if(tripList.get(position).orderType!=null) {
             @Override
             public void onFailure(Call<RemoveOrderModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail((Activity) context,t,"CxE001",null,""+call.request().url());
             }
         });
     }
@@ -565,7 +567,7 @@ if(tripList.get(position).orderType!=null) {
                 try {
                     if (getdata.satus) {
                         new Util().sendAlert((Activity) context," Customer Order  Reference #: "+OrderId+" has been received","Shipped");
-                        MDToast mdToast = MDToast.makeText(context, "Load Shipped  Success", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+                        MDToast mdToast = MDToast.makeText(context, "Your load has been shipped to Carrier", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                         mdToast.show();
                         tripList.get(position).status="Shipped";
 //                        tripList.remove(position);
@@ -584,11 +586,13 @@ if(tripList.get(position).orderType!=null) {
                     }
                 }catch (Exception e){
                     e.printStackTrace();
+                    new Util().sendSMTPMail((Activity) context,null,"CxE004",e,"");
                 }
             }
             @Override
             public void onFailure(Call<GetVehicleIdModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail((Activity) context,t,"CxE001",null,""+call.request().url());
             }
         });
     }

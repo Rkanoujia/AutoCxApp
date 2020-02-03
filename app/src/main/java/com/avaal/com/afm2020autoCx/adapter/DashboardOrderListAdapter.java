@@ -1,5 +1,6 @@
 package com.avaal.com.afm2020autoCx.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -370,12 +371,14 @@ public class DashboardOrderListAdapter extends RecyclerView.Adapter<DashboardOrd
                     }
                 }catch (Exception e){
                     e.printStackTrace();
+                    new Util().sendSMTPMail((Activity) context,null,"CxE004",e,"");
                 }
             }
 
             @Override
             public void onFailure(Call<ConfirmOrderModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail((Activity) context,t,"CxE001",null,""+call.request().url().toString());
             }
         });
     }

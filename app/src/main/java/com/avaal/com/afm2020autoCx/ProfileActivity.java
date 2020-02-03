@@ -147,6 +147,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ProfileDataModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail(ProfileActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
     
@@ -194,6 +195,7 @@ void logout(){
         @Override
         public void onFailure(Call<LogoutModel> call, Throwable t) {
             call.cancel();
+            new Util().sendSMTPMail(ProfileActivity.this,t,"CxE001",null,""+call.request().url().toString());
         }
     });
 }

@@ -2,11 +2,13 @@ package com.avaal.com.afm2020autoCx;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 
 import android.support.annotation.UiThread;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
@@ -75,6 +77,8 @@ public class NewDashBoardActivity extends AppCompatActivity {
     TextView paid;
     @BindView(R.id.out_standing)
             TextView out_standing;
+    @BindView(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     String message="";
     PreferenceManager prf;
@@ -110,7 +114,17 @@ public class NewDashBoardActivity extends AppCompatActivity {
         getDashboardData();
         if(prf.getStringData("mainMenuTutorial").equalsIgnoreCase(""))
         tutorial();
-
+        swipeRefreshLayout.setColorSchemeColors(Color.GREEN, Color.RED, Color.GRAY);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Util util=new Util();
+                if(util.isNetworkAvailable(NewDashBoardActivity.this))
+                    getDashboardData();
+                else
+                    swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
     }
     @OnClick(R.id.account)
@@ -187,6 +201,7 @@ public class NewDashBoardActivity extends AppCompatActivity {
 
                 final DashBoardModel getdata = response.body();
                 try {
+                    swipeRefreshLayout.setRefreshing(false);
                     if (getdata.status) {
 // GetVehicleIdListModel tripDetails;
                         runOnUiThread(new Runnable(){
@@ -222,6 +237,7 @@ public class NewDashBoardActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<DashBoardModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail(NewDashBoardActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
     }

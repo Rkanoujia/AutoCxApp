@@ -83,7 +83,7 @@
                     android:textColor="@color/colorWhite"
                     android:layout_marginTop="8dp"
                     android:layout_gravity="center_horizontal"
-                    android:text="Add Inventory"
+                    android:text="Inventory"
                     android:gravity="center"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content" />

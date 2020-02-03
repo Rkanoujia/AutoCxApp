@@ -115,7 +115,10 @@ public interface APIInterface {
                                        @Field("DeclaredValue") String DeclaredValue,@Field("BuildYear") String BuildYear,@Field("BuildMonth") String BuildMonth,@Field("GVWRValue") String GVWRValue,@Field("GVWRUnit") String GVWRUnit,
                                        @Field("Diesel") String Diesel,@Field("SpeedoConversion") String SpeedoConversion,@Field("TitleConversion") String TitleConversion,@Field("Title") String Title,
                                        @Field("BillOfSale") String BillOfSale,@Field("TrackingConfirmation") String TrackingConfirmation,@Field("SavedItemID") String SavedItemID,@Field("IsInventory") String IsInventory,
-                                       @Field("InventoryDate") String InventoryDate,@Field("OrderDate") String OrderDate,@Field("CustomerCode") String CustomerCode,@Field("IsReleaseForm") String IsReleaseForm,@Field("Color") String Color,@Field("DeclaredCurrency") String DeclaredCurrency,@Field("CreatedBy") String CreatedBy,@Field("CreatedOn") String CreatedOn,@Field("CorporateId") String CorporateId,@Header("Authorization") String authorization, @Header("Content-Type") String contentType);
+                                       @Field("InventoryDate") String InventoryDate,@Field("OrderDate") String OrderDate,@Field("CustomerCode") String CustomerCode,@Field("IsReleaseForm") String IsReleaseForm,@Field("Color") String Color,
+                                       @Field("DeclaredCurrency") String DeclaredCurrency,@Field("Latitude") String Latitude,@Field("Longitude") String Longitude,
+                                       @Field("CreatedBy") String CreatedBy,@Field("CreatedOn") String CreatedOn,@Field("CorporateId") String CorporateId,
+                                       @Header("Authorization") String authorization, @Header("Content-Type") String contentType);
 
     @POST("/Api/orderitem/GetTempVehicleID")
     Call<GetVehicleIdModel> getTempVehicleIds(@Body GetVehicleIdModel user);

@@ -1,5 +1,6 @@
 package com.avaal.com.afm2020autoCx.adapter;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -28,6 +29,7 @@ import java.util.Map;
 
 
 import extra.PreferenceManager;
+import extra.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -202,6 +204,7 @@ void deleteImg(String id, final int position){
         @Override
         public void onFailure(Call<RemoveImageModel> call, Throwable t) {
             call.cancel();
+            new Util().sendSMTPMail((Activity) context,t,"CxE001",null,""+call.request().url().toString());
         }
     });
 }

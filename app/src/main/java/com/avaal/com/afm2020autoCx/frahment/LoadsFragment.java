@@ -151,10 +151,17 @@ public class LoadsFragment extends Fragment {
             public void onFailure(Call<OrderListModel> call, Throwable t) {
                 call.cancel();
                 hideAnimation();
-                MDToast mdToast = MDToast.makeText(getActivity(), "Some Technical Issue", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
-                mdToast.show();
+                new Util().sendSMTPMail(getActivity(),t,"CxE001",null,""+call.request().url().toString());
             }
         });
+    }
+    @OnClick(R.id.add_order)
+    void add_order(){
+        Intent j = new Intent(getActivity(), CreateTripType.class);
+        j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        j.putExtra("AuthKey", getActivity().getIntent().getStringExtra("AuthKey"));
+        startActivity(j);
+        getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
     @OnClick(R.id.new_vehicle)
     void  new_vehicle(){

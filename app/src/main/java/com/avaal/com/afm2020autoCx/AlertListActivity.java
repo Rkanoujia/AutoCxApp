@@ -30,10 +30,7 @@ public class AlertListActivity extends AppCompatActivity {
     }
     @OnClick(R.id.home_)
     void home(){
-        Intent j = new Intent(this, DashBoardBottomMenu.class);
-//        overridePendingTransition(R.anim.trans_left_in, R.anim.trans_left_out);
-        j.putExtra("open","home");
-        startActivity(j);
+
     }
     @OnClick(R.id.back)
     void back(){

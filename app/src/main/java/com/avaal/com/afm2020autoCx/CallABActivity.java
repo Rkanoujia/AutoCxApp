@@ -152,6 +152,7 @@ String Phn_call;
             @Override
             public void onFailure(Call<CompanyProfileModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail(CallABActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
 

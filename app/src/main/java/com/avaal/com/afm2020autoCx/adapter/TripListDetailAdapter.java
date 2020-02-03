@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.avaal.com.afm2020autoCx.InventoryVehicleListActivity;
 import com.avaal.com.afm2020autoCx.MapsActivity;
-import com.avaal.com.afm2020autoCx.NewMapsActivity;
 import com.avaal.com.afm2020autoCx.R;
 import com.avaal.com.afm2020autoCx.models.TripListModel;
 import com.valdesekamdem.library.mdtoast.MDToast;

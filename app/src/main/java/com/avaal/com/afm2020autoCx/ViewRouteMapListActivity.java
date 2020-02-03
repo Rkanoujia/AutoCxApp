@@ -218,6 +218,7 @@ public class ViewRouteMapListActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<TripListModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail(ViewRouteMapListActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
     }
@@ -267,6 +268,7 @@ public class ViewRouteMapListActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ItemListModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail(ViewRouteMapListActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
     }

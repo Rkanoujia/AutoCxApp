@@ -248,6 +248,7 @@ public class AddLocationActivity extends AppCompatActivity {
                             try {
                                 adapter.notifyDataSetChanged();
                             } catch (Exception e) {
+                                new Util().sendSMTPMail(AddLocationActivity.this,null,"CxE004",e,"");
                                 e.printStackTrace();
                             }
                         }
@@ -256,6 +257,7 @@ public class AddLocationActivity extends AppCompatActivity {
                     setSpinner1(type);
                 }catch (Exception e){
                     e.printStackTrace();
+                    new Util().sendSMTPMail(AddLocationActivity.this,null,"CxE004",e,"");
                 }
 
 
@@ -265,6 +267,7 @@ public class AddLocationActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<DropDownModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail(AddLocationActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
     }
@@ -488,6 +491,7 @@ public class AddLocationActivity extends AppCompatActivity {
                         stateSpin.setEnabled(false);
                     }catch (Exception e){
                         e.printStackTrace();
+                        new Util().sendSMTPMail(AddLocationActivity.this,null,"CxE004",e,"");
                     }
 
                 }
@@ -504,6 +508,7 @@ public class AddLocationActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<PrimaryInfoDetailModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail(AddLocationActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
     }
@@ -545,6 +550,7 @@ public class AddLocationActivity extends AppCompatActivity {
 
                     } catch (Exception e) {
                         e.printStackTrace();
+                        new Util().sendSMTPMail(AddLocationActivity.this,null,"CxE004",e,"");
                     }
 //                    }
 //                    else{
@@ -562,6 +568,7 @@ public class AddLocationActivity extends AppCompatActivity {
             public void onFailure(Call<MasterDropDownModel> call, Throwable t) {
                 hideAnimation();
                 call.cancel();
+                new Util().sendSMTPMail(AddLocationActivity.this,t,"CxE001",null,""+call.request().url().toString());
 
             }
         });
@@ -636,6 +643,7 @@ public class AddLocationActivity extends AppCompatActivity {
 //                hideAnimation();
                 hideAnimation();
                 call.cancel();
+                new Util().sendSMTPMail(AddLocationActivity.this,t,"CxE001",null,""+call.request().url().toString());
 
             }
         });

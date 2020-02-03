@@ -1,5 +1,6 @@
 package com.avaal.com.afm2020autoCx.adapter;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -30,6 +31,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import extra.PreferenceManager;
+import extra.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -130,7 +132,7 @@ public class VehicleListAdapter extends RecyclerView.Adapter<VehicleListAdapter.
 //                if(tripList.get(position).isInventory)
 //                    holder.item.setBackgroundTintList();
 
-            if (!prf.getStringData("OrderStatus").equalsIgnoreCase("saved")) {
+            if (!prf.getStringData("OrderStatus").equalsIgnoreCase("saved") && !prf.getStringData("OrderStatus").equalsIgnoreCase("Shipped")) {
                 holder.delete_.setVisibility(View.GONE);
             }else if(tripList.get(position).isInventory){
 //                holder.item.setBackground(R.drawable.round_corners);
@@ -278,6 +280,7 @@ public class VehicleListAdapter extends RecyclerView.Adapter<VehicleListAdapter.
             @Override
             public void onFailure(Call<RemoveVehicleModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail((Activity) context,t,"CxE001",null,""+call.request().url().toString());
             }
         });
     }

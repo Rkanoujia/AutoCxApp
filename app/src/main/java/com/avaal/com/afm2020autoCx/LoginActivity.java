@@ -97,6 +97,7 @@ public class LoginActivity extends AppCompatActivity implements FingerprintHelpe
              }
          }catch (Exception e){
              e.printStackTrace();
+             new Util().sendSMTPMail(LoginActivity.this,null,"CxE004",e,"");
          }
         token = FirebaseInstanceId.getInstance().getToken();
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -126,12 +127,14 @@ try {
                     login();
                 } catch (Exception e) {
                     e.printStackTrace();
+                    new Util().sendSMTPMail(LoginActivity.this,null,"CxE004",e,"");
                 }
             }
         }
     }
 }catch (Exception e){
              e.printStackTrace();
+    new Util().sendSMTPMail(LoginActivity.this,null,"CxE004",e,"");
 }
 
         userName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -249,15 +252,15 @@ void driverApp(){
         call1.enqueue(new Callback<LoginModel>() {
             @Override
             public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
-
+                 String  ggg=null;
                 try {
-
                     if (response.message().equalsIgnoreCase("ok")) {
 //                hideAnimation();
                         LoginModel login = response.body();
                         if (login.error == null) {
 //                            MDToast mdToast = MDToast.makeText(LoginActivity.this, "Login Successfully", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
 //                            mdToast.show();
+
 
                             prf = new PreferenceManager(LoginActivity.this);
                             prf.saveStringData("accessToken", login.access_token);
@@ -329,8 +332,9 @@ void driverApp(){
                     }
                 }catch (Exception e){
                    e.printStackTrace();
-                    MDToast mdToast = MDToast.makeText(LoginActivity.this, "Cx01-Server Communication Error" , MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
-                    mdToast.show();
+
+
+                    new Util().sendSMTPMail(LoginActivity.this,null,"CxE004",e,"");
                }
 
             }
@@ -338,8 +342,8 @@ void driverApp(){
             @Override
             public void onFailure(Call<LoginModel> call, Throwable t) {
                 call.cancel();
-                MDToast mdToast = MDToast.makeText(LoginActivity.this, "Cx01-Server Communication Error" , MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
-                mdToast.show();
+                new Util().sendSMTPMail(LoginActivity.this,t,"CxE001",null,""+call.request().url().toString());
+
                 hideAnimation();
             }
         });
@@ -493,11 +497,13 @@ void forget(){
                     }
                 }catch (Exception e){
                     e.printStackTrace();
+                    new Util().sendSMTPMail(LoginActivity.this,null,"CxE004",e,"");
                 }
             }
             @Override
             public void onFailure(Call<ProfileDataModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail(LoginActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
 

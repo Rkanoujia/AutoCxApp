@@ -82,7 +82,11 @@ public class VehicleListActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if(prf.getStringData("OrderStatus")!=null) {
+
+            Log.e("orderStatus 33",""+prf.getStringData("OrderStatus"));
+
             if (prf.getStringData("OrderStatus").equalsIgnoreCase("Saved")) {
+
                 save_load.setClickable(true);
                 save_load.setEnabled(true);
                 ship_load.setClickable(true);
@@ -92,14 +96,21 @@ public class VehicleListActivity extends AppCompatActivity {
                 showAnimation();
                 getVehicleList(orderId);
             }else if (prf.getStringData("OrderStatus").equalsIgnoreCase("Shipped")) {
-                add_vehicle.setVisibility(View.GONE);
-                bottom_tab.setVisibility(View.GONE);
+//                add_vehicle.setVisibility(View.GONE);
+//                bottom_tab.setVisibility(View.GONE);
 //                ship_load.setVisibility(View.GONE);
-                top_linear.setVisibility(View.GONE);
-                save_load.setClickable(false);
+//                top_linear.setVisibility(View.GONE);
+//                save_load.setClickable(false);
+//                save_load.setEnabled(false);
+//                ship_load.setClickable(false);
+//                ship_load.setEnabled(false);
+                save_load.setVisibility(View.GONE);
                 save_load.setEnabled(false);
-                ship_load.setClickable(false);
-                ship_load.setEnabled(false);
+                ship_load.setText("Update Load");
+                ship_load.setClickable(true);
+                ship_load.setEnabled(true);
+                bottom_tab.setVisibility(View.VISIBLE);
+                add_vehicle.setVisibility(View.VISIBLE);
                 showAnimation();
                 getVehicleList(orderId);
             }else {
@@ -164,6 +175,7 @@ public class VehicleListActivity extends AppCompatActivity {
      orderId = getIntent().getStringExtra("OrderId");
  }catch (Exception e){
      e.printStackTrace();
+     new Util().sendSMTPMail(VehicleListActivity.this,null,"CxE004",e,"");
  }
          apiInterface = APIClient.getClient().create(APIInterface.class);
 //        getVehicleList(orderId);
@@ -172,7 +184,7 @@ public class VehicleListActivity extends AppCompatActivity {
 
 
         if(prf.getStringData("OrderStatus")!=null) {
-            if (prf.getStringData("OrderStatus").equalsIgnoreCase("Saved")) {
+            if (prf.getStringData("OrderStatus").equalsIgnoreCase("Saved") || prf.getStringData("OrderStatus").equalsIgnoreCase("Shipped")) {
                 save_load.setClickable(true);
                 save_load.setEnabled(true);
                 ship_load.setClickable(true);
@@ -207,7 +219,7 @@ public class VehicleListActivity extends AppCompatActivity {
     }
     @OnClick(R.id.back)
     void back(){
-        if (prf.getStringData("OrderStatus").equalsIgnoreCase("Saved")) {
+        if (prf.getStringData("OrderStatus").equalsIgnoreCase("Saved")|| prf.getStringData("OrderStatus").equalsIgnoreCase("Shipped") ) {
             if (getdata3.size() > 0) {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
                 // Setting Dialog Message
@@ -263,7 +275,7 @@ public class VehicleListActivity extends AppCompatActivity {
 
                 Intent i=new Intent(VehicleListActivity.this,AddVehicleActivity.class);
                     i.putExtra("VehicleId",getdata.oredrId);
-                    prf.saveStringData("OrderStatus","Saved");
+//                    prf.saveStringData("OrderStatus","Saved");
                     i.putExtra("OrderId",""+orderid);
                     i.putExtra("ForInventory", "false");
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -313,11 +325,13 @@ public class VehicleListActivity extends AppCompatActivity {
 //                    }
                 }catch (Exception e){
                     e.printStackTrace();
+                    new Util().sendSMTPMail(VehicleListActivity.this,null,"CxE004",e,"");
                 }
             }
             @Override
             public void onFailure(Call<GetVehicleIdListModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail(VehicleListActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
     }
@@ -357,11 +371,13 @@ public class VehicleListActivity extends AppCompatActivity {
 //                    }
                 }catch (Exception e){
                     e.printStackTrace();
+                    new Util().sendSMTPMail(VehicleListActivity.this,null,"CxE004",e,"");
                 }
             }
             @Override
             public void onFailure(Call<GetVehicleIdListModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail(VehicleListActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
     }
@@ -385,6 +401,7 @@ public class VehicleListActivity extends AppCompatActivity {
                     submitloadforinv("forsave");
                 } catch (Exception e) {
                     e.printStackTrace();
+                    new Util().sendSMTPMail(VehicleListActivity.this,null,"CxE004",e,"");
                 }
 //                deleteVihicle(tripList.get(position).vehiocleId, position);
             }
@@ -423,6 +440,7 @@ public class VehicleListActivity extends AppCompatActivity {
                     submitloadforinv("forship");
                 } catch (Exception e) {
                     e.printStackTrace();
+                    new Util().sendSMTPMail(VehicleListActivity.this,null,"CxE004",e,"");
                 }
 
 //                deleteVihicle(tripList.get(position).vehiocleId, position);
@@ -453,8 +471,9 @@ public class VehicleListActivity extends AppCompatActivity {
                     str1 = this.orderId;
 //                        getVehicleList(orderId);
                     }else if (prf.getStringData("OrderStatus").equalsIgnoreCase("Shipped")) {
-                    getVehicleList(orderId);
-                    top_linear.setVisibility(View.GONE);
+                    showAnimation();
+//                    getVehicleList(orderId);
+//                    top_linear.setVisibility(View.GONE);
                 }
                     else {
                         showAnimation();
@@ -583,11 +602,13 @@ public class VehicleListActivity extends AppCompatActivity {
                     }
                 }catch (Exception e){
                     e.printStackTrace();
+                    new Util().sendSMTPMail(VehicleListActivity.this,null,"CxE004",e,"");
                 }
             }
             @Override
             public void onFailure(Call<GetVehicleIdModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail(VehicleListActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
     }
@@ -607,7 +628,7 @@ public class VehicleListActivity extends AppCompatActivity {
                 try {
                     if (getdata.satus) {
                         new Util().sendAlert(VehicleListActivity.this," Customer Order  Reference #: "+orderId+" has been received","Shipped");
-                        MDToast mdToast = MDToast.makeText(VehicleListActivity.this, "Shipped Load Successfully", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+                        MDToast mdToast = MDToast.makeText(VehicleListActivity.this, "Your load has been shipped to Carrier", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                         mdToast.show();
                         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                         finishAffinity();
@@ -624,11 +645,13 @@ public class VehicleListActivity extends AppCompatActivity {
                     }
                 }catch (Exception e){
                     e.printStackTrace();
+                    new Util().sendSMTPMail(VehicleListActivity.this,null,"CxE004",e,"");
                 }
             }
             @Override
             public void onFailure(Call<GetVehicleIdModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail(VehicleListActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
     }
@@ -677,12 +700,14 @@ public class VehicleListActivity extends AppCompatActivity {
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
+                        new Util().sendSMTPMail(VehicleListActivity.this,null,"CxE004",e,"");
                     }
                 }
 
                 @Override
                 public void onFailure(Call<InventoryOrderModel> call, Throwable t) {
                     call.cancel();
+                    new Util().sendSMTPMail(VehicleListActivity.this,t,"CxE001",null,""+call.request().url().toString());
                 }
             });
         }
@@ -753,11 +778,13 @@ public class VehicleListActivity extends AppCompatActivity {
 
                 }catch (Exception e){
                     e.printStackTrace();
+                    new Util().sendSMTPMail(VehicleListActivity.this,null,"CxE004",e,"");
                 }
             }
             @Override
             public void onFailure(Call<GetVehicleIdListModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail(VehicleListActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
     }

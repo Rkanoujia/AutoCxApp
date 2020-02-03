@@ -12,20 +12,8 @@ import android.os.CancellationSignal;
 import android.support.v4.app.ActivityCompat;
 import android.widget.TextView;
 
-import com.avaal.com.afm2020autoCx.APIClient;
-import com.avaal.com.afm2020autoCx.APIInterface;
-import com.avaal.com.afm2020autoCx.DashBoardBottomMenu;
-import com.avaal.com.afm2020autoCx.LoginActivity;
 import com.avaal.com.afm2020autoCx.MainActivity;
 import com.avaal.com.afm2020autoCx.R;
-import com.avaal.com.afm2020autoCx.models.LoginModel;
-import com.valdesekamdem.library.mdtoast.MDToast;
-
-import extra.PreferenceManager;
-import extra.Util;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 /**

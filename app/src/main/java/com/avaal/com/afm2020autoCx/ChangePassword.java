@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import extra.LoaderScreen;
 import extra.PreferenceManager;
+import extra.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -172,6 +173,7 @@ showAnimation();
             @Override
             public void onFailure(Call<ChangePasswordModel> call, Throwable t) {
                 call.cancel();
+                new Util().sendSMTPMail(ChangePassword.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
     }
