@@ -227,7 +227,6 @@ public class InventoryVehicleListActivity extends AppCompatActivity {
                         Intent i=new Intent(InventoryVehicleListActivity.this,AddVehicleActivity.class);
                         i.putExtra("VehicleId",getdata.oredrId);
                         i.putExtra("OrderId","0");
-                        i.putExtra("IsAdd","true");
     //                    prf.saveStringData("VehicleType","true");
                         i.putExtra("VehicleType","true");
                         i.putExtra("vihiclevinList",list);

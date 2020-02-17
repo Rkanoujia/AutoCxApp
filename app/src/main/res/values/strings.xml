@@ -27,7 +27,7 @@
     <string name="name">AFM Auto Customer App \n \n</string>
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
     <string name="title_activity_maps">Map</string>
-    <string name="shortcut_label_create_new_task">Add Trip</string>
+    <string name="shortcut_label_create_new_task">Create Load</string>
     <string name="shortcut_label_new_task">new task</string>
     <string name="shortcut_label_disabled">disable</string>
     <string name="pickup_date">Pickup Date</string>

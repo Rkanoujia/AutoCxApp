@@ -221,10 +221,8 @@ public class VehicleListAdapter extends RecyclerView.Adapter<VehicleListAdapter.
                 if (prf.getStringData("OrderStatus").equalsIgnoreCase("saved") || prf.getStringData("OrderStatus").equalsIgnoreCase("shipped")) {
                     Intent intent = new Intent(context, AddVehicleActivity.class);
                     if (tripList.get(position).getSelect() != null && tripList.get(position).getSelect()) {
-                        intent.putExtra("ForInventory", "false");
                         intent.putExtra("VehicleType", "true");
                     } else {
-                        intent.putExtra("ForInventory", "false");
                         intent.putExtra("VehicleType", "false");
                     }
                     intent.putExtra("OrderId", tripList.get(position).TempOrderID);
@@ -235,10 +233,8 @@ public class VehicleListAdapter extends RecyclerView.Adapter<VehicleListAdapter.
                 }else{
                     Intent intent = new Intent(context, AddVehicleActivity.class);
                     if (tripList.get(position).getSelect() != null && tripList.get(position).getSelect()) {
-                        intent.putExtra("ForInventory", "false");
                         intent.putExtra("VehicleType", "true");
                     } else {
-                        intent.putExtra("ForInventory", "false");
                         intent.putExtra("VehicleType", "false");
                     }
                     intent.putExtra("OrderId", tripList.get(position).TempOrderID);

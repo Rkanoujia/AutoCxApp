@@ -277,7 +277,7 @@ public class VehicleListActivity extends AppCompatActivity {
                     i.putExtra("VehicleId",getdata.oredrId);
 //                    prf.saveStringData("OrderStatus","Saved");
                     i.putExtra("OrderId",""+orderid);
-                    i.putExtra("ForInventory", "false");
+                    i.putExtra("VehicleType", "false");
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                    i.putExtra("vihiclevinList",list);
                 startActivity(i);

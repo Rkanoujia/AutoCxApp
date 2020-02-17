@@ -28,6 +28,7 @@ import android.widget.TimePicker;
 import com.avaal.com.afm2020autoCx.models.DropDownModel;
 import com.avaal.com.afm2020autoCx.models.GetVehicleIdListModel;
 import com.avaal.com.afm2020autoCx.models.LocationDetailModel;
+import com.avaal.com.afm2020autoCx.models.MilesModel;
 import com.avaal.com.afm2020autoCx.models.OrderDetailModel;
 import com.avaal.com.afm2020autoCx.models.OrderListModel;
 import com.avaal.com.afm2020autoCx.models.PrimaryInfoDetailModel;
@@ -96,6 +97,8 @@ public class RouteSelectionActivity extends AppCompatActivity {
     TextView save_btn;
     @BindView(R.id.linear)
     LinearLayout linear;
+    @BindView(R.id.miles)
+    TextView miles;
 
     @BindView(R.id.main_selection)
     FrameLayout mainlayout;
@@ -120,6 +123,7 @@ public class RouteSelectionActivity extends AppCompatActivity {
     Calendar myCalendar = Calendar.getInstance();
     Calendar dCalendar = Calendar.getInstance();
     Calendar yCalendar = Calendar.getInstance();
+    String distanceUnit,distance;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -692,6 +696,11 @@ public class RouteSelectionActivity extends AppCompatActivity {
                 pickupId=pickupLocationId.get(pickupLocationName.indexOf(pickupName));
                 add.setImageBitmap(new MyImage().decodeSampledBitmapFromResource(getResources(), R.mipmap.info, 30, 30));
                 Log.e("pickupId",""+pickupName);
+                try {
+                    getMiles();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 //                InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 //                in.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
@@ -703,8 +712,11 @@ public class RouteSelectionActivity extends AppCompatActivity {
 
                 pickupName=pickupLocationName.get(i);
                 Log.e("pickupId2",""+pickupName);
-
-
+                try {
+                    getMiles();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
 
             }
@@ -805,6 +817,11 @@ public class RouteSelectionActivity extends AppCompatActivity {
 //                InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 //                in.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 add1.setImageBitmap(new MyImage().decodeSampledBitmapFromResource(getResources(), R.mipmap.info, 30, 30));
+                try {
+                    getMiles();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
         deliverySpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -812,7 +829,11 @@ public class RouteSelectionActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 deliveryId=deliveryLocationId.get(i);
                 deliveryName=deliveryLocationName.get(i);
-
+                try {
+                    getMiles();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
             }
 
@@ -1137,7 +1158,7 @@ public class RouteSelectionActivity extends AppCompatActivity {
         showAnimation();
 //        RouteSelectionModel vindetail=new RouteSelectionModel(prf.getStringData("authKey"),orderType,pickupId,
 //                deliveryId,prf.getStringData("carrierPrimaryId"),pickupdateTime[0],pickupdateTime[1]+" "+pickupdateTime[2],deliverydateTime[1]+" "+deliverydateTime[2],deliverydateTime[0],""+pickup_remark.getText(),""+delivery_remark.getText(),yardId,yardDate,yardtime,""/*+yard_remark.getText(*/,tempOrderId);
-              Call<RouteSelectionModel> call1 = apiInterface.getTempIds(""+tempOrderId,orderType,""+pickupId,new Util().getUtcToOrderdateTime(pickupdateTime),""+ prf.getStringData("userCode"),""+deliveryId,new Util().getUtcToOrderdateTime(deliverydateTime),""+pickup_remark.getText(),""+delivery_remark.getText(),yardId,yardDate+" "+yardtime,"","0","",""+ prf.getStringData("userName"),new Util().getDateTime(),""+ prf.getStringData("corporateId"),"bearer "+ prf.getStringData("accessToken"),"application/x-www-form-urlencoded");
+              Call<RouteSelectionModel> call1 = apiInterface.getTempIds(""+tempOrderId,orderType,""+pickupId,new Util().getUtcToOrderdateTime(pickupdateTime),""+ prf.getStringData("userCode"),""+deliveryId,new Util().getUtcToOrderdateTime(deliverydateTime),""+pickup_remark.getText(),""+distance,""+distanceUnit,""+delivery_remark.getText(),yardId,yardDate+" "+yardtime,"","0","",""+ prf.getStringData("userName"),new Util().getDateTime(),""+ prf.getStringData("corporateId"),"bearer "+ prf.getStringData("accessToken"),"application/x-www-form-urlencoded");
         call1.enqueue(new Callback<RouteSelectionModel>() {
             @Override
             public void onResponse(Call<RouteSelectionModel> call, Response<RouteSelectionModel> response) {
@@ -1258,6 +1279,11 @@ public class RouteSelectionActivity extends AppCompatActivity {
                 deliveryId = listObject.dropId;
                 deliverySpin.setText(deliveryLocationName.get(deliveryLocationId.indexOf(listObject.dropId)));
             }
+            try {
+                getMiles();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 //                       if(!prf.getStringData("OrderStatus").equalsIgnoreCase("save")){
 //                           pickupSpin.dismissDropDown();
 //                           deliverySpin.dismissDropDown();
@@ -1277,72 +1303,31 @@ public class RouteSelectionActivity extends AppCompatActivity {
             Log.e("data",listObject.PickupName);
         }
     }
-   void getOrderdetail(String id,String from)throws Exception{
+   void getMiles()throws Exception{
+       miles.setText("Total "+"Miles : "+0.0);
+        if(pickupId.equalsIgnoreCase("0"))
+            return;
 
+        if(deliveryId.equalsIgnoreCase("0"))
+            return;
 
-
-
-
-
-
+       distanceUnit="";
+       distance="";
 
        final PreferenceManager prf=new PreferenceManager(this);
-       Call<OrderDetailModel> call1 = apiInterface.getOrderDetail(""+id,"",""+ prf.getStringData("userCode"),""+ prf.getStringData("corporateId"),"bearer "+ prf.getStringData("accessToken"),"application/json");
-       call1.enqueue(new Callback<OrderDetailModel>() {
+       Call<MilesModel> call1 = apiInterface.getTotalMiles(""+pickupId,""+deliveryId,""+ prf.getStringData("corporateId"),"bearer "+ prf.getStringData("accessToken"),"application/json");
+       call1.enqueue(new Callback<MilesModel>() {
            @Override
-           public void onResponse(Call<OrderDetailModel> call, Response<OrderDetailModel> response) {
+           public void onResponse(Call<MilesModel> call, Response<MilesModel> response) {
            hideAnimation();
-               OrderDetailModel getdata = response.body();
+               MilesModel getdata = response.body();
                try{
 
-
-                       if(getdata.satus) {
+                       if(getdata.status) {
 //                   SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
-                   String strDate = null,endDate=null;
-
-
-                       strDate = new Util().getUtcToCurrentTime(getdata.dataValue.PickupDateTime);
-                       endDate = new Util().getUtcToCurrentTime(getdata.dataValue.DropDateTime);
-
-
-                       pickupdate.setText("" + strDate);
-                       deliveydate.setText("" + endDate);
-
-                       pickup_remark.setText(getdata.dataValue.pickupNote);
-                       delivery_remark.setText(getdata.dataValue.dropNote);
-                       if(pickupLocationId.indexOf(getdata.dataValue.pickupId)==-1){
-                           pickupId="0";
-                           pickupSpin.setText("");
-                       }else{
-                           pickupId = getdata.dataValue.pickupId;
-                           pickupSpin.setText(pickupLocationName.get(pickupLocationId.indexOf(getdata.dataValue.pickupId)));
-                       }
-                       if(deliveryLocationId.indexOf(getdata.dataValue.dropId)==-1){
-                           deliveryId="0";
-                           deliverySpin.setText("");
-                       }else{
-                           deliveryId = getdata.dataValue.dropId;
-                           deliverySpin.setText(deliveryLocationName.get(deliveryLocationId.indexOf(getdata.dataValue.dropId)));
-                       }
-//                       if(!prf.getStringData("OrderStatus").equalsIgnoreCase("save")){
-//                           pickupSpin.dismissDropDown();
-//                           deliverySpin.dismissDropDown();
-//                       }
-                   add.setImageBitmap(new MyImage().decodeSampledBitmapFromResource(getResources(), R.mipmap.info, 30, 30));
-                   add1.setImageBitmap(new MyImage().decodeSampledBitmapFromResource(getResources(), R.mipmap.info, 30, 30));
-                       pickupSpin.dismissDropDown();
-                       deliverySpin.dismissDropDown();
-//                       pickupSpin.setText(pickupLocationName.get(pickupLocationId.indexOf(getdata.dataValue.pickupId)));
-//                       deliverySpin.setText(deliveryLocationName.get(deliveryLocationId.indexOf(getdata.dataValue.dropId)));
-                       if(prf.getStringData("OrderStatus").equalsIgnoreCase("Saved")|| prf.getStringData("OrderStatus").equalsIgnoreCase("Shipped")){
-                           save_btn.setText("Update");
-                           save_btn.setVisibility(View.VISIBLE);
-                       }
-
-
-
-
-
+                           distanceUnit=getdata.dataValuer.DistanceUnit;
+                                   distance=getdata.dataValuer.TotalMiles;
+                           miles.setText("Total "+getdata.dataValuer.DistanceUnit+" : "+getdata.dataValuer.TotalMiles);
 
 // GetVehicleIdListModel tripDetails;
 //                   OrderListAdapter adapterd = new OrderListAdapter(getdata3,getActivity());
@@ -1357,10 +1342,11 @@ public class RouteSelectionActivity extends AppCompatActivity {
                }
                }catch (Exception e){
                    e.printStackTrace();
+                   new Util().sendSMTPMail(RouteSelectionActivity.this,null,"CxE004",e,""+call.request().url().toString());
                }
            }
            @Override
-           public void onFailure(Call<OrderDetailModel> call, Throwable t) {
+           public void onFailure(Call<MilesModel> call, Throwable t) {
                call.cancel();
                new Util().sendSMTPMail(RouteSelectionActivity.this,t,"CxE001",null,""+call.request().url().toString());
                MDToast mdToast = MDToast.makeText(RouteSelectionActivity.this, "Some Technical Issue", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
@@ -1370,7 +1356,6 @@ public class RouteSelectionActivity extends AppCompatActivity {
        });
     }
     void popUp(String id)throws Exception{
-
         final Dialog settingsDialog = new Dialog(this);
         settingsDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         settingsDialog.setContentView(getLayoutInflater().inflate(R.layout.view_location

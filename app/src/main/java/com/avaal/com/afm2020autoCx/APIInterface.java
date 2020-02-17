@@ -23,6 +23,7 @@ import com.avaal.com.afm2020autoCx.models.LoginModel;
 import com.avaal.com.afm2020autoCx.models.LogoutModel;
 import com.avaal.com.afm2020autoCx.models.LookUpModel;
 import com.avaal.com.afm2020autoCx.models.MasterDropDownModel;
+import com.avaal.com.afm2020autoCx.models.MilesModel;
 import com.avaal.com.afm2020autoCx.models.OrderDetailModel;
 import com.avaal.com.afm2020autoCx.models.OrderListModel;
 import com.avaal.com.afm2020autoCx.models.PrimaryInfoDetailModel;
@@ -105,7 +106,9 @@ public interface APIInterface {
     @FormUrlEncoded
     @POST("/api/CustomerApp/SaveTempLoad")
     Call<RouteSelectionModel> getTempIds(@Field("TempOrderID") String TempOrderID,@Field("OrderType") String OrderType,@Field("PickupCode") String PickupCode,@Field("PickupDateTime") String PickupDateTime,
-            @Field("PrimaryInfoCode") String PrimaryInfoCode,@Field("DropCode") String DropCode,@Field("DropDateTime") String DropDateTime,@Field("PickupNotes") String PickupNotes,@Field("DropNotes") String DropNotes,@Field("StopCode") String StopCode,@Field("StopDateTime") String StopDateTime,@Field("StopNotes") String StopNotes,@Field("IsSaved") String IsSaved,@Field("IsDeleted") String IsDeleted,
+            @Field("PrimaryInfoCode") String PrimaryInfoCode,@Field("DropCode") String DropCode,@Field("DropDateTime") String DropDateTime,@Field("PickupNotes") String PickupNotes,
+                                         @Field("Distance") String Distance,@Field("DistanceUnit") String DistanceUnit,
+                                         @Field("DropNotes") String DropNotes,@Field("StopCode") String StopCode,@Field("StopDateTime") String StopDateTime,@Field("StopNotes") String StopNotes,@Field("IsSaved") String IsSaved,@Field("IsDeleted") String IsDeleted,
              @Field("CreatedBy") String CreatedBy,@Field("CreatedOn") String CreatedOn,@Field("CorporateId") String CorporateId,@Header("Authorization") String authorization, @Header("Content-Type") String contentType);
 
     @FormUrlEncoded
@@ -258,6 +261,10 @@ Call<OrderListModel> getOrderList(@Query("Status") String Status,@Query("Corpora
 
     @GET("/api/CustomerApp/GetAFMDocumentList")
     Call<GetImageModel> getAFMImage(@Query("ItemCode") String ItemCode,@Query("DocumentType") String DocumentType,@Query("CorporateId") String CorporateId,@Header("Authorization") String authorization, @Header("Content-Type") String contentType);
+
+
+    @GET("/api/Common/GetTotalMiles?")
+    Call<MilesModel> getTotalMiles(@Query("Origin_LocCode") String Origin_LocCode, @Query("Destination_LocCode") String Destination_LocCode, @Query("CorporateId") String CorporateId, @Header("Authorization") String authorization, @Header("Content-Type") String contentType);
 
 
 }

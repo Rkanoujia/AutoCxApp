@@ -2,7 +2,6 @@
 <shortcut
     android:shortcutId="Create_Load"
     android:enabled="true"
-    android:icon="@drawable/ic_action_add"
     android:shortcutLongLabel="@string/shortcut_label_create_new_task"
     android:shortcutShortLabel="@string/shortcut_label_new_task"
     android:shortcutDisabledMessage="@string/shortcut_label_disabled" >

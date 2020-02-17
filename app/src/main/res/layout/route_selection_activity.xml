@@ -486,7 +486,9 @@
                                     android:src="@drawable/ic_action_add" />
                             </LinearLayout>
                         </LinearLayout>
-                    <LinearLayout android:orientation="vertical"
+                    <LinearLayout
+                        android:layout_marginStart="20dp"
+                        android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="250dp">
 
@@ -506,6 +508,16 @@
                 </LinearLayout>
             </android.support.v4.widget.NestedScrollView>
         </LinearLayout>
+        <TextView
+            android:id="@+id/miles"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:background="@color/gray"
+            android:layout_above="@+id/save_li"
+            android:textColor="@color/colorPrimary"
+            android:text="Total"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <LinearLayout
             android:id="@+id/save_li"
             android:layout_alignParentBottom="true"

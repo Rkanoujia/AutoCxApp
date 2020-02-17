@@ -145,6 +145,14 @@ public class NewDashBoardActivity extends AppCompatActivity {
         account_li.setVisibility(View.GONE);
         status_li.setVisibility(View.VISIBLE);
     }
+    @OnClick(R.id.add_new)
+    void add_new(){
+        Intent j = new Intent(this, CreateTripType.class);
+        j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        j.putExtra("AuthKey", getActivity().getIntent().getStringExtra("AuthKey"));
+        startActivity(j);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+    }
     @OnClick(R.id.new_manu)
     void new_manu(){
         startActivity(new Intent(this,NewMenuActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));

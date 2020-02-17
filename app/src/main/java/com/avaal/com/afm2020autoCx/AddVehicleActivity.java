@@ -54,7 +54,9 @@ import com.avaal.com.afm2020autoCx.barcode.BarcodeCaptureActivity;
 import com.avaal.com.afm2020autoCx.models.DropDownModel;
 import com.avaal.com.afm2020autoCx.models.GetImageDetailmodel;
 import com.avaal.com.afm2020autoCx.models.GetImageModel;
+import com.avaal.com.afm2020autoCx.models.GetInvVehicleModel;
 import com.avaal.com.afm2020autoCx.models.GetVehicleIdListModel;
+import com.avaal.com.afm2020autoCx.models.GetVehicleIdModel;
 import com.avaal.com.afm2020autoCx.models.LookUpModel;
 import com.avaal.com.afm2020autoCx.models.MakeModel;
 import com.avaal.com.afm2020autoCx.models.MasterDropDownModel;
@@ -536,7 +538,6 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
             title1.setVisibility(View.GONE);
             recall_sheet.setVisibility(View.GONE);
         }
-        if(getIntent().getStringExtra("ForInventory")==null)
         if ((getIntent().getStringExtra("VehicleType") != null) && getIntent().getStringExtra("VehicleType").equalsIgnoreCase("true"))
         {
             inventory = true;
@@ -638,7 +639,11 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
     }
     @OnTouch(R.id.li_touch)
     boolean li_touch(){
-        hideSoftKeyboard(this);
+        try {
+            hideSoftKeyboard(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return true;
     }
 @OnClick(R.id.get_lat_long)
@@ -1465,6 +1470,11 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
                     preInspection=false;
                     Log.e("preinspection from retu",""+preInspection);
                 }
+                if (IsNew) {
+                    myList.add("" + vinNo.getText());
+                    getVehicleId(orderId);
+                } else
+                    finish();
             }
         }else if (requestCode == 1111) {
             if (resultCode == RESULT_OK) {
@@ -1550,11 +1560,17 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
 @OnClick(R.id.save_new)
 void save_new(){
         IsNew=true;
-        saveData();
+    saveNew();
 }
     @OnClick(R.id.save_vehicle)
     void saveData(){
+        IsNew=false;
+        saveNew();
 
+
+    }
+
+    void  saveNew(){
         if (vinNo.getText().length() < 8) {
             MDToast mdToast = MDToast.makeText(this, "Enter Valid VIN Number", MDToast.LENGTH_LONG, MDToast.TYPE_ERROR);
             mdToast.show();
@@ -1571,18 +1587,18 @@ void save_new(){
             }
         }
 
-      try {
-          if (millage_txt.getText().length() > 0) {
-              if (millage_spinner.getSelectedItem().toString().equalsIgnoreCase("select")) {
-                  MDToast mdToast = MDToast.makeText(this, "Select Mileage Unit", MDToast.LENGTH_LONG, MDToast.TYPE_ERROR);
-                  mdToast.show();
-                  return;
-              }
-          }
-      }catch (Exception e){
+        try {
+            if (millage_txt.getText().length() > 0) {
+                if (millage_spinner.getSelectedItem().toString().equalsIgnoreCase("select")) {
+                    MDToast mdToast = MDToast.makeText(this, "Select Mileage Unit", MDToast.LENGTH_LONG, MDToast.TYPE_ERROR);
+                    mdToast.show();
+                    return;
+                }
+            }
+        }catch (Exception e){
             e.printStackTrace();
-          new Util().sendSMTPMail(AddVehicleActivity.this,null,"CxE004",e,"");
-      }
+            new Util().sendSMTPMail(AddVehicleActivity.this,null,"CxE004",e,"");
+        }
 
 //        if (millage_spinner.getSelectedItem().toString().equalsIgnoreCase("KM"))
 //            miliage = "1";
@@ -1609,7 +1625,7 @@ void save_new(){
             mdToast.show();
             return;
         }
-            buildYear = build_year.getText().toString();
+        buildYear = build_year.getText().toString();
 //        else
 //            buildYear = "" + build_year.getSelectedItem();
         if (gvwr_txt.getText().length() > 0) {
@@ -1697,7 +1713,7 @@ void save_new(){
                         public void onClick(DialogInterface dialog, int which) {
                             // continue with delete
                             try {
-                                save( oemStr, tpmsStr, dieselStr, speedoStr, titleconvStr, billStr, titleStr, buildMonth, miliage,inventory,releaseFormStr,currency_txt);
+                                save( oemStr, tpmsStr, dieselStr, speedoStr, titleconvStr, billStr, titleStr, buildMonth, miliage,inventory,releaseFormStr,currency_txt,true);
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 new Util().sendSMTPMail(AddVehicleActivity.this,null,"CxE004",e,"");
@@ -1712,7 +1728,13 @@ void save_new(){
 //                                    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 //                                    j.putExtra("open","home");
 //                                    startActivity(j);
-                            return;
+                            try {
+                                save( oemStr, tpmsStr, dieselStr, speedoStr, titleconvStr, billStr, titleStr, buildMonth, miliage,inventory,releaseFormStr,currency_txt,false);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                new Util().sendSMTPMail(AddVehicleActivity.this,null,"CxE004",e,"");
+                            }
+
                         }
                     })
                     .setIcon(android.R.drawable.ic_dialog_alert)
@@ -1723,15 +1745,14 @@ void save_new(){
 
         }else {
             try {
-                save( oemStr, tpmsStr, dieselStr, speedoStr, titleconvStr, billStr, titleStr, buildMonth, miliage,inventory,releaseFormStr,currency_txt);
+                save( oemStr, tpmsStr, dieselStr, speedoStr, titleconvStr, billStr, titleStr, buildMonth, miliage,inventory,releaseFormStr,currency_txt,false);
             } catch (Exception e) {
                 e.printStackTrace();
                 new Util().sendSMTPMail(AddVehicleActivity.this,null,"CxE004",e,"");
             }
         }
-
     }
-    void save(String oemStr1,String tpmsStr1,String dieselStr1,String speedoStr1,String titleconvStr1,String billStr1,String titleStr1,String buildMonth1,String miliage1,Boolean inventry,String releaseIs,String currency_val)throws Exception {
+    void save(String oemStr1,String tpmsStr1,String dieselStr1,String speedoStr1,String titleconvStr1,String billStr1,String titleStr1,String buildMonth1,String miliage1,Boolean inventry,String releaseIs,String currency_val,boolean isPreinspect)throws Exception {
         showAnimation();
         PreferenceManager prf = new PreferenceManager(this);
         String orderDate = "",inventryDate="";
@@ -1757,9 +1778,21 @@ void save_new(){
                                 MDToast mdToast = MDToast.makeText(AddVehicleActivity.this, "vehicle has been updated successfully", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                                 mdToast.show();
                             }
-//                        if(IsNew)
-//                            else
-                        finish();
+                            if(isPreinspect){
+                                Intent intent = new Intent(AddVehicleActivity.this, AddImageActivity.class);
+                                intent.putExtra("VehicleId", vehicleId);
+                                intent.putExtra("Vin", ""+vinNo.getText());
+                                if(inventory)
+                                    intent.putExtra("IsInventry", "1");
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivityForResult(intent,PREINSPECTION);
+                            }else {
+                                if (IsNew) {
+                                    myList.add("" + vinNo.getText());
+                                    getVehicleId(orderId);
+                                } else
+                                    finish();
+                            }
                     }
                 }catch (Exception e){
                     e.printStackTrace();
@@ -1794,17 +1827,10 @@ void save_new(){
                 hideAnimation();
                        try {
                            if (dropdata.status) {
-//                               if(IsNew){
-//                                   myList.add(""+vinNo.getText());
-//                                   Intent i=new Intent(AddVehicleActivity.this,AddVehicleActivity.class);
-//                                   i.putExtra("VehicleId",);
-//                                   i.putExtra("OrderId",""+orderId);
-//                                   //                    prf.saveStringData("VehicleType","true");
-//                                   i.putExtra("VehicleType",""+getIntent().getStringExtra("VehicleType"));
-//                                   i.putExtra("vihiclevinList",myList);
-//                                   i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                                   startActivity(i);
-//                               }
+                               if(IsNew){
+                                   myList.add(""+vinNo.getText());
+                                   getVehicleId(orderId);
+                               }
 //                    MDToast mdToast = MDToast.makeText(AddVehicleActivity.this, ""+dropdata.Message, MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
 //                    mdToast.show();
 //                    back();
@@ -1836,7 +1862,11 @@ void save_new(){
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-                hideSoftKeyboard(AddVehicleActivity.this);
+                try {
+                    hideSoftKeyboard(AddVehicleActivity.this);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 showAnimation();
                 try {
                     getMakeList(year.getText().toString());
@@ -1926,7 +1956,11 @@ void save_new(){
                     e.printStackTrace();
                 }
 //                Log.e("select make",make.getText().toString());
-                hideSoftKeyboard(AddVehicleActivity.this);
+                try {
+                    hideSoftKeyboard(AddVehicleActivity.this);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -2475,6 +2509,7 @@ void save_new(){
                                     save_vehicle.setClickable(true);
                                     save_vehicle.setEnabled(true);
                                     save_vehicle.setText("Update");
+                                    save_new.setText("Update & New");
 
                                     if (vihicleType.equalsIgnoreCase("VLSaved")) {
                                         save_vehicle.setClickable(true);
@@ -3025,7 +3060,7 @@ void save_new(){
         });
     }
 
-    public static void hideSoftKeyboard(Activity activity) {
+    public static void hideSoftKeyboard(Activity activity) throws Exception{
         InputMethodManager inputMethodManager =
                 (InputMethodManager) activity.getSystemService(
                         Activity.INPUT_METHOD_SERVICE);
@@ -3386,6 +3421,7 @@ void getInventoryVehicle(){
                             save_vehicle.setClickable(true);
                             save_vehicle.setEnabled(true);
                             save_vehicle.setText("Update");
+                            save_new.setText("Update & New");
 //                            save_vehicle.setClickable(false);
 //                            save_vehicle.setEnabled(false);
                             inventory=getdata3.get(i).isInventory;
@@ -3761,5 +3797,34 @@ void getInventoryVehicle(){
                     }
                 });
         prf.saveStringData("ScanTutorial","1");
+    }
+
+
+    void getVehicleId(final String orderid){
+        GetVehicleIdModel vindetail=new GetVehicleIdModel(prf.getStringData("authKey"),orderid,"");
+        Call<GetInvVehicleModel> call1 = apiInterface.getTempInvVehicleIds("0",""+orderid, null, null, null, null, null, null, null,null, null, null, null,null, null,null, null, null, null,null, null, null , null, null,null ,""+prf.getStringData("userCode"),null,""+ prf.getStringData("userName"),new Util().getDateTime(),""+prf.getStringData("corporateId"),"bearer "+prf.getStringData("accessToken"),"application/x-www-form-urlencoded");
+        call1.enqueue(new Callback<GetInvVehicleModel>() {
+            @Override
+            public void onResponse(Call<GetInvVehicleModel> call, Response<GetInvVehicleModel> response) {
+
+                GetInvVehicleModel getdata = response.body();
+                if(getdata.satus) {
+
+                    Intent i=new Intent(AddVehicleActivity.this,AddVehicleActivity.class);
+                    i.putExtra("VehicleId",getdata.oredrId);
+                    i.putExtra("OrderId",""+orderId);
+                    //                    prf.saveStringData("VehicleType","true");
+                    i.putExtra("VehicleType",""+getIntent().getStringExtra("VehicleType"));
+                    i.putExtra("vihiclevinList",myList);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+
+                }
+            }
+            @Override
+            public void onFailure(Call<GetInvVehicleModel> call, Throwable t) {
+                call.cancel();
+            }
+        });
     }
 }

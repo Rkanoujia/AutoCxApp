@@ -1371,8 +1371,6 @@
                 android:id="@+id/save_new"
                 android:textSize="15dp"
                 android:gravity="center"
-                android:clickable="false"
-                android:enabled="false"
                 android:text="@string/save_new"
                 android:textColor="@android:color/white"
                 android:layout_weight="1"

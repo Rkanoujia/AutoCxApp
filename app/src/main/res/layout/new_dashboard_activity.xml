@@ -8,6 +8,7 @@
         android:tint="@color/colorWhite"
         android:layout_gravity="bottom|end"
         android:layout_height="wrap_content"
+        android:id="@+id/add_new"
         android:layout_alignParentRight="true"
         app:fabSize="normal"
         android:layout_above="@+id/new_manu"
