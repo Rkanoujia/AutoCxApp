@@ -44,10 +44,12 @@ public class ExtraImageList extends RecyclerView.Adapter<ExtraImageList.MyViewHo
     private Context context;
     PreferenceManager prf;
     APIInterface apiInterface;
+    boolean isDelete;
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView name1;
         LinearLayout not_carrier,linear_carrier;
         public ImageView dam_img;
+
 
         public MyViewHolder(View view) {
             super(view);
@@ -68,9 +70,10 @@ public class ExtraImageList extends RecyclerView.Adapter<ExtraImageList.MyViewHo
     }
 
 
-    public ExtraImageList(List<Map<String , String>>  tripList, Context context) {
+    public ExtraImageList(List<Map<String , String>>  tripList, Context context,boolean isDelete) {
         this.tripList = tripList;
         this.context=context;
+        this.isDelete=isDelete;
         prf = new PreferenceManager(context);
         //        orderType=prf.getStringData("OrderType");
 //         vehicleId=getIntent().getStringExtra("VehicleId");
@@ -110,7 +113,7 @@ public class ExtraImageList extends RecyclerView.Adapter<ExtraImageList.MyViewHo
            holder.dam_img.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View view) {
-                   popUp(url,tripList.get(position).get("imageName"),position,tripList.get(position).get("imageId"));
+                   popUp(url,tripList.get(position).get("imageName"),position,tripList.get(position).get("imageId"),isDelete);
                }
            });
 
@@ -124,7 +127,7 @@ public class ExtraImageList extends RecyclerView.Adapter<ExtraImageList.MyViewHo
 
     }
 
-    void popUp(String url, String name, final int pos, final String id){
+    void popUp(String url, String name, final int pos, final String id,boolean isDelete1){
         Log.e("url",url);
         final Dialog settingsDialog = new Dialog(context);
         settingsDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
@@ -137,8 +140,10 @@ public class ExtraImageList extends RecyclerView.Adapter<ExtraImageList.MyViewHo
         Button ok=(Button)settingsDialog.findViewById(R.id.ok1);
         header.setText(name);
         Picasso.with(context).load(url).error(R.drawable.ic_camera).into(image);
-        if (!prf.getStringData("OrderStatus").equalsIgnoreCase("Saved"))
-            delete.setVisibility(View.GONE);
+        if (isDelete1)
+            delete.setVisibility(View.VISIBLE);
+        else
+            delete.setVisibility(View.VISIBLE);
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

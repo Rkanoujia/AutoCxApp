@@ -1,10 +1,12 @@
 package com.avaal.com.afm2020autoCx;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -654,28 +657,35 @@ public class InventoryVehicleListActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
-                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
-                    // Setting Dialog Message
-                    alertDialog.setMessage("Are you sure you want delete this?");
-                    // Setting Positive "Yes" Button
-                    alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-
-                            // Write your code here to invoke YES event
+                    Dialog dialog = new Dialog(InventoryVehicleListActivity.this);
+                    dialog.setContentView(R.layout.custome_alert_dialog);
+                    dialog.setCancelable(false);
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    // if button is clicked, close the custom dialog
+                    Button ok=(Button)dialog.findViewById(R.id.buttonOk) ;
+                    Button cancel=(Button)dialog.findViewById(R.id.buttoncancel);
+                    TextView title=(TextView)dialog.findViewById(R.id.title) ;
+                    TextView message=(TextView)dialog.findViewById(R.id.message) ;
+                    title.setText("");
+                    message.setText("Are you sure you want delete this? ");
+                    ok.setText("Yes");
+                    cancel.setText("No");
+                    ok.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
                             deleteVihicle(tripList.get(position).vehiocleId, position,false);
                         }
                     });
-
-                    // Setting Negative "NO" Button
-                    alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // Write your code here to invoke NO event
-                            dialog.cancel();
+                    cancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
                         }
                     });
+                    dialog.show();
 
-                    // Showing Alert Message
-                    alertDialog.show();
+
                 }
             });
             if(IsSelect){

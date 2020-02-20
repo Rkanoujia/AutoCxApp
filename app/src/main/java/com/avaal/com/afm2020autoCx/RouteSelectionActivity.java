@@ -5,9 +5,11 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -99,9 +101,14 @@ public class RouteSelectionActivity extends AppCompatActivity {
     LinearLayout linear;
     @BindView(R.id.miles)
     TextView miles;
+    @BindView(R.id.item)
+    TextView item;
+    @BindView(R.id.ord)
+    TextView ord;
 
     @BindView(R.id.main_selection)
     FrameLayout mainlayout;
+    String FreightTypeLuCode="FRT02";
     private LoaderScreen loaderScreen;
     private View loaderView;
     boolean isLoaded = false;
@@ -165,6 +172,39 @@ public class RouteSelectionActivity extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @OnClick(R.id.item)
+    void  item(){
+        FreightTypeLuCode="FRT02";
+        freightType(FreightTypeLuCode);
+    }
+    @OnClick(R.id.ord)
+    void  ord(){
+        FreightTypeLuCode="FRT01";
+        freightType(FreightTypeLuCode);
+    }
+
+    void freightType(String FreightTypeLuCode1){
+     if(FreightTypeLuCode1.equalsIgnoreCase("FRT02")){
+         item.setTextColor(ColorStateList.valueOf(getResources().getColor(R.color.colorWhite)));
+         item.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+         ord.setTextColor(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
+         ord.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.gray)));
+     }else{
+         ord.setTextColor(ColorStateList.valueOf(getResources().getColor(R.color.colorWhite)));
+         ord.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+         item.setTextColor(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
+         item.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.gray)));
+     }
+    }
+    @OnClick(R.id.getMile)
+    void  getMile(){
+        try {
+            getMiles();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -1158,7 +1198,7 @@ public class RouteSelectionActivity extends AppCompatActivity {
         showAnimation();
 //        RouteSelectionModel vindetail=new RouteSelectionModel(prf.getStringData("authKey"),orderType,pickupId,
 //                deliveryId,prf.getStringData("carrierPrimaryId"),pickupdateTime[0],pickupdateTime[1]+" "+pickupdateTime[2],deliverydateTime[1]+" "+deliverydateTime[2],deliverydateTime[0],""+pickup_remark.getText(),""+delivery_remark.getText(),yardId,yardDate,yardtime,""/*+yard_remark.getText(*/,tempOrderId);
-              Call<RouteSelectionModel> call1 = apiInterface.getTempIds(""+tempOrderId,orderType,""+pickupId,new Util().getUtcToOrderdateTime(pickupdateTime),""+ prf.getStringData("userCode"),""+deliveryId,new Util().getUtcToOrderdateTime(deliverydateTime),""+pickup_remark.getText(),""+distance,""+distanceUnit,""+delivery_remark.getText(),yardId,yardDate+" "+yardtime,"","0","",""+ prf.getStringData("userName"),new Util().getDateTime(),""+ prf.getStringData("corporateId"),"bearer "+ prf.getStringData("accessToken"),"application/x-www-form-urlencoded");
+              Call<RouteSelectionModel> call1 = apiInterface.getTempIds(""+tempOrderId,orderType,""+pickupId,new Util().getUtcToOrderdateTime(pickupdateTime),""+ prf.getStringData("userCode"),""+deliveryId,new Util().getUtcToOrderdateTime(deliverydateTime),""+pickup_remark.getText(),""+distance,""+distanceUnit,""+delivery_remark.getText(),yardId,yardDate+" "+yardtime,"","0","",""+FreightTypeLuCode,""+ prf.getStringData("userName"),new Util().getDateTime(),""+ prf.getStringData("corporateId"),"bearer "+ prf.getStringData("accessToken"),"application/x-www-form-urlencoded");
         call1.enqueue(new Callback<RouteSelectionModel>() {
             @Override
             public void onResponse(Call<RouteSelectionModel> call, Response<RouteSelectionModel> response) {
@@ -1264,6 +1304,11 @@ public class RouteSelectionActivity extends AppCompatActivity {
             prf.saveStringData("OrderId",tempOrderId);
             pickup_remark.setText(listObject.pickupNote);
             delivery_remark.setText(listObject.dropNote);
+
+            FreightTypeLuCode=listObject.FreightTypeLuCode;
+            freightType(listObject.FreightTypeLuCode);
+
+
             Log.e("pickupId",""+listObject.pickupId);
             if(pickupLocationId.indexOf(listObject.pickupId)==-1){
                 pickupId="0";
@@ -1304,7 +1349,7 @@ public class RouteSelectionActivity extends AppCompatActivity {
         }
     }
    void getMiles()throws Exception{
-       miles.setText("Total "+"Miles : "+0.0);
+       miles.setText("Distance "+" : "+0.00);
         if(pickupId.equalsIgnoreCase("0"))
             return;
 
@@ -1326,8 +1371,8 @@ public class RouteSelectionActivity extends AppCompatActivity {
                        if(getdata.status) {
 //                   SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
                            distanceUnit=getdata.dataValuer.DistanceUnit;
-                                   distance=getdata.dataValuer.TotalMiles;
-                           miles.setText("Total "+getdata.dataValuer.DistanceUnit+" : "+getdata.dataValuer.TotalMiles);
+                                   distance=""+getdata.dataValuer.TotalMiles;
+                           miles.setText("Distance "+" : "+String.format("%.2f", getdata.dataValuer.TotalMiles) +" "+getdata.dataValuer.DistanceUnit);
 
 // GetVehicleIdListModel tripDetails;
 //                   OrderListAdapter adapterd = new OrderListAdapter(getdata3,getActivity());

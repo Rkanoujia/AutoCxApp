@@ -16,9 +16,11 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -267,8 +269,8 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
     boolean isLoaded = false;
     private static final int RC_BARCODE_CAPTURE = 9001;
     private static final int PREINSPECTION=101;
-    String imageFilePath, imageType, qWvrUnit;
-    String buildMonth="", buildYear="",miliage="",fullAddress="";
+    String imageFilePath, imageType, qWvrUnit="-1";
+    String buildMonth="-1", buildYear="-1",miliage="-1",fullAddress="";
     String oemStr, tpmsStr, dieselStr, speedoStr, titleconvStr, billStr, titleStr, trackStr,releaseFormStr,currency_txt;
     private String trackUrl="", billUrl="", titleConvUrl="", tpmsUrl="", millageUrl="", oemUrl="", releaseFromUrl="",titleUrl="", titleUrl1="", titleConvUrl1="",imgId;
     private String trackId="0", billId="0", titleConvId="0", tpmsId="0", millageId="0", oemId="0",releaseFromId="0", titleId="0", titleId1="0", titleConvId1="0",recall2Url="",recall2Id="0",recall1Url="",recall1Id="0";
@@ -297,7 +299,7 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
         listValue.add("Yes");
         currency.add("CAD");
         currency.add("USD");
-        listBuildYaer.add(" ");
+        listBuildYaer.add("Select");
 
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -565,7 +567,7 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
         for (int i = thisYear1 - 20; i <= thisYear1 + 10; i++) {
             listBuildYaer.add("" + i);
         }
-        listBuildMonth.add(" ");
+        listBuildMonth.add("Select");
         listBuildMonth.add("JAN - 01");
         listBuildMonth.add("FEB - 02");
         listBuildMonth.add("MAR - 03");
@@ -612,13 +614,7 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
 
         GPSTrackerService gpstrack = new GPSTrackerService(AddVehicleActivity.this, this);
         location = gpstrack.getLocation();
-        if(location!=null) {
-            lat.setText("" + location.getLatitude());
-            longi.setText("" + location.getLongitude());
-        }else{
-            lat.setText("0.000000");
-            longi.setText("0.000000");
-        }
+
         pd = new ProgressDialog(AddVehicleActivity.this);
         pd.setMessage("loading..");
         pd.setCancelable(false);
@@ -628,6 +624,14 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
         }else{
             location=gpstrack.getLocation();
             getAddress();
+        }
+
+        if(location!=null) {
+            lat.setText("" + location.getLatitude());
+            longi.setText("" + location.getLongitude());
+        }else{
+            lat.setText("0.000000");
+            longi.setText("0.000000");
         }
 //                 if(prf.getStringData("OrderStatus")==null)
 //             if(!prf.getStringData("OrderStatus").equalsIgnoreCase("null")){
@@ -649,8 +653,14 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
 @OnClick(R.id.get_lat_long)
  void latlong(){
      Intent intent=new Intent(this,NewMapsActivity.class);
-     intent.putExtra("lati",location.getLatitude());
-     intent.putExtra("longi",location.getLongitude());
+     if(location!=null) {
+         intent.putExtra("lati", location.getLatitude());
+         intent.putExtra("longi", location.getLongitude());
+     }else{
+         intent.putExtra("lati", ""+lat.getText());
+         intent.putExtra("longi", ""+longi.getText());
+     }
+    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
      startActivityForResult(intent,1111);
  }
 
@@ -1480,8 +1490,15 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
             if (resultCode == RESULT_OK) {
                 String street = data.getStringExtra("location");
                 if(street.equalsIgnoreCase("true")){
-                   lat.setText(""+data.getStringExtra("Latitude"));
-                    longi.setText(""+data.getStringExtra("Longitude"));
+                    Log.e("lat",""+data.getStringExtra("Latitude"));
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            lat.setText(""+data.getStringExtra("Latitude"));
+                            longi.setText(""+data.getStringExtra("Longitude"));
+                        }
+                    });
+
                 }
             }
         } else {
@@ -1614,8 +1631,8 @@ void save_new(){
         }
 
 
-        if (build_month.getSelectedItem().toString().equalsIgnoreCase(" "))
-            buildMonth = "";
+        if (build_month.getSelectedItem().toString().equalsIgnoreCase("Select"))
+            buildMonth = "-1";
         else
             buildMonth = "" + build_month.getSelectedItemPosition();
 
@@ -1708,8 +1725,8 @@ void save_new(){
             Log.e("preinspection",""+preInspection);
 
             new AlertDialog.Builder(this)
-                    .setMessage("Are you sure you want to continue without pre_inspection images?")
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    .setMessage("Do you want to upload Pre-Inspection Images.")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // continue with delete
                             try {
@@ -1721,7 +1738,7 @@ void save_new(){
 
                         }
                     })
-                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // do nothing
 //                                    Intent j = new Intent(DashBoardBottomMenu.this, DashBoardBottomMenu.class);
@@ -1788,6 +1805,8 @@ void save_new(){
                                 startActivityForResult(intent,PREINSPECTION);
                             }else {
                                 if (IsNew) {
+                                    Log.e("vin","" + vinNo.getText());
+                                    if(myList!=null)
                                     myList.add("" + vinNo.getText());
                                     getVehicleId(orderId);
                                 } else
@@ -2162,11 +2181,11 @@ void save_new(){
                                     getAFMImages("TPMS");
                                     declared_txt.setText("" + getdata3.get(i).declareValue);
                                     if (getdata3.get(i).buildMonth != null)
-                                        if (!getdata3.get(i).buildMonth.equalsIgnoreCase(""))
+                                        if (!getdata3.get(i).buildMonth.equalsIgnoreCase("") && !getdata3.get(i).buildMonth.equalsIgnoreCase("-1"))
                                             build_month.setSelection(Integer.parseInt(getdata3.get(i).buildMonth));
 //                                if (!getdata3.get(i).buildYear.equalsIgnoreCase(""))
 //                                    build_year.setSelection(listBuildYaer.indexOf(getdata3.get(i).buildYear));
-                                    if (getdata3.get(i).buildYear == null)
+                                    if (getdata3.get(i).buildYear == null || getdata3.get(i).buildYear.equals("-1"))
                                         build_year.setText("");
                                     else
                                         build_year.setText(getdata3.get(i).buildYear);
@@ -2369,7 +2388,6 @@ void save_new(){
                             hideAnimation();
                         }
 
-
                         for (int i = 0; getdata3.size() > i; i++) {
                             if (getdata3.get(i).vehiocleId.equalsIgnoreCase(vehicleId)) {
                                 try {
@@ -2435,11 +2453,11 @@ void save_new(){
                                         tpms_txt.setSelection(0);
                                     declared_txt.setText(""+getdata3.get(i).declareValue);
                                     if(getdata3.get(i).buildMonth!=null)
-                                        if (!getdata3.get(i).buildMonth.equalsIgnoreCase(""))
+                                        if (!getdata3.get(i).buildMonth.equalsIgnoreCase("") && !getdata3.get(i).buildMonth.equalsIgnoreCase("-1"))
                                             build_month.setSelection(Integer.parseInt(getdata3.get(i).buildMonth));
 //                                if (!getdata3.get(i).buildYear.equalsIgnoreCase(""))
 //                                    build_year.setSelection(listBuildYaer.indexOf(getdata3.get(i).buildYear));
-                                    if (getdata3.get(i).buildYear == null)
+                                    if (getdata3.get(i).buildYear == null || getdata3.get(i).buildYear.equals("-1"))
                                         build_year.setText("");
                                     else
                                         build_year.setText(getdata3.get(i).buildYear);
@@ -2738,6 +2756,9 @@ void save_new(){
 //            Bitmap thumbnail = BitmapFactory.decodeFile(f.getAbsolutePath());
             BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
             thumbnail = BitmapFactory.decodeFile(imageFilePath, bitmapOptions);
+            ExifInterface exif = new ExifInterface(imageFilePath);
+            int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+            thumbnail = rotateBitmap(thumbnail, orientation);
             thumbnail = getScaledBitmap(thumbnail, 500, 800);
             Bitmap second = addText(thumbnail);
             thumbnail.recycle();
@@ -2946,17 +2967,23 @@ void save_new(){
 //                 return;
 //                }
 
-
-
-
-
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddVehicleActivity.this);
-                // Setting Dialog Message
-                alertDialog.setMessage("Are you sure you want delete this?");
-                // Setting Positive "Yes" Button
-                alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Write your code here to invoke YES event
+                Dialog dialog = new Dialog(AddVehicleActivity.this);
+                dialog.setContentView(R.layout.custome_alert_dialog);
+                dialog.setCancelable(false);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                // if button is clicked, close the custom dialog
+                Button ok=(Button)dialog.findViewById(R.id.buttonOk) ;
+                Button cancel=(Button)dialog.findViewById(R.id.buttoncancel);
+                TextView title=(TextView)dialog.findViewById(R.id.title) ;
+                TextView message=(TextView)dialog.findViewById(R.id.message) ;
+                title.setText("");
+                message.setText("Are you sure you want delete this? ");
+                ok.setText("Yes");
+                cancel.setText("No");
+                ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
                         try {
                             deleteImg(id,type1);
                         } catch (Exception e) {
@@ -2965,18 +2992,16 @@ void save_new(){
                         }
 
                         settingsDialog.dismiss();
+                    }
+                });
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
 
-                    }
-                });
-                // Setting Negative "NO" Button
-                alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Write your code here to invoke NO event
-                        dialog.cancel();
-                    }
-                });
-                // Showing Alert Message
-                alertDialog.show();
             }
         });
         Picasso.with(AddVehicleActivity.this).load(url).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.d1).into(image);
@@ -3064,7 +3089,7 @@ void save_new(){
         InputMethodManager inputMethodManager =
                 (InputMethodManager) activity.getSystemService(
                         Activity.INPUT_METHOD_SERVICE);
-
+if(activity.getCurrentFocus().getWindowToken()!=null)
         inputMethodManager.hideSoftInputFromWindow(
                 activity.getCurrentFocus().getWindowToken(), 0);
     }
@@ -3481,11 +3506,11 @@ void getInventoryVehicle(){
                                 tpms_txt.setSelection(0);
                             declared_txt.setText(""+getdata3.get(i).declareValue);
                             if(getdata3.get(i).buildMonth!=null)
-                            if (!getdata3.get(i).buildMonth.equalsIgnoreCase(""))
+                            if (!getdata3.get(i).buildMonth.equalsIgnoreCase("") && !getdata3.get(i).buildMonth.equalsIgnoreCase("-1"))
                                 build_month.setSelection(Integer.parseInt(getdata3.get(i).buildMonth));
 //                                if (!getdata3.get(i).buildYear.equalsIgnoreCase(""))
 //                                    build_year.setSelection(listBuildYaer.indexOf(getdata3.get(i).buildYear));
-                            if (getdata3.get(i).buildYear == null)
+                            if (getdata3.get(i).buildYear == null || getdata3.get(i).buildYear.equals("-1"))
                                 build_year.setText("");
                             else
                                 build_year.setText(getdata3.get(i).buildYear);
@@ -3827,4 +3852,74 @@ void getInventoryVehicle(){
             }
         });
     }
+    private static Bitmap rotateBitmap(Bitmap bitmap, int orientation) {
+        Matrix matrix = new Matrix();
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_NORMAL:
+                return bitmap;
+            case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
+                matrix.setScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                matrix.setRotate(180);
+                break;
+            case ExifInterface.ORIENTATION_FLIP_VERTICAL:
+                matrix.setRotate(180);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_TRANSPOSE:
+                matrix.setRotate(90);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                matrix.setRotate(90);
+                break;
+            case ExifInterface.ORIENTATION_TRANSVERSE:
+                matrix.setRotate(-90);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                matrix.setRotate(-90);
+                break;
+            default:
+                return bitmap;
+        }
+        try {
+            Bitmap bmRotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            bitmap.recycle();
+
+            return bmRotated;
+        } catch (OutOfMemoryError e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+//    void saveOnlyVin(Boolean inventry)throws Exception {
+//        showAnimation();
+//        PreferenceManager prf = new PreferenceManager(this);
+//        String orderDate = "",inventryDate="";
+//        if(inventry){
+//            inventryDate=new Util().getDateTime();
+//        }else{
+//            orderDate=new Util().getDateTime();
+//        }
+//
+//        Call<VehicleInfoModel> call1 = apiInterface.saveVehicle(vehicleId,""+orderId, "" + vinNo.getText(), "" + model.getText(), "" + make.getText(), "" + year.getText(), "" , "" + millage_txt.getText(), "0","" , "" + declared_txt.getText(), "" + build_year.getText(), "","" + gvwr_txt.getText(), qWvrUnit,"" , "" , "" , "","" , "" + tracking_txt.getText(), "" , ""+inventry, ""+inventryDate,""+orderDate ,""+prf.getStringData("userCode"),""+releaseIs,""+color_txt.getText(),""+currency_val,""+lat.getText(),""+longi.getText(),""+ prf.getStringData("userName"),new Util().getDateTime(),""+prf.getStringData("corporateId"),"bearer "+prf.getStringData("accessToken"),"application/x-www-form-urlencoded");
+//        call1.enqueue(new Callback<VehicleInfoModel>() {
+//            @Override
+//            public void onResponse(Call<VehicleInfoModel> call, Response<VehicleInfoModel> response) {
+//
+//                VehicleInfoModel dropdata = response.body();
+//                hideAnimation();
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<VehicleInfoModel> call, Throwable t) {
+//                call.cancel();
+//                new Util().sendSMTPMail(AddVehicleActivity.this,t,"CxE001",null,""+call.request().url().toString());
+//            }
+//        });
+//    }
+
 }

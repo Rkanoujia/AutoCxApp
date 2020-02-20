@@ -146,7 +146,7 @@
                         android:layout_marginEnd="10dp"
                         android:padding="5dp"
                         android:textColor="@color/colorPrimary"
-                        android:text="View Details"
+                        android:text="Detail"
                         android:background="@drawable/new_button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -164,7 +164,7 @@
                         android:layout_marginEnd="10dp"
                         android:padding="5dp"
                         android:textColor="@color/red"
-                        android:text="Pre-Inspections"
+                        android:text="Pre-Inspection"
                         android:background="@drawable/new_button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />

@@ -47,6 +47,7 @@ public class NewMapsActivity extends FragmentActivity implements OnMapReadyCallb
     ImageView pin_;
 TextView resutText,done;
              LatLng latLng;
+             LatLng SelectlatLng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,15 +74,15 @@ TextView resutText,done;
 
 //        intent.putExtra("lati",""+location.getLatitude());
 //        intent.putExtra("longi",""+location.getLongitude());
-        Log.e("hgsh",""+getIntent().getStringExtra("lati"));
-        latLng = new LatLng(getIntent().getDoubleExtra("lati",0), getIntent().getDoubleExtra("longi",0));
+//        Log.e("hgsh",""+getIntent().getStringExtra("lati"));
+        latLng = new LatLng(getIntent().getDoubleExtra("lati",0.00), getIntent().getDoubleExtra("longi",0.00));
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent data = new Intent();
                 data.putExtra("location","true");
-                data.putExtra("Latitude",""+latitude);
-                data.putExtra("Longitude",""+longitude);
+                data.putExtra("Latitude",""+SelectlatLng.latitude);
+                data.putExtra("Longitude",""+SelectlatLng.longitude);
                 setResult(RESULT_OK,data);
                 finish();
             }
@@ -138,13 +139,11 @@ TextView resutText,done;
             public void onCameraIdle() {
                 mMap.clear();
 
-                LatLng latLng = mMap.getCameraPosition().target;
+                 SelectlatLng = mMap.getCameraPosition().target;
                 Geocoder geocoder = new Geocoder(NewMapsActivity.this);
-                longitude=latLng.longitude;
-                 latitude=latLng.latitude;
 
                 try {
-                    List<Address> addressList = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+                    List<Address> addressList = geocoder.getFromLocation(SelectlatLng.latitude, SelectlatLng.longitude, 1);
                     if (addressList != null && addressList.size() > 0) {
                         String locality = addressList.get(0).getAddressLine(0);
                         String country = addressList.get(0).getCountryName();
@@ -156,8 +155,11 @@ TextView resutText,done;
 //                .snippet("Hello")
 //                .icon(BitmapDescriptorFactory.fromResource(R.drawable.car_marker)));
                         if (!locality.isEmpty() && !country.isEmpty())
-                            Log.e("Lat/Long",""+latLng.latitude+","+latLng.longitude);
+                            Log.e("Lat/Long",""+SelectlatLng.latitude+","+SelectlatLng.longitude);
                             resutText.setText(locality + "  " + country);
+//                        longitude=SelectlatLng.longitude;
+//                        latitude=SelectlatLng.latitude;
+
                     }
 
                 } catch (IOException e) {
@@ -232,6 +234,7 @@ TextView resutText,done;
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(20));
         mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+//        mMap.setIndoorEnabled(false);
 //        mMap.setOnMarkerDragListener(this);
 //        mMap.setOnMapLongClickListener(this);
 //        mMap.setOnInfoWindowClickListener(this);

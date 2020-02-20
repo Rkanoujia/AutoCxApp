@@ -16,7 +16,7 @@ public class MilesModel {
     public datavalu dataValuer;
     public class datavalu{
         @SerializedName("TotalMiles")
-        public   String TotalMiles;
+        public   Float TotalMiles;
         @SerializedName("DistanceUnit")
         public   String DistanceUnit;
         @SerializedName("ErrorMsg")

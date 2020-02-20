@@ -314,7 +314,7 @@ j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 .setMessage("You canceled the sequence")
                                 .setPositiveButton("Oops", null).show();
                         TapTargetView.showFor(dialog,
-                                TapTarget.forView(dialog.getButton(DialogInterface.BUTTON_POSITIVE), "Uh oh!", "You canceled the sequence at step " + lastTarget.id())
+                                TapTarget.forView(dialog.getButton(DialogInterface.BUTTON_POSITIVE), "Uh oh!", "You cancelled the sequence at step " )
                                         .cancelable(false)
                                         .tintTarget(false), new TapTargetView.Listener() {
                                     @Override

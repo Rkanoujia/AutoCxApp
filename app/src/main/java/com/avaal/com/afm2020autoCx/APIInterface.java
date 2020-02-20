@@ -109,6 +109,7 @@ public interface APIInterface {
             @Field("PrimaryInfoCode") String PrimaryInfoCode,@Field("DropCode") String DropCode,@Field("DropDateTime") String DropDateTime,@Field("PickupNotes") String PickupNotes,
                                          @Field("Distance") String Distance,@Field("DistanceUnit") String DistanceUnit,
                                          @Field("DropNotes") String DropNotes,@Field("StopCode") String StopCode,@Field("StopDateTime") String StopDateTime,@Field("StopNotes") String StopNotes,@Field("IsSaved") String IsSaved,@Field("IsDeleted") String IsDeleted,
+             @Field("FreightTypeLuCode") String FreightTypeLuCode,
              @Field("CreatedBy") String CreatedBy,@Field("CreatedOn") String CreatedOn,@Field("CorporateId") String CorporateId,@Header("Authorization") String authorization, @Header("Content-Type") String contentType);
 
     @FormUrlEncoded

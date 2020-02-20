@@ -1,8 +1,11 @@
 package com.avaal.com.afm2020autoCx;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.FloatingActionButton;
@@ -11,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -221,28 +225,37 @@ public class VehicleListActivity extends AppCompatActivity {
     void back(){
         if (prf.getStringData("OrderStatus").equalsIgnoreCase("Saved")|| prf.getStringData("OrderStatus").equalsIgnoreCase("Shipped") ) {
             if (getdata3.size() > 0) {
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-                // Setting Dialog Message
-                alertDialog.setMessage("Are you sure you want to back?");
-                // Setting Positive "Yes" Button
-                alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
+
+                Dialog dialog = new Dialog(VehicleListActivity.this);
+                dialog.setContentView(R.layout.custome_alert_dialog);
+                dialog.setCancelable(false);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                // if button is clicked, close the custom dialog
+                Button ok=(Button)dialog.findViewById(R.id.buttonOk) ;
+                Button cancel=(Button)dialog.findViewById(R.id.buttoncancel);
+                TextView title=(TextView)dialog.findViewById(R.id.title) ;
+                TextView message=(TextView)dialog.findViewById(R.id.message) ;
+                title.setText("");
+                message.setText("Are you sure you want to back?");
+                ok.setText("Yes");
+                cancel.setText("No");
+                ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
                         prf.saveStringData("vehicleList", null);
                         // Write your code here to invoke YES event
                         onBackPressed();
                     }
                 });
-
-                // Setting Negative "NO" Button
-                alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Write your code here to invoke NO event
-                        dialog.cancel();
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
                     }
                 });
+                dialog.show();
 
-                // Showing Alert Message
-                alertDialog.show();
             }else
                 onBackPressed();
         }else
@@ -264,7 +277,7 @@ public class VehicleListActivity extends AppCompatActivity {
     }
     void getVehicleId(final String orderid){
         GetVehicleIdModel vindetail=new GetVehicleIdModel(prf.getStringData("authKey"),orderid,"");
-        Call<GetInvVehicleModel> call1 = apiInterface.getTempInvVehicleIds("0",""+orderid, null, null, null, null, null, null, null,null, null, null, null,null, null,null, null, null, null,null, null, null , null, null,null ,""+prf.getStringData("userCode"),null,""+ prf.getStringData("userName"),new Util().getDateTime(),""+prf.getStringData("corporateId"),"bearer "+prf.getStringData("accessToken"),"application/x-www-form-urlencoded");
+        Call<GetInvVehicleModel> call1 = apiInterface.getTempInvVehicleIds("0","0", null, null, null, null, null, null, null,null, null, null, null,null, null,null, null, null, null,null, null, null , null, null,null ,""+prf.getStringData("userCode"),null,""+ prf.getStringData("userName"),new Util().getDateTime(),""+prf.getStringData("corporateId"),"bearer "+prf.getStringData("accessToken"),"application/x-www-form-urlencoded");
         call1.enqueue(new Callback<GetInvVehicleModel>() {
             @Override
             public void onResponse(Call<GetInvVehicleModel> call, Response<GetInvVehicleModel> response) {
@@ -627,7 +640,7 @@ public class VehicleListActivity extends AppCompatActivity {
                 hideAnimation();
                 try {
                     if (getdata.satus) {
-                        new Util().sendAlert(VehicleListActivity.this," Customer Order  Reference #: "+orderId+" has been received","Shipped");
+                        new Util().sendAlert(VehicleListActivity.this,prf.getStringData("userName")+" has placed an order having "+" vehicles with Ref no "+orderId+".","Shipped");
                         MDToast mdToast = MDToast.makeText(VehicleListActivity.this, "Your load has been shipped to Carrier", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                         mdToast.show();
                         overridePendingTransition(R.anim.fadein, R.anim.fadeout);

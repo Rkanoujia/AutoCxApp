@@ -96,6 +96,8 @@ public class OrderListModel {
         public String stopZip;
         @SerializedName("StopCountry")
         public String stopCountry;
+        @SerializedName("FreightTypeLuCode")
+        public String FreightTypeLuCode;
         @SerializedName("Status")
         public String status;
 

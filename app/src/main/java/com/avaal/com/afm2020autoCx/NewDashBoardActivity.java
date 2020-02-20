@@ -111,7 +111,7 @@ public class NewDashBoardActivity extends AppCompatActivity {
                 name.setText("Hi, "+message+"\n"+prf.getStringData("Name"));
             }
         }, 1000 );
-        getDashboardData();
+
         if(prf.getStringData("mainMenuTutorial").equalsIgnoreCase(""))
         tutorial();
         swipeRefreshLayout.setColorSchemeColors(Color.GREEN, Color.RED, Color.GRAY);
@@ -198,6 +198,13 @@ public class NewDashBoardActivity extends AppCompatActivity {
         startActivity(j);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getDashboardData();
+    }
+
     void getDashboardData(){
         APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
         PreferenceManager prf=new PreferenceManager(this);

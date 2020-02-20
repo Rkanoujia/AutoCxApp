@@ -14,9 +14,11 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -193,12 +195,12 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 //        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        Picasso.with(this).load("https://images.unsplash.com/photo-503454537195-1dcabb73ffb9?auto=format&fit=crop&w=750&q=80").memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(front_left);
-        Picasso.with(this).load("https://images.unsplash.com/photo-450037586774-00cb81edd142?auto=format&fit=crop&w=750&q=80").error(R.drawable.no_img_found).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).into(front_right);
-        Picasso.with(this).load("https://images.unsplash.com/photo-504196606672-aef5c9cefc92?auto=format&fit=crop&w=750&q=80").error(R.drawable.no_img_found).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).into(back_left);
-        Picasso.with(this).load("https://images.unsplash.com/photo-500395235658-f87dff62cbf3?auto=format&fit=crop&w=750&q=80").error(R.drawable.no_img_found).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).into(back_right);
-        Picasso.with(this).load("https://images.unsplash.com/photo-500395235658-f87dff62cbf3?auto=format&fit=crop&w=750&q=80").error(R.drawable.no_img_found).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).into(windshield);
-        Picasso.with(this).load("https://images.unsplash.com/photo-500395235658-f87dff62cbf3?auto=format&fit=crop&w=750&q=80").error(R.drawable.no_img_found).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).into(roof);
+        Picasso.with(this).load("https://images.unsplash.com/photo-503454537195-1dcabb73ffb9?auto=format&fit=crop&w=750&q=80").memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.front_left).into(front_left);
+        Picasso.with(this).load("https://images.unsplash.com/photo-450037586774-00cb81edd142?auto=format&fit=crop&w=750&q=80").error(R.drawable.front_right).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).into(front_right);
+        Picasso.with(this).load("https://images.unsplash.com/photo-504196606672-aef5c9cefc92?auto=format&fit=crop&w=750&q=80").error(R.drawable.back_left).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).into(back_left);
+        Picasso.with(this).load("https://images.unsplash.com/photo-500395235658-f87dff62cbf3?auto=format&fit=crop&w=750&q=80").error(R.drawable.back_right).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).into(back_right);
+        Picasso.with(this).load("https://images.unsplash.com/photo-500395235658-f87dff62cbf3?auto=format&fit=crop&w=750&q=80").error(R.drawable.windshield).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).into(windshield);
+        Picasso.with(this).load("https://images.unsplash.com/photo-500395235658-f87dff62cbf3?auto=format&fit=crop&w=750&q=80").error(R.drawable.roof).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).into(roof);
         Picasso.with(AddImageActivity.this).load("https://images.unsplash.com/photo-504196606672-aef5c9cefc92?auto=format&fit=crop&w=750&q=80").error(R.mipmap.takephoto).into(add_image);
 
         title.setText("Pre-Inspections");
@@ -385,17 +387,32 @@ try {
 
         for(int i=0;ExtraImageList.size()>i;i++){
             if((ExtraImageList.get(i).get("imageName").equalsIgnoreCase(imageside+"-"+lastdegit))){
-                android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(AddImageActivity.this);
-                alertDialog.setCancelable(false);
-                alertDialog.setMessage("Image is already exist. Do you want to overwrite the image ? ");
-                alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        opencamera();
 
+
+                Dialog dialog = new Dialog(this);
+                dialog.setContentView(R.layout.custome_alert_dialog);
+                dialog.setCancelable(false);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                // if button is clicked, close the custom dialog
+                Button ok=(Button)dialog.findViewById(R.id.buttonOk) ;
+                Button cancel=(Button)dialog.findViewById(R.id.buttoncancel);
+                TextView title=(TextView)dialog.findViewById(R.id.title) ;
+                TextView message=(TextView)dialog.findViewById(R.id.message) ;
+                title.setText("");
+                message.setText("Image is already exist. Do you want to overwrite the image ? ");
+                ok.setText("Yes");
+                cancel.setText("No");
+                ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        opencamera();
                     }
                 });
-                alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
                         String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss",Locale.US).format(new Date());
                         imageside=img_type.getText() + "_"+timeStamp;
 //                        this.ima=imageside+""+timeStamp;
@@ -403,7 +420,8 @@ try {
                         opencamera();
                     }
                 });
-                alertDialog.show();
+                dialog.show();
+
                 break;
             }
             if(ExtraImageList.size()-1==i){
@@ -510,28 +528,39 @@ try {
     @OnClick(R.id.back_left_imagedelete)
     void  back_left_delete(){
 
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddImageActivity.this);
-        // Setting Dialog Message
-        alertDialog.setMessage("Are you sure you want delete this?");
-        // Setting Positive "Yes" Button
-        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                // Write your code here to invoke YES event
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.custome_alert_dialog);
+        dialog.setCancelable(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        // if button is clicked, close the custom dialog
+        Button ok=(Button)dialog.findViewById(R.id.buttonOk) ;
+        Button cancel=(Button)dialog.findViewById(R.id.buttoncancel);
+        TextView title=(TextView)dialog.findViewById(R.id.title) ;
+        TextView message=(TextView)dialog.findViewById(R.id.message) ;
+        title.setText("");
+        message.setText("Are you sure you want delete this? ");
+        ok.setText("Yes");
+        cancel.setText("No");
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
                 deleteImg(backLeftfileId,"BackLeftAngleView");
                 dialog.dismiss();
-
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
 
             }
         });
-        // Setting Negative "NO" Button
-        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                // Write your code here to invoke NO event
-                dialog.cancel();
-            }
-        });
-        // Showing Alert Message
-        alertDialog.show();
+        dialog.show();
+
+
+
+
 
 
 
@@ -539,130 +568,173 @@ try {
     }
     @OnClick(R.id.back_right_imagedelete)
     void  back_right_delete(){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddImageActivity.this);
-        // Setting Dialog Message
-        alertDialog.setMessage("Are you sure you want delete this?");
-        // Setting Positive "Yes" Button
-        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                // Write your code here to invoke YES event
+
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.custome_alert_dialog);
+        dialog.setCancelable(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        // if button is clicked, close the custom dialog
+        Button ok=(Button)dialog.findViewById(R.id.buttonOk) ;
+        Button cancel=(Button)dialog.findViewById(R.id.buttoncancel);
+        TextView title=(TextView)dialog.findViewById(R.id.title) ;
+        TextView message=(TextView)dialog.findViewById(R.id.message) ;
+        title.setText("");
+        message.setText("Are you sure you want delete this? ");
+        ok.setText("Yes");
+        cancel.setText("No");
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
                 deleteImg(backRightfileId,"BackRightAngleView");
+                dialog.dismiss();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 dialog.dismiss();
 
             }
         });
-        // Setting Negative "NO" Button
-        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                // Write your code here to invoke NO event
-                dialog.cancel();
-            }
-        });
-        // Showing Alert Message
-        alertDialog.show();
+        dialog.show();
+
 
     }
     @OnClick(R.id.front_left_imagedelete)
     void  front_left_delete(){
-
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddImageActivity.this);
-        // Setting Dialog Message
-        alertDialog.setMessage("Are you sure you want delete this?");
-        // Setting Positive "Yes" Button
-        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                // Write your code here to invoke YES event
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.custome_alert_dialog);
+        dialog.setCancelable(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        // if button is clicked, close the custom dialog
+        Button ok=(Button)dialog.findViewById(R.id.buttonOk) ;
+        Button cancel=(Button)dialog.findViewById(R.id.buttoncancel);
+        TextView title=(TextView)dialog.findViewById(R.id.title) ;
+        TextView message=(TextView)dialog.findViewById(R.id.message) ;
+        title.setText("");
+        message.setText("Are you sure you want delete this? ");
+        ok.setText("Yes");
+        cancel.setText("No");
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
                 deleteImg(frontLeftfileId,"FrontLeftAngleView");
+                dialog.dismiss();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 dialog.dismiss();
 
             }
         });
-        // Setting Negative "NO" Button
-        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                // Write your code here to invoke NO event
-                dialog.cancel();
-            }
-        });
-        // Showing Alert Message
-        alertDialog.show();
+        dialog.show();
+
 
     }
     @OnClick(R.id.front_right_imagedelete)
     void  front_right_delete(){
-
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddImageActivity.this);
-        // Setting Dialog Message
-        alertDialog.setMessage("Are you sure you want delete this?");
-        // Setting Positive "Yes" Button
-        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                // Write your code here to invoke YES event
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.custome_alert_dialog);
+        dialog.setCancelable(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        // if button is clicked, close the custom dialog
+        Button ok=(Button)dialog.findViewById(R.id.buttonOk) ;
+        Button cancel=(Button)dialog.findViewById(R.id.buttoncancel);
+        TextView title=(TextView)dialog.findViewById(R.id.title) ;
+        TextView message=(TextView)dialog.findViewById(R.id.message) ;
+        title.setText("");
+        message.setText("Are you sure you want delete this? ");
+        ok.setText("Yes");
+        cancel.setText("No");
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
                 deleteImg(frontRightfileId,"FrontRightAngleView");
+                dialog.dismiss();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 dialog.dismiss();
 
             }
         });
-        // Setting Negative "NO" Button
-        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                // Write your code here to invoke NO event
-                dialog.cancel();
-            }
-        });
-        // Showing Alert Message
-        alertDialog.show();
+        dialog.show();
+
 
     }
     @OnClick(R.id.windshield_imagedelete)
     void  windshield_img_delete(){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddImageActivity.this);
-        // Setting Dialog Message
-        alertDialog.setMessage("Are you sure you want delete this?");
-        // Setting Positive "Yes" Button
-        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                // Write your code here to invoke YES event
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.custome_alert_dialog);
+        dialog.setCancelable(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        // if button is clicked, close the custom dialog
+        Button ok=(Button)dialog.findViewById(R.id.buttonOk) ;
+        Button cancel=(Button)dialog.findViewById(R.id.buttoncancel);
+        TextView title=(TextView)dialog.findViewById(R.id.title) ;
+        TextView message=(TextView)dialog.findViewById(R.id.message) ;
+        title.setText("");
+        message.setText("Are you sure you want delete this? ");
+        ok.setText("Yes");
+        cancel.setText("No");
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
                 deleteImg(windshieldfileId,"Windshield");
+                dialog.dismiss();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 dialog.dismiss();
 
             }
         });
-        // Setting Negative "NO" Button
-        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                // Write your code here to invoke NO event
-                dialog.cancel();
-            }
-        });
-        // Showing Alert Message
-        alertDialog.show();
+        dialog.show();
 
     }
     @OnClick(R.id.roof_imagedelete)
     void  roof_img_delete(){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddImageActivity.this);
-        // Setting Dialog Message
-        alertDialog.setMessage("Are you sure you want delete this?");
-        // Setting Positive "Yes" Button
-        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                // Write your code here to invoke YES event
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.custome_alert_dialog);
+        dialog.setCancelable(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        // if button is clicked, close the custom dialog
+        Button ok=(Button)dialog.findViewById(R.id.buttonOk) ;
+        Button cancel=(Button)dialog.findViewById(R.id.buttoncancel);
+        TextView title=(TextView)dialog.findViewById(R.id.title) ;
+        TextView message=(TextView)dialog.findViewById(R.id.message) ;
+        title.setText("");
+        message.setText("Are you sure you want delete this? ");
+        ok.setText("Yes");
+        cancel.setText("No");
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
                 deleteImg(rooffileId,"Roof");
                 dialog.dismiss();
-
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
 
             }
         });
-        // Setting Negative "NO" Button
-        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                // Write your code here to invoke NO event
-                dialog.cancel();
-            }
-        });
-        // Showing Alert Message
-        alertDialog.show();
+        dialog.show();
+
+
 
     }
 
@@ -885,7 +957,10 @@ try {
             BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
 
             thumbnail = BitmapFactory.decodeFile(imageFilePath, bitmapOptions);
-            thumbnail = getScaledBitmap(thumbnail, 600, 1200);
+            ExifInterface exif = new ExifInterface(imageFilePath);
+            int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+            thumbnail = rotateBitmap(thumbnail, orientation);
+            thumbnail = getScaledBitmap(thumbnail, 800, 1200);
             Bitmap second = addText(thumbnail);
             thumbnail.recycle();
             filetemdata = bitmapToBase64(second);
@@ -945,7 +1020,7 @@ try {
                                       runOnUiThread(new Runnable() {
                                           @Override
                                           public void run() {
-                                              Picasso.with(AddImageActivity.this).load(backRightfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(back_right);
+                                              Picasso.with(AddImageActivity.this).load(backRightfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.back_right).into(back_right);
 
                                           }
                                       });
@@ -961,7 +1036,7 @@ try {
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
-                                                Picasso.with(AddImageActivity.this).load(backLeftfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(back_left);
+                                                Picasso.with(AddImageActivity.this).load(backLeftfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.back_left).into(back_left);
                                             }
                                         });
 
@@ -977,7 +1052,7 @@ try {
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
-                                                Picasso.with(AddImageActivity.this).load(frontRightfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(front_right);
+                                                Picasso.with(AddImageActivity.this).load(frontRightfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.front_right).into(front_right);
 
                                             }
                                         });
@@ -992,7 +1067,7 @@ try {
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
-                                                Picasso.with(AddImageActivity.this).load(frontLeftfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(front_left);
+                                                Picasso.with(AddImageActivity.this).load(frontLeftfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.front_left).into(front_left);
 
                                             }
                                         });
@@ -1007,7 +1082,7 @@ try {
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
-                                                Picasso.with(AddImageActivity.this).load(windshieldfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(windshield);
+                                                Picasso.with(AddImageActivity.this).load(windshieldfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.windshield).into(windshield);
 
                                             }
                                         });
@@ -1021,7 +1096,7 @@ try {
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
-                                                Picasso.with(AddImageActivity.this).load(rooffileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(roof);
+                                                Picasso.with(AddImageActivity.this).load(rooffileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.roof).into(roof);
 
                                             }
                                         });
@@ -1089,6 +1164,49 @@ try {
         m.setRectToRect(new RectF(0, 0, b.getWidth(), b.getHeight()), new RectF(0, 0, reqWidth, reqHeight), Matrix.ScaleToFit.CENTER);
         return Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), m, true);
     }
+    private static Bitmap rotateBitmap(Bitmap bitmap, int orientation) {
+        Matrix matrix = new Matrix();
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_NORMAL:
+                return bitmap;
+            case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
+                matrix.setScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                matrix.setRotate(180);
+                break;
+            case ExifInterface.ORIENTATION_FLIP_VERTICAL:
+                matrix.setRotate(180);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_TRANSPOSE:
+                matrix.setRotate(90);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                matrix.setRotate(90);
+                break;
+            case ExifInterface.ORIENTATION_TRANSVERSE:
+                matrix.setRotate(-90);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                matrix.setRotate(-90);
+                break;
+            default:
+                return bitmap;
+        }
+        try {
+            Bitmap bmRotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            bitmap.recycle();
+
+            return bmRotated;
+        } catch (OutOfMemoryError e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     void getImages(String tempVehicleId){
          prf = new PreferenceManager(this);
         GetImageModel vindetail=new GetImageModel(prf.getStringData("authKey"),tempVehicleId);
@@ -1115,7 +1233,7 @@ try {
                                 front_left_imageview.setVisibility(View.VISIBLE);
                                 front_left_imagedelete.setVisibility(View.VISIBLE);
                                 progressCircle_progressBar.setVisibility(View.VISIBLE);
-                                Picasso.with(AddImageActivity.this).load(frontLeftfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(front_left, new com.squareup.picasso.Callback() {
+                                Picasso.with(AddImageActivity.this).load(frontLeftfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.front_left).into(front_left, new com.squareup.picasso.Callback() {
                                     @Override
                                     public void onSuccess() {
                                         progressCircle_progressBar.setVisibility(View.INVISIBLE);
@@ -1136,7 +1254,7 @@ try {
                                 frontRightfileId = getdata.dataValuer.get(i).docId;
                                 front_right_imagedelete.setVisibility(View.VISIBLE);
                                 front_right_imageview.setVisibility(View.VISIBLE);
-                                Picasso.with(AddImageActivity.this).load(frontRightfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(front_right, new com.squareup.picasso.Callback() {
+                                Picasso.with(AddImageActivity.this).load(frontRightfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.front_right).into(front_right, new com.squareup.picasso.Callback() {
                                     @Override
                                     public void onSuccess() {
                                         progressCircle_progressBar1.setVisibility(View.INVISIBLE);
@@ -1152,7 +1270,7 @@ try {
                                 backLeftfileUrl = getdata.dataValuer.get(i).DocURL.replace("DelhiServer", "192.168.1.20");
                                 progressCircle_progressBar2.setVisibility(View.VISIBLE);
                                 back_left_imagedelete.setVisibility(View.VISIBLE);
-                                Picasso.with(AddImageActivity.this).load(backLeftfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(back_left, new com.squareup.picasso.Callback() {
+                                Picasso.with(AddImageActivity.this).load(backLeftfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.back_left).into(back_left, new com.squareup.picasso.Callback() {
                                     @Override
                                     public void onSuccess() {
                                         progressCircle_progressBar2.setVisibility(View.INVISIBLE);
@@ -1170,7 +1288,7 @@ try {
                                 backRightfileUrl = getdata.dataValuer.get(i).DocURL.replace("DelhiServer", "192.168.1.20");
                                 progressCircle_progressBar3.setVisibility(View.VISIBLE);
                                 back_right_imagedelete.setVisibility(View.VISIBLE);
-                                Picasso.with(AddImageActivity.this).load(backRightfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(back_right, new com.squareup.picasso.Callback() {
+                                Picasso.with(AddImageActivity.this).load(backRightfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.back_right).into(back_right, new com.squareup.picasso.Callback() {
                                     @Override
                                     public void onSuccess() {
                                         progressCircle_progressBar3.setVisibility(View.INVISIBLE);
@@ -1190,7 +1308,7 @@ try {
                                 progressCircle_progressBar4.setVisibility(View.VISIBLE);
                                 windshield_imagedelete.setVisibility(View.VISIBLE);
 
-                                Picasso.with(AddImageActivity.this).load(windshieldfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(windshield, new com.squareup.picasso.Callback() {
+                                Picasso.with(AddImageActivity.this).load(windshieldfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.windshield).into(windshield, new com.squareup.picasso.Callback() {
                                     @Override
                                     public void onSuccess() {
                                         progressCircle_progressBar4.setVisibility(View.INVISIBLE);
@@ -1210,7 +1328,7 @@ try {
                                 progressCircle_progressBar5.setVisibility(View.VISIBLE);
                                 roof_imagedelete.setVisibility(View.VISIBLE);
 
-                                Picasso.with(AddImageActivity.this).load(rooffileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(roof, new com.squareup.picasso.Callback() {
+                                Picasso.with(AddImageActivity.this).load(rooffileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.roof).into(roof, new com.squareup.picasso.Callback() {
                                     @Override
                                     public void onSuccess() {
                                         progressCircle_progressBar5.setVisibility(View.INVISIBLE);
@@ -1234,7 +1352,7 @@ try {
                                 image.put("imageName", getdata.dataValuer.get(i).FileName);
                                 image.put("imageId", getdata.dataValuer.get(i).docId);
                                 ExtraImageList.add(image);
-                                adapterd = new ExtraImageList(ExtraImageList, AddImageActivity.this);
+                                adapterd = new ExtraImageList(ExtraImageList, AddImageActivity.this,true);
                                 _image_list.setAdapter(adapterd);
                             }
                         }
@@ -1309,7 +1427,7 @@ try {
                                 frontLeftfileUrl = getdata.dataValuer.get(i).DocURL.replace("DelhiServer", "192.168.1.20");
                                 front_left_imageview.setVisibility(View.VISIBLE);
                                 progressCircle_progressBar.setVisibility(View.VISIBLE);
-                                Picasso.with(AddImageActivity.this).load(frontLeftfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(front_left, new com.squareup.picasso.Callback() {
+                                Picasso.with(AddImageActivity.this).load(frontLeftfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.front_left).into(front_left, new com.squareup.picasso.Callback() {
                                     @Override
                                     public void onSuccess() {
                                         progressCircle_progressBar.setVisibility(View.INVISIBLE);
@@ -1330,7 +1448,7 @@ try {
                                 progressCircle_progressBar1.setVisibility(View.VISIBLE);
                                 frontRightfileId = getdata.dataValuer.get(i).docId;
                                 front_right_imageview.setVisibility(View.VISIBLE);
-                                Picasso.with(AddImageActivity.this).load(frontRightfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(front_right, new com.squareup.picasso.Callback() {
+                                Picasso.with(AddImageActivity.this).load(frontRightfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.front_right).into(front_right, new com.squareup.picasso.Callback() {
                                     @Override
                                     public void onSuccess() {
                                         progressCircle_progressBar1.setVisibility(View.INVISIBLE);
@@ -1346,7 +1464,7 @@ try {
                                 backLeftfileUrl = getdata.dataValuer.get(i).DocURL.replace("DelhiServer", "192.168.1.20");
                                 back_left_imageview.setVisibility(View.VISIBLE);
                                 progressCircle_progressBar2.setVisibility(View.VISIBLE);
-                                Picasso.with(AddImageActivity.this).load(backLeftfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(back_left, new com.squareup.picasso.Callback() {
+                                Picasso.with(AddImageActivity.this).load(backLeftfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.back_left).into(back_left, new com.squareup.picasso.Callback() {
                                     @Override
                                     public void onSuccess() {
                                         progressCircle_progressBar2.setVisibility(View.INVISIBLE);
@@ -1364,7 +1482,7 @@ try {
                             } else if (getdata.dataValuer.get(i).doctype.equalsIgnoreCase("BackRightAngleView")) {
                                 backRightfileUrl = getdata.dataValuer.get(i).DocURL.replace("DelhiServer", "192.168.1.20");
                                 progressCircle_progressBar3.setVisibility(View.VISIBLE);
-                                Picasso.with(AddImageActivity.this).load(backRightfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(back_right, new com.squareup.picasso.Callback() {
+                                Picasso.with(AddImageActivity.this).load(backRightfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.back_right).into(back_right, new com.squareup.picasso.Callback() {
                                     @Override
                                     public void onSuccess() {
                                         progressCircle_progressBar3.setVisibility(View.INVISIBLE);
@@ -1383,7 +1501,7 @@ try {
                             else if (getdata.dataValuer.get(i).doctype.equalsIgnoreCase("Windshield")) {
                                 windshieldfileUrl = getdata.dataValuer.get(i).DocURL.replace("DelhiServer", "192.168.1.20");
                                 progressCircle_progressBar4.setVisibility(View.VISIBLE);
-                                Picasso.with(AddImageActivity.this).load(windshieldfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(windshield, new com.squareup.picasso.Callback() {
+                                Picasso.with(AddImageActivity.this).load(windshieldfileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.windshield).into(windshield, new com.squareup.picasso.Callback() {
                                     @Override
                                     public void onSuccess() {
                                         progressCircle_progressBar4.setVisibility(View.INVISIBLE);
@@ -1402,7 +1520,7 @@ try {
                             else if (getdata.dataValuer.get(i).doctype.equalsIgnoreCase("Roof")) {
                                 rooffileUrl = getdata.dataValuer.get(i).DocURL.replace("DelhiServer", "192.168.1.20");
                                 progressCircle_progressBar5.setVisibility(View.VISIBLE);
-                                Picasso.with(AddImageActivity.this).load(rooffileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.no_img_found).into(roof, new com.squareup.picasso.Callback() {
+                                Picasso.with(AddImageActivity.this).load(rooffileUrl).memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.roof).into(roof, new com.squareup.picasso.Callback() {
                                     @Override
                                     public void onSuccess() {
                                         progressCircle_progressBar5.setVisibility(View.INVISIBLE);
@@ -1425,7 +1543,7 @@ try {
                                 image.put("imageName", getdata.dataValuer.get(i).FileName);
                                 image.put("imageId", getdata.dataValuer.get(i).docId);
                                 ExtraImageList.add(image);
-                                adapterd = new ExtraImageList(ExtraImageList, AddImageActivity.this);
+                                adapterd = new ExtraImageList(ExtraImageList, AddImageActivity.this,false);
                                 _image_list.setAdapter(adapterd);
                             }
                         }
@@ -1530,27 +1648,38 @@ try {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddImageActivity.this);
-                // Setting Dialog Message
-                alertDialog.setMessage("Are you sure you want delete this?");
-                // Setting Positive "Yes" Button
-                alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Write your code here to invoke YES event
+
+
+                Dialog dialog = new Dialog(AddImageActivity.this);
+                dialog.setContentView(R.layout.custome_alert_dialog);
+                dialog.setCancelable(false);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                // if button is clicked, close the custom dialog
+                Button ok=(Button)dialog.findViewById(R.id.buttonOk) ;
+                Button cancel=(Button)dialog.findViewById(R.id.buttoncancel);
+                TextView title=(TextView)dialog.findViewById(R.id.title) ;
+                TextView message=(TextView)dialog.findViewById(R.id.message) ;
+                title.setText("");
+                message.setText("Are you sure you want delete this? ");
+                ok.setText("Yes");
+                cancel.setText("No");
+                ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        deleteImg(windshieldfileId,"Windshield");
+                        dialog.dismiss();
+                    }
+                });
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
                         deleteImg(id,type);
                         settingsDialog.dismiss();
-
                     }
                 });
-                // Setting Negative "NO" Button
-                alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Write your code here to invoke NO event
-                        dialog.cancel();
-                    }
-                });
-                // Showing Alert Message
-                alertDialog.show();
+                dialog.show();
             }
         });
 

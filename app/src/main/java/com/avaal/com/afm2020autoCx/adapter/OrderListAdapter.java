@@ -566,7 +566,7 @@ if(tripList.get(position).orderType!=null) {
                 GetVehicleIdModel getdata = response.body();
                 try {
                     if (getdata.satus) {
-                        new Util().sendAlert((Activity) context," Customer Order  Reference #: "+OrderId+" has been received","Shipped");
+                        new Util().sendAlert((Activity) context,prf.getStringData("userName")+" has placed an order having "+" vehicles with Ref no "+OrderId+".","Shipped");
                         MDToast mdToast = MDToast.makeText(context, "Your load has been shipped to Carrier", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                         mdToast.show();
                         tripList.get(position).status="Shipped";

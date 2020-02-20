@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:id="@+id/main_selection"
     android:elevation="5dp"
@@ -122,11 +123,65 @@
                         </LinearLayout>
                     </FrameLayout>
 
+                    <RelativeLayout
+                        android:gravity="center_vertical"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/colorWhite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textColor="@color/colorPrimary"
+                            android:layout_margin="10dp"
+                            android:layout_centerVertical="true"
+                            android:text="Freight on"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:gravity="center"
+                            android:id="@+id/item"
+                            android:textColor="@color/colorWhite"
+                             android:backgroundTint="@color/green"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:padding="5dp"
+                            android:background="@drawable/round_linear"
+                             android:layout_marginEnd="1dp"
+                            android:layout_toLeftOf="@+id/switch_ord"
+                            android:layout_centerVertical="true"
+                            android:text="ITEM"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content" />
+                        <Switch
+                            android:visibility="gone"
+                            android:layout_centerVertical="true"
+                            android:id="@+id/switch_ord"
+                            android:layout_toLeftOf="@+id/ord"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:gravity="center"
+                            android:backgroundTint="@color/gray"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:padding="5dp"
+                            android:background="@drawable/round_linear"
+                            android:layout_marginEnd="10dp"
+                            android:layout_centerVertical="true"
+                            android:id="@+id/ord"
+                            android:layout_alignParentEnd="true"
+                            android:text="ORDER"
+                            android:layout_width="80dp"
+                            android:layout_height="match_parent" />
+                    </RelativeLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginStart="10dp"
                             android:background="@android:color/white"
                             android:orientation="horizontal">
 
@@ -154,6 +209,7 @@
                                     android:padding="10dp">
 
                                     <TextView
+                                        android:textSize="15dp"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginStart="10dp"
@@ -161,6 +217,7 @@
                                         android:textColor="@color/textColor" />
 
                                     <TextView
+                                        android:textSize="15dp"
                                         android:id="@+id/pickup_date"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -186,6 +243,7 @@
                                     <!--android:layout_width="match_parent"-->
                                     <!--android:layout_height="wrap_content" />-->
                                     <AutoCompleteTextView
+
                                         android:id="@+id/pickup_spinner"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -195,14 +253,14 @@
                                         android:inputType="text"
                                         android:soundEffectsEnabled="true"
                                         android:textColor="@color/textColor"
-                                        android:textSize="13dp"></AutoCompleteTextView>
+                                        android:textSize="15dp"></AutoCompleteTextView>
 
 
                                 </LinearLayout>
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="80dp"
                                     android:layout_marginStart="10dp"
                                     android:layout_marginTop="10dp"
                                     android:background="@drawable/round_corners"
@@ -216,10 +274,9 @@
                                         android:layout_marginStart="10dp"
                                         android:background="@null"
                                         android:hint="Remarks"
-                                        android:inputType="text"
-                                        android:lines="1"
+                                        android:inputType="textMultiLine"
                                         android:textColor="@color/textColor"
-                                        android:textSize="13dp" />
+                                        android:textSize="15dp" />
 
 
                                 </LinearLayout>
@@ -398,6 +455,7 @@
                                     android:padding="10dp">
 
                                     <TextView
+                                        android:textSize="15dp"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginStart="10dp"
@@ -405,6 +463,7 @@
                                         android:textColor="@color/textColor" />
 
                                     <TextView
+                                        android:textSize="15dp"
                                         android:id="@+id/delivery_date"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -438,7 +497,7 @@
                                         android:hint="Location"
                                         android:inputType="textCapSentences"
                                         android:textColor="@color/textColor"
-                                        android:textSize="13dp"
+                                        android:textSize="15dp"
                                         android:tooltipText="Welldone Tech Park"></AutoCompleteTextView>
 
 
@@ -446,7 +505,7 @@
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="80dp"
                                     android:layout_marginStart="10dp"
                                     android:layout_marginTop="10dp"
                                     android:background="@drawable/round_corners"
@@ -460,10 +519,9 @@
                                         android:layout_marginStart="10dp"
                                         android:background="@null"
                                         android:hint="Remarks"
-                                        android:inputType="text"
-                                        android:lines="1"
+                                        android:inputType="textMultiLine"
                                         android:textColor="@color/textColor"
-                                        android:textSize="13dp" />
+                                        android:textSize="15dp" />
 
 
                                 </LinearLayout>
@@ -511,12 +569,25 @@
         <TextView
             android:id="@+id/miles"
             android:textStyle="bold"
-            android:padding="10dp"
+            android:padding="16dp"
             android:background="@color/gray"
             android:layout_above="@+id/save_li"
             android:textColor="@color/colorPrimary"
-            android:text="Total"
+            android:text="Distance : 0.00"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/getMile"
+            android:backgroundTint="@color/colorPrimary"
+             android:layout_marginBottom="8dp"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/colorWhite"
+            android:layout_above="@+id/save_li"
+            android:layout_alignParentEnd="true"
+            android:padding="8dp"
+            android:background="@drawable/round_linear"
+            android:text="Get"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <LinearLayout
             android:id="@+id/save_li"
