@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -19,6 +21,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -27,6 +30,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.avaal.com.afm2020autoCx.models.CustOrderModel;
 import com.avaal.com.afm2020autoCx.models.DropDownModel;
 import com.avaal.com.afm2020autoCx.models.GetVehicleIdListModel;
 import com.avaal.com.afm2020autoCx.models.LocationDetailModel;
@@ -34,6 +38,7 @@ import com.avaal.com.afm2020autoCx.models.MilesModel;
 import com.avaal.com.afm2020autoCx.models.OrderDetailModel;
 import com.avaal.com.afm2020autoCx.models.OrderListModel;
 import com.avaal.com.afm2020autoCx.models.PrimaryInfoDetailModel;
+import com.avaal.com.afm2020autoCx.models.ProfileDataModel;
 import com.avaal.com.afm2020autoCx.models.RouteSelectionModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -105,7 +110,16 @@ public class RouteSelectionActivity extends AppCompatActivity {
     TextView item;
     @BindView(R.id.ord)
     TextView ord;
-
+    @BindView(R.id.pick_clear)
+    Button pick_clear;
+    @BindView(R.id.delivery_clear)
+    Button delivery_clear;
+    @BindView(R.id.pickup_number)
+    TextView pickup_number;
+    @BindView(R.id.delivery_number)
+    TextView delivery_number;
+    @BindView(R.id.cust_order_number)
+     TextView cust_order_number;
     @BindView(R.id.main_selection)
     FrameLayout mainlayout;
     String FreightTypeLuCode="FRT02";
@@ -205,6 +219,18 @@ public class RouteSelectionActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    @OnClick(R.id.pick_clear)
+    void pickupClear(){
+        pickupSpin.setText("");
+        pickupId="0";
+        pick_clear.setVisibility(View.GONE);
+    }
+    @OnClick(R.id.delivery_clear)
+    void deliveryClear(){
+        deliverySpin.setText("");
+        deliveryId="0";
+        delivery_clear.setVisibility(View.GONE);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -224,7 +250,8 @@ public class RouteSelectionActivity extends AppCompatActivity {
             mdToast.show();
             return;
         }
-
+        pick_clear.setVisibility(View.INVISIBLE);
+        delivery_clear.setVisibility(View.INVISIBLE);
 
         prf.saveStringData("vehicleList", null);
 //        if(!prf.getStringData("OrderStatus").equalsIgnoreCase("Saved")){
@@ -250,6 +277,62 @@ public class RouteSelectionActivity extends AppCompatActivity {
 //        this.setTitle("Create A Trip ");
 //
 ////Remove notification bar
+
+        pickupSpin.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                //do nothing
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //do nothing
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.length() != 0) {
+                    pick_clear.setVisibility(View.VISIBLE);
+                } else {
+                    pick_clear.setVisibility(View.GONE);
+                }
+            }
+        });
+        cust_order_number.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus) {
+                    if(prf.getBoolData("IsDuplicateCustomerOrderNoAllowed")) {
+                        showAnimation();
+                        IsOrderNumber("" + cust_order_number.getText(), tempOrderId);
+                    }
+                }
+            }
+        });
+
+        deliverySpin.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                //do nothing
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //do nothing
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.length() != 0) {
+                    delivery_clear.setVisibility(View.VISIBLE);
+                } else {
+                    delivery_clear.setVisibility(View.GONE);
+                }
+            }
+        });
+
         Date c = Calendar.getInstance().getTime();
 
 
@@ -258,11 +341,13 @@ public class RouteSelectionActivity extends AppCompatActivity {
         if(getIntent().getStringExtra("from").equalsIgnoreCase("CA") && getIntent().getStringExtra("to").equalsIgnoreCase("CA")){
             type.setText("Inter Provincial");
             orderType="InterProvincial";
+            title.setText("InterProvincial");
             from.setBackground(getResources().getDrawable(R.mipmap.cn));
             to.setBackground(getResources().getDrawable(R.mipmap.cn));
         }
         else if(getIntent().getStringExtra("from").equalsIgnoreCase("CA") && getIntent().getStringExtra("to").equalsIgnoreCase("US")){
             type.setText("Export");
+            title.setText("Export");
             orderType="Export";
 //            yard_view.setVisibility(View.VISIBLE);
             from.setBackground(getResources().getDrawable(R.mipmap.cn));
@@ -270,11 +355,13 @@ public class RouteSelectionActivity extends AppCompatActivity {
         }else if(getIntent().getStringExtra("from").equalsIgnoreCase("US") && getIntent().getStringExtra("to").equalsIgnoreCase("CA")){
             type.setText("Import");
             orderType="Import";
+            title.setText("Import");
             from.setBackground(getResources().getDrawable(R.mipmap.us));
             to.setBackground(getResources().getDrawable(R.mipmap.cn));
         }else if(getIntent().getStringExtra("from").equalsIgnoreCase("US") && getIntent().getStringExtra("to").equalsIgnoreCase("US")){
             type.setText("Inter State");
             orderType="InterState";
+            title.setText("Inter State");
             from.setBackground(getResources().getDrawable(R.mipmap.us));
             to.setBackground(getResources().getDrawable(R.mipmap.us));
         }
@@ -1198,7 +1285,7 @@ public class RouteSelectionActivity extends AppCompatActivity {
         showAnimation();
 //        RouteSelectionModel vindetail=new RouteSelectionModel(prf.getStringData("authKey"),orderType,pickupId,
 //                deliveryId,prf.getStringData("carrierPrimaryId"),pickupdateTime[0],pickupdateTime[1]+" "+pickupdateTime[2],deliverydateTime[1]+" "+deliverydateTime[2],deliverydateTime[0],""+pickup_remark.getText(),""+delivery_remark.getText(),yardId,yardDate,yardtime,""/*+yard_remark.getText(*/,tempOrderId);
-              Call<RouteSelectionModel> call1 = apiInterface.getTempIds(""+tempOrderId,orderType,""+pickupId,new Util().getUtcToOrderdateTime(pickupdateTime),""+ prf.getStringData("userCode"),""+deliveryId,new Util().getUtcToOrderdateTime(deliverydateTime),""+pickup_remark.getText(),""+distance,""+distanceUnit,""+delivery_remark.getText(),yardId,yardDate+" "+yardtime,"","0","",""+FreightTypeLuCode,""+ prf.getStringData("userName"),new Util().getDateTime(),""+ prf.getStringData("corporateId"),"bearer "+ prf.getStringData("accessToken"),"application/x-www-form-urlencoded");
+              Call<RouteSelectionModel> call1 = apiInterface.getTempIds(""+tempOrderId,orderType,""+pickupId,new Util().getUtcToOrderdateTime(pickupdateTime),""+ prf.getStringData("userCode"),""+deliveryId,new Util().getUtcToOrderdateTime(deliverydateTime),""+pickup_remark.getText(),""+distance,""+distanceUnit,""+delivery_remark.getText(),yardId,yardDate+" "+yardtime,"","0","",""+FreightTypeLuCode,""+pickup_number.getText(),""+delivery_number.getText(),""+cust_order_number.getText(),""+ prf.getStringData("userName"),new Util().getDateTime(),""+ prf.getStringData("corporateId"),"bearer "+ prf.getStringData("accessToken"),"application/x-www-form-urlencoded");
         call1.enqueue(new Callback<RouteSelectionModel>() {
             @Override
             public void onResponse(Call<RouteSelectionModel> call, Response<RouteSelectionModel> response) {
@@ -1304,6 +1391,9 @@ public class RouteSelectionActivity extends AppCompatActivity {
             prf.saveStringData("OrderId",tempOrderId);
             pickup_remark.setText(listObject.pickupNote);
             delivery_remark.setText(listObject.dropNote);
+            pickup_number.setText(listObject.PickupNumber);
+            delivery_number.setText(listObject.DeliveryNumber);
+            cust_order_number.setText(listObject.CustomerOrderNo);
 
             FreightTypeLuCode=listObject.FreightTypeLuCode;
             freightType(listObject.FreightTypeLuCode);
@@ -1482,5 +1572,35 @@ public class RouteSelectionActivity extends AppCompatActivity {
             }
         });
 
+    }
+    void IsOrderNumber(String cusOrederNumber,String OrderId){
+        final PreferenceManager prf=new PreferenceManager(this);
+        Call<CustOrderModel> call1 = apiInterface.getCheckDuplicateCustOrderNo(""+OrderId,""+cusOrederNumber,""+ prf.getStringData("userCode"),""+ prf.getStringData("corporateId"),"bearer "+ prf.getStringData("accessToken"),"application/json");
+        call1.enqueue(new Callback<CustOrderModel>() {
+            @Override
+            public void onResponse(Call<CustOrderModel> call, Response<CustOrderModel> response) {
+                hideAnimation();
+                CustOrderModel getdata = response.body();
+                try{
+                  if(getdata.staus){
+                      if(!getdata.Value.staus){
+                          cust_order_number.setError("Already Exist");
+                      }else
+                          cust_order_number.setError(null);
+                  }
+                }catch (Exception e){
+                    e.printStackTrace();
+                    new Util().sendSMTPMail(RouteSelectionActivity.this,null,"CxE004",e,""+call.request().url().toString());
+                }
+            }
+            @Override
+            public void onFailure(Call<CustOrderModel> call, Throwable t) {
+                call.cancel();
+                new Util().sendSMTPMail(RouteSelectionActivity.this,t,"CxE001",null,""+call.request().url().toString());
+                MDToast mdToast = MDToast.makeText(RouteSelectionActivity.this, "Some Technical Issue", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+                mdToast.show();
+                hideAnimation();
+            }
+        });
     }
 }

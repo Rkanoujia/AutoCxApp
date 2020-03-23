@@ -100,6 +100,13 @@ public class OrderListModel {
         public String FreightTypeLuCode;
         @SerializedName("Status")
         public String status;
+        @SerializedName("PickupNumber")
+        public String PickupNumber;
+        @SerializedName("DeliveryNumber")
+        public String DeliveryNumber;
+        @SerializedName("CustomerOrderNo")
+        public String CustomerOrderNo;
+
 
 
     }

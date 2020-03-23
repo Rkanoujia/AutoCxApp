@@ -63,6 +63,7 @@
             </intent-filter>
         </service>
         <service android:name="extra.GPSTrackerService" />
+        <service android:name="extra.GetOtherInformationService" />
         <!--
              Set color used with incoming notification messages. This is used when no color is set for the incoming
              notification message. See README(https://goo.gl/6BKBk7) for more.

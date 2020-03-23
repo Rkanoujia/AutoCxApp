@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <FrameLayout
+        android:layout_above="@+id/bottom_li"
         android:background="@color/gray"
         android:id="@+id/vehicle_screen"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
             android:orientation="vertical"
-            android:layout_marginBottom="?attr/actionBarSize"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <include
@@ -125,7 +125,9 @@
             android:background="@drawable/round_corner_white_bg"
             android:layout_width="match_parent"
             android:layout_height="45dp">
-
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
             <EditText
                 android:fontFamily="@font/open_sans"
@@ -143,6 +145,15 @@
                 android:lines="1"
                 android:inputType="text"
                 />
+            <Button
+                android:id="@+id/vin_clear"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="right|bottom"
+                android:background="@drawable/ic_close_black_24dp"
+                />
+            </FrameLayout>
         </LinearLayout>
             <TextView
 
@@ -1345,51 +1356,52 @@
     </LinearLayout>
         </ScrollView>
         </LinearLayout>
-        <LinearLayout
-            android:layout_gravity="bottom"
-
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
-            <TextView
-                android:fontFamily="@font/open_sans"
-                android:background="@color/green"
-                android:id="@+id/save_vehicle"
-                android:textSize="15dp"
-                android:gravity="center"
-                android:textColor="@android:color/white"
-                android:text="Save"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-            <View
-                android:background="@android:color/white"
-                android:layout_width="0.5dp"
-                android:layout_height="match_parent"/>
-            <TextView
-                android:fontFamily="@font/open_sans"
-                android:background="@color/green"
-                android:id="@+id/save_new"
-                android:textSize="15dp"
-                android:gravity="center"
-                android:text="@string/save_new"
-                android:textColor="@android:color/white"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-            <TextView
-                android:visibility="gone"
-                android:fontFamily="@font/open_sans"
-                android:background="#b0aaaa"
-                android:id="@+id/bol"
-                android:textSize="15dp"
-                android:gravity="center"
-                android:clickable="false"
-                android:enabled="false"
-                android:text="Pre-Inspection"
-                android:textColor="@android:color/black"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
     </FrameLayout>
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:id="@+id/bottom_li"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+        <TextView
+            android:fontFamily="@font/open_sans"
+            android:background="@color/green"
+            android:id="@+id/save_vehicle"
+            android:textSize="15dp"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:text="Save"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <View
+            android:background="@android:color/white"
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:fontFamily="@font/open_sans"
+            android:background="@color/green"
+            android:id="@+id/save_new"
+            android:textSize="15dp"
+            android:gravity="center"
+            android:text="@string/save_new"
+            android:textColor="@android:color/white"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <TextView
+            android:visibility="gone"
+            android:fontFamily="@font/open_sans"
+            android:background="#b0aaaa"
+            android:id="@+id/bol"
+            android:textSize="15dp"
+            android:gravity="center"
+            android:clickable="false"
+            android:enabled="false"
+            android:text="Pre-Inspection"
+            android:textColor="@android:color/black"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 </RelativeLayout>

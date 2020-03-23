@@ -12,6 +12,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
@@ -102,31 +103,31 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
         token = FirebaseInstanceId.getInstance().getToken();
-        new Handler().postDelayed(new Runnable() {
-
-                @Override
-                public void run() {
-
-
-
-        if (prf.getBoolData("IsFingerprint")) {
-            KeyguardManager km = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
-            if (km.isKeyguardSecure()) {
-
-                Intent i = null;
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                    i = km.createConfirmDeviceCredentialIntent("Unlock "+getResources().getString(R.string.app_name), "confirm your Screen lock pattern, PIN or password");
-                }
-                startActivityForResult(i, CODE_AUTHENTICATION_VERIFICATION);
-            } else
-                Toast.makeText(SplashActivity.this, "No any security setup done by user(pattern or password or pin or fingerprint", Toast.LENGTH_SHORT).show();
-        }else{
-            Intent j = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivity(j);
-              finish();
-        }
-                }
-        }, 3000);
+//        new Handler().postDelayed(new Runnable() {
+//
+//                @Override
+//                public void run() {
+//
+//
+//
+//        if (prf.getBoolData("IsFingerprint")) {
+//            KeyguardManager km = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
+//            if (km.isKeyguardSecure()) {
+//
+//                Intent i = null;
+//                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+//                    i = km.createConfirmDeviceCredentialIntent("Unlock "+getResources().getString(R.string.app_name), "confirm your Screen lock pattern, PIN or password");
+//                }
+//                startActivityForResult(i, CODE_AUTHENTICATION_VERIFICATION);
+//            } else
+//                Toast.makeText(SplashActivity.this, "No any security setup done by user(pattern or password or pin or fingerprint", Toast.LENGTH_SHORT).show();
+//        }else{
+//            Intent j = new Intent(getApplicationContext(), LoginActivity.class);
+//            startActivity(j);
+//              finish();
+//        }
+//                }
+//        }, 3000);
 
 
 //        Intent j = new Intent(getApplicationContext(), LoginActivity.class);
@@ -217,7 +218,7 @@ public class SplashActivity extends AppCompatActivity {
         showAnimation();
 
 
-        Call<LoginModel> call1 = apiInterface.userLogin(prf.getStringData("corporateId")+"~"+prf.getStringData("userName")+"~regular~"+FirebaseInstanceId.getInstance().getToken()+"~PRI~Android",prf.getStringData("password"),"password","application/json");
+        Call<LoginModel> call1 = apiInterface.userLogin(prf.getStringData("corporateId")+"~"+prf.getStringData("userName")+"~regular~"+FirebaseInstanceId.getInstance().getToken()+"~PRI~Android~"+Build.BRAND+" "+Build.MODEL+"~"+Build.VERSION.RELEASE,prf.getStringData("password"),"password","application/json");
         call1.enqueue(new Callback<LoginModel>() {
             @Override
             public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
@@ -261,6 +262,9 @@ public class SplashActivity extends AppCompatActivity {
                 }catch (Exception e){
                     e.printStackTrace();
                     new Util().sendSMTPMail(SplashActivity.this,null,"CxE001",e,"");
+                    Intent j = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(j);
+                    finish();
                 }
 
             }
@@ -371,26 +375,26 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        showAnimation();
-//        new Handler().postDelayed(new Runnable() {
+        showAnimation();
+        new Handler().postDelayed(new Runnable() {
 //            //            //
 //////            /*
 //////             * Showing splash screen with a timer. This will be useful when you
 //////             * want to show case your app logo / company
 //////             */
 //////
-////            @Override
-//            public void run() {
-//                new Thread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//                        forUpdate();
-//                    }
-//                }).start();
-//
-//            }
-//        }, 500);
+//            @Override
+            public void run() {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        forUpdate();
+                    }
+                }).start();
+
+            }
+        }, 500);
     }
     void forUpdate(){
 

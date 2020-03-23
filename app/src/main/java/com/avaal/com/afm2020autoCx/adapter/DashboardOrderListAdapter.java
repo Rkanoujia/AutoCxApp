@@ -181,6 +181,19 @@ public class DashboardOrderListAdapter extends RecyclerView.Adapter<DashboardOrd
             holder.fram_cancel.setVisibility(View.GONE);
         }
         holder.track.setVisibility(View.GONE);
+
+        if(tripList.get(position).status.equalsIgnoreCase("QUOTED")) {
+            if(tripList.get(position).vehiclecount.equalsIgnoreCase("0")){
+                holder.full_item.setClickable(false);
+                holder.full_item.setEnabled(false);
+                if(tripList.get(position).PickupDateTime.equalsIgnoreCase("0001-01-01T00:00:00")){
+                    holder.from_date.setText("");
+                    holder.to_date.setText("");
+                }
+
+            }
+        }
+
 //        holder.full_item.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {

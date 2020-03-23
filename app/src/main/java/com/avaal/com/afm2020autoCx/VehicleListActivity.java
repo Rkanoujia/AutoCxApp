@@ -30,7 +30,6 @@ import com.valdesekamdem.library.mdtoast.MDToast;
 
 import java.util.ArrayList;
 
-import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -440,36 +439,48 @@ public class VehicleListActivity extends AppCompatActivity {
             mdToast.show();
             return;
         }
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        // Setting Dialog Message
-        alertDialog.setMessage("Do you want to ship load?");
-        // Setting Positive "Yes" Button
-        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
 
-                // Write your code here to invoke YES event
-                showAnimation();
-                try {
-                    submitloadforinv("forship");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    new Util().sendSMTPMail(VehicleListActivity.this,null,"CxE004",e,"");
-                }
+        if (prf.getStringData("OrderStatus").equalsIgnoreCase("Shipped")){
+            showAnimation();
+            try {
+                submitloadforinv("forship");
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Util().sendSMTPMail(VehicleListActivity.this, null, "CxE004", e, "");
+            }
+        }else{
+
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+            // Setting Dialog Message
+            alertDialog.setMessage("Do you want to ship load?");
+            // Setting Positive "Yes" Button
+            alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+
+                    // Write your code here to invoke YES event
+                    showAnimation();
+                    try {
+                        submitloadforinv("forship");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        new Util().sendSMTPMail(VehicleListActivity.this, null, "CxE004", e, "");
+                    }
 
 //                deleteVihicle(tripList.get(position).vehiocleId, position);
-            }
-        });
+                }
+            });
 
-        // Setting Negative "NO" Button
-        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                // Write your code here to invoke NO event
-                dialog.cancel();
-            }
-        });
+            // Setting Negative "NO" Button
+            alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // Write your code here to invoke NO event
+                    dialog.cancel();
+                }
+            });
 
-        // Showing Alert Message
-        alertDialog.show();
+            // Showing Alert Message
+            alertDialog.show();
+        }
 
     }
 
@@ -640,9 +651,14 @@ public class VehicleListActivity extends AppCompatActivity {
                 hideAnimation();
                 try {
                     if (getdata.satus) {
-                        new Util().sendAlert(VehicleListActivity.this,prf.getStringData("userName")+" has placed an order having "+" vehicles with Ref no "+orderId+".","Shipped");
-                        MDToast mdToast = MDToast.makeText(VehicleListActivity.this, "Your load has been shipped to Carrier", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
-                        mdToast.show();
+                        if (prf.getStringData("OrderStatus").equalsIgnoreCase("Shipped")){
+                            MDToast mdToast = MDToast.makeText(VehicleListActivity.this, "Order Updated", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+                            mdToast.show();
+                        }else {
+                            new Util().sendAlert(VehicleListActivity.this, prf.getStringData("userName") + " has placed an order having " + " vehicle(s) with Ref no " + orderId + ".", "Shipped");
+                            MDToast mdToast = MDToast.makeText(VehicleListActivity.this, "Your load has been shipped to Carrier", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+                            mdToast.show();
+                        }
                         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                         finishAffinity();
                         new Util().myIntent(VehicleListActivity.this, NewOrderListActivity.class);

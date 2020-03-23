@@ -126,7 +126,7 @@ public class DeliveredFragment extends Fragment {
     }
     void getSaveLoads(String filterBy){
         PreferenceManager prf=new PreferenceManager(getActivity());
-        Call<OrderListModel> call1 = apiInterface.getOrderList("",""+ prf.getStringData("corporateId"),""+ prf.getStringData("userCode"),"bearer "+ prf.getStringData("accessToken"),"application/json");
+        Call<OrderListModel> call1 = apiInterface.getOrderList("",""+ prf.getStringData("corporateId"),""+ prf.getStringData("userCode"),"0","bearer "+ prf.getStringData("accessToken"),"application/json");
 
         call1.enqueue(new Callback<OrderListModel>() {
             @Override

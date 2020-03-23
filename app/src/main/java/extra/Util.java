@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.StrictMode;
+import android.text.Html;
 import android.util.Log;
 
 import com.avaal.com.afm2020autoCx.APIClient;
@@ -286,9 +287,9 @@ public class Util {
 
         MDToast mdToast = MDToast.makeText(activity, "" + code, MDToast.LENGTH_LONG, MDToast.TYPE_ERROR);
         mdToast.show();
-//        if(BuildConfig.DEBUG){
-//            return;
-//        }
+        if(BuildConfig.DEBUG){
+            return;
+        }
         StringBuilder error = new StringBuilder();
         if(e!=null) {
             StackTraceElement[] exc = e.getStackTrace();
@@ -338,7 +339,49 @@ public class Util {
                     new InternetAddress(activity.getString(R.string.cc)));
 
             message.setSubject("AFM Cx App Exception");
-            message.setText("UserName: "+prf.getStringData("userName")+"("+prf.getStringData("corporateId")+")\n"+url+"\n"+activity+"\n"+error);
+
+
+
+            String meesg=("<table style=\"padding: 0px; background-color: #FFFFFF; width: 640px; margin-left: auto; margin-right: auto; border-collapse: collapse;\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\">\n" +
+                    "            <tbody style=\"vertical-align: top;\">\n" +
+                    "                <tr>\n" +
+                    "                    <td style=\"border: 0px; background: #FFFFFF; font-size: 12px; width: 600px; padding: 40px 20px 40px;text-align: left;\">\n" +
+                    "                        <table style=\"padding: 0px; width: 600px; font-size: 12px; font-family: sans-serif; white-space: normal; text-align: left; border-color: #9E9E9E; border-collapse: collapse; \" cellpadding=\"0\" cellspacing=\"0\" border=\"1\">\n" +
+                    "                            <tbody>\n" +
+                    "                                <tr>\n" +
+                    "                                    <th style=\"padding: 5px 8px;text-align: left;\">UserName</th>\n" +
+                    "                                    <td style=\"padding: 5px 8px; word-break: break-word;\">"+prf.getStringData("userName")+"</td>\n" +
+                    "                                </tr>\n" +
+                    "                                <tr>\n" +
+                    "                                    <th style=\"padding: 5px 8px; vertical-align: top;text-align: left;\">API</th>\n" +
+                    "                                    <td style=\"padding: 5px 8px; word-break: break-word;\">\n" +url+
+                    "                                    </td>\n" +
+                    "                                </tr>\n" +
+                    "                                <tr>\n" +
+                    "                                    <th style=\"padding: 5px 8px;vertical-align: top;text-align: left;\">CorporateID</th>\n" +
+                    "                                    <td style=\"padding: 5px 8px; word-break: break-word;\">\n" + prf.getStringData("corporateId")+
+                    "                                    </td>\n" +
+                    "                                </tr>\n" +
+                    "                                <tr>\n" +
+                    "                                    <th style=\"padding: 5px 8px;vertical-align: top;text-align: left;\">Activity</th>\n" +
+                    "                                    <td style=\"padding: 5px 8px; word-break: break-word;\">\n" + activity+
+                    "                                    </td>\n" +
+                    "                                </tr>\n" +
+                    "                                <tr>\n" +
+                    "                                    <th style=\"padding: 5px 8px;vertical-align: top;text-align: left;\">Error</th>\n" +
+                    "                                    <td style=\"padding: 5px 8px; word-break: break-word;\">\n" + error+
+                    "                                    </td>\n" +
+                    "                                </tr>\n" +
+                    "                            </tbody>\n" +
+                    "                        </table>\n" +
+                    "                    </td>\n" +
+                    "                </tr>\n" +
+                    "            </tbody>\n" +
+                    "        </table>");
+
+//            message.setText("UserName: "+prf.getStringData("userName")+"("+prf.getStringData("corporateId")+")\n"+url+"\n"+activity+"\n"+error);
+//            message.setText(String.valueOf(Html.fromHtml(meesg)));
+            message.setContent(meesg, "text/html");
             if (android.os.Build.VERSION.SDK_INT > 9)
             {
                 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();

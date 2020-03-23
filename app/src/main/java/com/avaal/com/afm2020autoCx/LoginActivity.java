@@ -176,6 +176,24 @@ try {
          POST name and job Url encoded.
          **/
 
+        Log.e("TAG", "SERIAL: " + Build.SERIAL);
+        Log.e("TAG","MODEL: " + Build.MODEL);
+        Log.e("TAG","ID: " + Build.ID);
+        Log.e("TAG","Manufacture: " + Build.MANUFACTURER);
+        Log.e("TAG","brand: " + Build.BRAND);
+        Log.e("TAG","type: " + Build.TYPE);
+        Log.e("TAG","user: " + Build.USER);
+        Log.e("TAG","BASE: " + Build.VERSION_CODES.BASE);
+        Log.e("TAG","INCREMENTAL " + Build.VERSION.INCREMENTAL);
+        Log.e("TAG","SDK  " + Build.VERSION.SDK);
+        Log.e("TAG","BOARD: " + Build.BOARD);
+        Log.e("TAG","BRAND " + Build.BRAND);
+        Log.e("TAG","HOST " + Build.HOST);
+        Log.e("TAG","FINGERPRINT: "+Build.FINGERPRINT);
+        Log.e("TAG","Version Code: " + Build.VERSION.RELEASE);
+
+
+
 }
 @OnClick(R.id.driver_app)
 void driverApp(){
@@ -248,7 +266,7 @@ void driverApp(){
     }
    showAnimation();
 
-        Call<LoginModel> call1 = apiInterface.userLogin(corporateId.getText().toString()+"~"+userName.getText().toString()+"~regular~"+FirebaseInstanceId.getInstance().getToken()+"~PRI~Android",password.getText().toString(),"password","application/json");
+        Call<LoginModel> call1 = apiInterface.userLogin(corporateId.getText().toString()+"~"+userName.getText().toString()+"~regular~"+FirebaseInstanceId.getInstance().getToken()+"~PRI~Android~"+Build.BRAND+" "+Build.MODEL+"~"+Build.VERSION.RELEASE,password.getText().toString(),"password","application/json");
         call1.enqueue(new Callback<LoginModel>() {
             @Override
             public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
@@ -257,6 +275,7 @@ void driverApp(){
                     if (response.message().equalsIgnoreCase("ok")) {
 //                hideAnimation();
                         LoginModel login = response.body();
+
                         if (login.error == null) {
 //                            MDToast mdToast = MDToast.makeText(LoginActivity.this, "Login Successfully", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
 //                            mdToast.show();
@@ -283,13 +302,13 @@ void driverApp(){
 //                        startActivity(j);
 //                        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 //                        finish();
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    // do stuff
-                                    onIsfingerprint();
-                                }
-                            }, 500);
+//                            new Handler().postDelayed(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    // do stuff
+//                                    onIsfingerprint();
+//                                }
+//                            }, 500);
 
 
 
@@ -331,10 +350,9 @@ void driverApp(){
                         mdToast.show();
                     }
                 }catch (Exception e){
+                    hideAnimation();
                    e.printStackTrace();
-
-
-                    new Util().sendSMTPMail(LoginActivity.this,null,"CxE004",e,"");
+                    new Util().sendSMTPMail(LoginActivity.this,null,"CxE004",e,""+call.request().url());
                }
 
             }
@@ -364,8 +382,7 @@ void forget(){
 
      final KeyguardManager km = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
 
-     prf.saveBoolData("IsFingerprint", false);
-     new Util().myIntent(LoginActivity.this, NewDashBoardActivity.class);
+
 //         if (km.isKeyguardSecure()) {
 //                 new AlertDialog.Builder(this)
 //                         .setMessage("Are you want to Login with Phone Authentication ?")
@@ -484,10 +501,13 @@ void forget(){
                 ProfileDataModel getdata = response.body();
                 try {
                     if (getdata.status) {
-
+                        hideAnimation();
                         prf.saveStringData("CompnyCode",getdata.data.CompanyCode);
                         prf.saveStringData("userCode", getdata.data.PrimaryInfoCode);
                         prf.saveStringData("Name", getdata.data.Name);
+
+                        prf.saveBoolData("IsFingerprint", false);
+                        new Util().myIntent(LoginActivity.this, NewDashBoardActivity.class);
 
 //                    Picasso.with(this).load("https://images.unsplash.com/photo-450037586774-00cb81edd142?auto=format&fit=crop&w=750&q=80").error(R.drawable.R.drawable.noprofile).into(front_right);
 //                    Picasso.with(this).load("https://images.unsplash.com/photo-504196606672-aef5c9cefc92?auto=format&fit=crop&w=750&q=80").error(R.drawable.ic_camera).into(back_left);
@@ -496,6 +516,7 @@ void forget(){
 
                     }
                 }catch (Exception e){
+                    hideAnimation();
                     e.printStackTrace();
                     new Util().sendSMTPMail(LoginActivity.this,null,"CxE004",e,"");
                 }

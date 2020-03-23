@@ -22,6 +22,7 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.RectF;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.ErrorCallback;
@@ -414,7 +415,7 @@ public class CameraDemoActivity extends Activity implements PictureCallback,Call
     }
     private void setupImageDisplay() {
         bitmap = BitmapFactory.decodeByteArray(mCameraData, 0, mCameraData.length);
-
+        bitmap = getScaledBitmap(bitmap, 500, 1200);
         if (mCameraData != null) {
             File file=saveImageToFile(openFileForImage()).getAbsoluteFile();
             Log.e("cameradata","1");
@@ -428,5 +429,10 @@ public class CameraDemoActivity extends Activity implements PictureCallback,Call
         }
         finish();
 
+    }
+    public static Bitmap getScaledBitmap(Bitmap b, int reqWidth, int reqHeight) {
+        Matrix m = new Matrix();
+        m.setRectToRect(new RectF(0, 0, b.getWidth(), b.getHeight()), new RectF(0, 0, reqWidth, reqHeight), Matrix.ScaleToFit.CENTER);
+        return Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), m, true);
     }
 }

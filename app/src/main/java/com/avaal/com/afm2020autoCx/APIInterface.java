@@ -6,10 +6,12 @@ import com.avaal.com.afm2020autoCx.models.AddLocationModel;
 import com.avaal.com.afm2020autoCx.models.ChangePasswordModel;
 import com.avaal.com.afm2020autoCx.models.CompanyProfileModel;
 import com.avaal.com.afm2020autoCx.models.ConfirmOrderModel;
+import com.avaal.com.afm2020autoCx.models.CustOrderModel;
 import com.avaal.com.afm2020autoCx.models.DashBoardModel;
 import com.avaal.com.afm2020autoCx.models.DropDownModel;
 import com.avaal.com.afm2020autoCx.models.ForAddModel;
 import com.avaal.com.afm2020autoCx.models.ForgetPasswordModel;
+import com.avaal.com.afm2020autoCx.models.GetCompanyModel;
 import com.avaal.com.afm2020autoCx.models.GetImageDetailmodel;
 import com.avaal.com.afm2020autoCx.models.GetImageModel;
 import com.avaal.com.afm2020autoCx.models.GetInvVehicleModel;
@@ -109,7 +111,7 @@ public interface APIInterface {
             @Field("PrimaryInfoCode") String PrimaryInfoCode,@Field("DropCode") String DropCode,@Field("DropDateTime") String DropDateTime,@Field("PickupNotes") String PickupNotes,
                                          @Field("Distance") String Distance,@Field("DistanceUnit") String DistanceUnit,
                                          @Field("DropNotes") String DropNotes,@Field("StopCode") String StopCode,@Field("StopDateTime") String StopDateTime,@Field("StopNotes") String StopNotes,@Field("IsSaved") String IsSaved,@Field("IsDeleted") String IsDeleted,
-             @Field("FreightTypeLuCode") String FreightTypeLuCode,
+             @Field("FreightTypeLuCode") String FreightTypeLuCode,@Field("PickupNumber") String PickupNumber,@Field("DeliveryNumber") String DeliveryNumber,@Field("CustomerOrderNo") String CustomerOrderNo,
              @Field("CreatedBy") String CreatedBy,@Field("CreatedOn") String CreatedOn,@Field("CorporateId") String CorporateId,@Header("Authorization") String authorization, @Header("Content-Type") String contentType);
 
     @FormUrlEncoded
@@ -153,7 +155,7 @@ public interface APIInterface {
 //    Call<OrderListModel> getOrderList(@Body OrderListModel user);
 
 @GET("/api/CustomerApp/GetLoadListByStatus?")
-Call<OrderListModel> getOrderList(@Query("Status") String Status,@Query("CorporateId") String CorporateId,@Query("CustomerCode") String CustomerCode,@Header("Authorization") String authorization, @Header("Content-Type") String contentType);
+Call<OrderListModel> getOrderList(@Query("Status") String Status,@Query("CorporateId") String CorporateId,@Query("CustomerCode") String CustomerCode,@Query("OrderID") String OrderID,@Header("Authorization") String authorization, @Header("Content-Type") String contentType);
 
 
     @FormUrlEncoded
@@ -267,5 +269,10 @@ Call<OrderListModel> getOrderList(@Query("Status") String Status,@Query("Corpora
     @GET("/api/Common/GetTotalMiles?")
     Call<MilesModel> getTotalMiles(@Query("Origin_LocCode") String Origin_LocCode, @Query("Destination_LocCode") String Destination_LocCode, @Query("CorporateId") String CorporateId, @Header("Authorization") String authorization, @Header("Content-Type") String contentType);
 
+    @GET("/api/Common/GetCompanyParameter?")
+    Call<GetCompanyModel> getCompanyParameter(@Query("CorporateId") String CorporateId, @Header("Authorization") String authorization, @Header("Content-Type") String contentType);
+
+    @GET("/api/CustomerApp/CheckDuplicateCustOrderNo?")
+    Call<CustOrderModel> getCheckDuplicateCustOrderNo(@Query("OrderID") String OrderID, @Query("CustomerOrderNo") String CustomerOrderNo, @Query("CustomerCode") String CustomerCode, @Query("CorporateId") String CorporateId, @Header("Authorization") String authorization, @Header("Content-Type") String contentType);
 
 }

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <FrameLayout
+        android:id="@+id/list_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:background="@color/gray"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <include
+                layout="@layout/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <include
+                android:layout_below="@+id/toolbar"
+                layout="@layout/dashboard_triplist_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <ScrollView
+                android:layout_below="@+id/vieword"
+                android:id="@+id/scrall"
+                android:layout_above="@+id/botom_lin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:id="@+id/top_linear"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <View
+                                android:backgroundTint="@color/orange"
+                                android:layout_marginEnd="3dp"
+                                android:background="@drawable/assinge_circle"
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"/>
+                            <TextView
+                                android:textSize="11dp"
+                                android:text="Inventory"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <View
+                                android:backgroundTint="@color/blue"
+                                android:layout_marginEnd="3dp"
+                                android:background="@drawable/assinge_circle"
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"/>
+                            <TextView
+                                android:textSize="11dp"
+                                android:text="Direct"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                    </LinearLayout>
+                    <TextView
+                        android:textAlignment="center"
+                        android:id="@+id/toptext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/_vehicle_list"
+                        android:elevation="2dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fadeScrollbars="true"
+                        android:scrollbarSize="3dp"
+                        android:paddingBottom="?attr/actionBarSize"
+                        android:scrollbarThumbVertical="@android:color/white"
+                        android:scrollbars="vertical" />
+                </LinearLayout>
+            </ScrollView>
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/add_vehicle"
+                android:layout_width="wrap_content"
+                android:tint="@color/colorWhite"
+                android:layout_alignParentRight="true"
+                android:layout_above="@+id/botom_lin"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="35dp"
+                android:layout_marginBottom="10dp"
+                app:layout_anchorGravity="bottom|right"
+                app:backgroundTint="@color/dot_inactive_screen2"
+                app:srcCompat="@android:drawable/ic_input_add" />
+            <LinearLayout
+                android:id="@+id/botom_lin"
+                android:orientation="vertical"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_alignParentBottom="true"
+                    android:id="@+id/bottom_tab"
+                    android:background="@color/green"
+                    android:layout_gravity="bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize">
+                    <TextView
+                        android:id="@+id/save_load"
+                        android:text="Save Load"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                    <View
+                        android:background="@android:color/white"
+                        android:layout_width="0.5dp"
+                        android:layout_height="match_parent"/>
+                    <TextView
+                        android:id="@+id/ship_load"
+                        android:text="Ship Load"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+
+    </FrameLayout>
+</android.support.constraint.ConstraintLayout>

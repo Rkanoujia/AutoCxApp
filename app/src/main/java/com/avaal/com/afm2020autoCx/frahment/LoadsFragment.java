@@ -23,10 +23,6 @@ import com.valdesekamdem.library.mdtoast.MDToast;
 
 import java.util.ArrayList;
 
-import android.support.annotation.Nullable;
-import android.support.v4.content.FileProvider;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -116,7 +112,7 @@ public class LoadsFragment extends Fragment {
     void getSaveLoads(){
         PreferenceManager prf=new PreferenceManager(getActivity());
 //        OrderListModel vindetail1=new OrderListModel(prf.getStringData("authKey"),prf.getStringData("carrierPrimaryId"),"OL","Saved");
-        Call<OrderListModel> call1 = apiInterface.getOrderList(""+filterString,""+ prf.getStringData("corporateId"),""+ prf.getStringData("userCode"),"bearer "+ prf.getStringData("accessToken"),"application/json");
+        Call<OrderListModel> call1 = apiInterface.getOrderList(""+filterString,""+ prf.getStringData("corporateId"),""+ prf.getStringData("userCode"),"0","bearer "+ prf.getStringData("accessToken"),"application/json");
         call1.enqueue(new Callback<OrderListModel>() {
             @Override
             public void onResponse(Call<OrderListModel> call, Response<OrderListModel> response) {

@@ -115,7 +115,7 @@ public class EnrouteTripActivity extends AppCompatActivity {
     }
     void getSaveLoads(){
         PreferenceManager prf=new PreferenceManager(EnrouteTripActivity.this);
-        Call<OrderListModel> call1 = apiInterface.getOrderList("Saved",""+ prf.getStringData("corporateId"),""+ prf.getStringData("userCode"),"bearer "+ prf.getStringData("accessToken"),"application/json");
+        Call<OrderListModel> call1 = apiInterface.getOrderList("Saved",""+ prf.getStringData("corporateId"),""+ prf.getStringData("userCode"),"0","bearer "+ prf.getStringData("accessToken"),"application/json");
 
         call1.enqueue(new Callback<OrderListModel>() {
             @Override

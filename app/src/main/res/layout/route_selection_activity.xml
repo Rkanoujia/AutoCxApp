@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_selection"
     android:elevation="5dp"
     android:layout_height="match_parent">
@@ -34,6 +35,7 @@
                     android:orientation="vertical">
 
                     <FrameLayout
+                        android:visibility="gone"
                         android:id="@+id/fram1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -175,7 +177,33 @@
                             android:layout_width="80dp"
                             android:layout_height="match_parent" />
                     </RelativeLayout>
+                    <LinearLayout
 
+                         android:background="@color/colorWhite"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    <LinearLayout
+                        android:layout_margin="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/round_corners"
+                        android:gravity="center_vertical"
+                        android:padding="10dp">
+
+                        <EditText
+                            android:id="@+id/cust_order_number"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:background="@null"
+                            android:hint="Customer Order #"
+                            android:inputType="textMultiLine"
+                            android:textColor="@color/textColor"
+                            android:textSize="15dp" />
+                    </LinearLayout>
+                    </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -242,8 +270,10 @@
                                     <!--android:text="Welldone Tech Park"-->
                                     <!--android:layout_width="match_parent"-->
                                     <!--android:layout_height="wrap_content" />-->
+                                    <FrameLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
                                     <AutoCompleteTextView
-
                                         android:id="@+id/pickup_spinner"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -253,11 +283,41 @@
                                         android:inputType="text"
                                         android:soundEffectsEnabled="true"
                                         android:textColor="@color/textColor"
-                                        android:textSize="15dp"></AutoCompleteTextView>
+                                        android:textSize="15dp"/>
+                                    <Button
+                                        android:id="@+id/pick_clear"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_marginRight="10dp"
+                                        android:layout_gravity="right|bottom"
+                                        android:background="@drawable/ic_close_black_24dp"
+                                        />
+                                    </FrameLayout>
 
 
                                 </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginTop="10dp"
+                                    android:background="@drawable/round_corners"
+                                    android:gravity="center_vertical"
+                                    android:padding="10dp">
 
+                                    <EditText
+                                        android:id="@+id/pickup_number"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:background="@null"
+                                        android:hint="Pickup #"
+                                        android:inputType="textMultiLine"
+                                        android:textColor="@color/textColor"
+                                        android:textSize="15dp" />
+
+
+                                </LinearLayout>
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="80dp"
@@ -488,6 +548,9 @@
                                     <!--android:text="Welldone Tech Park"-->
                                     <!--android:layout_width="match_parent"-->
                                     <!--android:layout_height="wrap_content" />-->
+                                    <FrameLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
                                     <AutoCompleteTextView
                                         android:id="@+id/delivery_spinner"
                                         android:layout_width="match_parent"
@@ -499,10 +562,40 @@
                                         android:textColor="@color/textColor"
                                         android:textSize="15dp"
                                         android:tooltipText="Welldone Tech Park"></AutoCompleteTextView>
+    <Button
+        android:id="@+id/delivery_clear"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_gravity="right|bottom"
+        android:background="@drawable/ic_close_black_24dp"
+       />
+</FrameLayout>
+
+                                </LinearLayout>
+                                <LinearLayout
+
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginTop="10dp"
+                                    android:background="@drawable/round_corners"
+                                    android:gravity="center_vertical"
+                                    android:padding="10dp">
+
+                                    <EditText
+                                        android:id="@+id/delivery_number"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:background="@null"
+                                        android:hint="Delivery #"
+                                        android:inputType="textMultiLine"
+                                        android:textColor="@color/textColor"
+                                        android:textSize="15dp" />
 
 
                                 </LinearLayout>
-
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="80dp"

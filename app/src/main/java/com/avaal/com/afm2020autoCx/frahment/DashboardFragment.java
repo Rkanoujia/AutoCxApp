@@ -144,7 +144,7 @@ public class DashboardFragment extends Fragment {
     }
     void getSaveLoads(String filterBy)throws Exception{
         PreferenceManager prf=new PreferenceManager(getActivity());
-        Call<OrderListModel> call1 = apiInterface.getOrderList("Dispatched",""+ prf.getStringData("corporateId"),""+ prf.getStringData("userCode"),"bearer "+ prf.getStringData("accessToken"),"application/json");
+        Call<OrderListModel> call1 = apiInterface.getOrderList("Dispatched",""+ prf.getStringData("corporateId"),""+ prf.getStringData("userCode"),"0","bearer "+ prf.getStringData("accessToken"),"application/json");
 
         call1.enqueue(new Callback<OrderListModel>() {
             @Override

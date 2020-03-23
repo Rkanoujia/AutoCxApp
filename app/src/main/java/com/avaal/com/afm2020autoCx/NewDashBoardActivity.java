@@ -34,6 +34,7 @@ import java.util.Calendar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import extra.GetOtherInformationService;
 import extra.PreferenceManager;
 import extra.Util;
 import retrofit2.Call;
@@ -101,7 +102,8 @@ public class NewDashBoardActivity extends AppCompatActivity {
        /* else if(timeOfDay >= 21 && timeOfDay < 24){
             message= "Good Night !";
         }*/
-
+        Intent intent = new Intent(NewDashBoardActivity.this, GetOtherInformationService.class);
+        startService(intent);
 
         name.setText("Hi, "+message+"\n"+prf.getStringData("Name"));
         new Handler().postDelayed(new Runnable() {

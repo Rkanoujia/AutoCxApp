@@ -24,8 +24,6 @@ import com.avaal.com.afm2020autoCx.models.OrderListModel;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
 import java.util.ArrayList;
-
-import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;

@@ -234,7 +234,7 @@ TextView resutText,done;
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(20));
         mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-//        mMap.setIndoorEnabled(false);
+        mMap.setIndoorEnabled(false);
 //        mMap.setOnMarkerDragListener(this);
 //        mMap.setOnMapLongClickListener(this);
 //        mMap.setOnInfoWindowClickListener(this);

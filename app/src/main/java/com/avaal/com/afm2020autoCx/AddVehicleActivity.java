@@ -244,6 +244,10 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
             TextView longi;
     @BindView(R.id.save_new)
             TextView save_new;
+    @BindView(R.id.vin_clear)
+            Button vin_clear;
+    @BindView(R.id.bottom_li)
+            LinearLayout bottom_li;
     APIInterface apiInterface;
    Boolean preInspection=true;
     VehicleApiInterface vehicleApiInterface;
@@ -317,7 +321,7 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
 
 //            marshmallow.checkPermissionForExternalStorage();
         }
-
+        vin_clear.setVisibility(View.INVISIBLE);
         prf = new PreferenceManager(this);
         Util util = new Util();
         if (!util.isNetworkAvailable(this)) {
@@ -406,7 +410,11 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                if(charSequence.length() != 0) {
+                    vin_clear.setVisibility(View.VISIBLE);
+                } else {
+                    vin_clear.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -641,6 +649,12 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
 
 //             }
     }
+    @OnClick(R.id.vin_clear)
+    void deliveryClear(){
+        vinNo.setText("");
+        vin_clear.setVisibility(View.GONE);
+    }
+
     @OnTouch(R.id.li_touch)
     boolean li_touch(){
         try {
@@ -2117,7 +2131,7 @@ void save_new(){
                             hideAnimation();
                         }
 
-
+                        save_vehicle.setVisibility(View.GONE);
                         for (int i = 0; getdata3.size() > i; i++) {
                             if (getdata3.get(i).ItemCode.equalsIgnoreCase(vehicleId)) {
                                 try {
@@ -2268,8 +2282,7 @@ void save_new(){
                                 save_vehicle.setClickable(false);
                                 save_vehicle.setEnabled(false);
                                 save_vehicle.setText("Update");
-
-                                save_vehicle.setVisibility(View.GONE);
+                                bottom_li.setVisibility(View.GONE);
                                 saveBol.setText("View Pre-Inspections");
                                 year.setEnabled(false);
                                 year.setClickable(false);
