@@ -7,14 +7,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,12 +23,15 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.avaal.com.afm2020autoCx.adapter.OrderListAdapter;
 import com.avaal.com.afm2020autoCx.adapter.VehicleListAdapter;
 import com.avaal.com.afm2020autoCx.models.GetInvVehicleModel;
 import com.avaal.com.afm2020autoCx.models.GetVehicleIdListModel;
 import com.avaal.com.afm2020autoCx.models.GetVehicleIdModel;
 import com.avaal.com.afm2020autoCx.models.InventoryOrderModel;
 import com.avaal.com.afm2020autoCx.models.OrderListModel;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.valdesekamdem.library.mdtoast.MDToast;
@@ -98,12 +99,10 @@ public class NewOrderViewActivity extends AppCompatActivity {
    TextView pickup_name;
     @BindView(R.id.delivery_name)
     TextView delivery_name;
-
-
-
-
-
-
+    @BindView(R.id.order_lbl)
+    TextView order_lbl;
+ @BindView(R.id.vieword)
+         FrameLayout vieword;
 
     String vehicleId;
     PreferenceManager prf;
@@ -116,16 +115,17 @@ public class NewOrderViewActivity extends AppCompatActivity {
     private View loaderView;
     boolean isLoaded = false;
     ArrayList<String> list=new ArrayList<>();
+    OrderListModel.datavalue1 viewModel;
 
     @SuppressLint("RestrictedApi")
     @Override
     protected void onResume() {
         super.onResume();
-        if(prf.getStringData("OrderStatus")!=null) {
+        if(getIntent().getStringExtra("OrderStatus")!=null) {
 
-            Log.e("orderStatus 33",""+prf.getStringData("OrderStatus"));
+            Log.e("orderStatus 33",""+getIntent().getStringExtra("OrderStatus"));
 
-            if (prf.getStringData("OrderStatus").equalsIgnoreCase("Saved")) {
+            if (getIntent().getStringExtra("OrderStatus").equalsIgnoreCase("")|| getIntent().getStringExtra("OrderStatus").equalsIgnoreCase("Saved")) {
 
                 save_load.setClickable(true);
                 save_load.setEnabled(true);
@@ -135,7 +135,8 @@ public class NewOrderViewActivity extends AppCompatActivity {
                 add_vehicle.setVisibility(View.VISIBLE);
                 showAnimation();
                 getVehicleList(orderId);
-            }else if (prf.getStringData("OrderStatus").equalsIgnoreCase("Shipped")) {
+                getSaveOrder();
+            }else if (getIntent().getStringExtra("OrderStatus").equalsIgnoreCase("Shipped")) {
 //                add_vehicle.setVisibility(View.GONE);
 //                bottom_tab.setVisibility(View.GONE);
 //                ship_load.setVisibility(View.GONE);
@@ -152,7 +153,9 @@ public class NewOrderViewActivity extends AppCompatActivity {
                 bottom_tab.setVisibility(View.VISIBLE);
                 add_vehicle.setVisibility(View.VISIBLE);
                 showAnimation();
+                getSaveOrder();
                 getVehicleList(orderId);
+
             }else {
                 add_vehicle.setVisibility(View.GONE);
                 bottom_tab.setVisibility(View.GONE);
@@ -164,6 +167,7 @@ public class NewOrderViewActivity extends AppCompatActivity {
                 ship_load.setEnabled(false);
                 showAnimation();
                 getAFMVehicleList(orderId);
+                viewOrderDetail();
             }
 
         }
@@ -201,13 +205,13 @@ public class NewOrderViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.vehicle_list_activity);
+        setContentView(R.layout.new_order_view_activity);
 //        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         ButterKnife.bind(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 //        apiInterface = APIClient.getClient().create(APIInterface.class);
 //        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        title.setText("Vehicle List");
+        title.setText("Order Detail");
         prf = new PreferenceManager(this);
 //         orderId=prf.getStringData("OrderId");
 //        orderType=prf.getStringData("OrderType");
@@ -217,20 +221,22 @@ public class NewOrderViewActivity extends AppCompatActivity {
             e.printStackTrace();
             new Util().sendSMTPMail(NewOrderViewActivity.this,null,"CxE004",e,"");
         }
+        Log.e("orderStatus 33",""+getIntent().getStringExtra("OrderStatus")+"/"+orderId);
         apiInterface = APIClient.getClient().create(APIInterface.class);
 //        getVehicleList(orderId);
         textshow.setVisibility(View.GONE);
         recyclerView();
 
 
-        if(prf.getStringData("OrderStatus")!=null) {
-            if (prf.getStringData("OrderStatus").equalsIgnoreCase("Saved") || prf.getStringData("OrderStatus").equalsIgnoreCase("Shipped")) {
+        if(getIntent().getStringExtra("OrderStatus")!=null) {
+            if (getIntent().getStringExtra("OrderStatus").equalsIgnoreCase("Saved") || getIntent().getStringExtra("OrderStatus").equalsIgnoreCase("Shipped")) {
                 save_load.setClickable(true);
                 save_load.setEnabled(true);
                 ship_load.setClickable(true);
                 ship_load.setEnabled(true);
                 bottom_tab.setVisibility(View.VISIBLE);
                 add_vehicle.setVisibility(View.VISIBLE);
+
             }else {
                 add_vehicle.setVisibility(View.GONE);
                 bottom_tab.setVisibility(View.GONE);
@@ -244,6 +250,17 @@ public class NewOrderViewActivity extends AppCompatActivity {
         }
 
 
+    }
+    @OnClick(R.id.vieword)
+    void viewedit(){
+        Intent j = new Intent(this, RouteSelectionActivity.class);
+        j.putExtra("from", viewModel.PickupCountryCode);
+        j.putExtra("to", viewModel.DeliveryCountryCode);
+        j.putExtra("Id",orderId);
+        j.putExtra("OrderFrom","Update");
+        String gson=new Gson().toJson(viewModel);
+        j.putExtra("ModelClass",gson);
+        startActivity(j);
     }
     @OnClick(R.id.add_vehicle)
     void addNewVehicle(){
@@ -259,7 +276,7 @@ public class NewOrderViewActivity extends AppCompatActivity {
     }
     @OnClick(R.id.back)
     void back(){
-        if (prf.getStringData("OrderStatus").equalsIgnoreCase("Saved")|| prf.getStringData("OrderStatus").equalsIgnoreCase("Shipped") ) {
+        if (getIntent().getStringExtra("OrderStatus").equalsIgnoreCase("Saved")|| getIntent().getStringExtra("OrderStatus").equalsIgnoreCase("Shipped") ) {
             if (getdata3.size() > 0) {
 
                 Dialog dialog = new Dialog(NewOrderViewActivity.this);
@@ -362,7 +379,7 @@ public class NewOrderViewActivity extends AppCompatActivity {
 //                        }
                     if (getdata3.size() == 0) {
                         if (prf.getStringData("When").equalsIgnoreCase("add")) {
-                            if (prf.getStringData("OrderStatus").equalsIgnoreCase("Saved"))
+                            if (getIntent().getStringExtra("OrderStatus").equalsIgnoreCase("Saved"))
                                 addNewVehicle();
                         } /*else
                                 back(); */
@@ -515,11 +532,11 @@ public class NewOrderViewActivity extends AppCompatActivity {
         if ((requestCode == 108) && (resultCode == RESULT_OK) && (data.getStringExtra("Inventry").equalsIgnoreCase("true"))) {
             try {
                 String str1 = null;
-                if (prf.getStringData("OrderStatus").equalsIgnoreCase("Saved")) {
+                if (getIntent().getStringExtra("OrderStatus").equalsIgnoreCase("Saved")) {
                     showAnimation();
                     str1 = this.orderId;
 //                        getVehicleList(orderId);
-                }else if (prf.getStringData("OrderStatus").equalsIgnoreCase("Shipped")) {
+                }else if (getIntent().getStringExtra("OrderStatus").equalsIgnoreCase("Shipped")) {
                     showAnimation();
 //                    getVehicleList(orderId);
 //                    top_linear.setVisibility(View.GONE);
@@ -842,24 +859,28 @@ public class NewOrderViewActivity extends AppCompatActivity {
         if (getIntent().getStringExtra("ModelClass") != null) {
             OrderListModel.datavalue1 listObject = gson.fromJson(getIntent().getStringExtra("ModelClass"), new TypeToken<OrderListModel.datavalue1>() {
             }.getType());
+            viewModel=listObject;
 
-            if (!listObject.orderId.trim().equalsIgnoreCase("0"))
-                id.setText(listObject.orderId);
-            else
                 id.setText(listObject.SavedOrderNumber);
 
-
+            order_lbl.setText("Order# ");
 //        if(tripList.get(position).orderId.length()>0)
 //            holder.title.setVisibility(View.GONE);
-            if (listObject.status.equalsIgnoreCase(""))
-                title1.setText("SAVED");
-            else
-                title1.setText(listObject.status.toUpperCase());
+            title1.setText(listObject.status.toUpperCase());
 
-            if (listObject.status.equalsIgnoreCase("Saved"))
-                title1.setTextColor(this.getResources().getColor(R.color.textPrimaryDark));
-            else
-                title1.setTextColor(this.getResources().getColor(R.color.blue));
+            if(listObject.status.equalsIgnoreCase("TripStarted"))
+                title1.setTextColor(getResources().getColor(R.color.blue));
+            else  if(listObject.status.equalsIgnoreCase("Dispatched")) {
+                title1.setTextColor(getResources().getColor(R.color.blue));
+            }else  if(listObject.status.equalsIgnoreCase("QUOTED")) {
+                title1.setTextColor(getResources().getColor(R.color.orange));
+            }else  if(listObject.status.equalsIgnoreCase("Delivered")) {
+                title1.setTextColor(getResources().getColor(R.color.black));
+            } else  if(listObject.status.equalsIgnoreCase("Confirmed")) {
+                title1.setTextColor(getResources().getColor(R.color.green));
+            }else  if(listObject.status.equalsIgnoreCase("CANCELLED")) {
+                title1.setTextColor(getResources().getColor(R.color.orange));
+            }
 
             from.setText(listObject.pickupCity + ", " + listObject.pickupstateCode + ", " + listObject.PickupCountryCode);
             to.setText(listObject.dropCity + ", " + listObject.dropSateCode + ", " + listObject.DeliveryCountryCode);
@@ -875,14 +896,84 @@ public class NewOrderViewActivity extends AppCompatActivity {
             to_time.setText("");
             pickup_name.setText(listObject.PickupName);
             delivery_name.setText(listObject.dropName);
-            if (listObject.orderType != null) {
-                if (listObject.orderType.equalsIgnoreCase("Interprovincial"))
-                    typ_.setText("Inter Provincial");
-                else if (listObject.orderType.equalsIgnoreCase("Interstate"))
-                    typ_.setText("Inter State");
-                else
-                    typ_.setText(listObject.orderType);
-            }
+            if(listObject.PickupCountryCode.equalsIgnoreCase("CA") && listObject.DeliveryCountryCode.equalsIgnoreCase("CA"))
+                typ_.setText("Inter Provincial");
+            else if(listObject.PickupCountryCode.equalsIgnoreCase("US") && listObject.DeliveryCountryCode.equalsIgnoreCase("US"))
+                typ_.setText("Inter State");
+            else if(listObject.PickupCountryCode.equalsIgnoreCase("CA") && listObject.DeliveryCountryCode.equalsIgnoreCase("US"))
+                typ_.setText("Export");
+            else
+                typ_.setText("Import");
         }
+    }
+    void getSaveOrder(){
+        PreferenceManager prf=new PreferenceManager(NewOrderViewActivity.this);
+//        OrderListModel vindetail1=new OrderListModel(prf.getStringData("authKey"),prf.getStringData("carrierPrimaryId"),"OL","Saved");
+        Call<OrderListModel> call1 = apiInterface.getOrderList("",""+ prf.getStringData("corporateId"),""+ prf.getStringData("userCode"),""+orderId,"bearer "+ prf.getStringData("accessToken"),"application/json");
+        call1.enqueue(new Callback<OrderListModel>() {
+            @Override
+            public void onResponse(Call<OrderListModel> call, Response<OrderListModel> response) {
+
+
+                OrderListModel getdata = response.body();
+                hideAnimation();
+                try {
+                    if (getdata.satus) {
+                        if(getdata.dataValue.size()==1) {
+                            viewModel=getdata.dataValue.get(0);
+                            if (!getdata.dataValue.get(0).orderId.trim().equalsIgnoreCase("0"))
+                                id.setText(getdata.dataValue.get(0).orderId);
+                            else
+                                id.setText(getdata.dataValue.get(0).SavedOrderNumber);
+
+
+
+//        if(tripList.get(position).orderId.length()>0)
+//            holder.title.setVisibility(View.GONE);
+                            if (getdata.dataValue.get(0).status.equalsIgnoreCase(""))
+                                title1.setText("SAVED");
+                            else
+                                title1.setText(getdata.dataValue.get(0).status.toUpperCase());
+
+                            if (getdata.dataValue.get(0).status.equalsIgnoreCase("Saved"))
+                                title1.setTextColor(getResources().getColor(R.color.textPrimaryDark));
+                            else
+                                title1.setTextColor(getResources().getColor(R.color.blue));
+
+                            from.setText(getdata.dataValue.get(0).pickupCity + ", " + getdata.dataValue.get(0).pickupstateCode + ", " + getdata.dataValue.get(0).PickupCountryCode);
+                            to.setText(getdata.dataValue.get(0).dropCity + ", " + getdata.dataValue.get(0).dropSateCode + ", " + getdata.dataValue.get(0).DeliveryCountryCode);
+                            from_address.setText(getdata.dataValue.get(0).pickupZip);
+                            to_address.setText(getdata.dataValue.get(0).dropZip);
+                            if (getdata.dataValue.get(0).vehiclecount.equalsIgnoreCase("1"))
+                                vehicle_num.setText(getdata.dataValue.get(0).vehiclecount + " Vehicle");
+                            else
+                                vehicle_num.setText(getdata.dataValue.get(0).vehiclecount + " Vehicles");
+                            from_date.setText(new Util().getUtcToCurrentTime(getdata.dataValue.get(0).PickupDateTime));
+                            to_date.setText(new Util().getUtcToCurrentTime(getdata.dataValue.get(0).DropDateTime));
+                            from_time.setText("");
+                            to_time.setText("");
+                            pickup_name.setText(getdata.dataValue.get(0).PickupName);
+                            delivery_name.setText(getdata.dataValue.get(0).dropName);
+                            if (getdata.dataValue.get(0).orderType != null) {
+                                if (getdata.dataValue.get(0).orderType.equalsIgnoreCase("Interprovincial"))
+                                    typ_.setText("Inter Provincial");
+                                else if (getdata.dataValue.get(0).orderType.equalsIgnoreCase("Interstate"))
+                                    typ_.setText("Inter State");
+                                else
+                                    typ_.setText(getdata.dataValue.get(0).orderType);
+                            }
+                        }
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(Call<OrderListModel> call, Throwable t) {
+                call.cancel();
+                hideAnimation();
+                new Util().sendSMTPMail(NewOrderViewActivity.this,t,"CxE001",null,""+call.request().url().toString());
+            }
+        });
     }
 }

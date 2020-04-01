@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,17 +16,20 @@ import android.widget.TextView;
 
 import com.avaal.com.afm2020autoCx.APIClient;
 import com.avaal.com.afm2020autoCx.APIInterface;
+import com.avaal.com.afm2020autoCx.NewOrderViewActivity;
 import com.avaal.com.afm2020autoCx.R;
 import com.avaal.com.afm2020autoCx.RouteSelectionActivity;
 import com.avaal.com.afm2020autoCx.ViewRouteMapListActivity;
 import com.avaal.com.afm2020autoCx.models.ConfirmOrderModel;
 import com.avaal.com.afm2020autoCx.models.OrderListModel;
 ;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
 import java.util.ArrayList;
 
+import androidx.recyclerview.widget.RecyclerView;
 import extra.PreferenceManager;
 import extra.Util;
 import retrofit2.Call;
@@ -315,13 +316,24 @@ public class DashboardOrderListAdapter extends RecyclerView.Adapter<DashboardOrd
 //                context.startActivity(i);
                             settingsDialog.dismiss();
 
-                                Intent j = new Intent(context, RouteSelectionActivity.class);
-                                j.putExtra("from", tripList.get(position).PickupCountryCode);
-                                j.putExtra("to", tripList.get(position).DeliveryCountryCode);
-                                j.putExtra("Id", tripList.get(position).orderId);
-                                String gson=new Gson().toJson(tripList.get(position));
-                                j.putExtra("ModelClass",gson);
-                                context.startActivity(j);
+                            Intent j = new Intent(context, NewOrderViewActivity.class);
+////        overridePendingTransition(R.anim.trans_left_in, R.anim.trans_left_out);
+//                j.putExtra("AuthKey", getIntent().getStringExtra("AuthKey"));
+//              j.putExtra("from", tripList.get(position).PickupCountryCode);
+                                j.putExtra("OrderStatus", tripList.get(position).status);
+                            j.putExtra("OrderId", tripList.get(position).orderId);
+
+//              j.putExtra("ModelClass",gson);
+                            String gson=new Gson().toJson(tripList.get(position));
+                            j.putExtra("ModelClass",gson);
+                            context.startActivity(j);
+//                                Intent j = new Intent(context, RouteSelectionActivity.class);
+//                                j.putExtra("from", tripList.get(position).PickupCountryCode);
+//                                j.putExtra("to", tripList.get(position).DeliveryCountryCode);
+//                                j.putExtra("Id", tripList.get(position).orderId);
+//                                String gson=new Gson().toJson(tripList.get(position));
+//                                j.putExtra("ModelClass",gson);
+//                                context.startActivity(j);
 
 
                         }

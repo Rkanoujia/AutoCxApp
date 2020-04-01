@@ -2,9 +2,7 @@ package com.avaal.com.afm2020autoCx;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -14,7 +12,10 @@ import com.avaal.com.afm2020autoCx.adapter.TabAdapter;
 import com.avaal.com.afm2020autoCx.frahment.AfmOrderFragment;
 import com.avaal.com.afm2020autoCx.frahment.FragmentOne;
 import com.avaal.com.afm2020autoCx.frahment.LoadsFragment;
+import com.google.android.material.tabs.TabLayout;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;

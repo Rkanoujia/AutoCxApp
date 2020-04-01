@@ -8,15 +8,16 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.avaal.com.afm2020autoCx.models.GetVehicleIdListModel;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -29,9 +30,17 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentActivity;
+import extra.LoaderScreen;
+import extra.Util;
 
 
 public class NewMapsActivity extends FragmentActivity implements OnMapReadyCallback
@@ -44,6 +53,10 @@ public class NewMapsActivity extends FragmentActivity implements OnMapReadyCallb
     //To store longitude and latitude from map
     private double longitude;
     private double latitude;
+             private FrameLayout mainlayout;
+             private LoaderScreen loaderScreen;
+             private View loaderView;
+             boolean isLoaded = false;
     ImageView pin_;
 TextView resutText,done;
              LatLng latLng;
@@ -76,15 +89,37 @@ TextView resutText,done;
 //        intent.putExtra("longi",""+location.getLongitude());
 //        Log.e("hgsh",""+getIntent().getStringExtra("lati"));
         latLng = new LatLng(getIntent().getDoubleExtra("lati",0.00), getIntent().getDoubleExtra("longi",0.00));
+        Log.e("map lat",""+getIntent().getDoubleExtra("lati",0.00));
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent data = new Intent();
-                data.putExtra("location","true");
-                data.putExtra("Latitude",""+SelectlatLng.latitude);
-                data.putExtra("Longitude",""+SelectlatLng.longitude);
-                setResult(RESULT_OK,data);
-                finish();
+                Gson gson = new Gson();
+
+                GetVehicleIdListModel.datavalue localObject = gson.fromJson(getIntent().getStringExtra("vehicle"), new TypeToken<GetVehicleIdListModel.datavalue>() {}.getType());
+                if(localObject!=null){
+                    localObject.Latitude=SelectlatLng.latitude;
+                    localObject.Longitude=SelectlatLng.longitude;
+                    if(getIntent().getStringExtra("Isupdate")!=null) {
+                        try {
+                            showAnimation();
+                            new Util().save(localObject, NewMapsActivity.this);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent data = new Intent();
+                        data.putExtra("location","true");
+                        data.putExtra("Latitude",""+SelectlatLng.latitude);
+                        data.putExtra("Longitude",""+SelectlatLng.longitude);
+                        setResult(RESULT_OK,data);
+                        finish();    //add your code here
+                    }
+                }, 4000);
+
             }
         });
  configureCameraIdle();
@@ -308,4 +343,35 @@ TextView resutText,done;
 //            moveMap();
 //        }
 //    }
+
+             private void showAnimation() {
+                 FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
+                         FrameLayout.LayoutParams.MATCH_PARENT,
+                         FrameLayout.LayoutParams.MATCH_PARENT);
+                 mainlayout = (FrameLayout) findViewById(R.id.main_map);
+                 if (mainlayout != null && loaderScreen == null) {
+                     loaderScreen = new LoaderScreen(this);
+                     loaderView = loaderScreen.getView();
+                     loaderScreen.showBackground(getApplicationContext(), true);
+                     mainlayout.addView(loaderView, layoutParams);
+
+                     if (!isLoaded) {
+                         if (loaderView != null && loaderScreen != null) {
+                             loaderView.setVisibility(View.VISIBLE);
+                             loaderScreen.startAnimating();
+                         }
+                     }
+                 }
+             }
+
+             private void hideAnimation() {
+                 if (loaderView != null) {
+                     loaderView.setVisibility(View.GONE);
+                     mainlayout.removeView(loaderView);
+                 }
+                 if (loaderScreen != null) {
+                     loaderScreen.stopAnimation();
+                     loaderScreen = null;
+                 }
+             }
 }

@@ -7,10 +7,14 @@ import android.graphics.Path;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.LinearInterpolator;
@@ -23,6 +27,7 @@ import com.avaal.com.afm2020autoCx.models.LogoutModel;
 import com.avaal.com.afm2020autoCx.tabtargetview.TapTarget;
 import com.avaal.com.afm2020autoCx.tabtargetview.TapTargetSequence;
 import com.avaal.com.afm2020autoCx.tabtargetview.TapTargetView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
 import butterknife.BindView;

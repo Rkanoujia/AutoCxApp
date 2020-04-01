@@ -6,8 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +20,7 @@ import com.avaal.com.afm2020autoCx.APIInterface;
 import com.avaal.com.afm2020autoCx.AddImageActivity;
 import com.avaal.com.afm2020autoCx.AddVehicleActivity;
 import com.avaal.com.afm2020autoCx.InventoryVehicleListActivity;
+import com.avaal.com.afm2020autoCx.NewMapsActivity;
 import com.avaal.com.afm2020autoCx.R;
 import com.avaal.com.afm2020autoCx.models.GetVehicleIdListModel;
 import com.avaal.com.afm2020autoCx.models.RemoveVehicleModel;
@@ -30,6 +30,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 import extra.PreferenceManager;
 import extra.Util;
 import retrofit2.Call;
@@ -49,7 +51,7 @@ public class VehicleListAdapter extends RecyclerView.Adapter<VehicleListAdapter.
     APIInterface apiInterface;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView title, make, model, delete_,is_preinspec,view_details,damage;
+        public TextView title, make, model, delete_,is_preinspec,view_details,damage,location;
         public ImageView typeicon;
         public LinearLayout list_item;
         FrameLayout item;
@@ -66,6 +68,8 @@ public class VehicleListAdapter extends RecyclerView.Adapter<VehicleListAdapter.
             is_preinspec=(TextView)view.findViewById(R.id.is_preinspec);
             damage=(TextView)view.findViewById(R.id.damage);
             view_details=(TextView)view.findViewById(R.id.view_details);
+            location=(TextView)view.findViewById(R.id.location);
+
 
         }
     }
@@ -242,6 +246,28 @@ public class VehicleListAdapter extends RecyclerView.Adapter<VehicleListAdapter.
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     context.startActivity(intent);
                 }
+            }
+        });
+
+        holder.location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                if(prf.getStringData("OrderStatus").equalsIgnoreCase("save")){
+
+                String gson=new Gson().toJson(tripList.get(position));
+                Intent intent=new Intent(context, NewMapsActivity.class);
+                intent.putExtra("lati", tripList.get(position).Latitude);
+                Log.e("lat",""+tripList.get(position).Latitude);
+                intent.putExtra("longi", tripList.get(position).Longitude);
+                if (prf.getStringData("OrderStatus").equalsIgnoreCase("saved") || prf.getStringData("OrderStatus").equalsIgnoreCase("shipped")) {
+                    intent.putExtra("Isupdate", "no");
+                }
+
+                intent.putExtra("vehicle",gson);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+               context.startActivity(intent);
+//                }
+
             }
         });
 

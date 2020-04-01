@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <FrameLayout
@@ -300,14 +300,14 @@
                     <!--android:textColor="@android:color/white" />-->
 
             <!--</LinearLayout>-->
-            <android.support.v4.widget.NestedScrollView
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 <LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/_item_list"
                 android:layout_margin="3dp"
                 android:elevation="2dp"
@@ -322,7 +322,7 @@
                 android:background="@android:color/black"
                 android:layout_width="match_parent"
                 android:layout_height="0.2dp"/>
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/_trip_list"
                 android:visibility="gone"
                 android:layout_width="match_parent"
@@ -331,8 +331,8 @@
                 android:scrollbarThumbVertical="@android:color/white"
                 android:scrollbars="vertical" />
             </LinearLayout>
-            </android.support.v4.widget.NestedScrollView>
+            </androidx.core.widget.NestedScrollView>
         </LinearLayout>
 
     </FrameLayout>
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,8 +9,7 @@ import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -52,6 +51,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -102,6 +103,8 @@ public class RouteSelectionActivity extends AppCompatActivity {
     ImageView add1;
     @BindView(R.id.save_btn)
     TextView save_btn;
+    @BindView(R.id.next_btn)
+    TextView next_btn;
     @BindView(R.id.linear)
     LinearLayout linear;
     @BindView(R.id.miles)
@@ -1432,8 +1435,22 @@ public class RouteSelectionActivity extends AppCompatActivity {
             if(prf.getStringData("OrderStatus").equalsIgnoreCase("Saved") || prf.getStringData("OrderStatus").equalsIgnoreCase("Shipped")){
                 save_btn.setText("Update");
                 save_btn.setVisibility(View.VISIBLE);
+            }else{
+                cust_order_number.setEnabled(false);
+                cust_order_number.setClickable(false);
+                pickup_number.setEnabled(false);
+                pickup_number.setClickable(false);
+                delivery_number.setEnabled(false);
+                delivery_number.setClickable(false);
+                item.setClickable(false);
+                item.setEnabled(false);
+                ord.setClickable(false);
+                ord.setEnabled(false);
+
             }
 
+            if(getIntent().getStringExtra("OrderFrom")!=null)
+                next_btn.setVisibility(View.GONE);
              hideAnimation();
             Log.e("data",listObject.PickupName);
         }

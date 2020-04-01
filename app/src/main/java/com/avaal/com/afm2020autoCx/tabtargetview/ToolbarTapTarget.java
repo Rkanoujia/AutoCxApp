@@ -4,9 +4,6 @@ package com.avaal.com.afm2020autoCx.tabtargetview;
 import android.annotation.TargetApi;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.IdRes;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +13,10 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.Stack;
+
+import androidx.annotation.IdRes;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 
 class ToolbarTapTarget extends ViewTapTarget {
     ToolbarTapTarget(Toolbar toolbar, @IdRes int menuItemId,

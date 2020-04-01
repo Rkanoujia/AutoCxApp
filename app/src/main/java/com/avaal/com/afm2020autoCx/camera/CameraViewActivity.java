@@ -1,8 +1,9 @@
 package com.avaal.com.afm2020autoCx.camera;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import com.avaal.com.afm2020autoCx.R;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 
 public class CameraViewActivity extends AppCompatActivity {

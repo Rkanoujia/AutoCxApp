@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_margin="5dp"
         android:elevation="4dp"
         android:padding="3dp"
@@ -424,5 +424,5 @@
                 </FrameLayout>
             </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 </FrameLayout>

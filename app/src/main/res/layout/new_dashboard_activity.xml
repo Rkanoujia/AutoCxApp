@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:tint="@color/colorWhite"
         android:layout_gravity="bottom|end"
@@ -17,7 +17,7 @@
         app:layout_anchorGravity="bottom|right"
         app:backgroundTint="@color/green"
         app:srcCompat="@drawable/ic_action_add" />
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/new_manu"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
@@ -31,7 +31,7 @@
         app:layout_anchorGravity="bottom|right"
         app:backgroundTint="@color/menu_color"
         app:srcCompat="@mipmap/menu" />
-    <android.support.v4.widget.SwipeRefreshLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -88,7 +88,7 @@
             android:background="@drawable/round_corners"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:layout_weight="1"
                 android:id="@+id/status"
                 app:cardCornerRadius="5dp"
@@ -105,8 +105,8 @@
                     android:text="Load Status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-            </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
                 android:id="@+id/account"
                 app:cardCornerRadius="5dp"
                 android:layout_weight="1"
@@ -123,7 +123,7 @@
                     android:text="Accounting"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
 
         </LinearLayout>
@@ -355,5 +355,5 @@
             android:layout_height="150dp"></LinearLayout>
     </LinearLayout>
     </ScrollView>
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </RelativeLayout>

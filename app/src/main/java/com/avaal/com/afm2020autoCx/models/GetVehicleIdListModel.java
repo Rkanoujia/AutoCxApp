@@ -95,9 +95,13 @@ public class GetVehicleIdListModel
         @SerializedName("ItemCode")
         public String ItemCode;
         @SerializedName("Latitude")
-        public String Latitude;
+        public Double Latitude;
         @SerializedName("Longitude")
-        public String Longitude;
+        public Double Longitude;
+        @SerializedName("InventoryDate")
+        public  String InventoryDate;
+        @SerializedName("OrderDate")
+        public  String OrderDate;
         public datavalue() {}
 
         public Boolean getSelect()

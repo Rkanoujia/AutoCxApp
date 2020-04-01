@@ -6,12 +6,13 @@ package com.avaal.com.afm2020autoCx.barcode;
 
 
 import android.content.Context;
-import android.support.annotation.UiThread;
 
 import com.avaal.com.afm2020autoCx.ui.camera.GraphicOverlay;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.Tracker;
 import com.google.android.gms.vision.barcode.Barcode;
+
+import androidx.annotation.UiThread;
 
 
 /**

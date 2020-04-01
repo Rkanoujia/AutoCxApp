@@ -253,7 +253,7 @@
                                         android:layout_margin="5dp"
                                         android:background="@android:color/white" />
 
-                                    <android.support.design.widget.TextInputLayout
+                                    <com.google.android.material.textfield.TextInputLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         app:hintEnabled="false"
@@ -271,7 +271,7 @@
                                             android:textColor="@color/colorPrimary"
                                             android:textColorHint="@color/blue"
                                             android:textSize="13dp" />
-                                    </android.support.design.widget.TextInputLayout>
+                                    </com.google.android.material.textfield.TextInputLayout>
 
                                 </LinearLayout>
                             </FrameLayout>

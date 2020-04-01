@@ -9,11 +9,12 @@ import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.CancellationSignal;
-import android.support.v4.app.ActivityCompat;
 import android.widget.TextView;
 
 import com.avaal.com.afm2020autoCx.MainActivity;
 import com.avaal.com.afm2020autoCx.R;
+
+import androidx.core.app.ActivityCompat;
 
 
 /**

@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <android.support.v4.widget.NestedScrollView
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                >
@@ -657,7 +657,7 @@
 
                     </LinearLayout>
                 </LinearLayout>
-            </android.support.v4.widget.NestedScrollView>
+            </androidx.core.widget.NestedScrollView>
         </LinearLayout>
         <TextView
             android:id="@+id/miles"
@@ -684,11 +684,11 @@
             android:layout_height="wrap_content" />
         <LinearLayout
             android:id="@+id/save_li"
+            android:minHeight="10dp"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@color/colorPrimary"
             android:soundEffectsEnabled="true">
 
             <TextView
@@ -697,7 +697,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/green"
-
                 android:clickable="true"
                 android:gravity="center"
                 android:padding="10dp"
@@ -707,8 +706,8 @@
                 android:visibility="gone" />
 
             <View
+                android:layout_height="30dp"
                 android:layout_width="0.5dp"
-                android:layout_height="match_parent"
                 android:background="@color/colorWhite" />
 
             <TextView

@@ -2,12 +2,13 @@ package extra;
 
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.avaal.com.afm2020autoCx.R;
+
+import androidx.core.content.ContextCompat;
 
 
 /**

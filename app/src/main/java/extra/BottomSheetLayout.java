@@ -11,9 +11,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Build;
-import android.support.annotation.IntDef;
-import android.support.annotation.NonNull;
-import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -31,6 +28,9 @@ import android.widget.LinearLayout;
 import com.avaal.com.afm2020autoCx.R;
 import com.bowyer.app.fabtransitionlayout.ViewUtils;
 
+import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
+import androidx.interpolator.view.animation.FastOutLinearInInterpolator;
 import io.codetail.animation.SupportAnimator;
 
 /**

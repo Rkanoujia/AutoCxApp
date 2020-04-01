@@ -2,8 +2,9 @@ package com.avaal.com.afm2020autoCx;
 
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
+
+import androidx.annotation.RequiresApi;
+import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
 
 
 @RequiresApi(api = Build.VERSION_CODES.M)

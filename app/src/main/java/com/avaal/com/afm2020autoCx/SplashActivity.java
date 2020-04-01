@@ -16,8 +16,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
+
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -28,11 +27,13 @@ import android.widget.Toast;
 import com.avaal.com.afm2020autoCx.fingerprint.FingerprintActivity;
 import com.avaal.com.afm2020autoCx.models.LoginModel;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
 import org.jsoup.Jsoup;
 
+import androidx.appcompat.app.AppCompatActivity;
 import extra.LoaderScreen;
 import extra.MyImage;
 import extra.PreferenceManager;

@@ -27,10 +27,14 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.FileProvider;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
@@ -242,6 +246,8 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
     TextView lat;
     @BindView(R.id.longi)
             TextView longi;
+    @BindView(R.id.add)
+    TextView latlongaddress;
     @BindView(R.id.save_new)
             TextView save_new;
     @BindView(R.id.vin_clear)
@@ -286,6 +292,7 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
     boolean IsNew=false;
     ArrayList<String> myList=new ArrayList<>();
     Calendar myCalendar = Calendar.getInstance();
+    boolean isupadteLocation=true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -315,6 +322,7 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
                     new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE,
                             Manifest.permission.WRITE_EXTERNAL_STORAGE,
                             Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_BACKGROUND_LOCATION,
                             android.Manifest.permission.ACCESS_COARSE_LOCATION,
                             android.Manifest.permission.CAMERA}, 1);
 
@@ -638,8 +646,8 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
             lat.setText("" + location.getLatitude());
             longi.setText("" + location.getLongitude());
         }else{
-            lat.setText("0.000000");
-            longi.setText("0.000000");
+            lat.setText("0.0");
+            longi.setText("0.0");
         }
 //                 if(prf.getStringData("OrderStatus")==null)
 //             if(!prf.getStringData("OrderStatus").equalsIgnoreCase("null")){
@@ -1510,6 +1518,14 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
                         public void run() {
                             lat.setText(""+data.getStringExtra("Latitude"));
                             longi.setText(""+data.getStringExtra("Longitude"));
+                            try {
+                                location.setLatitude(Double.parseDouble(data.getStringExtra("Latitude")));
+                                location.setLongitude(Double.parseDouble(data.getStringExtra("Longitude")));
+                                getAddress();
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                            getAddress();
                         }
                     });
 
@@ -2238,6 +2254,14 @@ void save_new(){
 //                                    tracking_txt.setSelection(0);
                                     lat.setText(""+getdata3.get(i).Latitude);
                                     longi.setText(""+getdata3.get(i).Longitude);
+                                    try {
+                                        location.setLatitude(getdata3.get(i).Latitude);
+                                        location.setLongitude(getdata3.get(i).Longitude);
+                                        getAddress();
+                                    }catch (Exception e){
+                                        e.printStackTrace();
+                                    }
+                                    isupadteLocation=false;
                                     findViewById(R.id.get_lat_long).setVisibility(View.INVISIBLE);
 
                                     qWvrUnit = getdata3.get(i).gvwrUnit;
@@ -2437,7 +2461,15 @@ void save_new(){
                                     miliage=getdata3.get(i).mileageUnit;
                                     lat.setText(""+getdata3.get(i).Latitude);
                                     longi.setText(""+getdata3.get(i).Longitude);
+                                    isupadteLocation=false;
+                                    try {
+                                        location.setLatitude(getdata3.get(i).Latitude);
+                                        location.setLongitude(getdata3.get(i).Longitude);
 
+                                        getAddress();
+                                    }catch (Exception e){
+                                        e.printStackTrace();
+                                    }
 //                            if (getdata3.get(i).mileageUnit.equalsIgnoreCase("2")) {
 //                                millage_spinner.setSelection(2);
 ////                                    getImages("MileageValue");
@@ -3562,7 +3594,13 @@ void getInventoryVehicle(){
 //                                    tracking_txt.setSelection(0);
                             lat.setText(""+getdata3.get(i).Latitude);
                             longi.setText(""+getdata3.get(i).Longitude);
-
+                            try {
+                                location.setLatitude(getdata3.get(i).Latitude);
+                                location.setLongitude(getdata3.get(i).Longitude);
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                            isupadteLocation=false;
                             qWvrUnit=getdata3.get(i).gvwrUnit;
 
                             if (getdata3.get(i).billOfSale.equalsIgnoreCase("true")) {
@@ -3759,6 +3797,7 @@ void getInventoryVehicle(){
     }
     @Override
     public void onCheckLatLongListner(Location location1) {
+        if(isupadteLocation)
         this.location=location1;
         getAddress();
 
@@ -3769,6 +3808,12 @@ void getInventoryVehicle(){
         if(!location1){
             if (pd.isShowing())
                 pd.dismiss();
+        }else{
+            if(isupadteLocation) {
+                lat.setText("" + location.getLatitude());
+                longi.setText("" + location.getLongitude());
+                getAddress();
+            }
         }
     }
 
@@ -3789,12 +3834,12 @@ void getInventoryVehicle(){
                 if(postalCode== null || postalCode.equalsIgnoreCase("null"))
                     postalCode="";
                 fullAddress = "" + city + "," + state + "," + postalCode;
+                latlongaddress.setText(""+fullAddress);
                 if(pd!=null) {
                     if (pd.isShowing())
                         pd.dismiss();
                 }
 //                prf.saveStringData("address", fullAddress);
-
                 Log.e("address", "" + city + "," + state + "," + postalCode);
             } catch (Exception e) {
                 e.printStackTrace();

@@ -9,7 +9,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +20,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.avaal.com.afm2020autoCx.barcode.BarcodeCaptureActivity;
 import com.avaal.com.afm2020autoCx.models.GetInvVehicleModel;
 import com.avaal.com.afm2020autoCx.models.GetVehicleIdListModel;
 import com.avaal.com.afm2020autoCx.models.RemoveVehicleModel;
 
+import com.google.android.gms.common.api.CommonStatusCodes;
+import com.google.android.gms.vision.barcode.Barcode;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
@@ -34,14 +38,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-import android.support.annotation.Nullable;
-import android.support.v4.content.FileProvider;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -82,6 +84,7 @@ public class InventoryVehicleListActivity extends AppCompatActivity {
     private View loaderView;
     boolean isLoaded = false;
     boolean exist=true;
+    GetVehicleIdListModel.datavalue selectVehicle;
     ArrayList<GetVehicleIdListModel.datavalue> selectedData = new ArrayList();
     ArrayList<String> list=new ArrayList<>();
 
@@ -544,7 +547,7 @@ public class InventoryVehicleListActivity extends AppCompatActivity {
         Boolean IsSelect;
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
-            public TextView title, make, model, delete_,days,date_,is_preinspec,damage,view_details;
+            public TextView title, make, model, delete_,days,date_,is_preinspec,damage,view_details,location;
             public ImageView typeicon;
             public LinearLayout list_item;
 
@@ -561,6 +564,7 @@ public class InventoryVehicleListActivity extends AppCompatActivity {
                 is_preinspec=(TextView)view.findViewById(R.id.is_preinspec);
                 damage=(TextView)view.findViewById(R.id.damage);
                 view_details=(TextView)view.findViewById(R.id.view_details);
+                location=(TextView)view.findViewById(R.id.location);
 
             }
         }
@@ -734,6 +738,26 @@ public class InventoryVehicleListActivity extends AppCompatActivity {
 
                 }
             });
+            holder.location.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+//                if(prf.getStringData("OrderStatus").equalsIgnoreCase("save")){
+                    selectVehicle=tripList.get(position);
+                    String gson=new Gson().toJson(tripList.get(position));
+                    Intent intent=new Intent(InventoryVehicleListActivity.this,NewMapsActivity.class);
+//                    intent.putExtra("lati", location.getLatitude());
+//                    intent.putExtra("longi", location.getLongitude());
+                    Log.e("lat",""+tripList.get(position).Latitude);
+                        intent.putExtra("lati", tripList.get(position).Latitude);
+                        intent.putExtra("longi", tripList.get(position).Longitude);
+                        intent.putExtra("Isupdate","yes");
+                        intent.putExtra("vehicle",gson);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+//                }
+
+                }
+            });
 
         }
 
@@ -794,4 +818,7 @@ public class InventoryVehicleListActivity extends AppCompatActivity {
         }
 
     }
+
+
+
 }

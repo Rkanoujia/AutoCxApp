@@ -11,10 +11,14 @@ import android.util.Log;
 
 import com.avaal.com.afm2020autoCx.APIClient;
 import com.avaal.com.afm2020autoCx.APIInterface;
+import com.avaal.com.afm2020autoCx.AddImageActivity;
+import com.avaal.com.afm2020autoCx.AddVehicleActivity;
 import com.avaal.com.afm2020autoCx.BuildConfig;
 import com.avaal.com.afm2020autoCx.NewDashBoardActivity;
 import com.avaal.com.afm2020autoCx.R;
 import com.avaal.com.afm2020autoCx.models.ForAddModel;
+import com.avaal.com.afm2020autoCx.models.GetVehicleIdListModel;
+import com.avaal.com.afm2020autoCx.models.VehicleInfoModel;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
 import java.text.ParseException;
@@ -75,6 +79,41 @@ public class Util {
         }
         return Connected;
     }
+
+   public void save(GetVehicleIdListModel.datavalue selectVehicle ,Activity activity)throws Exception {
+
+        PreferenceManager prf = new PreferenceManager(activity);
+        String orderDate = "",inventryDate="";
+        APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
+
+        Call<VehicleInfoModel> call1 = apiInterface.saveVehicle(selectVehicle.vehiocleId,""+selectVehicle.TempOrderID, "" + selectVehicle.vinNumber, "" + selectVehicle.model, "" +selectVehicle.makeV, "" + selectVehicle.year, "" + selectVehicle.oem, "" + selectVehicle.mileageValue, ""+selectVehicle.mileageUnit,"" + selectVehicle.tpms, "" + selectVehicle.declareValue, "" + selectVehicle.buildYear, ""+selectVehicle.buildMonth,"" + selectVehicle.gvwrValue, selectVehicle.gvwrUnit,"" + selectVehicle.diesel, "" + selectVehicle.speedoConversion, "" + selectVehicle.titleConversion, ""+selectVehicle.title,"" + selectVehicle.billOfSale, "" + selectVehicle.trackingConfig, "" , ""+selectVehicle.isInventory, ""+selectVehicle.InventoryDate,""+selectVehicle.OrderDate ,""+prf.getStringData("userCode"),""+selectVehicle.releasefrom,""+selectVehicle.Color,""+selectVehicle.DeclaredCurrency,""+selectVehicle.Latitude,""+selectVehicle.Longitude,""+ prf.getStringData("userName"),new Util().getDateTime(),""+prf.getStringData("corporateId"),"bearer "+prf.getStringData("accessToken"),"application/x-www-form-urlencoded");
+        call1.enqueue(new Callback<VehicleInfoModel>() {
+            @Override
+            public void onResponse(Call<VehicleInfoModel> call, Response<VehicleInfoModel> response) {
+
+                VehicleInfoModel dropdata = response.body();
+
+                try {
+                    if (dropdata.status) {
+
+                            MDToast mdToast = MDToast.makeText(activity, "Updated", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+                            mdToast.show();
+
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                    new Util().sendSMTPMail(activity,null,"CxE004",e,"");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<VehicleInfoModel> call, Throwable t) {
+                call.cancel();
+                new Util().sendSMTPMail(activity,t,"CxE001",null,""+call.request().url().toString());
+            }
+        });
+    }
+
     public String getDateTime(){
         Calendar calendar = Calendar.getInstance();
 

@@ -4,7 +4,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
-import android.support.annotation.RequiresApi;
 import android.util.Log;
 
 import com.avaal.com.afm2020autoCx.APIClient;
@@ -12,6 +11,7 @@ import com.avaal.com.afm2020autoCx.APIInterface;
 import com.avaal.com.afm2020autoCx.models.GetCompanyModel;
 import com.avaal.com.afm2020autoCx.models.ProfileDataModel;
 
+import androidx.annotation.RequiresApi;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

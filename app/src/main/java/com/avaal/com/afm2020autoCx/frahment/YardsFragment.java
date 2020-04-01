@@ -1,7 +1,6 @@
 package com.avaal.com.afm2020autoCx.frahment;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,7 @@ import com.avaal.com.afm2020autoCx.R;
 import com.avaal.com.afm2020autoCx.adapter.AppSettingModel;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
+import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import extra.LoaderScreen;
