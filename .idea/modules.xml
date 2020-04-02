@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AFMAutoCustomer.iml" filepath="$PROJECT_DIR$/AFMAutoCustomer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AFMAutoCustomer.iml" filepath="$PROJECT_DIR$/AFMAutoCustomer.iml" group="AFMAutoCustomer" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="AFMAutoCustomer/app" />
     </modules>
   </component>
 </project>
