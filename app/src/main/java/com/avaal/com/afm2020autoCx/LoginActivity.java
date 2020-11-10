@@ -99,18 +99,27 @@ public class LoginActivity extends AppCompatActivity implements FingerprintHelpe
              new Util().sendSMTPMail(LoginActivity.this,null,"CxE004",e,"");
          }
         token = FirebaseInstanceId.getInstance().getToken();
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 //            marshmallow.checkLocationPermission();
 //               marshmallow.checkPermissionForExternalStorage();
 //                    marshmallow.checkPermissionForCall();
 //            marshmallow.checkPermissionForCamera();
-            ActivityCompat.requestPermissions(LoginActivity.this,
-                    new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_BACKGROUND_LOCATION,
-                            android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                            android.Manifest.permission.CAMERA}, 1);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                ActivityCompat.requestPermissions(LoginActivity.this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                Manifest.permission.ACCESS_FINE_LOCATION,
+                                Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                                Manifest.permission.ACCESS_COARSE_LOCATION,
+                                Manifest.permission.CAMERA}, 1);
+            }else{
+                ActivityCompat.requestPermissions(LoginActivity.this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                Manifest.permission.ACCESS_FINE_LOCATION,
+                                Manifest.permission.ACCESS_COARSE_LOCATION,
+                                Manifest.permission.CAMERA}, 1);
+            }
 
 //            marshmallow.checkPermissionForExternalStorage();
         }

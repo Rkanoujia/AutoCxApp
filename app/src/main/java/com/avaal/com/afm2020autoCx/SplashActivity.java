@@ -273,6 +273,9 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<LoginModel> call, Throwable t) {
                 call.cancel();
+                Intent j = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(j);
+                finish();
                 new Util().sendSMTPMail(SplashActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });

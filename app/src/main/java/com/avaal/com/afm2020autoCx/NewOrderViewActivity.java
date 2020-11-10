@@ -339,7 +339,7 @@ public class NewOrderViewActivity extends AppCompatActivity {
                 if(getdata.satus) {
 
 
-                    Intent i=new Intent(NewOrderViewActivity.this,AddVehicleActivity.class);
+                    Intent i=new Intent(NewOrderViewActivity.this,NewAddVehicleActivity.class);
                     i.putExtra("VehicleId",getdata.oredrId);
 //                    prf.saveStringData("OrderStatus","Saved");
                     i.putExtra("OrderId",""+orderid);
@@ -919,15 +919,12 @@ public class NewOrderViewActivity extends AppCompatActivity {
                 hideAnimation();
                 try {
                     if (getdata.satus) {
-                        if(getdata.dataValue.size()==1) {
+                        if(getdata.dataValue.size()>0) {
                             viewModel=getdata.dataValue.get(0);
                             if (!getdata.dataValue.get(0).orderId.trim().equalsIgnoreCase("0"))
                                 id.setText(getdata.dataValue.get(0).orderId);
                             else
                                 id.setText(getdata.dataValue.get(0).SavedOrderNumber);
-
-
-
 //        if(tripList.get(position).orderId.length()>0)
 //            holder.title.setVisibility(View.GONE);
                             if (getdata.dataValue.get(0).status.equalsIgnoreCase(""))

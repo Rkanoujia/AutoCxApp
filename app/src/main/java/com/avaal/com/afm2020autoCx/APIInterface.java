@@ -19,6 +19,7 @@ import com.avaal.com.afm2020autoCx.models.GetLocationDetailModel;
 import com.avaal.com.afm2020autoCx.models.GetVehicleIdListModel;
 import com.avaal.com.afm2020autoCx.models.GetVehicleIdModel;
 import com.avaal.com.afm2020autoCx.models.InventoryOrderModel;
+import com.avaal.com.afm2020autoCx.models.InvoiceListModel;
 import com.avaal.com.afm2020autoCx.models.ItemListModel;
 import com.avaal.com.afm2020autoCx.models.LocationDetailModel;
 import com.avaal.com.afm2020autoCx.models.LoginModel;
@@ -30,6 +31,7 @@ import com.avaal.com.afm2020autoCx.models.OrderDetailModel;
 import com.avaal.com.afm2020autoCx.models.OrderListModel;
 import com.avaal.com.afm2020autoCx.models.PrimaryInfoDetailModel;
 import com.avaal.com.afm2020autoCx.models.ProfileDataModel;
+import com.avaal.com.afm2020autoCx.models.ReceiptListModel;
 import com.avaal.com.afm2020autoCx.models.RemoveImageModel;
 import com.avaal.com.afm2020autoCx.models.RemoveOrderModel;
 import com.avaal.com.afm2020autoCx.models.RemoveVehicleModel;
@@ -274,5 +276,11 @@ Call<OrderListModel> getOrderList(@Query("Status") String Status,@Query("Corpora
 
     @GET("/api/CustomerApp/CheckDuplicateCustOrderNo?")
     Call<CustOrderModel> getCheckDuplicateCustOrderNo(@Query("OrderID") String OrderID, @Query("CustomerOrderNo") String CustomerOrderNo, @Query("CustomerCode") String CustomerCode, @Query("CorporateId") String CorporateId, @Header("Authorization") String authorization, @Header("Content-Type") String contentType);
+
+    @GET("/api/CustomerApp/GetInvoiceList?")
+    Call<InvoiceListModel> getInvoiceList(@Query("PageSize") String PageSize, @Query("PageNo") String PageNo, @Query("OrderID") String OrderID, @Query("CustomerOrderNo") String CustomerOrderNo, @Query("CustomerCode") String CustomerCode, @Query("CorporateId") String CorporateId, @Header("Authorization") String authorization, @Header("Content-Type") String contentType);
+    @GET("/api/CustomerApp/GetReceiptList?")
+    Call<ReceiptListModel> getReceiptList(@Query("InvoiceID") String InvoiceID, @Query("PageSize") String PageSize, @Query("PageNo") String PageNo, @Query("OrderID") String OrderID, @Query("CustomerOrderNo") String CustomerOrderNo, @Query("CustomerCode") String CustomerCode, @Query("CorporateId") String CorporateId, @Header("Authorization") String authorization, @Header("Content-Type") String contentType);
+
 
 }

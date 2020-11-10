@@ -44,4 +44,6 @@
 <color name="dashback">#32A2E6</color>
     <color name="menu_color">#32A2E6</color>
     <color name="splash_bg">#57A0E0</color>
+    <color name="lightgray">#E9E7E7</color>
+    <color name="dark_gray">#777676</color>
 </resources>

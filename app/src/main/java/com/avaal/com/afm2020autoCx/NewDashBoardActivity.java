@@ -176,7 +176,7 @@ public class NewDashBoardActivity extends AppCompatActivity {
     }
     @OnClick(R.id.total_invoice)
     void total_invoice(){
-        Intent j = new Intent(this, NewOrderListActivity.class);
+        Intent j = new Intent(this, InvoiceListActivity.class);
         j.putExtra("AFMOrder", "ggd");
         j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(j);
@@ -184,7 +184,7 @@ public class NewDashBoardActivity extends AppCompatActivity {
     }
     @OnClick(R.id.total_paid)
     void total_paid(){
-        Intent j = new Intent(this, NewOrderListActivity.class);
+        Intent j = new Intent(this, ReceiptListActivity.class);
         j.putExtra("AFMOrder", "ggd");
         j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(j);

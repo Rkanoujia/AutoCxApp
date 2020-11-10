@@ -217,6 +217,7 @@ public class RouteSelectionActivity extends AppCompatActivity {
     @OnClick(R.id.getMile)
     void  getMile(){
         try {
+            showAnimation();
             getMiles();
         } catch (Exception e) {
             e.printStackTrace();
@@ -1456,7 +1457,7 @@ public class RouteSelectionActivity extends AppCompatActivity {
         }
     }
    void getMiles()throws Exception{
-       miles.setText("Distance "+" : "+0.00);
+
         if(pickupId.equalsIgnoreCase("0"))
             return;
 
@@ -1489,6 +1490,7 @@ public class RouteSelectionActivity extends AppCompatActivity {
 ////                    i.putExtra("orderType",orderType);
 //                    startActivity(i);
                }else{
+                           miles.setText("Distance "+" : "+0.00);
                    MDToast mdToast = MDToast.makeText(RouteSelectionActivity.this, "Some Technical Issue", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                    mdToast.show();
                }

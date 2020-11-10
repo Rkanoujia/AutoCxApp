@@ -5,4 +5,18 @@
     <external-path
         name="external_files" path="." />
     <files-path name="AFM/"/>
+    <cache-path
+        name="my_cache"
+        path="." />
+    <cache-path
+        name="cache"
+        path="." />
+    <external-cache-path
+        name="external_cache"
+        path="." />
+    <files-path
+        name="files"
+        path="." />
+
+
 </paths>

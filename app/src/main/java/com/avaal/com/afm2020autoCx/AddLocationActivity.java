@@ -197,6 +197,16 @@ public class AddLocationActivity extends AppCompatActivity {
             mdToast.show();
             return;
         }
+        if(!new Util().isValidAdde(locationAddress.getText().toString())){
+            MDToast mdToast = MDToast.makeText(this, "Enter Correct Address", MDToast.LENGTH_LONG, MDToast.TYPE_ERROR);
+            mdToast.show();
+            return;
+        }
+        if(!new Util().isValidCity(citySpin.getText().toString())){
+            MDToast mdToast = MDToast.makeText(this, "Enter Correct City", MDToast.LENGTH_LONG, MDToast.TYPE_ERROR);
+            mdToast.show();
+            return;
+        }
 
         Util util=new Util();
         if(!util.isNetworkAvailable(this)){

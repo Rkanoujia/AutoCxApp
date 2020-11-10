@@ -19,7 +19,9 @@ import com.avaal.com.afm2020autoCx.APIInterface;
 import com.avaal.com.afm2020autoCx.R;
 import com.avaal.com.afm2020autoCx.models.RemoveImageModel;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.gms.fido.fido2.api.common.RequestOptions;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -34,6 +36,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+
 /**
  * Created by dell pc on 26-04-2018.
  */
@@ -47,14 +52,19 @@ public class ExtraImageList extends RecyclerView.Adapter<ExtraImageList.MyViewHo
     boolean isDelete;
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView name1;
-        LinearLayout not_carrier,linear_carrier;
-        public ImageView dam_img;
-
+        ImageView image,edit,delete,reload;
+        TextView title_name;
 
         public MyViewHolder(View view) {
             super(view);
-            dam_img = (ImageView) view.findViewById(R.id.dam_img);
-            name1 = (TextView) view.findViewById(R.id.name1);
+            reload = (ImageView) view.findViewById(R.id.reload);
+//
+            delete = (ImageView) view.findViewById(R.id.delete);
+
+            edit=(ImageView)view.findViewById(R.id.edit);
+//
+            image = (ImageView) view.findViewById(R.id.image);
+            title_name = (TextView) view.findViewById(R.id.title_name);
 
 //            first_driver=(TextView)view.findViewById(R.id.first_driver);
 //            first_trailer=(TextView)view.findViewById(R.id.first_trailer);
@@ -83,7 +93,7 @@ public class ExtraImageList extends RecyclerView.Adapter<ExtraImageList.MyViewHo
     @Override
     public ExtraImageList.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.image_list_item, parent, false);
+                .inflate(R.layout.inspect_damage_item, parent, false);
 
         return new ExtraImageList.MyViewHolder(itemView);
     }
@@ -99,24 +109,58 @@ public class ExtraImageList extends RecyclerView.Adapter<ExtraImageList.MyViewHo
 
 //                holder.current_location.setText("Current Location :"+tripList.get(position).carrierAddress);
 //                String url = "http://maps.google.com/maps/api/staticmap?center=" + tripList.get(position).carrierLatitude + "," + tripList.get(position).carrierLongitude + "&zoom=15&size=200x200&sensor=false";
-            final String url=(tripList.get(position).get("imageUrl")).replaceAll(" ","%20").replace("DelhiServer","192.168.1.20");
-//                String url="https://maps.googleapis.com/maps/api/staticmap?center="+tripList.get(position).carrierLatitude+","+tripList.get(position).carrierLongitude +"&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C"+40.702147,-74.015794+"&key="+R.string.google_maps_key;
-           holder.name1.setText(tripList.get(position).get("imageName"));
-//            Picasso.with(context).load(url).into(holder.dam_img);
+        Glide.with(context).load(tripList.get(position).get("imageUrl").replace("DelhiServer", "192.168.1.20")).placeholder(R.drawable.progress_draw)              .skipMemoryCache(true).into(holder.image);
 
-        Glide.with(context)
-                .load(url)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(true)
-                .crossFade()
-                .into(holder.dam_img);
-           holder.dam_img.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View view) {
-                   popUp(url,tripList.get(position).get("imageName"),position,tripList.get(position).get("imageId"),isDelete);
-               }
-           });
+//            if(model.getIsSync().equalsIgnoreCase("Not")){
+//                Picasso.with(getApplicationContext()).load(new File(model.FilePath)).networkPolicy(NetworkPolicy.NO_CACHE)
+//                        .memoryPolicy(MemoryPolicy.NO_CACHE)
+//                        .into(holder.image);
+//            }else {
+//                Picasso.with(getApplicationContext()).load(model.FilePath).networkPolicy(NetworkPolicy.NO_CACHE)
+//                        .memoryPolicy(MemoryPolicy.NO_CACHE)
+//                        .into(holder.image);
+//            }
 
+        holder.title_name.setText(tripList.get(position).get("imageName"));
+//            holder.title_name.setVisibility(View.VISIBLE);
+//            if(isDelete)
+//                holder.cancel.setVisibility(View.VISIBLE);
+//            else
+//                holder.cancel.setVisibility(View.GONE);
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteImg(tripList.get(position).get("imageId"), position);
+//                    alertDialog.show();
+////                    list.remove(position);
+////                    notifyDataSetChanged();
+            }
+        });
+        if (isDelete) {
+            holder.edit.setVisibility(INVISIBLE);
+            holder.delete.setVisibility(INVISIBLE);
+        } else{
+            holder.delete.setVisibility(VISIBLE);
+            holder.edit.setVisibility(VISIBLE);
+        }
+
+        holder.reload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Glide.with(context).load(tripList.get(position).get("imageUrl").replace("DelhiServer", "192.168.1.20")).placeholder(R.drawable.progress_draw) .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true).into(holder.image);
+//                    popUp(model.FilePath,""+model.FileName);
+            }
+        });
+
+        holder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                    Glide.with(InspectionsActivity.this).load(model.FilePath.replace("DelhiServer", "192.168.1.20")).apply(options).diskCacheStrategy(DiskCacheStrategy.NONE)
+//                            .skipMemoryCache(true).into(holder.image);
+                popUp(""+tripList.get(position).get("imageUrl"),""+tripList.get(position).get("imageName"),position,tripList.get(position).get("imageId"),isDelete);
+            }
+        });
 
 //         }
 //        String url="http://maps.google.com/maps/api/staticmap?markers=color:brown%7C" + tripList.get(position).carrierLatitude + "," + tripList.get(position).carrierLongitude +"&zoom=15&size=500x200&sensor=true";

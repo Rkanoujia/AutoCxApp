@@ -284,7 +284,7 @@ public class VehicleListActivity extends AppCompatActivity {
                 if(getdata.satus) {
 
 
-                Intent i=new Intent(VehicleListActivity.this,AddVehicleActivity.class);
+                Intent i=new Intent(VehicleListActivity.this,NewAddVehicleActivity.class);
                     i.putExtra("VehicleId",getdata.oredrId);
 //                    prf.saveStringData("OrderStatus","Saved");
                     i.putExtra("OrderId",""+orderid);

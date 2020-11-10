@@ -78,7 +78,7 @@ public class InventoryVehicleListActivity extends AppCompatActivity {
     APIInterface apiInterface;
     String orderId;
     InventryVehicleListAdapter adapterd = null;
-    ArrayList<GetVehicleIdListModel.datavalue> getdata3;
+    ArrayList<GetVehicleIdListModel.datavalue> getdata3=new ArrayList<>();
     private FrameLayout mainlayout;
     private LoaderScreen loaderScreen;
     private View loaderView;
@@ -230,7 +230,7 @@ public class InventoryVehicleListActivity extends AppCompatActivity {
     //                    paramAnonymousl.putExtra("VehicleType", "true");
     //                    paramAnonymousl.putExtra("vihiclevinList", InventoryListActivity.this.list);
 //                        prf.saveStringData("OrderStatus", "saved");
-                        Intent i=new Intent(InventoryVehicleListActivity.this,AddVehicleActivity.class);
+                        Intent i=new Intent(InventoryVehicleListActivity.this,NewAddVehicleActivity.class);
                         i.putExtra("VehicleId",getdata.oredrId);
                         i.putExtra("OrderId","0");
     //                    prf.saveStringData("VehicleType","true");
@@ -646,13 +646,13 @@ public class InventoryVehicleListActivity extends AppCompatActivity {
                 }else
                     tripList.get(position).setSelect(false);
                 String current = new SimpleDateFormat("MM/dd/yyyy hh:mm aa", Locale.US).format(new Date());
-                int day=getDaysbitweenDays(current,new Util().getUtcToCurrentTime(tripList.get(position).createDate));
+                int day=getDaysbitweenDays(current,new Util().getUtcToCurrentTime(tripList.get(position).InventoryDate));
                 if(day>1)
                 holder.days.setText(""+day+" Days");
                 else
                     holder.days.setText(""+day+" Day");
 
-                        holder.date_.setText(new Util().getUtcToCurrentTime((tripList.get(position).createDate)));
+                        holder.date_.setText(new Util().getUtcToCurrentTime((tripList.get(position).InventoryDate)));
 
             }catch (Exception e){
                 e.printStackTrace();
@@ -723,7 +723,7 @@ public class InventoryVehicleListActivity extends AppCompatActivity {
                 public void onClick(View view) {
 //                if(prf.getStringData("OrderStatus").equalsIgnoreCase("save")){
 
-                    Intent intent=new Intent(context,AddVehicleActivity.class);
+                    Intent intent=new Intent(context,NewAddVehicleActivity.class);
                     intent.putExtra("VehicleId",tripList.get(position).vehiocleId);
                     intent.putExtra("OrderId","0");
 //                    prf.saveStringData("OrderStatus", "saved");

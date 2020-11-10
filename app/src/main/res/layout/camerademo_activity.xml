@@ -1,19 +1,52 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <SurfaceView
-        android:id="@+id/surfaceView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_centerVertical="true"
+            android:elevation="6dp"
+            android:layout_alignParentRight="true"
+            android:padding="8dp"
+
+            android:textSize="@dimen/dp15"
+            android:rotation="90"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorWhite"
+            android:gravity="center"
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <SurfaceView
+            android:id="@+id/surfaceView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+        <ImageView
+            android:rotation="90"
+             android:elevation="3dp"
+            android:layout_above="@+id/fram1"
+            android:id="@+id/image"
+            android:scaleType="fitCenter"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
 
 <FrameLayout
+    android:alpha="0.6"
+    android:background="@color/colorPrimary"
+    android:id="@+id/fram1"
     android:layout_alignParentBottom="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:gravity="center_horizontal"
         android:padding="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -23,12 +56,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <Button
+                android:rotation="90"
                 android:id="@+id/flash"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:layout_marginRight="25dp"
+                android:layout_margin="@dimen/activity_vertical_margin"
                 android:backgroundTint="@color/colorWhite"
                 android:background="@drawable/ic_flash_off" />
         </LinearLayout>
@@ -39,7 +72,7 @@
             android:id="@+id/captureImage"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_margin="@dimen/activity_vertical_margin"
             android:background="@drawable/btn_broadcast_selected" />
 
     <LinearLayout
@@ -48,16 +81,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <Button
+        android:rotation="90"
         android:layout_gravity="center_vertical|end"
         android:id="@+id/flipCamera"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="25dp"
+        android:layout_margin="@dimen/activity_vertical_margin"
         android:layout_toRightOf="@id/captureImage"
         android:background="@drawable/btn_flipcamera" />
     </LinearLayout>
     </LinearLayout>
 </FrameLayout>
+    </RelativeLayout>
 </RelativeLayout>

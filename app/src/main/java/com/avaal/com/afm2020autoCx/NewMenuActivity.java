@@ -175,14 +175,25 @@ j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
     }
     @OnClick(R.id.invoices)
     void invoices(){
+        Intent j = new Intent(this, InvoiceListActivity.class);
+//        j.putExtra("AuthKey", getActivity().getIntent().getStringExtra("AuthKey"));
+        j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(j);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
-        MDToast mdToast = MDToast.makeText(this, "Coming Soon..", MDToast.LENGTH_LONG, MDToast.TYPE_INFO);
-        mdToast.show();
+//        MDToast mdToast = MDToast.makeText(this, "Coming Soon..", MDToast.LENGTH_LONG, MDToast.TYPE_INFO);
+//        mdToast.show();
     }
     @OnClick(R.id.receipts)
     void receipts(){
-        MDToast mdToast = MDToast.makeText(this, "Coming Soon..", MDToast.LENGTH_LONG, MDToast.TYPE_INFO);
-        mdToast.show();
+        Intent j = new Intent(this, ReceiptListActivity.class);
+//        j.putExtra("AuthKey", getActivity().getIntent().getStringExtra("AuthKey"));
+        j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(j);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+
+//        MDToast mdToast = MDToast.makeText(this, "Coming Soon..", MDToast.LENGTH_LONG, MDToast.TYPE_INFO);
+//        mdToast.show();
 
     }
     @OnClick(R.id.track_order)

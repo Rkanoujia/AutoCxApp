@@ -20,6 +20,7 @@ import com.avaal.com.afm2020autoCx.APIInterface;
 import com.avaal.com.afm2020autoCx.AddImageActivity;
 import com.avaal.com.afm2020autoCx.AddVehicleActivity;
 import com.avaal.com.afm2020autoCx.InventoryVehicleListActivity;
+import com.avaal.com.afm2020autoCx.NewAddVehicleActivity;
 import com.avaal.com.afm2020autoCx.NewMapsActivity;
 import com.avaal.com.afm2020autoCx.R;
 import com.avaal.com.afm2020autoCx.models.GetVehicleIdListModel;
@@ -223,7 +224,7 @@ public class VehicleListAdapter extends RecyclerView.Adapter<VehicleListAdapter.
             @Override
             public void onClick(View view) {
                 if (prf.getStringData("OrderStatus").equalsIgnoreCase("saved") || prf.getStringData("OrderStatus").equalsIgnoreCase("shipped")) {
-                    Intent intent = new Intent(context, AddVehicleActivity.class);
+                    Intent intent = new Intent(context, NewAddVehicleActivity.class);
                     if (tripList.get(position).getSelect() != null && tripList.get(position).getSelect()) {
                         intent.putExtra("VehicleType", "true");
                     } else {
@@ -235,7 +236,7 @@ public class VehicleListAdapter extends RecyclerView.Adapter<VehicleListAdapter.
                     context.startActivity(intent);
 //                }
                 }else{
-                    Intent intent = new Intent(context, AddVehicleActivity.class);
+                    Intent intent = new Intent(context, NewAddVehicleActivity.class);
                     if (tripList.get(position).getSelect() != null && tripList.get(position).getSelect()) {
                         intent.putExtra("VehicleType", "true");
                     } else {

@@ -1445,7 +1445,7 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
     @OnClick(R.id.scan)
     void scanBarcode() {
         Intent intent = new Intent(this, BarcodeCaptureActivity.class);
-        intent.putExtra(BarcodeCaptureActivity.AutoFocus, true);
+
         intent.putExtra(BarcodeCaptureActivity.UseFlash, false);
         startActivityForResult(intent, RC_BARCODE_CAPTURE);
     }
@@ -1455,22 +1455,22 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
         if (requestCode == RC_BARCODE_CAPTURE) {
             if (resultCode == CommonStatusCodes.SUCCESS) {
                 if (data != null) {
-                    Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
+                    String barcode = data.getStringExtra(BarcodeCaptureActivity.BarcodeObject);
 //                    statusMessage.setText(R.string.barcode_success);
 //                    barcodeValue.setText(barcode.displayValue);
 //                    String vinNo1 = barcode.rawValue.substring(barcode.rawValue.length() - 17);
 
-                    if(!new Util().isValidVin(""+barcode.rawValue)) {
+                    if(!new Util().isValidVin(""+barcode)) {
                         MDToast mdToast = MDToast.makeText(this, "Invalid Vin #", MDToast.LENGTH_LONG, MDToast.TYPE_ERROR);
                         mdToast.show();
                         vinNo.setText("");
                         return;
                     }
 
-                    if (barcode.rawValue.length() > 17)
-                        vinNo.setText(barcode.rawValue.substring(barcode.rawValue.length() - 17));
+                    if (barcode.length() > 17)
+                        vinNo.setText(barcode.substring(barcode.length() - 17));
                     else
-                        vinNo.setText(barcode.rawValue);
+                        vinNo.setText(barcode);
 //                    getVehicleDetail(barcode.rawValue);
                     try {
                         getVehicleDetail(vinNo.getText().toString());
@@ -1478,7 +1478,7 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
                         e.printStackTrace();
                         new Util().sendSMTPMail(AddVehicleActivity.this,null,"CxE004",e,"");
                     }
-                    Log.d("", "Barcode read: " + barcode.rawValue);
+                    Log.d("", "Barcode read: " + barcode);
                 }
             }
         } else if (requestCode == CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE) {

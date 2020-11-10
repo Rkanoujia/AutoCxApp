@@ -118,7 +118,7 @@ public class Util {
         Calendar calendar = Calendar.getInstance();
 
         long time = System.currentTimeMillis();
-        calendar.setTimeInMillis(getUtcTime(time));
+        calendar.setTimeInMillis(time);
 
         Locale loc = new Locale("en", "US");
 
@@ -138,7 +138,7 @@ public class Util {
 
         Locale loc = new Locale("en", "US");
         long time = System.currentTimeMillis();
-        calendar.setTimeInMillis(getUtcTime(time));
+        calendar.setTimeInMillis(time);
 
         Log.e("UTC date ",""+calendar.getTime());
 
@@ -185,7 +185,7 @@ public class Util {
         Locale loc = new Locale("en", "US");
 
         long time = System.currentTimeMillis();
-        calendar.setTimeInMillis(getUtcTime(time));
+        calendar.setTimeInMillis(time);
 
         //DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.FULL, loc);
 
@@ -203,13 +203,41 @@ public class Util {
     public  String getUtcToCurrentTime(String time) {
         try {
             if(time!=null && !time.equalsIgnoreCase("")) {
+//            SimpleDateFormat dateFormatter,dateFormatter1;
+//            //create a new Date object using the UTC timezone
+//            Log.e("", "Input utc date:" + time);
+////                dateFormatter = new SimpleDateFormat("MM/dd/yyyy hh:mm aa");
+//
+//            dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//            dateFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+//            Date utcDate = null;
+//            try {
+//                utcDate = dateFormatter.parse(time);
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
+//            //Convert the UTC date to Local timezone
+//            dateFormatter1 = new SimpleDateFormat("MM/dd/yyyy hh:mm aa", Locale.US);
+//            dateFormatter1.setTimeZone(TimeZone.getDefault());
+//            String formattedDate = dateFormatter1.format(utcDate);
+                return time;
+            }else
+                return "";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return time;
+        }
+    }
+    public  String getUtcToCurrentDateOnly(String time) {
+        try {
+            if(time!=null && !time.equalsIgnoreCase("")) {
                 SimpleDateFormat dateFormatter,dateFormatter1;
                 //create a new Date object using the UTC timezone
                 Log.e("", "Input utc date:" + time);
 
 //                dateFormatter = new SimpleDateFormat("MM/dd/yyyy hh:mm aa");
-                dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss",Locale.US);
-                dateFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+                dateFormatter = new SimpleDateFormat("MM/dd/yyyy hh:mm aa",Locale.US);
+//                dateFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
                 Date utcDate = null;
                 try {
                     utcDate = dateFormatter.parse(time);
@@ -217,12 +245,12 @@ public class Util {
                     e.printStackTrace();
                 }
                 //Convert the UTC date to Local timezone
-                dateFormatter1 = new SimpleDateFormat("MM/dd/yyyy hh:mm aa", Locale.US);
-                dateFormatter1.setTimeZone(TimeZone.getDefault());
+                dateFormatter1 = new SimpleDateFormat("MM/dd/yyyy ", Locale.US);
+//                dateFormatter1.setTimeZone(TimeZone.getDefault());
                 String formattedDate = dateFormatter1.format(utcDate);
                 return formattedDate;
             }else
-                return "00/00/0000 00:00:00";
+                return "";
         } catch (Exception e) {
             e.printStackTrace();
             return time;
@@ -243,7 +271,7 @@ public class Util {
         }
 //        long time = System.currentTimeMillis();
 
-        calendar.setTimeInMillis(getUtcTime(time));
+        calendar.setTimeInMillis(time);
 
         //DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.FULL, loc);
 
@@ -315,6 +343,29 @@ public class Util {
 
 
     }
+    public final boolean isValidName(String text1) {
+
+        String expression = "^[A-Za-z0-9'\\/_\\-()\\s]{0,100}$";
+        Pattern pattern = Pattern.compile(expression);
+        Matcher matcher = pattern.matcher(text1);
+        return matcher.matches();
+    }
+    public final boolean isValidAdde(String text1) {
+
+        String expression = "^[a-zA-Z0-9'\\/_\\-,.#&()\\s]{0,250}$";
+        Pattern pattern = Pattern.compile(expression);
+        Matcher matcher = pattern.matcher(text1);
+        return matcher.matches();
+    }
+
+    public final boolean isValidCity(String text1) {
+
+        String expression = "[a-zA-Z ]+";
+        Pattern pattern = Pattern.compile(expression);
+        Matcher matcher = pattern.matcher(text1);
+        return matcher.matches();
+    }
+
     public final boolean isValidVin(String text1) {
 
         String expression = "^[a-zA-Z0-9]*$";
