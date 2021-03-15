@@ -106,6 +106,11 @@ public class AfmOrderFragment extends Fragment {
 
     }
     @OnClick(R.id.add_trip) void onFabClick() {
+        if(!new Util().isNetworkAvailable(getActivity())) {
+            MDToast mdToast = MDToast.makeText(getActivity(), "Check Your Internet connection", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
+            mdToast.show();
+            return;
+        }
         mBottomSheetLayout.expandFab();
     }
     void recyclerView(){
@@ -118,6 +123,7 @@ public class AfmOrderFragment extends Fragment {
 
     @OnClick(R.id.all_li)
     void alafilter(){
+
         mBottomSheetLayout.contractFab();
         filterString="";
         allIcon.setVisibility(View.VISIBLE);
@@ -179,7 +185,7 @@ public class AfmOrderFragment extends Fragment {
     @OnClick(R.id.canceled_li)
     void canceledfilter(){
         mBottomSheetLayout.contractFab();
-        filterString="Canceled";
+        filterString="Cancelled";
         allIcon.setVisibility(View.INVISIBLE);
         dispatchIcon.setVisibility(View.INVISIBLE);
         confirmIcon.setVisibility(View.INVISIBLE);

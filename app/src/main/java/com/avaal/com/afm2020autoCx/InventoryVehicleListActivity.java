@@ -1,5 +1,6 @@
 package com.avaal.com.afm2020autoCx;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -40,6 +41,7 @@ import java.util.Locale;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -168,16 +170,28 @@ public class InventoryVehicleListActivity extends AppCompatActivity {
 //                ship_load.setEnabled(false);
 //            }
 //        }
-
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            ActivityCompat.requestPermissions(InventoryVehicleListActivity.this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION,
+                            Manifest.permission.CAMERA}, 1);
+        }
 
     }
     @OnClick(R.id.add_vehicle)
     void addNewVehicle(){
-        showAnimation();
-        prf.saveStringData("OrderId", " ");
-        Util util=new Util();
-        if(util.isNetworkAvailable(this)) {
+        if(!new Util().isNetworkAvailable(this)) {
+            MDToast mdToast = MDToast.makeText(InventoryVehicleListActivity.this, "Check Your Internet connection", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
+            mdToast.show();
+            return;
+        }
+
             try {
+
+                showAnimation();
+                prf.saveStringData("OrderId", " ");
 //                Intent i=new Intent(InventoryVehicleListActivity.this,AddVehicleActivity.class);
 //                i.putExtra("VehicleId","0");
 //                //                    prf.saveStringData("VehicleType","true");
@@ -189,7 +203,7 @@ public class InventoryVehicleListActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+
 
     }
     @OnClick(R.id.home_)
@@ -660,7 +674,11 @@ public class InventoryVehicleListActivity extends AppCompatActivity {
             holder.delete_.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    if(!new Util().isNetworkAvailable(InventoryVehicleListActivity.this)) {
+                        MDToast mdToast = MDToast.makeText(InventoryVehicleListActivity.this, "Check Your Internet connection", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
+                        mdToast.show();
+                        return;
+                    }
                     Dialog dialog = new Dialog(InventoryVehicleListActivity.this);
                     dialog.setContentView(R.layout.custome_alert_dialog);
                     dialog.setCancelable(false);
@@ -747,7 +765,7 @@ public class InventoryVehicleListActivity extends AppCompatActivity {
                     Intent intent=new Intent(InventoryVehicleListActivity.this,NewMapsActivity.class);
 //                    intent.putExtra("lati", location.getLatitude());
 //                    intent.putExtra("longi", location.getLongitude());
-                    Log.e("lat",""+tripList.get(position).Latitude);
+                        Log.e("lat",""+tripList.get(position).Latitude);
                         intent.putExtra("lati", tripList.get(position).Latitude);
                         intent.putExtra("longi", tripList.get(position).Longitude);
                         intent.putExtra("Isupdate","yes");

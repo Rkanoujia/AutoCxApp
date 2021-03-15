@@ -110,30 +110,44 @@ public class ChangePassword extends AppCompatActivity {
 
         @OnClick(R.id.login)
     void cahngePswrd(){
-
+            if(paswrd_old.getText().toString().trim().length()==0){
+                MDToast mdToast = MDToast.makeText(ChangePassword.this, "Please Enter Current Password ", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
+                mdToast.show();
+                return;
+            }
         if(!paswrd_old.getText().toString().equalsIgnoreCase(prf.getStringData("password"))){
-            MDToast mdToast = MDToast.makeText(ChangePassword.this, "Current Password Not Match", MDToast.LENGTH_LONG, MDToast.TYPE_ERROR);
+            MDToast mdToast = MDToast.makeText(ChangePassword.this, "Current Password Not Match", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
             mdToast.show();
             return;
         }
-            if(paswrd_new.getText().toString().trim().equalsIgnoreCase("")){
-                MDToast mdToast = MDToast.makeText(ChangePassword.this, "Please Enter New Password", MDToast.LENGTH_LONG, MDToast.TYPE_ERROR);
+            if(paswrd_new.getText().toString().trim().length()==0){
+                MDToast mdToast = MDToast.makeText(ChangePassword.this, "Please Enter New Password", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
+                mdToast.show();
+                return;
+            }
+            if(paswrd_confirm.getText().toString().trim().length()==0){
+                MDToast mdToast = MDToast.makeText(ChangePassword.this, "Please Enter Confirm Password ", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
                 mdToast.show();
                 return;
             }
         if(!paswrd_new.getText().toString().equalsIgnoreCase(paswrd_confirm.getText().toString()))
         {
-            MDToast mdToast = MDToast.makeText(ChangePassword.this, "Confirm Password Not Match", MDToast.LENGTH_LONG, MDToast.TYPE_ERROR);
+            MDToast mdToast = MDToast.makeText(ChangePassword.this, "Confirm Password Not Match", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
             mdToast.show();
             return;
         }
         if(prf.getStringData("password").equalsIgnoreCase(paswrd_confirm.getText().toString())){
-            MDToast mdToast = MDToast.makeText(ChangePassword.this, "Password should not match with last password.", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
+            MDToast mdToast = MDToast.makeText(ChangePassword.this, "New Password should not match with last password.", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
             mdToast.show();
             return;
         }
+            if(!new Util().isNetworkAvailable(this)){
+                MDToast mdToast = MDToast.makeText(ChangePassword.this, "Please Check your Internet connection", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
+                mdToast.show();
+                return;
+            }
 
-showAnimation();
+             showAnimation();
 //        Call<SaveImageModel> call1 = apiInterface.updateProfile(vehicleIds, fileNames,authKey1,content,docTypess,exten,size1,remarks, body);
         Call<ChangePasswordModel> call1 = apiInterface.changePassword(""+prf.getStringData("userName"),""+prf.getStringData("password"),""+paswrd_confirm.getText(),"PRI",""+prf.getStringData("corporateId"),"bearer "+prf.getStringData("accessToken"),"application/x-www-form-urlencoded");
         call1.enqueue(new Callback<ChangePasswordModel>() {

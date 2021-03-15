@@ -31,6 +31,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,6 +53,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import androidx.appcompat.app.AppCompatActivity;
+import extra.LoaderScreen;
 
 public class CameraDemoActivity extends AppCompatActivity implements PictureCallback,Callback,
         OnClickListener {
@@ -73,7 +75,11 @@ public class CameraDemoActivity extends AppCompatActivity implements PictureCall
     HashMap<Integer, String> imageList;
     int keyValue;
     boolean editMode=false;
-    int imagekey=700188;
+    int imagekey=2131230845;
+    boolean isLoaded = false;
+    private FrameLayout mainlayout;
+    private LoaderScreen loaderScreen;
+    private View loaderView;
 
     HashMap<Integer,String> fixName;
     ArrayList<String> returnValue = new ArrayList<>();
@@ -144,13 +150,13 @@ public class CameraDemoActivity extends AppCompatActivity implements PictureCall
                 return;
             }
         }
-      if(editMode){
-          imagekey=imagekey+imageList.size();
-          keyValue = imagekey;
-      }else {
-          imagekey=imagekey+imageList.size();
-          keyValue = imagekey;
-      }
+        if(editMode){
+            imagekey=imagekey+imageList.size();
+            keyValue = imagekey;
+        }else {
+            imagekey=imagekey+imageList.size();
+            keyValue = imagekey;
+        }
         text.setVisibility(View.INVISIBLE);
         image.setVisibility(View.INVISIBLE);
 
@@ -315,11 +321,16 @@ public class CameraDemoActivity extends AppCompatActivity implements PictureCall
 
     private void releaseCamera() {
         try {
+
             if (camera != null) {
+//                Parameters param = camera.getParameters();
+//                param.setFlashMode(Parameters.FLASH_MODE_OFF);
+//                camera.setParameters(param);
                 camera.setPreviewCallback(null);
                 camera.setErrorCallback(null);
                 camera.stopPreview();
                 camera.release();
+                mCameraData = null;
                 camera = null;
             }
         } catch (Exception e) {
@@ -359,6 +370,7 @@ public class CameraDemoActivity extends AppCompatActivity implements PictureCall
     }
 
     private void takeImage() {
+        showAnimation();
         captureImage();
 
 
@@ -498,7 +510,7 @@ public class CameraDemoActivity extends AppCompatActivity implements PictureCall
         String timeStamp =
                 new SimpleDateFormat("yyyyMMdd_HHmmss",
                         Locale.getDefault()).format(new Date());
-        String imageFileName = "image_"+timeStamp;
+        String imageFileName = "image_" + timeStamp;
         File storageDir =
                 getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = null;
@@ -508,17 +520,24 @@ public class CameraDemoActivity extends AppCompatActivity implements PictureCall
                     ".jpg",         /* suffix */
                     storageDir      /* directory */
             );
-        } catch (IOException e) {
+        } catch (OutOfMemoryError e) {
+
+            Toast.makeText(CameraDemoActivity.this, "No Enough Memory",
+                    Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        } catch
+        (IOException e) {
             e.printStackTrace();
         }
         return new File(image.getAbsolutePath());
     }
+
     private File saveImageToFile(File file) {
         if (bitmap != null) {
             FileOutputStream outStream = null;
             try {
                 outStream = new FileOutputStream(file);
-                if (!bitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream)) {
+                if (!bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outStream)) {
                     Toast.makeText(CameraDemoActivity.this, "Unable to save image to file.",
                             Toast.LENGTH_LONG).show();
                 } else {
@@ -528,20 +547,25 @@ public class CameraDemoActivity extends AppCompatActivity implements PictureCall
                 }
                 outStream.close();
 
+            } catch (OutOfMemoryError e) {
+
+                Toast.makeText(CameraDemoActivity.this, "No Enough Memory",
+                        Toast.LENGTH_LONG).show();
+                e.printStackTrace();
             } catch (Exception e) {
 
                 Toast.makeText(CameraDemoActivity.this, "Unable to save image to file.",
                         Toast.LENGTH_LONG).show();
             }
             return file;
-        }else
+        } else
             return null;
     }
 
     @Override
     public void onPictureTaken(byte[] data, Camera camera) {
         mCameraData = data;
-        openCamera(CameraInfo.CAMERA_FACING_BACK);
+//        openCamera(CameraInfo.CAMERA_FACING_BACK);
 //        Glide.with(CameraDemoActivity.this).load(R.drawable.car_a).into(image);
         setupImageDisplay();
 
@@ -565,35 +589,35 @@ public class CameraDemoActivity extends AppCompatActivity implements PictureCall
 //                rotateMatrix, false);
 //        ExifInterface exif = new ExifInterface(imageFilePath);
 //        int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
-        bitmap = getScaledBitmap(bitmap, 800, 1000);
+//        bitmap = getScaledBitmap(bitmap, 800, 1000);
 //        Bitmap rotatedBitmap = rotateBitmap(bitmap, orientation);
         if (mCameraData != null) {
 
-            File file=saveImageToFile(openFileForImage()).getAbsoluteFile();
-            imageList.put(keyValue,""+file);
+            File file = saveImageToFile(openFileForImage()).getAbsoluteFile();
+            imageList.put(keyValue, "" + file);
 
-            Log.e("cameradata","1");
+            Log.e("cameradata", "1");
 
             Intent intent = new Intent();
-            intent.putExtra("File",""+file.getPath());
-            intent.putExtra("images",  imageList);
+            intent.putExtra("File", "" + file.getPath());
+            intent.putExtra("images", imageList);
+            releaseCamera();
 //                intent.putExtra(EXTRA_CAMERA_DATA, mCameraData);
             setResult(RESULT_OK, intent);
-//            finish();
+            mCameraData = null;
+            finish();
 //            if(editMode)
 //                finish();
 //            else
 //                imagemsg();
 
 
-
 //            openCamera(CameraInfo.CAMERA_FACING_BACK);
 //            Glide.with(CameraDemoActivity.this).load(R.drawable.front).into(image);
         } else {
-            Log.e("cameradata","0");
+            Log.e("cameradata", "0");
             setResult(RESULT_CANCELED);
         }
-        finish();
 
     }
 
@@ -643,6 +667,36 @@ public class CameraDemoActivity extends AppCompatActivity implements PictureCall
         } catch (OutOfMemoryError e) {
             e.printStackTrace();
             return null;
+        }
+    }
+    private void showAnimation() {
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT);
+        mainlayout = (FrameLayout) findViewById(R.id.main_fram);
+        if (mainlayout != null && loaderScreen == null) {
+            loaderScreen = new LoaderScreen(this);
+            loaderView = loaderScreen.getView();
+            loaderScreen.showBackground(getApplicationContext(), true);
+            mainlayout.addView(loaderView, layoutParams);
+
+            if (!isLoaded) {
+                if (loaderView != null && loaderScreen != null) {
+                    loaderView.setVisibility(View.VISIBLE);
+                    loaderScreen.startAnimating();
+                }
+            }
+        }
+    }
+
+    private void hideAnimation() {
+        if (loaderView != null) {
+            loaderView.setVisibility(View.GONE);
+            mainlayout.removeView(loaderView);
+        }
+        if (loaderScreen != null) {
+            loaderScreen.stopAnimation();
+            loaderScreen = null;
         }
     }
 }

@@ -72,6 +72,11 @@ public class ReceiptListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if(!new Util().isNetworkAvailable(ReceiptListActivity.this)) {
+            MDToast mdToast = MDToast.makeText(ReceiptListActivity.this, "Check Your Internet connection", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
+            mdToast.show();
+            return;
+        }
         pageNo=1;
         getdata3.clear();
         adapterd.notifyDataSetChanged();
@@ -150,7 +155,7 @@ public class ReceiptListActivity extends AppCompatActivity {
 
     void getAFMReceiptList(int pageno){
 //        GetVehicleIdListModel vindetail1=new GetVehicleIdListModel(prf.getStringData("authKey"),orderid,vihicle,prf.getStringData("carrierPrimaryId"));
-        Call<ReceiptListModel> call1 = apiInterface.getReceiptList("","10",""+pageno,"","",""+ prf.getStringData("userCode"),""+ prf.getStringData("corporateId"),"bearer "+ prf.getStringData("accessToken"),"application/json");
+        Call<ReceiptListModel> call1 = apiInterface.getReceiptList("","100",""+pageno,"","",""+ prf.getStringData("userCode"),""+ prf.getStringData("corporateId"),"bearer "+ prf.getStringData("accessToken"),"application/json");
         call1.enqueue(new Callback<ReceiptListModel>() {
             @Override
             public void onResponse(Call<ReceiptListModel> call, Response<ReceiptListModel> response) {

@@ -86,6 +86,7 @@ public class CreateTripType extends AppCompatActivity {
                 j.putExtra("from", "CA");
                 j.putExtra("to", "CA");
                 j.putExtra("Id", "0");
+        j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
                 startActivity(j);
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 //                finish();
@@ -109,6 +110,7 @@ public class CreateTripType extends AppCompatActivity {
                 j.putExtra("from", "CA");
                 j.putExtra("to", "US");
         j.putExtra("Id", "0");
+        j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
                 startActivity(j);
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
@@ -143,6 +145,7 @@ public class CreateTripType extends AppCompatActivity {
                 j.putExtra("from", "US");
                 j.putExtra("to", "CA");
                 j.putExtra("Id", "0");
+        j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
                 startActivity(j);
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
@@ -177,6 +180,7 @@ public class CreateTripType extends AppCompatActivity {
                 j.putExtra("from", "US");
                 j.putExtra("to", "US");
                 j.putExtra("Id", "0");
+        j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
                 startActivity(j);
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 

@@ -34,14 +34,11 @@
             android:layout_width="138dp"
             android:layout_height="59dp" />
     </LinearLayout>
-
-
                     <RelativeLayout
                         android:layout_weight=".6"
                         android:layout_gravity="center"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
-
 
 
                         <RelativeLayout
@@ -149,11 +146,11 @@
                                     android:layout_height="wrap_content">
 
                                     <ImageView
-                                        android:tint="@color/colorPrimary"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:padding="5dp"
-                                        android:src="@mipmap/coorporate" />
+                                        android:src="@mipmap/coorporate"
+                                        app:tint="@color/colorPrimary" />
 
                                     <View
                                         android:visibility="invisible"
@@ -197,8 +194,8 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:padding="5dp"
-                                        android:tint="@color/colorPrimary"
-                                        android:src="@drawable/ic_action_username" />
+                                        android:src="@drawable/ic_action_username"
+                                        app:tint="@color/colorPrimary" />
 
                                     <View
                                         android:visibility="invisible"
@@ -208,7 +205,6 @@
                                         android:background="@android:color/white" />
 
                                     <EditText
-
                                         android:id="@+id/user_name"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
@@ -240,11 +236,11 @@
                                     android:layout_height="wrap_content">
 
                                     <ImageView
-                                        android:tint="@color/colorPrimary"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:padding="5dp"
-                                        android:src="@drawable/ic_action_password" />
+                                        android:src="@drawable/ic_action_password"
+                                        app:tint="@color/colorPrimary" />
 
                                     <View
                                         android:visibility="invisible"

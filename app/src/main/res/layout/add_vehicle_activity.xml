@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -142,6 +143,7 @@
                 android:background="@null"
                 android:elevation="1dp"
                 android:paddingStart="10dp"
+                android:imeOptions="actionNext"
                 android:lines="1"
                 android:inputType="text"
                 />
@@ -356,9 +358,9 @@
                         android:id="@+id/oem_tag_txt_img_view"
                         android:layout_gravity="end|center"
                         android:src="@drawable/ic_action_eye"
-                        android:tint="@android:color/black"
                         android:layout_width="25dp"
-                        android:layout_height="25dp" />
+                        android:layout_height="25dp"
+                        app:tint="@android:color/black" />
                     <ImageView
                         android:layout_marginRight="3dp"
                         android:id="@+id/oem_tag_txt_img"
@@ -435,9 +437,9 @@
                     android:id="@+id/title_txt_img_view"
                     android:layout_gravity="end|center"
                     android:src="@drawable/ic_action_eye"
-                    android:tint="@android:color/black"
                     android:layout_width="25dp"
-                    android:layout_height="25dp" />
+                    android:layout_height="25dp"
+                    app:tint="@android:color/black" />
                         <ImageView
                             android:layout_marginRight="5dp"
                             android:id="@+id/title_txt_img"
@@ -471,9 +473,9 @@
                             android:id="@+id/title_txt_img_view1"
                             android:layout_gravity="end|center"
                             android:src="@drawable/ic_action_eye"
-                            android:tint="@android:color/black"
                             android:layout_width="25dp"
-                            android:layout_height="25dp" />
+                            android:layout_height="25dp"
+                            app:tint="@android:color/black" />
                             <ImageView
                                 android:layout_marginRight="5dp"
                                 android:id="@+id/title_txt_img1"
@@ -534,9 +536,9 @@
                 android:id="@+id/bill_txt_img_view"
                 android:layout_gravity="end|center"
                 android:src="@drawable/ic_action_eye"
-                android:tint="@android:color/black"
                 android:layout_width="25dp"
-                android:layout_height="25dp" />
+                android:layout_height="25dp"
+                app:tint="@android:color/black" />
                 <ImageView
                     android:layout_marginRight="3dp"
                     android:id="@+id/bill_txt_img"
@@ -597,9 +599,9 @@
                     android:id="@+id/tracking_txt_img_view"
                     android:layout_gravity="end|center"
                     android:src="@drawable/ic_action_eye"
-                    android:tint="@android:color/black"
                     android:layout_width="25dp"
-                    android:layout_height="25dp" />
+                    android:layout_height="25dp"
+                    app:tint="@android:color/black" />
                     <ImageView
                         android:layout_marginRight="3dp"
                         android:id="@+id/tracking_txt_img"
@@ -865,9 +867,9 @@
                     android:id="@+id/millage_txt_img_view"
                     android:layout_gravity="end|center"
                     android:src="@drawable/ic_action_eye"
-                    android:tint="@android:color/black"
                     android:layout_width="25dp"
-                    android:layout_height="25dp" />
+                    android:layout_height="25dp"
+                    app:tint="@android:color/black" />
                     <ImageView
                         android:layout_marginRight="3dp"
                         android:id="@+id/millage_txt_img"
@@ -927,9 +929,9 @@
                     android:id="@+id/tpms_txt_img_view"
                     android:layout_gravity="end|center"
                     android:src="@drawable/ic_action_eye"
-                    android:tint="@android:color/black"
                     android:layout_width="25dp"
-                    android:layout_height="25dp" />
+                    android:layout_height="25dp"
+                    app:tint="@android:color/black" />
                     <ImageView
                         android:layout_marginRight="3dp"
                         android:id="@+id/tpms_txt_img"
@@ -1101,9 +1103,9 @@
                         android:id="@+id/release_form_txt_img_view"
                         android:layout_gravity="end|center"
                         android:src="@drawable/ic_action_eye"
-                        android:tint="@android:color/black"
                         android:layout_width="25dp"
-                        android:layout_height="25dp" />
+                        android:layout_height="25dp"
+                        app:tint="@android:color/black" />
                     <ImageView
                         android:layout_marginRight="3dp"
                         android:id="@+id/release_form_txt_img"
@@ -1151,9 +1153,9 @@
                         android:id="@+id/title_conv_txt_img_view"
                         android:layout_gravity="end|center"
                         android:src="@drawable/ic_action_eye"
-                        android:tint="@android:color/black"
                         android:layout_width="25dp"
-                        android:layout_height="25dp" />
+                        android:layout_height="25dp"
+                        app:tint="@android:color/black" />
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
@@ -1188,9 +1190,9 @@
                         android:id="@+id/title_conv_txt_img_view1"
                         android:layout_gravity="end|center"
                         android:src="@drawable/ic_action_eye"
-                        android:tint="@android:color/black"
                         android:layout_width="25dp"
-                        android:layout_height="25dp" />
+                        android:layout_height="25dp"
+                        app:tint="@android:color/black" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -1230,9 +1232,9 @@
                         android:id="@+id/recall1_txt_img_view"
                         android:layout_gravity="end|center"
                         android:src="@drawable/ic_action_eye"
-                        android:tint="@android:color/black"
                         android:layout_width="25dp"
-                        android:layout_height="25dp" />
+                        android:layout_height="25dp"
+                        app:tint="@android:color/black" />
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
@@ -1267,9 +1269,9 @@
                         android:id="@+id/recall2_txt_img_view1"
                         android:layout_gravity="end|center"
                         android:src="@drawable/ic_action_eye"
-                        android:tint="@android:color/black"
                         android:layout_width="25dp"
-                        android:layout_height="25dp" />
+                        android:layout_height="25dp"
+                        app:tint="@android:color/black" />
                 </LinearLayout>
             </LinearLayout>
 

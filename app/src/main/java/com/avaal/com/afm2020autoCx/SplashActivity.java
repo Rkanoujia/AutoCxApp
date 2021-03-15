@@ -24,10 +24,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.avaal.com.afm2020autoCx.fingerprint.FingerprintActivity;
 import com.avaal.com.afm2020autoCx.models.LoginModel;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
@@ -54,7 +54,7 @@ public class SplashActivity extends AppCompatActivity {
     PreferenceManager prf;
     APIInterface apiInterface;
     boolean isLoaded = false;
-    String token;
+    String token="dfdgfdgb";
     private static int CODE_AUTHENTICATION_VERIFICATION = 241;
 
     @Override
@@ -71,6 +71,8 @@ public class SplashActivity extends AppCompatActivity {
         final String androidDeviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         apiInterface = APIClient.getClient().create(APIInterface.class);
+        FirebaseApp.initializeApp(this);
+        token = FirebaseInstanceId.getInstance().getToken();
         PackageInfo packageInfo = null;
         try {
             packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
@@ -103,7 +105,7 @@ public class SplashActivity extends AppCompatActivity {
 
             }
         });
-        token = FirebaseInstanceId.getInstance().getToken();
+
 //        new Handler().postDelayed(new Runnable() {
 //
 //                @Override
@@ -219,7 +221,7 @@ public class SplashActivity extends AppCompatActivity {
         showAnimation();
 
 
-        Call<LoginModel> call1 = apiInterface.userLogin(prf.getStringData("corporateId")+"~"+prf.getStringData("userName")+"~regular~"+FirebaseInstanceId.getInstance().getToken()+"~PRI~Android~"+Build.BRAND+" "+Build.MODEL+"~"+Build.VERSION.RELEASE,prf.getStringData("password"),"password","application/json");
+        Call<LoginModel> call1 = apiInterface.userLogin(prf.getStringData("corporateId")+"~"+prf.getStringData("userName")+"~regular~"+token+"~PRI~Android~"+Build.BRAND+" "+Build.MODEL+"~"+Build.VERSION.RELEASE,prf.getStringData("password"),"password","application/json");
         call1.enqueue(new Callback<LoginModel>() {
             @Override
             public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {

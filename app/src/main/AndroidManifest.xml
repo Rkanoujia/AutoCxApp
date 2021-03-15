@@ -17,18 +17,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.FLASHLIGHT"/>
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="true" />
-    <uses-feature android:name="android.hardware.camera.autofocus" />
-
-    <!--
-         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
-         Google Maps Android API v2, but you must specify either coarse or fine
-         location permissions for the 'MyLocation' functionality. 
-    -->
-    <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> -->
     <application
+        android:requestLegacyExternalStorage="true"
         android:allowBackup="true"
         android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
@@ -40,17 +30,11 @@
         android:usesCleartextTraffic="true"
        >
         <uses-library android:name="org.apache.http.legacy" android:required="false" />
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.avaal.com.afm2020autoCx.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true"
-            tools:replace="android:authorities">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/filepath"
-                tools:replace="android:resource" />
-        </provider>
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -64,7 +48,9 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name="extra.GPSTrackerService" />
+        <activity android:name=".DamageActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <service android:name="extra.GetOtherInformationService" />
         <!--
              Set color used with incoming notification messages. This is used when no color is set for the incoming
@@ -96,10 +82,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".cuscamera.CameraDemoActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateVisible|adjustResize" />
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".CreateTripType"
             android:screenOrientation="portrait"
@@ -169,7 +154,7 @@
              Note that the API key is linked to the encryption key used to sign the APK.
              You need a different API key for each encryption key, including the release key that is used to
              sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -213,11 +198,21 @@
         <activity android:name=".ReceiptListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".DamageActivity"
-            android:screenOrientation="landscape"/>
-        <activity
-            android:name=".cuscamera.CameraDemoActivity"
-            android:screenOrientation="portrait" />
+        <activity android:name=".ImageViewActivity" />
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.avaal.com.afm2020autoCx.fileprovider"
+            android:enabled="true"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepath"
+                tools:replace="android:resource" />
+        </provider>
+        <service android:name="extra.GPSTrackerService"
+            tools:ignore="Instantiatable" />
         <!--        <activity android:name=".NewAddVehicleActivity" />-->
 
         <!-- <activity android:name=".camera.CameraDemoActivity" /> -->
@@ -227,9 +222,27 @@
              Note that the API key is linked to the encryption key used to sign the APK.
              You need a different API key for each encryption key, including the release key that is used to
              sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
 
     </application>
+    <!--    <uses-permission android:name="android.permission.CALL_PHONE"-->
+    <!--        android:required="false"/>-->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-permission android:name="com.samsung.android.providers.context.permission.WRITE_USE_APP_FEATURE_SURVEY" />
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+<!--    <uses-feature android:name="android.hardware.camera.autofocus" />-->
+
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality. 
+    -->
+    <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
 </manifest>

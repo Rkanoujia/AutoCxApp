@@ -149,12 +149,17 @@ public class ForgetPassword extends AppCompatActivity {
     void forget(){
 
         if(userName.getText().toString().equalsIgnoreCase("")){
-            MDToast mdToast = MDToast.makeText(ForgetPassword.this, "Enter Username", MDToast.LENGTH_LONG, MDToast.TYPE_ERROR);
+            MDToast mdToast = MDToast.makeText(ForgetPassword.this, "Enter Username", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
             mdToast.show();
             return;
         }
         if(corporateId.getText().toString().equalsIgnoreCase("")){
-            MDToast mdToast = MDToast.makeText(ForgetPassword.this, "Enter CorporateId", MDToast.LENGTH_LONG, MDToast.TYPE_ERROR);
+            MDToast mdToast = MDToast.makeText(ForgetPassword.this, "Enter Corporate Id", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
+            mdToast.show();
+            return;
+        }
+        if(!new Util().isNetworkAvailable(this)) {
+            MDToast mdToast = MDToast.makeText(ForgetPassword.this, "Check Your Internet connection", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
             mdToast.show();
             return;
         }

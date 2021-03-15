@@ -4,7 +4,7 @@
         <!--path="Android/datacom.avaal.com.afm2020autoCx/files/Pictures" />-->
     <external-path
         name="external_files" path="." />
-    <files-path name="AFM/"/>
+    <files-path name="AFM" path="app_AFM/" />
     <cache-path
         name="my_cache"
         path="." />

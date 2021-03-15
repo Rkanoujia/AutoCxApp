@@ -27,6 +27,16 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/view_img"
+
+                        android:visibility="gone"
+                        app:tint="@android:color/black" />
+
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_weight="1"
@@ -66,9 +76,9 @@
                                     android:layout_marginEnd="10dp"
                                     android:layout_gravity="end"
                                     android:src="@drawable/view_img"
-                                    android:tint="@android:color/black"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="wrap_content"
+                                    app:tint="@android:color/black" />
                             </FrameLayout>
                             <FrameLayout
                                 android:layout_weight="1"
@@ -98,10 +108,10 @@
                                             android:background="@drawable/circle"
                                             android:src="@drawable/retake"
                                             android:layout_gravity="end"
-                                            android:tint="@android:color/white"
                                             android:id="@+id/front_left_imageview"
                                             android:layout_width="30dp"
-                                            android:layout_height="30dp" />
+                                            android:layout_height="30dp"
+                                            app:tint="@android:color/white" />
                                         <ImageView
                                             android:backgroundTint="@color/dark_gray"
                                             android:padding="5dp"
@@ -109,10 +119,10 @@
                                             android:src="@drawable/ic_camera"
                                             android:layout_marginStart="10dp"
                                             android:layout_gravity="end"
-                                            android:tint="@android:color/white"
                                             android:id="@+id/front_left_imageedit"
                                             android:layout_width="30dp"
-                                            android:layout_height="30dp" />
+                                            android:layout_height="30dp"
+                                            app:tint="@android:color/white" />
                                         <ImageView
                                             android:backgroundTint="@color/dark_gray"
                                             android:padding="5dp"
@@ -120,10 +130,10 @@
                                             android:src="@drawable/ic_delete"
                                             android:layout_marginStart="10dp"
                                             android:layout_gravity="end"
-                                            android:tint="@android:color/white"
                                             android:id="@+id/front_left_imagedelete"
                                             android:layout_width="30dp"
-                                            android:layout_height="30dp" />
+                                            android:layout_height="30dp"
+                                            app:tint="@android:color/white" />
 
                                     </LinearLayout>
                                 </FrameLayout>
@@ -134,7 +144,7 @@
                                     android:src="@drawable/car_a"
                                     android:scaleType="fitXY"
                                     android:layout_gravity="center_horizontal"
-                                    android:elevation="3dp"
+                                    android:elevation="10dp"
                                     android:minWidth="32dp"
                                     android:minHeight="32dp"
                                     android:id="@+id/front_left"
@@ -183,10 +193,10 @@
                                     android:layout_marginEnd="10dp"
                                     android:layout_gravity="end"
                                     android:src="@drawable/view_img"
-                                    android:tint="@android:color/black"
 
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="wrap_content"
+                                    app:tint="@android:color/black" />
                             </FrameLayout>
                             <FrameLayout
                                 android:layout_weight="1"
@@ -215,10 +225,10 @@
                                             android:background="@drawable/circle"
                                             android:src="@drawable/retake"
                                             android:layout_gravity="end"
-                                            android:tint="@android:color/white"
                                             android:id="@+id/front_right_imageview"
                                             android:layout_width="30dp"
-                                            android:layout_height="30dp" />
+                                            android:layout_height="30dp"
+                                            app:tint="@android:color/white" />
                                         <ImageView
                                             android:backgroundTint="@color/dark_gray"
                                             android:padding="5dp"
@@ -226,10 +236,10 @@
                                             android:src="@drawable/ic_camera"
                                             android:layout_marginStart="10dp"
                                             android:layout_gravity="end"
-                                            android:tint="@android:color/white"
                                             android:id="@+id/front_right_imageedit"
                                             android:layout_width="30dp"
-                                            android:layout_height="30dp" />
+                                            android:layout_height="30dp"
+                                            app:tint="@android:color/white" />
                                         <ImageView
                                             android:backgroundTint="@color/dark_gray"
                                             android:padding="5dp"
@@ -237,10 +247,10 @@
                                             android:src="@drawable/ic_delete"
                                             android:layout_marginStart="10dp"
                                             android:layout_gravity="end"
-                                            android:tint="@android:color/white"
                                             android:id="@+id/front_right_imagedelete"
                                             android:layout_width="30dp"
-                                            android:layout_height="30dp" />
+                                            android:layout_height="30dp"
+                                            app:tint="@android:color/white" />
 
                                     </LinearLayout>
                                 </FrameLayout>
@@ -325,10 +335,10 @@
                                             android:src="@drawable/retake"
 
                                             android:layout_gravity="end"
-                                            android:tint="@android:color/white"
                                             android:id="@+id/roof_imageview"
                                             android:layout_width="30dp"
-                                            android:layout_height="30dp" />
+                                            android:layout_height="30dp"
+                                            app:tint="@android:color/white" />
                                         <ImageView
                                             android:backgroundTint="@color/dark_gray"
                                             android:padding="5dp"
@@ -336,10 +346,10 @@
                                             android:src="@drawable/ic_camera"
                                             android:layout_marginStart="10dp"
                                             android:layout_gravity="end"
-                                            android:tint="@android:color/white"
                                             android:id="@+id/roof_imageedit"
                                             android:layout_width="30dp"
-                                            android:layout_height="30dp" />
+                                            android:layout_height="30dp"
+                                            app:tint="@android:color/white" />
                                         <ImageView
                                             android:backgroundTint="@color/dark_gray"
                                             android:padding="5dp"
@@ -347,10 +357,10 @@
                                             android:src="@drawable/ic_delete"
                                             android:layout_marginStart="10dp"
                                             android:layout_gravity="end"
-                                            android:tint="@android:color/white"
                                             android:id="@+id/roof_imagedelete"
                                             android:layout_width="30dp"
-                                            android:layout_height="30dp" />
+                                            android:layout_height="30dp"
+                                            app:tint="@android:color/white" />
 
                                     </LinearLayout>
                                 </FrameLayout>
@@ -373,16 +383,6 @@
 
                         </LinearLayout>
                     </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_marginEnd="10dp"
-                        android:src="@drawable/view_img"
-
-                        android:tint="@android:color/black"
-                        android:visibility="gone" />
 
                     <View
                         android:background="@color/lightgray"
@@ -429,9 +429,9 @@
                                     android:layout_marginEnd="10dp"
                                     android:layout_gravity="end"
 
-                                    android:tint="@android:color/black"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="wrap_content"
+                                    app:tint="@android:color/black" />
                             </FrameLayout>
 
                             <FrameLayout
@@ -462,10 +462,10 @@
                                             android:src="@drawable/retake"
 
                                             android:layout_gravity="end"
-                                            android:tint="@android:color/white"
                                             android:id="@+id/windshield_imageview"
                                             android:layout_width="30dp"
-                                            android:layout_height="30dp" />
+                                            android:layout_height="30dp"
+                                            app:tint="@android:color/white" />
                                         <ImageView
                                             android:backgroundTint="@color/dark_gray"
                                             android:padding="5dp"
@@ -473,10 +473,10 @@
                                             android:src="@drawable/ic_camera"
                                             android:layout_marginStart="10dp"
                                             android:layout_gravity="end"
-                                            android:tint="@android:color/white"
                                             android:id="@+id/windshield_imageedit"
                                             android:layout_width="30dp"
-                                            android:layout_height="30dp" />
+                                            android:layout_height="30dp"
+                                            app:tint="@android:color/white" />
                                         <ImageView
                                             android:backgroundTint="@color/dark_gray"
                                             android:padding="5dp"
@@ -484,10 +484,10 @@
                                             android:src="@drawable/ic_delete"
                                             android:layout_marginStart="10dp"
                                             android:layout_gravity="end"
-                                            android:tint="@android:color/white"
                                             android:id="@+id/windshield_imagedelete"
                                             android:layout_width="30dp"
-                                            android:layout_height="30dp" />
+                                            android:layout_height="30dp"
+                                            app:tint="@android:color/white" />
 
                                     </LinearLayout>
                                 </FrameLayout>
@@ -548,10 +548,9 @@
                                     android:layout_marginEnd="10dp"
                                     android:layout_gravity="end"
 
-                                    android:tint="@android:color/black"
-
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="wrap_content"
+                                    app:tint="@android:color/black" />
                             </FrameLayout>
                             <FrameLayout
                                 android:layout_weight="1"
@@ -581,10 +580,10 @@
                                             android:src="@drawable/retake"
 
                                             android:layout_gravity="end"
-                                            android:tint="@android:color/white"
                                             android:id="@+id/back_right_imageview"
                                             android:layout_width="30dp"
-                                            android:layout_height="30dp" />
+                                            android:layout_height="30dp"
+                                            app:tint="@android:color/white" />
                                         <ImageView
                                             android:backgroundTint="@color/dark_gray"
                                             android:padding="5dp"
@@ -592,10 +591,10 @@
                                             android:src="@drawable/ic_camera"
                                             android:layout_marginStart="10dp"
                                             android:layout_gravity="end"
-                                            android:tint="@android:color/white"
                                             android:id="@+id/back_right_imageedit"
                                             android:layout_width="30dp"
-                                            android:layout_height="30dp" />
+                                            android:layout_height="30dp"
+                                            app:tint="@android:color/white" />
                                         <ImageView
                                             android:backgroundTint="@color/dark_gray"
                                             android:padding="5dp"
@@ -603,10 +602,10 @@
                                             android:src="@drawable/ic_delete"
                                             android:layout_marginStart="10dp"
                                             android:layout_gravity="end"
-                                            android:tint="@android:color/white"
                                             android:id="@+id/back_right_imagedelete"
                                             android:layout_width="30dp"
-                                            android:layout_height="30dp" />
+                                            android:layout_height="30dp"
+                                            app:tint="@android:color/white" />
 
                                     </LinearLayout>
                                 </FrameLayout>
@@ -691,10 +690,10 @@
                                             android:src="@drawable/retake"
 
                                             android:layout_gravity="end"
-                                            android:tint="@android:color/white"
                                             android:id="@+id/back_left_imageview"
                                             android:layout_width="30dp"
-                                            android:layout_height="30dp" />
+                                            android:layout_height="30dp"
+                                            app:tint="@android:color/white" />
                                         <ImageView
                                             android:backgroundTint="@color/dark_gray"
                                             android:padding="5dp"
@@ -702,10 +701,10 @@
                                             android:src="@drawable/ic_camera"
                                             android:layout_marginStart="10dp"
                                             android:layout_gravity="end"
-                                            android:tint="@android:color/white"
                                             android:id="@+id/back_left_imageedit"
                                             android:layout_width="30dp"
-                                            android:layout_height="30dp" />
+                                            android:layout_height="30dp"
+                                            app:tint="@android:color/white" />
                                         <ImageView
                                             android:backgroundTint="@color/dark_gray"
                                             android:padding="5dp"
@@ -713,10 +712,10 @@
                                             android:src="@drawable/ic_delete"
                                             android:layout_marginStart="10dp"
                                             android:layout_gravity="end"
-                                            android:tint="@android:color/white"
                                             android:id="@+id/back_left_imagedelete"
                                             android:layout_width="30dp"
-                                            android:layout_height="30dp" />
+                                            android:layout_height="30dp"
+                                            app:tint="@android:color/white" />
 
                                     </LinearLayout>
                                 </FrameLayout>

@@ -10,388 +10,394 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <RelativeLayout
-            android:background="@color/black"
-            android:layout_alignParentRight="true"
-            android:id="@+id/camera_li"
-            android:layout_width="200dp"
-            android:layout_height="match_parent">
-
-            <RelativeLayout
-                android:layout_below="@+id/top"
-                android:orientation="vertical"
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <View
-                    android:visibility="gone"
-                    android:id="@+id/view2"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center_horizontal"
-                    android:rotation="-90"
-                    android:layout_alignParentTop="true"
-                    android:backgroundTint="@color/colorWhite"
-                    android:background="@drawable/next_arrow"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"/>
-                <ImageView
-                    android:visibility="gone"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/bg_car_image"
-                    android:layout_width="100dp"
-                    android:layout_height="80dp"/>
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/images"
-                    android:layout_below="@+id/view2"
-                    android:layout_above="@+id/view1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-                <View
-                     android:layout_centerHorizontal="true"
-                    android:id="@+id/view1"
-                    android:layout_alignParentBottom="true"
-                    android:layout_gravity="center_horizontal"
-                    android:rotation="90"
-                    android:backgroundTint="@color/colorWhite"
-                    android:background="@drawable/next_arrow"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"/>
-
-            </RelativeLayout>
-            <LinearLayout
-                android:id="@+id/top"
-
-                android:gravity="center_horizontal"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_margin="8dp"
-                        android:layout_gravity="center_horizontal"
-                        android:background="@drawable/cancel_img"
-                        android:id="@+id/cancel"
-                        android:layout_width="42dp"
-                        android:layout_height="42dp"/>
-                    <TextView
-                        android:layout_marginBottom="8dp"
-                        android:gravity="center"
-                        android:textSize="11dp"
-                        android:textColor="@color/colorWhite"
-                        android:text="CANCEL"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_margin="8dp"
-                        android:layout_gravity="center_horizontal"
-                        android:background="@drawable/next_img"
-                        android:id="@+id/imgCamera"
-                        android:layout_width="42dp"
-                        android:layout_height="42dp"/>
-                    <TextView
-                        android:layout_marginBottom="8dp"
-                        android:gravity="center"
-                        android:textSize="11dp"
-                        android:textColor="@color/colorWhite"
-                        android:text="NEXT"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-                <LinearLayout
-                     android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_margin="8dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/save_img"
-                    android:id="@+id/upload"
-                    android:layout_width="42dp"
-                    android:layout_height="42dp"/>
-                <TextView
-                    android:layout_marginBottom="8dp"
-                    android:gravity="center"
-                    android:textSize="11dp"
-                     android:textColor="@color/colorWhite"
-                    android:text="DONE"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-
-
-
-
-            </LinearLayout>
-
-
-        </RelativeLayout>
         <FrameLayout
             android:layout_toLeftOf="@+id/camera_li"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:elevation="2dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:elevation="2dp">
 
-        <LinearLayout
-            android:visibility="gone"
-            android:id="@+id/view"
-            android:layout_alignParentRight="true"
-            android:gravity="center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_marginEnd="10dp"
-                android:paddingEnd="12dp"
-                android:paddingStart="12dp"
-                android:background="@android:color/holo_orange_dark"
-                android:textColor="@android:color/black"
-                android:text="Hide/Show Damage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                app:srcCompat="@drawable/ic_remove_red_eye_black_24dp"
-                android:backgroundTint="@color/colorWhite"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-
-
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_alignParentBottom="true"
-            android:visibility="gone"
-            android:layout_alignParentRight="true"
-            android:id="@+id/menu_list"
-            android:layout_marginBottom="50dp"
-            app:srcCompat="@drawable/ic_more_horiz_black_24dp"
-            android:backgroundTint="@color/colorWhite"
-            android:layout_marginEnd="25dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:id="@+id/rootView"
-        android:padding="8dp"
-        android:background="@drawable/orange_li_border"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-
-
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_end="?attr/actionBarSize" />
-
-        <ja.burhanrashid52.photoeditor.PhotoEditorView
-            android:id="@+id/photoEditorView"
-            android:layout_width="0dp"
-            app:layout_constraintCircleRadius="3dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/bottom_rl"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
-        <LinearLayout
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/bottom_rl"
-            android:layout_centerVertical="true"
-            android:orientation="vertical"
-            android:gravity="center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:layout_alignParentBottom="true"
-                android:id="@+id/remove"
-                android:layout_alignParentRight="true"
-                app:srcCompat="@drawable/remove"
-                android:backgroundTint="@color/colorWhite"
-                android:layout_margin="5dp"
-                app:fabSize="mini"
-                android:layout_marginTop="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                app:srcCompat="@drawable/delete"
-                app:fabSize="mini"
-                android:id="@+id/delete_pic"
-                android:backgroundTint="@color/colorWhite"
-                android:layout_margin="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:layout_alignParentBottom="true"
-                android:id="@+id/retake"
-                app:fabSize="mini"
-                android:layout_alignParentRight="true"
-                app:srcCompat="@drawable/retake"
-                android:backgroundTint="@color/colorWhite"
-                android:layout_margin="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-        <!--<ImageView-->
-        <!--android:visibility="gone"-->
-        <!--android:id="@+id/imgCamera"-->
-        <!--android:layout_width="50dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginRight="24dp"-->
-        <!--android:background="#99000000"-->
-        <!--android:padding="8dp"-->
-        <!--android:src="@drawable/ic_camera"-->
-
-        <!--app:layout_constraintRight_toRightOf="parent"-->
-        <!--tools:layout_editor_absoluteY="16dp" />-->
-
-
-
-        <TextView
-            android:visibility="gone"
-            android:textColor="@color/colorWhite"
-            android:text="Confirm"
-            android:padding="5dp"
-            android:backgroundTint="#FFB562"
-            android:background="@drawable/round_linear"
-            android:elevation="2dp"
-            android:layout_gravity="center_vertical"
-            android:tint="@color/colorWhite"
-            app:layout_constraintBottom_toTopOf="@+id/bottom_rl"
-            android:id="@+id/imgSave"
-            android:layout_margin="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <RelativeLayout
-            android:id="@+id/bottom_rl"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:background="@color/black"
-                android:elevation="3dp"
-                android:gravity="center_vertical"
-                android:id="@+id/float_btn"
-                android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    app:srcCompat="@drawable/navi"
-                    android:visibility="gone"
-                    android:backgroundTint="@color/colorWhite"
-                    app:maxImageSize="52dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
                 <LinearLayout
+                    android:id="@+id/view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical"
+                    android:visibility="gone">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:background="@android:color/holo_orange_dark"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:text="Hide/Show Damage"
+                        android:textColor="@android:color/black" />
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:backgroundTint="@color/colorWhite"
+                        app:srcCompat="@drawable/ic_remove_red_eye_black_24dp"
+                        tools:ignore="VectorDrawableCompat" />
+
+                </LinearLayout>
+
+
+
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/menu_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginBottom="50dp"
+                    android:backgroundTint="@color/colorWhite"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_more_horiz_black_24dp"
+                    tools:ignore="VectorDrawableCompat" />
+            </RelativeLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/rootView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/orange_li_border"
+                android:padding="8dp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true"
-                    android:id="@+id/li_delete"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toTopOf="@+id/bottom_rl"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints">
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/remove"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="5dp"
+                        android:layout_marginTop="5dp"
+                        android:backgroundTint="@color/colorWhite"
+                        app:fabSize="mini"
+                        app:srcCompat="@drawable/remove" />
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/delete_pic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="5dp"
+                        android:backgroundTint="@color/colorWhite"
+                        app:fabSize="mini"
+                        app:srcCompat="@drawable/delete" />
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/retake"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="5dp"
+                        android:backgroundTint="@color/colorWhite"
+                        app:fabSize="mini"
+                        app:srcCompat="@drawable/retake" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/guideline">
+                    <LinearLayout
+                        android:id="@+id/imgClose"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/linear_outline"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:elevation="5dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+                    </LinearLayout>
+                </LinearLayout>
+                <RelativeLayout
+                    android:id="@+id/bottom_rl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+                    <LinearLayout
+                        android:id="@+id/float_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@color/black"
+                        android:elevation="3dp"
+                        android:gravity="center_vertical"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
+                        <LinearLayout
+                            android:id="@+id/li_delete"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:orientation="vertical">
+                            <ImageView
+                                android:id="@+id/delete_"
+                                android:layout_width="42dp"
+                                android:layout_height="42dp"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_margin="8dp"
+                                android:background="@drawable/delete_img"/>
+                            <TextView android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="DELETE ALL"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="11dp"/>
+                        </LinearLayout>
+                        <View
+                            android:id="@+id/arrow_view"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:background="@drawable/next_arrow"
+                            android:backgroundTint="@color/colorWhite"
+                            android:rotation="180"/>
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:visibility="gone"
+                            app:maxImageSize="52dp"
+                            app:srcCompat="@drawable/navi" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/menu"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:orientation="horizontal" />
+                    <View
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/next_arrow"
+                        android:backgroundTint="@color/colorWhite"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvEmoji"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/menu"
+                        android:layout_toRightOf="@+id/float_btn"
+                        android:background="@color/black"
+                        android:minHeight="50dp"
+                        android:orientation="horizontal"
+                        android:padding="8dp"
+                        />
+
+                </RelativeLayout>
+
+                <!--<ImageView-->
+                <!--android:visibility="gone"-->
+                <!--android:id="@+id/imgCamera"-->
+                <!--android:layout_width="50dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginRight="24dp"-->
+                <!--android:background="#99000000"-->
+                <!--android:padding="8dp"-->
+                <!--android:src="@drawable/ic_camera"-->
+
+                <!--app:layout_constraintRight_toRightOf="parent"-->
+                <!--tools:layout_editor_absoluteY="16dp" />-->
+
+
+
+                <TextView
+                    android:id="@+id/imgSave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="16dp"
+                    android:background="@drawable/round_linear"
+                    android:backgroundTint="#FFB562"
+                    android:elevation="2dp"
+                    android:padding="5dp"
+                    android:text="Confirm"
+                    android:textColor="@color/colorWhite"
+                    android:tint="@color/colorWhite"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toTopOf="@+id/bottom_rl"
+                    tools:ignore="MissingConstraints" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_end="?attr/actionBarSize" />
+
+
+                <ja.burhanrashid52.photoeditor.PhotoEditorView
+                    android:id="@+id/photoEditorView"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toTopOf="@+id/bottom_rl"
+                    app:layout_constraintCircleRadius="3dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
+        <RelativeLayout
+            android:id="@+id/camera_li"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@color/black">
+
+            <LinearLayout
+                android:id="@+id/top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="10dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/cancel"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/cancel_img"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center"
+                        android:text="CANCEL"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="11dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:elevation="5dp"
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <ImageView
+                        android:id="@+id/imgCamera"
                         android:layout_gravity="center_horizontal"
-                        android:id="@+id/delete_"
                         android:layout_margin="8dp"
-                        android:background="@drawable/delete_img"
+                        android:background="@drawable/next_img"
                         android:layout_width="42dp"
                         android:layout_height="42dp"/>
-                    <TextView android:gravity="center"
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_marginBottom="8dp"
                         android:textSize="11dp"
                         android:textColor="@color/colorWhite"
-                        android:text="DELETE ALL"
-                        android:layout_width="wrap_content"
+                        android:gravity="center"
+                        android:text="NEXT"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
-                  <View
-                      android:rotation="180"
-                      android:id="@+id/arrow_view"
-                      android:backgroundTint="@color/colorWhite"
-                      android:background="@drawable/next_arrow"
-                      android:layout_width="32dp"
-                      android:layout_height="32dp"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/upload"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/save_img"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center"
+                        android:text="DONE"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="11dp"/>
+                </LinearLayout>
+
+
+
+
             </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/top"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="80dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/bg_car_image"
+                    android:visibility="gone"/>
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/next_arrow"
+                    android:backgroundTint="@color/colorWhite"
+                    android:rotation="-90"
+                    android:visibility="gone"/>
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/next_arrow"
+                    android:backgroundTint="@color/colorWhite"
+                    android:rotation="90"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/images"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_above="@+id/view1"
+                    android:layout_below="@+id/view2"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvEmoji"
-                android:layout_toRightOf="@+id/float_btn"
-                android:layout_width="wrap_content"
-                android:layout_toLeftOf="@+id/menu"
-                android:minHeight="50dp"
-                android:background="@color/black"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="8dp"
-                />
-            <View
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:backgroundTint="@color/colorWhite"
-                android:background="@drawable/next_arrow"
-                android:layout_width="32dp"
-                android:layout_height="32dp"/>
+            </RelativeLayout>
 
-            <LinearLayout
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:id="@+id/menu"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" />
 
         </RelativeLayout>
-
-
-        <LinearLayout
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guideline"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:id="@+id/imgClose"
-            android:elevation="5dp"
-            android:layout_margin="8dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:background="@drawable/linear_outline"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </LinearLayout>
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-        </FrameLayout>
     </RelativeLayout>
 </FrameLayout>

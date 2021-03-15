@@ -64,6 +64,11 @@ public class InvoiceListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if(!new Util().isNetworkAvailable(InvoiceListActivity.this)) {
+            MDToast mdToast = MDToast.makeText(InvoiceListActivity.this, "Check Your Internet connection", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
+            mdToast.show();
+            return;
+        }
         getdata3.clear();
         pageNo=1;
         adapterd.notifyDataSetChanged();
@@ -142,7 +147,7 @@ public class InvoiceListActivity extends AppCompatActivity {
 
     void getAFMInvoiceList(int pageno){
 //        GetVehicleIdListModel vindetail1=new GetVehicleIdListModel(prf.getStringData("authKey"),orderid,vihicle,prf.getStringData("carrierPrimaryId"));
-        Call<InvoiceListModel> call1 = apiInterface.getInvoiceList("10",""+pageno,"","",""+ prf.getStringData("userCode"),""+ prf.getStringData("corporateId"),"bearer "+ prf.getStringData("accessToken"),"application/json");
+        Call<InvoiceListModel> call1 = apiInterface.getInvoiceList("100",""+pageno,"","",""+ prf.getStringData("userCode"),""+ prf.getStringData("corporateId"),"bearer "+ prf.getStringData("accessToken"),"application/json");
         call1.enqueue(new Callback<InvoiceListModel>() {
             @Override
             public void onResponse(Call<InvoiceListModel> call, Response<InvoiceListModel> response) {

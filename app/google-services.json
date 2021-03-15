@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "329161602113-fkmc2425hs01bifbkk0oq3n773vpbt59.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.avaal.com.afm2020autoCx",
+            "certificate_hash": "2d8dd000d7f8f54c59efcac3069af56f5f17899b"
+          }
+        },
+        {
+          "client_id": "329161602113-l67v04tmp9nt34g5ipojfhtqo2s84eqk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.avaal.com.afm2020autoCx",
+            "certificate_hash": "dd243aaec87278fe3955280783e608ea28f70c64"
+          }
+        },
+        {
           "client_id": "329161602113-qlurgs4lkc3f48sj62esfve7depno0g1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

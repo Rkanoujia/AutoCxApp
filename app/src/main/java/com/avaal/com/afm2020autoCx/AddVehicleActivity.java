@@ -8,6 +8,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -27,6 +28,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -35,6 +37,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
@@ -54,6 +57,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.avaal.com.afm2020autoCx.adapter.VehicleListAdapter;
 import com.avaal.com.afm2020autoCx.barcode.BarcodeCaptureActivity;
@@ -74,6 +78,11 @@ import com.avaal.com.afm2020autoCx.models.VinDetailModel;
 import com.avaal.com.afm2020autoCx.tabtargetview.TapTarget;
 import com.avaal.com.afm2020autoCx.tabtargetview.TapTargetView;
 import com.google.android.gms.common.api.CommonStatusCodes;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
@@ -238,24 +247,23 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
     ImageView recall1_txt_img;
     @BindView(R.id.recall2_txt_img1)
     ImageView recall2_txt_img1;
+    public static final int CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE = 1771;
+    private static final int PREINSPECTION = 101;
     @BindView(R.id.recall_sheet)
-            LinearLayout recall_sheet;
-    @BindView(R.id.title_conv_)
-            LinearLayout title_conv_;
+    LinearLayout recall_sheet;
     @BindView(R.id.lat)
     TextView lat;
-    @BindView(R.id.longi)
-            TextView longi;
+    @BindView(R.id.title_conv_)
+    LinearLayout title_conv_;
     @BindView(R.id.add)
     TextView latlongaddress;
+    @BindView(R.id.longi)
+    TextView longi;
     @BindView(R.id.save_new)
-            TextView save_new;
+    TextView save_new;
     @BindView(R.id.vin_clear)
-            Button vin_clear;
-    @BindView(R.id.bottom_li)
-            LinearLayout bottom_li;
+    Button vin_clear;
     APIInterface apiInterface;
-   Boolean preInspection=true;
     VehicleApiInterface vehicleApiInterface;
     ArrayList<String> yearList = new ArrayList<>();
     ArrayList<String> makeList = new ArrayList<>();
@@ -278,21 +286,22 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
     private View loaderView;
     boolean isLoaded = false;
     private static final int RC_BARCODE_CAPTURE = 9001;
-    private static final int PREINSPECTION=101;
-    String imageFilePath, imageType, qWvrUnit="-1";
-    String buildMonth="-1", buildYear="-1",miliage="-1",fullAddress="";
-    String oemStr, tpmsStr, dieselStr, speedoStr, titleconvStr, billStr, titleStr, trackStr,releaseFormStr,currency_txt;
-    private String trackUrl="", billUrl="", titleConvUrl="", tpmsUrl="", millageUrl="", oemUrl="", releaseFromUrl="",titleUrl="", titleUrl1="", titleConvUrl1="",imgId;
-    private String trackId="0", billId="0", titleConvId="0", tpmsId="0", millageId="0", oemId="0",releaseFromId="0", titleId="0", titleId1="0", titleConvId1="0",recall2Url="",recall2Id="0",recall1Url="",recall1Id="0";
-    public static final int CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE = 1771;
-    Boolean inventory=false;
+    @BindView(R.id.bottom_li)
+    LinearLayout bottom_li;
+    Boolean preInspection = true;
+    String imageFilePath, imageType, qWvrUnit = "-1";
+    String buildMonth = "-1", buildYear = "-1", miliage = "-1", fullAddress = "";
+    String oemStr, tpmsStr, dieselStr, speedoStr, titleconvStr, billStr, titleStr, trackStr, releaseFormStr, currency_txt;
+    Boolean inventory = false;
+    String orderId = "0", vehicleId = "0";
+    boolean IsNew = false;
     Location location;
-    String orderId="0",vehicleId="0";
+    ArrayList<String> myList = new ArrayList<>();
     ProgressDialog pd;
-    boolean IsNew=false;
-    ArrayList<String> myList=new ArrayList<>();
+    boolean isupadteLocation = true;
     Calendar myCalendar = Calendar.getInstance();
-    boolean isupadteLocation=true;
+    private String trackUrl = "", billUrl = "", titleConvUrl = "", tpmsUrl = "", millageUrl = "", oemUrl = "", releaseFromUrl = "", titleUrl = "", titleUrl1 = "", titleConvUrl1 = "", imgId;
+    private String trackId = "0", billId = "0", titleConvId = "0", tpmsId = "0", millageId = "0", oemId = "0", releaseFromId = "0", titleId = "0", titleId1 = "0", titleConvId1 = "0", recall2Url = "", recall2Id = "0", recall1Url = "", recall1Id = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -322,7 +331,6 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
                     new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE,
                             Manifest.permission.WRITE_EXTERNAL_STORAGE,
                             Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_BACKGROUND_LOCATION,
                             android.Manifest.permission.ACCESS_COARSE_LOCATION,
                             android.Manifest.permission.CAMERA}, 1);
 
@@ -337,25 +345,24 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
             mdToast.show();
             return;
         }
-        if(prf.getStringData("ScanTutorial").equalsIgnoreCase(""))
-        tutorial();
+        if (prf.getStringData("ScanTutorial").equalsIgnoreCase(""))
+            tutorial();
         try {
             showAnimation();
             qwvrList("WeightUnit");
             milegeList("DTC");
         } catch (Exception e) {
             e.printStackTrace();
-            new Util().sendSMTPMail(AddVehicleActivity.this,null,"CxE004",e,"");
+            new Util().sendSMTPMail(AddVehicleActivity.this, null, "CxE004", e, "");
         }
 
 //        if(getIntent().getStringExtra("OrderId").equalsIgnoreCase("0"))
-            orderId=getIntent().getStringExtra("OrderId");
+        orderId = getIntent().getStringExtra("OrderId");
 //        else
 //            orderId= prf.getStringData("OrderId");
-         vehicleId=getIntent().getStringExtra("VehicleId");
+        vehicleId = getIntent().getStringExtra("VehicleId");
 
-        if (getIntent().getStringExtra("VehicleType") != null)
-        {
+        if (getIntent().getStringExtra("VehicleType") != null) {
             if (getIntent().getStringExtra("VehicleType").equalsIgnoreCase("true")) {
 //                if (prf.getStringData("OrderStatus").equalsIgnoreCase("save")) {
 //                    try {
@@ -365,39 +372,38 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
 //                        e.printStackTrace();
 //                    }
 //                }else {
-                    inventory = true;
-                    try {
-                        showAnimation();
-                        getInventoryVehicle();
-                    } catch (Exception paramBundle) {
-                        paramBundle.printStackTrace();
-                    }
+                inventory = true;
+                try {
+                    showAnimation();
+                    getInventoryVehicle();
+                } catch (Exception paramBundle) {
+                    paramBundle.printStackTrace();
+                }
 //                }
-            }else {
+            } else {
 
                 if (prf.getStringData("OrderStatus").equalsIgnoreCase("Saved")) {
                     try {
                         showAnimation();
                         getVehicleList(orderId, "VLSaved");
                     } catch (Exception e) {
-                        new Util().sendSMTPMail(AddVehicleActivity.this,null,"CxE004",e,"");
+                        new Util().sendSMTPMail(AddVehicleActivity.this, null, "CxE004", e, "");
                         e.printStackTrace();
                     }
-                }else if (prf.getStringData("OrderStatus").equalsIgnoreCase("Shipped")) {
+                } else if (prf.getStringData("OrderStatus").equalsIgnoreCase("Shipped")) {
                     try {
                         showAnimation();
                         getVehicleList(orderId, "VLSaved");
                     } catch (Exception e) {
-                        new Util().sendSMTPMail(AddVehicleActivity.this,null,"CxE004",e,"");
+                        new Util().sendSMTPMail(AddVehicleActivity.this, null, "CxE004", e, "");
                         e.printStackTrace();
                     }
-                }
-                else {
+                } else {
                     try {
                         showAnimation();
                         getAFMVehicleList(prf.getStringData("OrderId"));
                     } catch (Exception e) {
-                        new Util().sendSMTPMail(AddVehicleActivity.this,null,"CxE004",e,"");
+                        new Util().sendSMTPMail(AddVehicleActivity.this, null, "CxE004", e, "");
                         e.printStackTrace();
                     }
                 }
@@ -418,7 +424,7 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(charSequence.length() != 0) {
+                if (charSequence.length() != 0) {
                     vin_clear.setVisibility(View.VISIBLE);
                 } else {
                     vin_clear.setVisibility(View.GONE);
@@ -432,7 +438,7 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
 //                    s = s.toUpperCase();
 //                    vinNo.setText(s);
 //                }
-                Boolean isup=true;
+                Boolean isup = true;
                 if (vinNo.length() >= 8) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
@@ -449,17 +455,17 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
                     model.setEnabled(true);
                     year.setClickable(true);
                     year.setEnabled(true);
-                    if(vinNo.length()==17) {
+                    if (vinNo.length() == 17) {
                         try {
-                            if(!isup)
-                            getVehicleDetail(vinNo.getText().toString());
+                            if (!isup)
+                                getVehicleDetail(vinNo.getText().toString());
                         } catch (Exception e) {
-                            new Util().sendSMTPMail(AddVehicleActivity.this,null,"CxE004",e,"");
+                            new Util().sendSMTPMail(AddVehicleActivity.this, null, "CxE004", e, "");
                             e.printStackTrace();
                         }
                     }
                 } else {
-                    isup=false;
+                    isup = false;
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         saveBol.setBackgroundColor(Color.parseColor("#b0aaaa"));
                         saveBol.setTextColor(getColor(R.color.black));
@@ -489,16 +495,15 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
                     }
                 }
 
-                if(vinNo.length() >= 8) {
+                if (vinNo.length() >= 8) {
                     try {
                         getVehicleDetail(vinNo.getText().toString());
                     } catch (Exception e) {
-                        new Util().sendSMTPMail(AddVehicleActivity.this,null,"CxE004",e,"");
+                        new Util().sendSMTPMail(AddVehicleActivity.this, null, "CxE004", e, "");
                         e.printStackTrace();
                     }
-                }
-                else {
-                    if(vinNo.length() != 0) {
+                } else {
+                    if (vinNo.length() != 0) {
                         MDToast mdToast = MDToast.makeText(AddVehicleActivity.this, "Enter Valid VIN Number", MDToast.LENGTH_LONG, MDToast.TYPE_ERROR);
                         mdToast.show();
                         return;
@@ -509,19 +514,19 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
 
         PreferenceManager prf = new PreferenceManager(this);
         if (prf.getStringData("OrderType").equalsIgnoreCase("Export")) {
-           tracking.setVisibility(View.GONE);
+            tracking.setVisibility(View.GONE);
             bill.setVisibility(View.GONE);
-           title1.setVisibility(View.GONE);
+            title1.setVisibility(View.GONE);
             recall_sheet.setVisibility(View.VISIBLE);
             oem_tag.setVisibility(View.VISIBLE);
             millage.setVisibility(View.VISIBLE);
             tpms.setVisibility(View.VISIBLE);
-           declared.setVisibility(View.VISIBLE);
+            declared.setVisibility(View.VISIBLE);
             build.setVisibility(View.VISIBLE);
             release_form.setVisibility(View.GONE);
             gvwr.setVisibility(View.VISIBLE);
-           diesel.setVisibility(View.VISIBLE);
-           speedo.setVisibility(View.VISIBLE);
+            diesel.setVisibility(View.VISIBLE);
+            speedo.setVisibility(View.VISIBLE);
             title_conv.setVisibility(View.VISIBLE);
         } else if (prf.getStringData("OrderType").equalsIgnoreCase("Import")) {
             oem_tag.setVisibility(View.GONE);
@@ -556,8 +561,7 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
             title1.setVisibility(View.GONE);
             recall_sheet.setVisibility(View.GONE);
         }
-        if ((getIntent().getStringExtra("VehicleType") != null) && getIntent().getStringExtra("VehicleType").equalsIgnoreCase("true"))
-        {
+        if ((getIntent().getStringExtra("VehicleType") != null) && getIntent().getStringExtra("VehicleType").equalsIgnoreCase("true")) {
             inventory = true;
             tracking.setVisibility(View.GONE);
             bill.setVisibility(View.GONE);
@@ -601,18 +605,18 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
             years();
         } catch (Exception e) {
             e.printStackTrace();
-            new Util().sendSMTPMail(AddVehicleActivity.this,null,"CxE004",e,"");
+            new Util().sendSMTPMail(AddVehicleActivity.this, null, "CxE004", e, "");
         }
         try {
             make();
         } catch (Exception e) {
-            new Util().sendSMTPMail(AddVehicleActivity.this,null,"CxE004",e,"");
+            new Util().sendSMTPMail(AddVehicleActivity.this, null, "CxE004", e, "");
             e.printStackTrace();
         }
         try {
             model();
         } catch (Exception e) {
-            new Util().sendSMTPMail(AddVehicleActivity.this,null,"CxE004",e,"");
+            new Util().sendSMTPMail(AddVehicleActivity.this, null, "CxE004", e, "");
             e.printStackTrace();
         }
         spinner1();
@@ -635,17 +639,17 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
         pd.setMessage("loading..");
         pd.setCancelable(false);
         pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        if (!gpstrack.canGetLocation()){
+        if (!gpstrack.canGetLocation()) {
             pd.show();
-        }else{
-            location=gpstrack.getLocation();
+        } else {
+            location = gpstrack.getLocation();
             getAddress();
         }
 
-        if(location!=null) {
+        if (location != null) {
             lat.setText("" + location.getLatitude());
             longi.setText("" + location.getLongitude());
-        }else{
+        } else {
             lat.setText("0.0");
             longi.setText("0.0");
         }
@@ -653,7 +657,32 @@ public class AddVehicleActivity extends AppCompatActivity implements LatLongChec
 //             if(!prf.getStringData("OrderStatus").equalsIgnoreCase("null")){
 //                 save_vehicle.setClickable(false);
 //                 save_vehicle.setEnabled(false);
+        FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            ActivityCompat.requestPermissions(AddVehicleActivity.this,
+                    new String[]{
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            android.Manifest.permission.ACCESS_COARSE_LOCATION
+                    }, 1);
+            return;
+        }
+        Task<Location> task = fusedLocationProviderClient.getLastLocation();
+        task.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location1) {
+                if (location1 != null) {
+                    location = location1;
 
+                }
+            }
+        });
 
 //             }
     }

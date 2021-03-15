@@ -12,16 +12,18 @@
         android:gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
             <View
-                android:backgroundTint="@android:color/white"
-                android:background="@drawable/ic_flash_off"
-                android:elevation="10dp"
+                android:layout_width="30dp"
                 android:id="@+id/focus"
+                android:layout_height="22dp"
+                android:layout_gravity="end"
+                android:background="@drawable/ic_flash_off"
                 android:layout_marginTop="80dp"
                 android:layout_marginEnd="10dp"
-                android:layout_gravity="end"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:backgroundTint="@android:color/white"
+                android:elevation="10dp"
+                android:visibility="gone" />
         <LinearLayout
             android:background="@android:color/white"
             android:elevation="5dp"

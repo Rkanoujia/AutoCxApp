@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.avaal.com.afm2020autoCx.frahment.FullBottomSheetDialogFragment;
 import com.avaal.com.afm2020autoCx.models.DashBoardModel;
@@ -81,6 +82,7 @@ public class NewDashBoardActivity extends AppCompatActivity {
 
     String message="";
     PreferenceManager prf;
+    boolean doubleBackToExitPressedOnce = false;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,6 +128,14 @@ public class NewDashBoardActivity extends AppCompatActivity {
             }
         });
 
+        if(getIntent().getStringExtra("")!=null){
+            if(getIntent().getStringExtra("OrderList").equalsIgnoreCase("accept")){
+
+            }else{
+
+            }
+        }
+
     }
     @OnClick(R.id.account)
     void  account(){
@@ -148,21 +158,21 @@ public class NewDashBoardActivity extends AppCompatActivity {
     @OnClick(R.id.add_new)
     void add_new(){
         Intent j = new Intent(this, CreateTripType.class);
-        j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
 //        j.putExtra("AuthKey", getActivity().getIntent().getStringExtra("AuthKey"));
         startActivity(j);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
     @OnClick(R.id.new_manu)
     void new_manu(){
-        startActivity(new Intent(this,NewMenuActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+        startActivity(new Intent(this,NewMenuActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK ));
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
   @OnClick(R.id.pending_loads)
   void pending_loads(){
       Intent j = new Intent(this, NewOrderListActivity.class);
 //        j.putExtra("AuthKey", getActivity().getIntent().getStringExtra("AuthKey"));
-      j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+      j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
       startActivity(j);
       overridePendingTransition(R.anim.fadein, R.anim.fadeout);
   }
@@ -170,7 +180,7 @@ public class NewDashBoardActivity extends AppCompatActivity {
     void enroute_loads(){
         Intent j = new Intent(this, NewOrderListActivity.class);
         j.putExtra("AFMOrder", "ggd");
-        j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
         startActivity(j);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
@@ -178,7 +188,7 @@ public class NewDashBoardActivity extends AppCompatActivity {
     void total_invoice(){
         Intent j = new Intent(this, InvoiceListActivity.class);
         j.putExtra("AFMOrder", "ggd");
-        j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
         startActivity(j);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
@@ -186,7 +196,7 @@ public class NewDashBoardActivity extends AppCompatActivity {
     void total_paid(){
         Intent j = new Intent(this, ReceiptListActivity.class);
         j.putExtra("AFMOrder", "ggd");
-        j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
         startActivity(j);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
@@ -194,7 +204,7 @@ public class NewDashBoardActivity extends AppCompatActivity {
     void totalOrder(){
         Intent j = new Intent(this, NewOrderListActivity.class);
         j.putExtra("AFMOrder", "err");
-        j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
         startActivity(j);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
@@ -204,7 +214,24 @@ public class NewDashBoardActivity extends AppCompatActivity {
         super.onResume();
         getDashboardData();
     }
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            finishAffinity();
+            return;
+        }
 
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
+    }
     void getDashboardData(){
         APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
         PreferenceManager prf=new PreferenceManager(this);

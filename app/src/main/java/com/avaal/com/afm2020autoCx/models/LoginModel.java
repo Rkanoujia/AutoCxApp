@@ -1,6 +1,5 @@
 package com.avaal.com.afm2020autoCx.models;
 
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

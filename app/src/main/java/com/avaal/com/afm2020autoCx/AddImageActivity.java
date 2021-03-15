@@ -76,6 +76,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -179,6 +180,7 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
     Map<String,String> image =new HashMap<String, String>();
     List<Map<String , String>> ExtraImageList= new ArrayList<Map<String,String>>();
     ExtraImageList adapterd = null;
+    boolean IsRefresh=false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -211,7 +213,7 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
         recyclerView();
         Util util=new Util();
         if(!util.isNetworkAvailable(this)){
-            MDToast mdToast = MDToast.makeText(this, "Check Internet Connection", MDToast.LENGTH_LONG, MDToast.TYPE_ERROR);
+            MDToast mdToast = MDToast.makeText(this, "Check Internet Connection", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
             mdToast.show();
             return;
         }
@@ -296,12 +298,14 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
 
 //            marshmallow.checkPermissionForExternalStorage();
         }
-
+        IsRefresh=false;
+        getList(true);
 //        hideSoftKeyboard(this);
     }
     @Override
     public void onBackPressed() {
         // Write your code here
+
 
         super.onBackPressed();
     }
@@ -309,66 +313,68 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
     @Override
     protected void onResume() {
         super.onResume();
-        prf=new PreferenceManager(this);
-        try {
-            if(getIntent().getStringExtra("IsInventry")!=null  ){
-                if(getIntent().getStringExtra("IsInventry").equalsIgnoreCase("1")) {
-                    showAnimation();
-                    getImages(vehicleId);
-
-                }
-            }
-            else{
-                if (prf.getStringData("OrderStatus").equalsIgnoreCase("saved") || prf.getStringData("OrderStatus").equalsIgnoreCase("shipped")) {
-                    showAnimation();
-                    getImages(vehicleId);
-
-
-                } else {
-                    showAnimation();
-                    getAFMImages(vehicleId);
-
-                }
-            }
-
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        if(IsRefresh)
+        getList(true);
+        IsRefresh=true;
     }
+  void getList(boolean isRefresh){
+      prf=new PreferenceManager(this);
+      try {
+          if(getIntent().getStringExtra("IsInventry")!=null  ){
+              if(getIntent().getStringExtra("IsInventry").equalsIgnoreCase("1")) {
+                  showAnimation();
+                  getImages(vehicleId);
 
+              }
+          }
+          else{
+              if (prf.getStringData("OrderStatus").equalsIgnoreCase("saved") || prf.getStringData("OrderStatus").equalsIgnoreCase("shipped")) {
+                  showAnimation();
+                  getImages(vehicleId);
+              } else {
+                  showAnimation();
+                  getAFMImages(vehicleId);
+
+              }
+          }
+
+      }catch (Exception e)
+      {
+          e.printStackTrace();
+      }
+  }
     @OnClick(R.id.save_)
         void save(){
-        if(frontLeftfileUrl.equalsIgnoreCase("")){
-            MDToast mdToast = MDToast.makeText(this, "Please Add FrontLeft Image", MDToast.LENGTH_LONG, MDToast.TYPE_ERROR);
-            mdToast.show();
-            return;
-        }
-        if(frontRightfileUrl.equalsIgnoreCase("")){
-            MDToast mdToast = MDToast.makeText(this, "Please Add FrontRight Image", MDToast.LENGTH_LONG, MDToast.TYPE_ERROR);
-            mdToast.show();
-            return;
-        }
-        if(backLeftfileUrl.equalsIgnoreCase("")){
-            MDToast mdToast = MDToast.makeText(this, "Please Add BackLeft Image", MDToast.LENGTH_LONG, MDToast.TYPE_ERROR);
-            mdToast.show();
-            return;
-        }
-        if(backRightfileUrl.equalsIgnoreCase("")){
-            MDToast mdToast = MDToast.makeText(this, "Please Add BackRight Image", MDToast.LENGTH_LONG, MDToast.TYPE_ERROR);
-            mdToast.show();
-            return;
-        }
-        if(windshieldfileUrl.equalsIgnoreCase("")){
-            MDToast mdToast = MDToast.makeText(this, "Please Add Windshield Image", MDToast.LENGTH_LONG, MDToast.TYPE_ERROR);
-            mdToast.show();
-            return;
-        }
-        if(rooffileUrl.equalsIgnoreCase("")){
-            MDToast mdToast = MDToast.makeText(this, "Please Add Roof Image", MDToast.LENGTH_LONG, MDToast.TYPE_ERROR);
-            mdToast.show();
-            return;
-        }
+//        if(frontLeftfileUrl.equalsIgnoreCase("")){
+//            MDToast mdToast = MDToast.makeText(this, "Please Add FrontLeft Image", MDToast.LENGTH_LONG, MDToast.TYPE_ERROR);
+//            mdToast.show();
+//            return;
+//        }
+//        if(frontRightfileUrl.equalsIgnoreCase("")){
+//            MDToast mdToast = MDToast.makeText(this, "Please Add FrontRight Image", MDToast.LENGTH_LONG, MDToast.TYPE_ERROR);
+//            mdToast.show();
+//            return;
+//        }
+//        if(backLeftfileUrl.equalsIgnoreCase("")){
+//            MDToast mdToast = MDToast.makeText(this, "Please Add BackLeft Image", MDToast.LENGTH_LONG, MDToast.TYPE_ERROR);
+//            mdToast.show();
+//            return;
+//        }
+//        if(backRightfileUrl.equalsIgnoreCase("")){
+//            MDToast mdToast = MDToast.makeText(this, "Please Add BackRight Image", MDToast.LENGTH_LONG, MDToast.TYPE_ERROR);
+//            mdToast.show();
+//            return;
+//        }
+//        if(windshieldfileUrl.equalsIgnoreCase("")){
+//            MDToast mdToast = MDToast.makeText(this, "Please Add Windshield Image", MDToast.LENGTH_LONG, MDToast.TYPE_ERROR);
+//            mdToast.show();
+//            return;
+//        }
+//        if(rooffileUrl.equalsIgnoreCase("")){
+//            MDToast mdToast = MDToast.makeText(this, "Please Add Roof Image", MDToast.LENGTH_LONG, MDToast.TYPE_ERROR);
+//            mdToast.show();
+//            return;
+//        }
 
         Intent data = new Intent();
         data.putExtra("IsPreInspection","true");
@@ -420,7 +426,7 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
       opencamera();
     }
     @OnClick(R.id.add_damage)
-    void otherImage(){
+    public void otherImage(){
 
         Util util=new Util();
         if(!util.isNetworkAvailable(this)){
@@ -428,13 +434,13 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
             mdToast.show();
             return;
         }
-        HashMap<Integer,String> fixName1=new HashMap<Integer, String>();
-        fixName1.put(R.drawable.car_d, "uploaded");
-        fixName1.put(R.drawable.car_b, "uploaded");
-        fixName1.put(R.drawable.car_c, "uploaded");
-        fixName1.put(R.drawable.car_a, "uploaded");
-        fixName1.put(R.drawable.car_e, "uploaded");
-        fixName1.put(R.drawable.car_f, "uploaded");
+        HashMap<Integer,String> fixName2=new HashMap<Integer, String>();
+        fixName2.put(R.drawable.car_d, "uploaded");
+        fixName2.put(R.drawable.car_b, "uploaded");
+        fixName2.put(R.drawable.car_c, "uploaded");
+        fixName2.put(R.drawable.car_a, "uploaded");
+        fixName2.put(R.drawable.car_e, "uploaded");
+        fixName2.put(R.drawable.car_f, "uploaded");
 
 
 
@@ -465,7 +471,7 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
                 Intent intent=new Intent(AddImageActivity.this,DamageActivity.class);
                 intent.putExtra("IsGallery", "Yes");
                 intent.putExtra("VehicleId",vehicleId);
-                intent.putExtra("images",fixName1);
+                intent.putExtra("images",fixName2);
                 intent.putExtra("IsEdit","yes");
                 startActivity(intent);
             }
@@ -477,7 +483,7 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
                 dialog.dismiss();
                 Intent intent=new Intent(AddImageActivity.this,DamageActivity.class);
                 intent.putExtra("VehicleId",vehicleId);
-                intent.putExtra("images",fixName1);
+                intent.putExtra("images",fixName2);
                 intent.putExtra("IsEdit","yes");
                 startActivity(intent);
 
@@ -533,7 +539,61 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
         fixName.put(R.drawable.car_e, "");
         opencamera();
     }
-
+//    @OnClick(R.id.front_left)
+//    void front_left(){
+//        try {
+//            Log.e("frontleft",""+frontLeftfileUrl);
+//            if(!frontLeftfileUrl.equalsIgnoreCase(""))
+//            popUpList(frontLeftfileUrl);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//    @OnClick(R.id.windshield)
+//    void windshield_imageview(){
+//        try {
+//            if(!windshieldfileUrl.equalsIgnoreCase(""))
+//                popUpList(windshieldfileUrl);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//    @OnClick(R.id.front_right)
+//    void front_right_imageview(){
+//        try {
+//            if(!frontRightfileUrl.equalsIgnoreCase(""))
+//                popUpList(frontRightfileUrl);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//    @OnClick(R.id.back_left)
+//    void back_left_imageview(){
+//        try {
+//            if(!backLeftfileUrl.equalsIgnoreCase(""))
+//                popUpList(backLeftfileUrl);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//    @OnClick(R.id.roof)
+//    void roof_imageview(){
+//        try {
+//            if(!rooffileUrl.equalsIgnoreCase(""))
+//                popUpList(rooffileUrl);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//    @OnClick(R.id.back_right)
+//    void back_right_imageview(){
+//        try {
+//            if(!backRightfileUrl.equalsIgnoreCase(""))
+//                popUpList(backRightfileUrl);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     void opencamera(){
         Intent intent=new Intent(AddImageActivity.this,DamageActivity.class);
@@ -1369,6 +1429,18 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
             public void onResponse(Call<GetImageModel> call, Response<GetImageModel> response) {
                 GetImageModel getdata = response.body();
                 try {
+                    front_left_imagedelete.setVisibility(View.GONE);
+                    front_right_imagedelete.setVisibility(View.GONE);
+                    back_left_imagedelete.setVisibility(View.GONE);
+                    back_right_imagedelete.setVisibility(View.GONE);
+                    windshield_imagedelete.setVisibility(View.GONE);
+                    roof_imagedelete.setVisibility(View.GONE);
+                    fixName.put(R.drawable.car_d, "");
+                    fixName.put(R.drawable.car_b, "");
+                    fixName.put(R.drawable.car_c, "");
+                    fixName.put(R.drawable.car_a, "");
+                    fixName.put(R.drawable.car_e, "");
+                    fixName.put(R.drawable.car_f, "");
                     if (getdata.status) {
                         ExtraImageList = new ArrayList<>();
                         ExtraImageList.clear();
@@ -1378,18 +1450,8 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
                             firstOpenMenu();
 
                         }
-                        front_left_imagedelete.setVisibility(View.GONE);
-                        front_right_imagedelete.setVisibility(View.GONE);
-                        back_left_imagedelete.setVisibility(View.GONE);
-                        back_right_imagedelete.setVisibility(View.GONE);
-                        windshield_imagedelete.setVisibility(View.GONE);
-                        roof_imagedelete.setVisibility(View.GONE);
-                        fixName.put(R.drawable.car_d, "");
-                        fixName.put(R.drawable.car_b, "");
-                        fixName.put(R.drawable.car_c, "");
-                        fixName.put(R.drawable.car_a, "");
-                        fixName.put(R.drawable.car_e, "");
-                        fixName.put(R.drawable.car_f, "");
+
+
 
                         for (int i = 0; getdata.dataValuer.size() > i; i++) {
                             System.gc();
@@ -1462,7 +1524,7 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
                                 image.put("imageName", getdata.dataValuer.get(i).FileName);
                                 image.put("imageId", getdata.dataValuer.get(i).docId);
                                 ExtraImageList.add(image);
-                                adapterd = new ExtraImageList(ExtraImageList, AddImageActivity.this,true);
+                                adapterd = new ExtraImageList(ExtraImageList, AddImageActivity.this,true,AddImageActivity.this);
                                 _image_list.setAdapter(adapterd);
                             }
                         }
@@ -1474,10 +1536,9 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
 //                    Picasso.with(this).load("https://images.unsplash.com/photo-500395235658-f87dff62cbf3?auto=format&fit=crop&w=750&q=80").error(R.drawable.ic_camera).into(back_right);
 
                     }else{
-                        Intent intent=new Intent(AddImageActivity.this,DamageActivity.class);
-                        intent.putExtra("VehicleId",vehicleId);
-
-                        startActivity(intent);
+//                        Intent intent=new Intent(AddImageActivity.this,DamageActivity.class);
+//                        intent.putExtra("VehicleId",vehicleId);
+//                        startActivity(intent);
                     }
 //                    if (!prf.getStringData("OrderStatus").equalsIgnoreCase("Saved")) {
 
@@ -1489,17 +1550,17 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
 //                        roof_imagedelete.setVisibility(View.GONE);
 
                         front_left_imageedit.setVisibility(View.VISIBLE);
-                        front_left.setEnabled(false);
+//                        front_left.setEnabled(false);
                         front_right_imageedit.setVisibility(View.VISIBLE);
-                        front_right.setEnabled(false);
+//                        front_right.setEnabled(false);
                         back_left_imageedit.setVisibility(View.VISIBLE);
-                        back_left.setEnabled(false);
+//                        back_left.setEnabled(false);
                         back_right_imageedit.setVisibility(View.VISIBLE);
-                        back_right.setEnabled(false);
+//                        back_right.setEnabled(false);
                         windshield_imageedit.setVisibility(View.VISIBLE);
-                        windshield.setEnabled(false);
+//                        windshield.setEnabled(false);
                         roof_imageedit.setVisibility(View.VISIBLE);
-                        roof.setEnabled(false);
+//                        roof.setEnabled(false);
                     findViewById(R.id.add_damage).setVisibility(View.VISIBLE);
 
 //                        title.setText("View Images");
@@ -1649,7 +1710,7 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
     void recyclerView(){
         int numberOfColumns = 2;
         _image_list.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
-        adapterd = new ExtraImageList(ExtraImageList, AddImageActivity.this,false);
+        adapterd = new ExtraImageList(ExtraImageList, AddImageActivity.this,false,AddImageActivity.this);
         _image_list.setAdapter(adapterd);
 //        _image_list.addItemDecoration(new DividerItemDecoration(this, 0));
 
@@ -1935,5 +1996,13 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
                     pd.dismiss();
             }
         }
+    }
+    void popUpList(String url) throws Exception {
+
+            Intent intent = new Intent(AddImageActivity.this, ImageViewActivity.class);
+            intent.putExtra("Url", "" + url);
+            intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+            startActivityForResult(intent, 5456);
+
     }
 }

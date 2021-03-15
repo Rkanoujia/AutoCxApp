@@ -197,9 +197,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
+                            android:inputType="text"
                             android:background="@null"
                             android:hint="Customer Order #"
-                            android:inputType="textMultiLine"
+                            android:lines="1"
                             android:textColor="@color/textColor"
                             android:textSize="15dp" />
                     </LinearLayout>
@@ -312,7 +313,8 @@
                                         android:layout_marginStart="10dp"
                                         android:background="@null"
                                         android:hint="Pickup #"
-                                        android:inputType="textMultiLine"
+                                        android:inputType="text"
+                                        android:lines="1"
                                         android:textColor="@color/textColor"
                                         android:textSize="15dp" />
 
@@ -350,14 +352,14 @@
                                 android:gravity="center">
 
                                 <ImageView
+                                     android:layout_marginBottom="30dp"
                                     android:id="@+id/add"
                                     android:layout_width="30dp"
                                     android:layout_height="30dp"
-                                    android:layout_marginTop="16dp"
-                                    android:tint="@color/colorWhite"
                                     android:background="@drawable/ovel"
                                     android:backgroundTint="@color/textColor"
-                                    android:src="@drawable/ic_action_add" />
+                                    android:src="@drawable/ic_action_add"
+                                    app:tint="@color/colorWhite" />
                             </LinearLayout>
                         </LinearLayout>
 
@@ -590,7 +592,8 @@
                                         android:layout_marginStart="10dp"
                                         android:background="@null"
                                         android:hint="Delivery #"
-                                        android:inputType="textMultiLine"
+                                        android:inputType="text"
+                                        android:lines="1"
                                         android:textColor="@color/textColor"
                                         android:textSize="15dp" />
 
@@ -630,11 +633,11 @@
                                     android:id="@+id/add1"
                                     android:layout_width="30dp"
                                     android:layout_height="30dp"
-                                    android:layout_marginTop="16dp"
+                                    android:layout_marginBottom="30dp"
                                     android:background="@drawable/ovel"
                                     android:backgroundTint="@color/textColor"
-                                    android:tint="@color/colorWhite"
-                                    android:src="@drawable/ic_action_add" />
+                                    android:src="@drawable/ic_action_add"
+                                    app:tint="@color/colorWhite" />
                             </LinearLayout>
                         </LinearLayout>
                     <LinearLayout

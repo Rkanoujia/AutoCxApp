@@ -155,6 +155,11 @@ j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // continue with delete
+                        if(!new Util().isNetworkAvailable(NewMenuActivity.this)) {
+                            MDToast mdToast = MDToast.makeText(NewMenuActivity.this, "Check Your Internet connection", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
+                            mdToast.show();
+                            return;
+                        }
                         logout1();
 
                     }

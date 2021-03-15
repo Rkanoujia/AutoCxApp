@@ -24,7 +24,7 @@
     <string name="barcode_success">Barcode read successfully</string>
     <string name="barcode_failure">No barcode captured</string>
     <string name="barcode_error">"Error reading barcode: %1$s"</string>
-    <string name="name">AFM Auto Customer App \n \n</string>
+    <string name="name">AFM CX App \n \n</string>
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
     <string name="title_activity_maps">Map</string>
     <string name="shortcut_label_create_new_task">Create Load</string>
@@ -53,4 +53,7 @@
     <string name="cc">rkanoujia@avaaldev.com</string>
     <string name="paswrd">ePrusTred3un!</string>
     <string name="port">587</string>
+    <string name="_0">0</string>
+
+
 </resources>

@@ -16,12 +16,13 @@ import android.widget.TextView;
 
 import com.avaal.com.afm2020autoCx.APIClient;
 import com.avaal.com.afm2020autoCx.APIInterface;
+import com.avaal.com.afm2020autoCx.AddImageActivity;
 import com.avaal.com.afm2020autoCx.R;
 import com.avaal.com.afm2020autoCx.models.RemoveImageModel;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.google.android.gms.fido.fido2.api.common.RequestOptions;
+
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -49,6 +50,7 @@ public class ExtraImageList extends RecyclerView.Adapter<ExtraImageList.MyViewHo
     private Context context;
     PreferenceManager prf;
     APIInterface apiInterface;
+    AddImageActivity addImageActivity;
     boolean isDelete;
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView name1;
@@ -80,10 +82,11 @@ public class ExtraImageList extends RecyclerView.Adapter<ExtraImageList.MyViewHo
     }
 
 
-    public ExtraImageList(List<Map<String , String>>  tripList, Context context,boolean isDelete) {
+    public ExtraImageList(List<Map<String , String>>  tripList, Context context,boolean isDelete,AddImageActivity addImageActivity) {
         this.tripList = tripList;
         this.context=context;
         this.isDelete=isDelete;
+        this.addImageActivity=addImageActivity;
         prf = new PreferenceManager(context);
         //        orderType=prf.getStringData("OrderType");
 //         vehicleId=getIntent().getStringExtra("VehicleId");
@@ -130,25 +133,93 @@ public class ExtraImageList extends RecyclerView.Adapter<ExtraImageList.MyViewHo
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteImg(tripList.get(position).get("imageId"), position);
+
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+                // Setting Dialog Message
+                alertDialog.setMessage("Are you sure you want delete this?");
+                // Setting Positive "Yes" Button
+                alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        // Write your code here to invoke YES event
+                        deleteImg(tripList.get(position).get("imageId"));
+                        tripList.remove(position);
+                        notifyDataSetChanged();
+
+                    }
+                });
+
+                // Setting Negative "NO" Button
+                alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Write your code here to invoke NO event
+                        dialog.cancel();
+                    }
+                });
+
+                // Showing Alert Message
+                alertDialog.show();
+
+
+
 //                    alertDialog.show();
 ////                    list.remove(position);
 ////                    notifyDataSetChanged();
             }
         });
         if (isDelete) {
-            holder.edit.setVisibility(INVISIBLE);
-            holder.delete.setVisibility(INVISIBLE);
-        } else{
-            holder.delete.setVisibility(VISIBLE);
             holder.edit.setVisibility(VISIBLE);
+            holder.delete.setVisibility(VISIBLE);
+        } else{
+            holder.delete.setVisibility(INVISIBLE);
+            holder.edit.setVisibility(INVISIBLE);
         }
-
+//        holder.edit.setVisibility(INVISIBLE);
         holder.reload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Glide.with(context).load(tripList.get(position).get("imageUrl").replace("DelhiServer", "192.168.1.20")).placeholder(R.drawable.progress_draw) .diskCacheStrategy(DiskCacheStrategy.NONE)
                         .skipMemoryCache(true).into(holder.image);
+//                    popUp(model.FilePath,""+model.FileName);
+            }
+        });
+        holder.edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+                // Setting Dialog Message
+                alertDialog.setMessage("Are you sure you want Recapture this?");
+                // Setting Positive "Yes" Button
+                alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        // Write your code here to invoke YES event
+
+                        deleteImg(tripList.get(position).get("imageId"));
+                        tripList.remove(position);
+                        notifyDataSetChanged();
+                        addImageActivity.otherImage();
+
+                    }
+                });
+
+                // Setting Negative "NO" Button
+                alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Write your code here to invoke NO event
+                        dialog.cancel();
+                    }
+                });
+
+                // Showing Alert Message
+                alertDialog.show();
+
+
+
+
+
+//                Glide.with(context).load(tripList.get(position).get("imageUrl").replace("DelhiServer", "192.168.1.20")).placeholder(R.drawable.progress_draw) .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                        .skipMemoryCache(true).into(holder.image);
 //                    popUp(model.FilePath,""+model.FileName);
             }
         });
@@ -205,7 +276,9 @@ public class ExtraImageList extends RecyclerView.Adapter<ExtraImageList.MyViewHo
                     public void onClick(DialogInterface dialog, int which) {
 
                         // Write your code here to invoke YES event
-                        deleteImg(id,  pos);
+                        deleteImg(id );
+                        tripList.remove(pos);
+                        notifyDataSetChanged();
                         settingsDialog.dismiss();
 
                     }
@@ -230,7 +303,7 @@ public class ExtraImageList extends RecyclerView.Adapter<ExtraImageList.MyViewHo
         return tripList.size();
     }
 
-void deleteImg(String id, final int position){
+void deleteImg(String id){
 //    RemoveImageModel vindetail = new RemoveImageModel(prf.getStringData("authKey"), id);
     Call<RemoveImageModel> call1 = apiInterface.deleteImage(id,""+prf.getStringData("corporateId"),"bearer "+prf.getStringData("accessToken"),"application/x-www-form-urlencoded");
     call1.enqueue(new Callback<RemoveImageModel>() {
@@ -245,8 +318,6 @@ void deleteImg(String id, final int position){
 ////                    i.putExtra("orderType",orderType);
 //                    startActivity(i);
 
-                    tripList.remove(position);
-                    notifyDataSetChanged();
                 }
             }
         }

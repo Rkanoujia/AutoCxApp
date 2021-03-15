@@ -315,7 +315,7 @@ public class Util {
     }
     public void myIntent(Activity activity,Class class1){
         Intent j = new Intent(activity, class1);
-        j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP );
 //        overridePendingTransition(R.anim.trans_left_in, R.anim.trans_left_out);
         activity.startActivity(j);
         activity. overridePendingTransition(R.anim.fadein, R.anim.fadeout);

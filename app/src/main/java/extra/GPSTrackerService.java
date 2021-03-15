@@ -68,6 +68,7 @@ public class GPSTrackerService extends Service implements LocationListener {
 
     public Location getLocation() {
         try {
+            location=null;
             locationManager = (LocationManager) mContext
                     .getSystemService(LOCATION_SERVICE);
 
@@ -95,7 +96,6 @@ public class GPSTrackerService extends Service implements LocationListener {
                             // here to request the missing permissions, and then overriding
                             ActivityCompat.requestPermissions( mContext,
                                     new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
-                                            Manifest.permission.ACCESS_BACKGROUND_LOCATION,
                                             Manifest.permission.ACCESS_FINE_LOCATION}, 1);
                             // to handle the case where the user grants the permission. See the documentation
                             // for ActivityCompat#requestPermissions for more details.

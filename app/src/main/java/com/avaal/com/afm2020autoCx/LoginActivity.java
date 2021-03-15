@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.avaal.com.afm2020autoCx.models.LoginModel;
 import com.avaal.com.afm2020autoCx.models.ProfileDataModel;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
@@ -98,6 +99,7 @@ public class LoginActivity extends AppCompatActivity implements FingerprintHelpe
              e.printStackTrace();
              new Util().sendSMTPMail(LoginActivity.this,null,"CxE004",e,"");
          }
+        FirebaseApp.initializeApp(this);
         token = FirebaseInstanceId.getInstance().getToken();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 //            marshmallow.checkLocationPermission();
@@ -109,7 +111,6 @@ public class LoginActivity extends AppCompatActivity implements FingerprintHelpe
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
                                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                                 Manifest.permission.ACCESS_FINE_LOCATION,
-                                Manifest.permission.ACCESS_BACKGROUND_LOCATION,
                                 Manifest.permission.ACCESS_COARSE_LOCATION,
                                 Manifest.permission.CAMERA}, 1);
             }else{
@@ -252,14 +253,14 @@ void driverApp(){
 
 @OnClick(R.id.login)
     void login(){
-    Util util=new Util();
-    if(!util.isNetworkAvailable(this)) {
-        MDToast mdToast = MDToast.makeText(LoginActivity.this, "Check Your Internet", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
+
+    if(corporateId.getText()==null ||corporateId.getText().length()==0){
+        MDToast mdToast = MDToast.makeText(LoginActivity.this, "Enter Corporate Id", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
         mdToast.show();
         return;
     }
     if(userName.getText()==null ||userName.getText().length()==0){
-        MDToast mdToast = MDToast.makeText(LoginActivity.this, "Enter UserName", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
+        MDToast mdToast = MDToast.makeText(LoginActivity.this, "Enter Username", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
         mdToast.show();
         return;
     }
@@ -268,14 +269,16 @@ void driverApp(){
         mdToast.show();
         return;
     }
-    if(corporateId.getText()==null ||corporateId.getText().length()==0){
-        MDToast mdToast = MDToast.makeText(LoginActivity.this, "Enter CorporateId", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
+    Util util=new Util();
+    if(!util.isNetworkAvailable(this)) {
+        MDToast mdToast = MDToast.makeText(LoginActivity.this, "Check Your Internet connection", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
         mdToast.show();
         return;
     }
+
    showAnimation();
 
-        Call<LoginModel> call1 = apiInterface.userLogin(corporateId.getText().toString()+"~"+userName.getText().toString()+"~regular~"+FirebaseInstanceId.getInstance().getToken()+"~PRI~Android~"+Build.BRAND+" "+Build.MODEL+"~"+Build.VERSION.RELEASE,password.getText().toString(),"password","application/json");
+        Call<LoginModel> call1 = apiInterface.userLogin(corporateId.getText().toString().trim()+"~"+userName.getText().toString()+"~regular~"+FirebaseInstanceId.getInstance().getToken()+"~PRI~Android~"+Build.BRAND+" "+Build.MODEL+"~"+Build.VERSION.RELEASE,password.getText().toString(),"password","application/json");
         call1.enqueue(new Callback<LoginModel>() {
             @Override
             public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
@@ -294,7 +297,7 @@ void driverApp(){
                             prf.saveStringData("accessToken", login.access_token);
 
                             prf.saveStringData("userName", userName.getText().toString());
-                            prf.saveStringData("corporateId", corporateId.getText().toString());
+                            prf.saveStringData("corporateId", corporateId.getText().toString().trim());
                             prf.saveBoolData("logout", true);
 
                             if (remember.isChecked()) {

@@ -289,7 +289,7 @@ public class VehicleListActivity extends AppCompatActivity {
 //                    prf.saveStringData("OrderStatus","Saved");
                     i.putExtra("OrderId",""+orderid);
                     i.putExtra("VehicleType", "false");
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                    i.putExtra("vihiclevinList",list);
                 startActivity(i);
                 }
@@ -342,6 +342,7 @@ public class VehicleListActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<GetVehicleIdListModel> call, Throwable t) {
                 call.cancel();
+                hideAnimation();
                 new Util().sendSMTPMail(VehicleListActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
@@ -388,6 +389,7 @@ public class VehicleListActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<GetVehicleIdListModel> call, Throwable t) {
                 call.cancel();
+                hideAnimation();
                 new Util().sendSMTPMail(VehicleListActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
@@ -572,7 +574,7 @@ public class VehicleListActivity extends AppCompatActivity {
         track.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                settingsDialog.dismiss();
+                settingsDialog.cancel();
                 getVehicleId(orderId);
 
             }
@@ -582,10 +584,10 @@ public class VehicleListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                settingsDialog.dismiss();
+                settingsDialog.cancel();
                prf.saveStringData("When", "add");
-             Intent   intent = new Intent(VehicleListActivity.this, InventoryVehicleListActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Intent   intent = new Intent(VehicleListActivity.this, InventoryVehicleListActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("IsSelect", "true");
                 intent.putExtra("vihiclevinList", list);
                 startActivityForResult(intent, 108);
@@ -613,12 +615,9 @@ public class VehicleListActivity extends AppCompatActivity {
 //
 //                    j.putExtra("open","home");
 //                    startActivity(j);
-                        finishAffinity();
+//                        finishAffinity();
                         new Util().myIntent(VehicleListActivity.this, NewOrderListActivity.class);
-//                    Intent i=new Intent(VehicleListActivity.this,AddVehicleActivity.class);
-//                    i.putExtra("VehicleId",getdata.data.temOdId);
-////                    i.putExtra("orderType",orderType);
-//                    startActivity(i);
+
                     } else {
                         MDToast mdToast = MDToast.makeText(VehicleListActivity.this, "Some Technical Issue", MDToast.LENGTH_LONG, MDToast.TYPE_ERROR);
                         mdToast.show();
@@ -659,7 +658,7 @@ public class VehicleListActivity extends AppCompatActivity {
                             mdToast.show();
                         }
                         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-                        finishAffinity();
+//
                         new Util().myIntent(VehicleListActivity.this, NewOrderListActivity.class);
 
 

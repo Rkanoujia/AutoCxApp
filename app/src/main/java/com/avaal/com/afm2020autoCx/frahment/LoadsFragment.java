@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.avaal.com.afm2020autoCx.APIClient;
 import com.avaal.com.afm2020autoCx.APIInterface;
 import com.avaal.com.afm2020autoCx.CreateTripType;
+import com.avaal.com.afm2020autoCx.LoginActivity;
 import com.avaal.com.afm2020autoCx.R;
 import com.avaal.com.afm2020autoCx.adapter.OrderListAdapter;
 import com.avaal.com.afm2020autoCx.models.OrderListModel;
@@ -154,7 +155,7 @@ public class LoadsFragment extends Fragment {
     @OnClick(R.id.add_order)
     void add_order(){
         Intent j = new Intent(getActivity(), CreateTripType.class);
-        j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
 //        j.putExtra("AuthKey", getActivity().getIntent().getStringExtra("AuthKey"));
         startActivity(j);
         getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
@@ -162,13 +163,15 @@ public class LoadsFragment extends Fragment {
     @OnClick(R.id.new_vehicle)
     void  new_vehicle(){
         Intent j = new Intent(getActivity(), CreateTripType.class);
-        j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
 //        j.putExtra("AuthKey", getActivity().getIntent().getStringExtra("AuthKey"));
         startActivity(j);
         getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 @OnClick(R.id.ship_li)
 void shipfilter(){
+
+
     mBottomSheetLayout.contractFab();
     filterString="Shipped";
     allIcon.setVisibility(View.INVISIBLE);
@@ -178,6 +181,7 @@ void shipfilter(){
 }
     @OnClick(R.id.save_li)
     void savefilter(){
+
         mBottomSheetLayout.contractFab();
         filterString="Saved";
         allIcon.setVisibility(View.INVISIBLE);
@@ -187,6 +191,7 @@ void shipfilter(){
     }
     @OnClick(R.id.all_li)
     void allfilter(){
+
         mBottomSheetLayout.contractFab();
         filterString="";
         allIcon.setVisibility(View.VISIBLE);
@@ -195,6 +200,11 @@ void shipfilter(){
         getSaveLoads();
     }
     @OnClick(R.id.add_trip) void onFabClick() {
+        if(!new Util().isNetworkAvailable(getActivity())) {
+            MDToast mdToast = MDToast.makeText(getActivity(), "Check Your Internet connection", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
+            mdToast.show();
+            return;
+        }
         mBottomSheetLayout.expandFab();
     }
 

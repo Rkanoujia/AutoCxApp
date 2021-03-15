@@ -128,11 +128,10 @@ public class NewAddVehicleActivity extends AppCompatActivity implements OnMapRea
     View bottomSheet;
     @BindView(R.id.dragg_result)
     TextView resultText;
-    @BindView(R.id.text_hint)
-            TextView text_hint;
+    public static final int CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE = 1771;
     GoogleMap mMap;
     private LatLng mLoc;
-    LatLng SelectlatLng=new LatLng(28.4575,77.0263);
+    private static final int PREINSPECTION = 101;
     View mapView;
 
     @BindView(R.id.title)
@@ -273,7 +272,8 @@ public class NewAddVehicleActivity extends AppCompatActivity implements OnMapRea
     @BindView(R.id.bottom_li)
     LinearLayout bottom_li;
     APIInterface apiInterface;
-    Boolean preInspection=true;
+    @BindView(R.id.text_hint)
+    TextView text_hint;
     VehicleApiInterface vehicleApiInterface;
     ArrayList<String> yearList = new ArrayList<>();
     ArrayList<String> makeList = new ArrayList<>();
@@ -296,22 +296,22 @@ public class NewAddVehicleActivity extends AppCompatActivity implements OnMapRea
     private View loaderView;
     boolean isLoaded = false;
     private static final int RC_BARCODE_CAPTURE = 9001;
-    private static final int PREINSPECTION=101;
-    String imageFilePath, imageType, qWvrUnit="-1";
-    String buildMonth="-1", buildYear="-1",miliage="-1",fullAddress="";
-    String oemStr, tpmsStr, dieselStr, speedoStr, titleconvStr, billStr, titleStr, trackStr,releaseFormStr,currency_txt;
-    private String trackUrl="", billUrl="", titleConvUrl="", tpmsUrl="", millageUrl="", oemUrl="", releaseFromUrl="",titleUrl="", titleUrl1="", titleConvUrl1="",imgId;
-    private String trackId="0", billId="0", titleConvId="0", tpmsId="0", millageId="0", oemId="0",releaseFromId="0", titleId="0", titleId1="0", titleConvId1="0",recall2Url="",recall2Id="0",recall1Url="",recall1Id="0";
-    public static final int CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE = 1771;
-    Boolean inventory=false;
-    String orderId="0",vehicleId="0";
+    LatLng SelectlatLng = new LatLng(28.4575, 77.0263);
+    Boolean preInspection = true;
+    String imageFilePath, imageType, qWvrUnit = "-1";
+    String buildMonth = "-1", buildYear = "-1", miliage = "-1", fullAddress = "";
+    String oemStr, tpmsStr, dieselStr, speedoStr, titleconvStr, billStr, titleStr, trackStr, releaseFormStr, currency_txt;
+    Boolean inventory = false;
+    String orderId = "0", vehicleId = "0";
+    boolean IsNew = false;
+    ArrayList<String> myList = new ArrayList<>();
     ProgressDialog pd;
-    boolean IsNew=false;
-    ArrayList<String> myList=new ArrayList<>();
+    boolean isupadteLocation = true;
+    String TAG = "";
     Calendar myCalendar = Calendar.getInstance();
-    boolean isupadteLocation=true;
+    private String trackUrl = "", billUrl = "", titleConvUrl = "", tpmsUrl = "", millageUrl = "", oemUrl = "", releaseFromUrl = "", titleUrl = "", titleUrl1 = "", titleConvUrl1 = "", imgId;
     protected static final int REQUEST_CHECK_SETTINGS = 0x1;
-    String TAG="";
+    private String trackId = "0", billId = "0", titleConvId = "0", tpmsId = "0", millageId = "0", oemId = "0", releaseFromId = "0", titleId = "0", titleId1 = "0", titleConvId1 = "0", recall2Url = "", recall2Id = "0", recall1Url = "", recall1Id = "0";
 
 
     private GoogleMap.OnCameraIdleListener onCameraIdleListener;
@@ -338,7 +338,7 @@ public class NewAddVehicleActivity extends AppCompatActivity implements OnMapRea
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 //        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         apiInterface = APIClient.getClient().create(APIInterface.class);
-        prf=new PreferenceManager(this);
+        prf = new PreferenceManager(this);
 
         title.setText("Vehicle Details");
 
@@ -361,7 +361,7 @@ public class NewAddVehicleActivity extends AppCompatActivity implements OnMapRea
                                 Manifest.permission.ACCESS_BACKGROUND_LOCATION,
                                 Manifest.permission.ACCESS_COARSE_LOCATION,
                                 Manifest.permission.CAMERA}, 1);
-            }else{
+            } else {
                 ActivityCompat.requestPermissions(NewAddVehicleActivity.this,
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
                                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -375,16 +375,15 @@ public class NewAddVehicleActivity extends AppCompatActivity implements OnMapRea
         }
         GPSTrackerService gpstrack = new GPSTrackerService(NewAddVehicleActivity.this, this);
         if (gpstrack.canGetLocation())
-        SelectlatLng=new LatLng(gpstrack.getLocation().getLatitude(),gpstrack.getLocation().getLongitude());
+            SelectlatLng = new LatLng(gpstrack.getLocation().getLatitude(), gpstrack.getLocation().getLongitude());
 
-            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.map);
-            mapView = mapFragment.getView();
-            mapFragment.getMapAsync(this);
-            bsBehavior = AnchorSheetBehavior.from(bottomSheet);
-            bsBehavior.setState(AnchorSheetBehavior.STATE_SETTLING);
-            configureCameraIdle();
-
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapView = mapFragment.getView();
+        mapFragment.getMapAsync(this);
+        bsBehavior = AnchorSheetBehavior.from(bottomSheet);
+        bsBehavior.setState(AnchorSheetBehavior.STATE_SETTLING);
+        configureCameraIdle();
 
 
 //anchor offset. any value between 0 and 1 depending upon the position u want
@@ -414,7 +413,7 @@ public class NewAddVehicleActivity extends AppCompatActivity implements OnMapRea
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
 
                 float h = bottomSheet.getHeight();
-                float off = h*slideOffset;
+                float off = h * slideOffset;
 
                 switch (bsBehavior.getState()) {
                     case AnchorSheetBehavior.STATE_DRAGGING:
@@ -443,17 +442,18 @@ public class NewAddVehicleActivity extends AppCompatActivity implements OnMapRea
         tapactionlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(bsBehavior.getState()==AnchorSheetBehavior.STATE_COLLAPSED) {
+                if (bsBehavior.getState() == AnchorSheetBehavior.STATE_COLLAPSED) {
                     bsBehavior.setState(AnchorSheetBehavior.STATE_EXPANDED);
-                }else if(bsBehavior.getState()==AnchorSheetBehavior.STATE_EXPANDED) {
+                } else if (bsBehavior.getState() == AnchorSheetBehavior.STATE_EXPANDED) {
                     bsBehavior.setState(AnchorSheetBehavior.STATE_COLLAPSED);
                 }
             }
         });
-         addView();
+        addView();
 
     }
-    void addView(){
+
+    void addView() {
         vin_clear.setVisibility(View.INVISIBLE);
         prf = new PreferenceManager(this);
         Util util = new Util();
@@ -462,7 +462,7 @@ public class NewAddVehicleActivity extends AppCompatActivity implements OnMapRea
             mdToast.show();
             return;
         }
-        if(prf.getStringData("ScanTutorial").equalsIgnoreCase(""))
+        if (prf.getStringData("ScanTutorial").equalsIgnoreCase(""))
             tutorial();
         try {
             showAnimation();
@@ -470,17 +470,16 @@ public class NewAddVehicleActivity extends AppCompatActivity implements OnMapRea
             milegeList("DTC");
         } catch (Exception e) {
             e.printStackTrace();
-            new Util().sendSMTPMail(NewAddVehicleActivity.this,null,"CxE004",e,"");
+            new Util().sendSMTPMail(NewAddVehicleActivity.this, null, "CxE004", e, "");
         }
 
 //        if(getIntent().getStringExtra("OrderId").equalsIgnoreCase("0"))
-        orderId=getIntent().getStringExtra("OrderId");
+        orderId = getIntent().getStringExtra("OrderId");
 //        else
 //            orderId= prf.getStringData("OrderId");
-        vehicleId=getIntent().getStringExtra("VehicleId");
+        vehicleId = getIntent().getStringExtra("VehicleId");
 
-        if (getIntent().getStringExtra("VehicleType") != null)
-        {
+        if (getIntent().getStringExtra("VehicleType") != null) {
             if (getIntent().getStringExtra("VehicleType").equalsIgnoreCase("true")) {
 //                if (prf.getStringData("OrderStatus").equalsIgnoreCase("save")) {
 //                    try {
@@ -498,31 +497,30 @@ public class NewAddVehicleActivity extends AppCompatActivity implements OnMapRea
                     paramBundle.printStackTrace();
                 }
 //                }
-            }else {
+            } else {
 
                 if (prf.getStringData("OrderStatus").equalsIgnoreCase("Saved")) {
                     try {
                         showAnimation();
                         getVehicleList(orderId, "VLSaved");
                     } catch (Exception e) {
-                        new Util().sendSMTPMail(NewAddVehicleActivity.this,null,"CxE004",e,"");
+                        new Util().sendSMTPMail(NewAddVehicleActivity.this, null, "CxE004", e, "");
                         e.printStackTrace();
                     }
-                }else if (prf.getStringData("OrderStatus").equalsIgnoreCase("Shipped")) {
+                } else if (prf.getStringData("OrderStatus").equalsIgnoreCase("Shipped")) {
                     try {
                         showAnimation();
                         getVehicleList(orderId, "VLSaved");
                     } catch (Exception e) {
-                        new Util().sendSMTPMail(NewAddVehicleActivity.this,null,"CxE004",e,"");
+                        new Util().sendSMTPMail(NewAddVehicleActivity.this, null, "CxE004", e, "");
                         e.printStackTrace();
                     }
-                }
-                else {
+                } else {
                     try {
                         showAnimation();
                         getAFMVehicleList(prf.getStringData("OrderId"));
                     } catch (Exception e) {
-                        new Util().sendSMTPMail(NewAddVehicleActivity.this,null,"CxE004",e,"");
+                        new Util().sendSMTPMail(NewAddVehicleActivity.this, null, "CxE004", e, "");
                         e.printStackTrace();
                     }
                 }
@@ -543,7 +541,7 @@ public class NewAddVehicleActivity extends AppCompatActivity implements OnMapRea
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(charSequence.length() != 0) {
+                if (charSequence.length() != 0) {
                     vin_clear.setVisibility(View.VISIBLE);
                 } else {
                     vin_clear.setVisibility(View.GONE);
@@ -557,7 +555,7 @@ public class NewAddVehicleActivity extends AppCompatActivity implements OnMapRea
 //                    s = s.toUpperCase();
 //                    vinNo.setText(s);
 //                }
-                Boolean isup=true;
+                Boolean isup = true;
                 if (vinNo.length() >= 8) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
@@ -574,17 +572,17 @@ public class NewAddVehicleActivity extends AppCompatActivity implements OnMapRea
                     model.setEnabled(true);
                     year.setClickable(true);
                     year.setEnabled(true);
-                    if(vinNo.length()==17) {
+                    if (vinNo.length() == 17) {
                         try {
-                            if(!isup)
+                            if (!isup)
                                 getVehicleDetail(vinNo.getText().toString());
                         } catch (Exception e) {
-                            new Util().sendSMTPMail(NewAddVehicleActivity.this,null,"CxE004",e,"");
+                            new Util().sendSMTPMail(NewAddVehicleActivity.this, null, "CxE004", e, "");
                             e.printStackTrace();
                         }
                     }
                 } else {
-                    isup=false;
+                    isup = false;
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         saveBol.setBackgroundColor(Color.parseColor("#b0aaaa"));
                         saveBol.setTextColor(getColor(R.color.black));
@@ -614,16 +612,15 @@ public class NewAddVehicleActivity extends AppCompatActivity implements OnMapRea
                     }
                 }
 
-                if(vinNo.length() >= 8) {
+                if (vinNo.length() >= 8) {
                     try {
                         getVehicleDetail(vinNo.getText().toString());
                     } catch (Exception e) {
-                        new Util().sendSMTPMail(NewAddVehicleActivity.this,null,"CxE004",e,"");
+                        new Util().sendSMTPMail(NewAddVehicleActivity.this, null, "CxE004", e, "");
                         e.printStackTrace();
                     }
-                }
-                else {
-                    if(vinNo.length() != 0) {
+                } else {
+                    if (vinNo.length() != 0) {
                         MDToast mdToast = MDToast.makeText(NewAddVehicleActivity.this, "Enter Valid VIN Number", MDToast.LENGTH_LONG, MDToast.TYPE_ERROR);
                         mdToast.show();
                         return;
@@ -681,8 +678,7 @@ public class NewAddVehicleActivity extends AppCompatActivity implements OnMapRea
             title1.setVisibility(View.GONE);
             recall_sheet.setVisibility(View.GONE);
         }
-        if ((getIntent().getStringExtra("VehicleType") != null) && getIntent().getStringExtra("VehicleType").equalsIgnoreCase("true"))
-        {
+        if ((getIntent().getStringExtra("VehicleType") != null) && getIntent().getStringExtra("VehicleType").equalsIgnoreCase("true")) {
             inventory = true;
             tracking.setVisibility(View.GONE);
             bill.setVisibility(View.GONE);
@@ -726,18 +722,18 @@ public class NewAddVehicleActivity extends AppCompatActivity implements OnMapRea
             years();
         } catch (Exception e) {
             e.printStackTrace();
-            new Util().sendSMTPMail(NewAddVehicleActivity.this,null,"CxE004",e,"");
+            new Util().sendSMTPMail(NewAddVehicleActivity.this, null, "CxE004", e, "");
         }
         try {
             make();
         } catch (Exception e) {
-            new Util().sendSMTPMail(NewAddVehicleActivity.this,null,"CxE004",e,"");
+            new Util().sendSMTPMail(NewAddVehicleActivity.this, null, "CxE004", e, "");
             e.printStackTrace();
         }
         try {
             model();
         } catch (Exception e) {
-            new Util().sendSMTPMail(NewAddVehicleActivity.this,null,"CxE004",e,"");
+            new Util().sendSMTPMail(NewAddVehicleActivity.this, null, "CxE004", e, "");
             e.printStackTrace();
         }
         spinner1();
@@ -761,6 +757,7 @@ public class NewAddVehicleActivity extends AppCompatActivity implements OnMapRea
 
 //             }
     }
+
     private void configureCameraIdle() {
         onCameraIdleListener = new GoogleMap.OnCameraIdleListener() {
             @Override
@@ -783,8 +780,8 @@ public class NewAddVehicleActivity extends AppCompatActivity implements OnMapRea
 //                .snippet("Hello")
 //                .icon(BitmapDescriptorFactory.fromResource(R.drawable.car_marker)));
                         if (!locality.isEmpty() && !country.isEmpty())
-                            Log.e("Lat/Long",""+SelectlatLng.latitude+","+SelectlatLng.longitude);
-                        resultText.setText(locality + "  " + country);
+                            resultText.setText(locality + "  " + country);
+                        Log.e("Lat/Long", "" + SelectlatLng.latitude + "," + SelectlatLng.longitude);
 //                        longitude=SelectlatLng.longitude;
 //                        latitude=SelectlatLng.latitude;
 
@@ -807,6 +804,21 @@ public class NewAddVehicleActivity extends AppCompatActivity implements OnMapRea
         mMap.animateCamera(CameraUpdateFactory.zoomTo(18));
         mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
         mMap.setIndoorEnabled(false);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            ActivityCompat.requestPermissions(NewAddVehicleActivity.this,
+                    new String[]{
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            android.Manifest.permission.ACCESS_COARSE_LOCATION
+                    }, 1);
+            return;
+        }
         mMap.setMyLocationEnabled(true);
 //        mMap.setOnMarkerDragListener(this);
 //        mMap.setOnMapLongClickListener(this);
@@ -3123,7 +3135,9 @@ public class NewAddVehicleActivity extends AppCompatActivity implements OnMapRea
         ImageView image = (ImageView) settingsDialog.findViewById(R.id.image_url);
         ImageView deleteImg = (ImageView) settingsDialog.findViewById(R.id.delete_view);
         Button ok = (Button) settingsDialog.findViewById(R.id.ok);
-        if (!prf.getStringData("OrderStatus").equalsIgnoreCase("Saved") && !prf.getStringData("OrderStatus").equalsIgnoreCase("Shipped"))
+        if (prf.getStringData("OrderStatus").equalsIgnoreCase("Saved") || prf.getStringData("OrderStatus").equalsIgnoreCase("Shipped") || inventory)
+            deleteImg.setVisibility(View.VISIBLE);
+        else
             deleteImg.setVisibility(View.GONE);
         ok.setOnClickListener(new View.OnClickListener() {
             @Override

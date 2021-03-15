@@ -217,6 +217,18 @@ public class RouteSelectionActivity extends AppCompatActivity {
     @OnClick(R.id.getMile)
     void  getMile(){
         try {
+            if(pickupId.equalsIgnoreCase("0")) {
+                MDToast mdToast = MDToast.makeText(this, "Please Select Pickup", MDToast.LENGTH_LONG, MDToast.TYPE_INFO);
+                mdToast.show();
+                return;
+            }
+
+            if(deliveryId.equalsIgnoreCase("0")){
+                MDToast mdToast = MDToast.makeText(this, "Please Select Delivery", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
+                mdToast.show();
+                return;
+            }
+
             showAnimation();
             getMiles();
         } catch (Exception e) {
@@ -338,7 +350,6 @@ public class RouteSelectionActivity extends AppCompatActivity {
         });
 
         Date c = Calendar.getInstance().getTime();
-
 
         deliveydate.setText(sdf.format(c)+" "+String.format("%02d:%02d", 12, 00)+" "+ "AM");
         pickupdate.setText(sdf.format(c)+" "+String.format("%02d:%02d", 12, 00)+" "+ "AM");
@@ -1458,11 +1469,7 @@ public class RouteSelectionActivity extends AppCompatActivity {
     }
    void getMiles()throws Exception{
 
-        if(pickupId.equalsIgnoreCase("0"))
-            return;
 
-        if(deliveryId.equalsIgnoreCase("0"))
-            return;
 
        distanceUnit="";
        distance="";

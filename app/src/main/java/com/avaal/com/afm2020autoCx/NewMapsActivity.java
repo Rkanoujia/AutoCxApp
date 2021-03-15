@@ -32,6 +32,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.valdesekamdem.library.mdtoast.MDToast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -93,6 +94,14 @@ TextView resutText,done;
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(!new Util().isNetworkAvailable(NewMapsActivity.this)) {
+                    MDToast mdToast = MDToast.makeText(NewMapsActivity.this, "Check Your Internet connection", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
+                    mdToast.show();
+                    return;
+                }
+
+
                 Gson gson = new Gson();
 
                 GetVehicleIdListModel.datavalue localObject = gson.fromJson(getIntent().getStringExtra("vehicle"), new TypeToken<GetVehicleIdListModel.datavalue>() {}.getType());
@@ -190,8 +199,8 @@ TextView resutText,done;
 //                .snippet("Hello")
 //                .icon(BitmapDescriptorFactory.fromResource(R.drawable.car_marker)));
                         if (!locality.isEmpty() && !country.isEmpty())
-                            Log.e("Lat/Long",""+SelectlatLng.latitude+","+SelectlatLng.longitude);
                             resutText.setText(locality + "  " + country);
+                        Log.e("Lat/Long",""+SelectlatLng.latitude+","+SelectlatLng.longitude);
 //                        longitude=SelectlatLng.longitude;
 //                        latitude=SelectlatLng.latitude;
 
@@ -266,6 +275,7 @@ TextView resutText,done;
         mMap = googleMap;
         mMap.setOnCameraIdleListener(onCameraIdleListener);
 //        mMap.addMarker(new MarkerOptions().position(latLng).draggable(true));
+
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(20));
         mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);

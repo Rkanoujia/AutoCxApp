@@ -656,7 +656,7 @@ public class NewOrderViewActivity extends AppCompatActivity {
 //
 //                    j.putExtra("open","home");
 //                    startActivity(j);
-                        finishAffinity();
+
                         new Util().myIntent(NewOrderViewActivity.this, NewOrderListActivity.class);
 //                    Intent i=new Intent(NewOrderViewActivity.this,AddVehicleActivity.class);
 //                    i.putExtra("VehicleId",getdata.data.temOdId);
@@ -697,7 +697,7 @@ public class NewOrderViewActivity extends AppCompatActivity {
                         MDToast mdToast = MDToast.makeText(NewOrderViewActivity.this, "Your load has been shipped to Carrier", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                         mdToast.show();
                         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-                        finishAffinity();
+                       
                         new Util().myIntent(NewOrderViewActivity.this, NewOrderListActivity.class);
 
 

@@ -3,6 +3,7 @@ package com.avaal.com.afm2020autoCx;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -53,6 +54,7 @@ import com.valdesekamdem.library.mdtoast.MDToast;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -108,7 +110,6 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
     boolean isFABOpen=false;
     private StickerListener mStickerListener;
     boolean open=true;
-    View arrow_view;
     ImageAdatpter imagesAdapte;
     ArrayList<DamageImageModel> imagesList=new ArrayList<>();
     @BindView(R.id.rvEmoji)
@@ -181,8 +182,9 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
 //        retake=findViewById(R.id.retake);
 //        remove_all=findViewById(R.id.remove);
 //        show_hide=findViewById(R.id.view);
-        fabmenu= findViewById(R.id.menu_list);
-        arrow_view=findViewById(R.id.arrow_view);
+
+        fabmenu = findViewById(R.id.menu_list);
+//        arrow_view=findViewById(R.id.arrow_view);
 
         RecyclerView rvEmoji = findViewById(R.id.images);
 
@@ -278,7 +280,7 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
                 .setRequestCode(100)
                 .setCount(20)
                 .setFrontfacing(false)
-                .setImageQuality(ImageQuality.REGULAR)
+                .setMode(Options.Mode.Picture)
                 .setPreSelectedUrls(returnValue)
                 .setScreenOrientation(Options.SCREEN_ORIENTATION_PORTRAIT)
                 .setPath("/AFM");
@@ -289,7 +291,7 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
             imagesFix.put(R.drawable.car_d, "IsGallery");
             imagesFix.put(R.drawable.car_e, "IsGallery");
             imagesFix.put(R.drawable.car_b, "IsGallery");
-            returnValue.clear();
+//            returnValue.clear();
             Pix.start(DamageActivity.this, options);
         }else
       {
@@ -303,43 +305,62 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
 
     @OnClick(R.id.cancel)
     void cancel(){
-        super.onBackPressed();
+       onBackPressed();
+
     }
     @OnClick(R.id.delete_pic)
             void remdelete_picove() {
+        if (imagesList.size() == 0) {
+            return;
+        }
+
         mPhotoEditor.clearAllViews();
         if (imagesList.size() == 0) {
             MDToast mdToast = MDToast.makeText(this, "No Image for Delete All Marks", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
             mdToast.show();
-//            new Util().toastView(DamageActivity.this, "No Images for Delete all Marks", "");
         } else {
-            orignalimagesFix.put(imagesList.get(IssaveImg).getImageid(), "");
-            imagesFix.put(imagesList.get(IssaveImg).getImageid(), "");
+            if(imagesList.get(IssaveImg).getName().contains("extra_")) {
+                orignalimagesFix.remove(imagesList.get(IssaveImg).getImageid());
+                imagesFix.remove(imagesList.get(IssaveImg).getImageid());
+            }else {
+                orignalimagesFix.put(imagesList.get(IssaveImg).getImageid(), "");
+                imagesFix.put(imagesList.get(IssaveImg).getImageid(), "");
+            }
+            mPhotoEditor.clearAllViews();
             imagesList.remove(IssaveImg);
             imagesAdapte.notifyDataSetChanged();
             if (imagesList.size() > 0) {
-                IssaveImg = 0;
-                mPhotoEditorView.getSource().setImageURI(Uri.fromFile(new File(imagesList.get(0).getUrl())));
+                IssaveImg = imagesList.size()-1;
+                mPhotoEditorView.getSource().setImageURI(Uri.fromFile(new File(imagesList.get(IssaveImg).getUrl())));
             } else
                 mPhotoEditorView.getSource().setImageResource(R.drawable.bg_car_image);
 
 
         }
+
     }
     @OnClick(R.id.retake)
     void retake(){
-        if(imagesList.size()==0){
-            MDToast mdToast = MDToast.makeText(this, "No Image for Retake", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
+        if (imagesList.size() == 0) {
+            MDToast mdToast = MDToast.makeText(this, "No Images for Retake", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
             mdToast.show();
-//            new Util().toastView(DamageActivity.this,"No Images for Retake","");
-        }else {
-            orignalimagesFix.put(imagesList.get(IssaveImg).getImageid(), "");
-            imagesFix.put(imagesList.get(IssaveImg).getImageid(), "");
-            imagesList.remove(IssaveImg);
-            imagesAdapte.notifyDataSetChanged();
-            Intent intent = new Intent(DamageActivity.this, CameraDemoActivity.class);
-            intent.putExtra("images", imagesFix);
-            startActivityForResult(intent, 1222);
+        } else {
+            mPhotoEditor.clearAllViews();
+            if(imagesList.get(IssaveImg).getName().contains("extra_")){
+                orignalimagesFix.remove(imagesList.get(IssaveImg).getImageid());
+                imagesFix.remove(imagesList.get(IssaveImg).getImageid());
+//                imagesList.remove(IssaveImg);
+//                imagesAdapte.notifyDataSetChanged();
+                openCamera();
+            }else{
+                orignalimagesFix.put(imagesList.get(IssaveImg).getImageid(), "");
+                imagesFix.put(imagesList.get(IssaveImg).getImageid(), "");
+//                imagesList.remove(IssaveImg);
+//                imagesAdapte.notifyDataSetChanged();
+                openCamera();
+            }
+
+
         }
 
     }
@@ -385,6 +406,7 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
             public void onClick(View v) {
                 dialog.dismiss();
                imagesList.clear();
+                mPhotoEditor.clearAllViews();
                imagesAdapte.notifyDataSetChanged();
                 imagesFix = new HashMap<Integer, String>();
                 imagesFix.put(R.drawable.car_d, "");
@@ -547,29 +569,28 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
     private void saveImage1(int position,String camera) {
 
 //            showLoading("Saving...");
-        File file = new File(Environment.getExternalStorageDirectory()
-                + File.separator + ""
-                + System.currentTimeMillis() + ".png");
-        String imageFileName = ""+System.currentTimeMillis();
-        File storageDir =
-                getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+//        File file = new File(Environment.getExternalStorageDirectory()
+//                + File.separator + ""
+//                + System.currentTimeMillis() + ".png");
+
+        String path = getApplicationContext().getDir("AFM", Context.MODE_PRIVATE)+ File.separator;
+//                    f.delete();
+        OutputStream outFile = null;
+        final String name=String.valueOf(System.currentTimeMillis()) + ".png";
+        File file = new File(path, name);
 
             try {
-//                file.createNewFile();
-                File image = File.createTempFile(
-                        imageFileName,  /* prefix */
-                        ".png",         /* suffix */
-                        storageDir      /* directory */
-                );
+                file.createNewFile();
+
                 SaveSettings saveSettings = new SaveSettings.Builder()
                         .setClearViewsEnabled(true)
                         .setTransparencyEnabled(true)
                         .build();
 
-                mPhotoEditor.saveAsFile(image.getAbsolutePath(), saveSettings, new PhotoEditor.OnSaveListener() {
+                mPhotoEditor.saveAsFile(file.getAbsolutePath(), saveSettings, new PhotoEditor.OnSaveListener() {
                     @Override
                     public void onSuccess(@NonNull String imagePath) {
-     hideAnimation();
+                       hideAnimation();
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -600,7 +621,7 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
             } catch (IOException e) {
                 e.printStackTrace();
                 hideAnimation();
-                hideLoading();
+//                hideLoading();
 //                showSnackbar(e.getMessage());
             }
 
@@ -661,7 +682,7 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
                                 orignalimagesFix.put(entry.getKey(),entry.getValue());
                         }
                                if(getIntent().getStringExtra("IsEdit")!=null){
-                                   if (!entry.getValue().equalsIgnoreCase("uploaded") && !entry.getValue().equalsIgnoreCase("")) {
+                                   if (!entry.getValue().equalsIgnoreCase("IsGallery") && !entry.getValue().equalsIgnoreCase("uploaded") && !entry.getValue().equalsIgnoreCase("")) {
                                        if(fixName.get(entry.getKey())!=null) {
                                            DamageImageModel damageImageModel = new DamageImageModel(fixName.get(entry.getKey()), entry.getValue(), entry.getKey(),fixName.get(entry.getKey()),fixViewName.get(entry.getKey()));
                                            imagesList.add(damageImageModel);
@@ -686,9 +707,10 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
 
                                    }
                                }else {
+
                                    if(getIntent().getStringExtra("IsGallery")!=null){
-                                       if (!entry.getValue().equals("") && !entry.getValue().equals("IsGallery")) {
-                                           if (fixName.get(entry.getKey()) != null) {
+                                       if (!entry.getValue().equals("uploaded") &&!entry.getValue().equals("") && !entry.getValue().equals("IsGallery")) {
+                                            if (fixName.get(entry.getKey()) != null) {
                                                DamageImageModel damageImageModel = new DamageImageModel(fixName.get(entry.getKey()), entry.getValue(), entry.getKey(), fixName.get(entry.getKey()), fixViewName.get(entry.getKey()));
                                                imagesList.add(damageImageModel);
                                            } else {
@@ -733,42 +755,44 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
                                 }
                             });
                             imagesAdapte.notifyDataSetChanged();
+                            image.scrollToPosition(IssaveImg);
                         }
                     }, 100);
 
                     break;
                 case 100:
-
-                        returnValue = data.getStringArrayListExtra(Pix.IMAGE_RESULTS);
+                    imagesList.clear();
+                    returnValue = data.getStringArrayListExtra(Pix.IMAGE_RESULTS);
                     Random rand = new Random();
                     Date date = new Date();
-                        for(int i=0;returnValue.size()>i;i++){
-                            int t=rand.nextInt(1000);
-                            imagesFix.put(t,new File(returnValue.get(i)).getAbsolutePath());
-                            orignalimagesFix.put(t,new File(returnValue.get(i)).getAbsolutePath());
-                            DamageImageModel damageImageModel = new DamageImageModel("extra_"+date.getTime()+""+i, new File(returnValue.get(i)).getAbsolutePath(),t ,"InspectionExtraImages","extra_"+new Date().getTime()+""+i);
-                            imagesList.add(damageImageModel);
-                        }
+                    for (int i = 0; returnValue.size() > i; i++) {
+                        int t = rand.nextInt(1000);
+                        imagesFix.put(t, new File(returnValue.get(i)).getAbsolutePath());
+                        orignalimagesFix.put(t, new File(returnValue.get(i)).getAbsolutePath());
+                        DamageImageModel damageImageModel = new DamageImageModel("extra_" + date.getTime() + "" + i, new File(returnValue.get(i)).getAbsolutePath(), t, "InspectionExtraImages", "extra_" + new Date().getTime() + "" + i);
+                        imagesList.add(damageImageModel);
+                    }
 
-                        Log.e("new select ",""+returnValue.size());
+//                    Log.e("new select ", "" + returnValue.size());
 //            TemImagesAdapte.addImage(returnValue);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             // Do something after 5s = 5000ms
-                            if(imagesList.size()>0) {
-                                IssaveImg=imagesList.size()-1;
+                            if (imagesList.size() > 0) {
+                                IssaveImg = imagesList.size() - 1;
                                 mPhotoEditorView.getSource().setImageURI(Uri.fromFile(new File(imagesList.get(IssaveImg).getUrl())));
                             }
                             Collections.sort(imagesList, new Comparator<DamageImageModel>() {
                                 @Override
                                 public int compare(DamageImageModel lhs, DamageImageModel rhs) {
-                                    return lhs.getImageid()- rhs.getImageid();
+                                    return lhs.getImageid() - rhs.getImageid();
                                 }
                             });
                             imagesAdapte.notifyDataSetChanged();
+                            image.scrollToPosition(IssaveImg);
                         }
-                    }, 100);
+                    }, 300);
                     break;
             }
         }
@@ -877,16 +901,21 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
 
     @Override
     public void onBackPressed() {
-        if (mIsFilterVisible) {
-            showFilter(false);
-        } else if (!mPhotoEditor.isCacheEmpty()) {
+//        if (mIsFilterVisible) {
+//            showFilter(false);
+//        } else if (!mPhotoEditor.isCacheEmpty()) {
            backbutton();
-        } else {
-            super.onBackPressed();
-        }
+//        } else {
+//            super.onBackPressed();
+//        }
     }
 
     void backbutton(){
+        if(imagesList.size()==0){
+            finish();
+            return;
+        }else
+        saveImage(IssaveImg,"");
         final Dialog dialog = new Dialog(DamageActivity.this);
         dialog.setContentView(R.layout.custome_alert_dialog);
         dialog.setCancelable(false);
@@ -896,15 +925,20 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
         Button cancel=(Button)dialog.findViewById(R.id.buttoncancel);
         TextView title=(TextView)dialog.findViewById(R.id.title) ;
         TextView message=(TextView)dialog.findViewById(R.id.message) ;
-        title.setText("Are You Sure?");
-        message.setText("Want To Back ?");
+        title.setText("Inspection Images");
+        message.setText("Do you want to save the pictures ?");
         ok.setText("Yes");
         cancel.setText("No");
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                finish();
+                if(imagesList.size()>0){
+                    showAnimation();
+                    sendpreinspection(imagesList.get(uploadImg));
+                }else
+                    finish();
+
 
             }
         });
@@ -912,6 +946,7 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                finish();
             }
         });
         dialog.show();
@@ -1061,77 +1096,6 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
         return image;
     }
 
-    public class ImageAdatpter extends RecyclerView.Adapter<ImageAdatpter.MyViewHolder> {
-
-        private int count;
-        ArrayList<DamageImageModel> triplist;
-        boolean istselect=true;
-        public class MyViewHolder extends RecyclerView.ViewHolder {
-
-            FrameLayout border;
-           ImageView image_view;
-           TextView name;
-            View referNo;
-
-            public MyViewHolder(View view) {
-                super(view);
-
-                image_view = (ImageView) view.findViewById(R.id.image_view);
-                name = (TextView) view.findViewById(R.id.name);
-                border=(FrameLayout)view.findViewById(R.id.border);
-
-            }
-        }
-        public ImageAdatpter( ArrayList<DamageImageModel> triplist) {
-            this.triplist = triplist;
-        }
-
-        @Override
-        public ImageAdatpter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.image_item, parent, false);
-
-            return new ImageAdatpter.MyViewHolder(itemView);
-        }
-
-        @Override
-        public void onBindViewHolder(final MyViewHolder holder, final int position) {
-            Glide.with(DamageActivity.this).load(new File(""+triplist.get(position).getUrl())).into(holder.image_view);
-          holder.name.setText(triplist.get(position).getViewName());
-          if(position==IssaveImg) {
-              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                  holder.border.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.blue)));
-              }
-          }else{
-              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                  holder.border.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorWhite)));
-              }
-          }
-
-            holder.image_view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
-                        return;
-                    }
-                    mLastClickTime = SystemClock.elapsedRealtime();
-
-
-                    showAnimation();
-                    saveImage(position,"");
-
-
-                }
-            });
-//
-        }
-
-        @Override
-        public int getItemCount() {
-            return triplist.size();
-        }
-
-    }
     void sendpreinspection(DamageImageModel imageModel) {
 
 //        System.gc();
@@ -1163,11 +1127,56 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
 //            bitmapOptions.inSampleSize = 2;
             thumbnail = BitmapFactory.decodeFile(filepath, bitmapOptions);
 
+
+
+            int actualHeight = bitmapOptions.outHeight;
+            int actualWidth = bitmapOptions.outWidth;
+
+//      max Height and width values of the compressed image is taken as 816x612
+            float maxHeight = 1024.0f;
+            float maxWidth = 886.0f;
+            float imgRatio = actualWidth / actualHeight;
+            float maxRatio = maxWidth / maxHeight;
+
+//      width and height values are set maintaining the aspect ratio of the image
+            if (actualHeight > maxHeight || actualWidth > maxWidth) {
+                if (imgRatio < maxRatio) {
+                    imgRatio = maxHeight / actualHeight;
+                    actualWidth = (int) (imgRatio * actualWidth);
+                    actualHeight = (int) maxHeight;
+                } else if (imgRatio > maxRatio) {
+                    imgRatio = maxWidth / actualWidth;
+                    actualHeight = (int) (imgRatio * actualHeight);
+                    actualWidth = (int) maxWidth;
+                } else {
+                    actualHeight = (int) maxHeight;
+                    actualWidth = (int) maxWidth;
+                }
+            }
+
+//      setting inSampleSize value allows to load a scaled down version of the original image
+            bitmapOptions.inSampleSize = calculateInSampleSize(bitmapOptions, actualWidth, actualHeight);
+
+//      inJustDecodeBounds set to false to load the actual bitmap
+            bitmapOptions.inJustDecodeBounds = false;
+
+//      this options allow android to claim the bitmap memory if it runs low on memory
+            bitmapOptions.inPurgeable = true;
+            bitmapOptions.inInputShareable = true;
+            bitmapOptions.inTempStorage = new byte[16 * 1024];
+
+            try {
+//          load the bitmap from its path
+                thumbnail = BitmapFactory.decodeFile(filepath, bitmapOptions);
+            } catch (OutOfMemoryError exception) {
+                exception.printStackTrace();
+
+            }
             ExifInterface exif = new ExifInterface(filepath);
             int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
             thumbnail = rotateBitmap(thumbnail, orientation);
 
-            thumbnail = getScaledBitmap(thumbnail, 800, 1000);
+            thumbnail = getScaledBitmap(thumbnail, 800, 600);
             if(!prf.getBoolData("ImageWaterMarks")){
                 Bitmap second = addText(thumbnail);
                 thumbnail.recycle();
@@ -1265,7 +1274,7 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
                         ++uploadImg;
                         sendpreinspection(imagesList.get(uploadImg));
                     }else {
-                        MDToast mdToast = MDToast.makeText(DamageActivity.this, "Images Upload Successfully", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
+                        MDToast mdToast = MDToast.makeText(DamageActivity.this, "Images Upload Successfully", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                         mdToast.show();
 //                        new Util().toastView(DamageActivity.this,"Images Upload Successfully","");
                         hideAnimation();
@@ -1295,6 +1304,26 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
 
 
     }
+
+    public int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+            final int heightRatio = Math.round((float) height / (float) reqHeight);
+            final int widthRatio = Math.round((float) width / (float) reqWidth);
+            inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+        }
+        final float totalPixels = width * height;
+        final float totalReqPixelsCap = reqWidth * reqHeight * 2;
+        while (totalPixels / (inSampleSize * inSampleSize) > totalReqPixelsCap) {
+            inSampleSize++;
+        }
+
+        return inSampleSize;
+    }
+
     private Bitmap addText(Bitmap toEdit)throws Exception{
         Calendar calendar = Calendar.getInstance();
         Bitmap newBitmap = null;
@@ -1325,7 +1354,7 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
 //        canvas.drawText(timeStamp , 10,  50, paint);
 
 //        if(fullAddress!=null)
-//            newCanvas.drawText(fullAddress , 10,  25, paint);
+            newCanvas.drawText(prf.getStringData("address") , 10,  25, paint);
         newCanvas.drawText(timeStamp , 10,  50, paint);
         Matrix matrix = new Matrix();
         matrix.postScale(0, 0);
@@ -1338,6 +1367,80 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
 
 
         return dest;
+    }
+
+    public class ImageAdatpter extends RecyclerView.Adapter<ImageAdatpter.MyViewHolder> {
+
+        ArrayList<DamageImageModel> triplist;
+        boolean istselect = true;
+        private int count;
+
+        public ImageAdatpter(ArrayList<DamageImageModel> triplist) {
+            this.triplist = triplist;
+        }
+
+        @Override
+        public void onBindViewHolder(final MyViewHolder holder, final int position) {
+            Glide.with(DamageActivity.this).load(new File("" + triplist.get(position).getUrl())).into(holder.image_view);
+            holder.name.setText(triplist.get(position).getViewName());
+            if (position == IssaveImg) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    holder.border.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.blue)));
+                }
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    holder.border.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorWhite)));
+                }
+            }
+
+            holder.image_view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
+                        return;
+                    }
+                    mLastClickTime = SystemClock.elapsedRealtime();
+
+
+                    showAnimation();
+                    saveImage(position, "");
+
+
+                }
+            });
+//
+        }
+
+        @Override
+        public ImageAdatpter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View itemView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.image_item, parent, false);
+
+            return new ImageAdatpter.MyViewHolder(itemView);
+        }
+
+        @Override
+        public int getItemCount() {
+            return triplist.size();
+        }
+
+        public class MyViewHolder extends RecyclerView.ViewHolder {
+
+            FrameLayout border;
+            ImageView image_view;
+            TextView name;
+            View referNo;
+
+            public MyViewHolder(View view) {
+                super(view);
+
+                image_view = (ImageView) view.findViewById(R.id.image_view);
+                name = (TextView) view.findViewById(R.id.name);
+                border = (FrameLayout) view.findViewById(R.id.border);
+
+            }
+        }
+
     }
 
     private String bitmapToBase64(Bitmap bitmap) {
