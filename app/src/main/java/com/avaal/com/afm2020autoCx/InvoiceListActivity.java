@@ -33,6 +33,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -43,11 +44,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class InvoiceListActivity extends AppCompatActivity {
+public class InvoiceListActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     @BindView(R.id.title)
     TextView title;
     @BindView(R.id._vehicle_list)
     RecyclerView recyclerView;
+    @BindView(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout swipeLayout;
     PreferenceManager prf;
     APIInterface apiInterface;
     private boolean loading = true;
@@ -90,6 +93,11 @@ public class InvoiceListActivity extends AppCompatActivity {
         setContentView(R.layout.invoice_list_activity);
         ButterKnife.bind(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        swipeLayout.setOnRefreshListener(this);
+        swipeLayout.setColorScheme(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
         title.setText("Invoice List");
         prf = new PreferenceManager(this);
         apiInterface = APIClient.getClient().create(APIInterface.class);
@@ -154,6 +162,7 @@ public class InvoiceListActivity extends AppCompatActivity {
 
                 InvoiceListModel getdata = response.body();
                 hideAnimation();
+                swipeLayout.setRefreshing(false);
                 try {
 
                     getdata3.addAll(getdata.datalist);
@@ -184,6 +193,8 @@ public class InvoiceListActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<InvoiceListModel> call, Throwable t) {
                 call.cancel();
+                swipeLayout.setRefreshing(false);
+                hideAnimation();
                 new Util().sendSMTPMail(InvoiceListActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
@@ -226,6 +237,22 @@ public class InvoiceListActivity extends AppCompatActivity {
             loaderScreen = null;
         }
     }
+
+    @Override
+    public void onRefresh() {
+        if(!new Util().isNetworkAvailable(InvoiceListActivity.this)) {
+            swipeLayout.setRefreshing(false);
+            MDToast mdToast = MDToast.makeText(InvoiceListActivity.this, "Check Your Internet connection", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
+            mdToast.show();
+            return;
+        }
+        getdata3.clear();
+        pageNo=1;
+        adapterd.notifyDataSetChanged();
+        showAnimation();
+        getAFMInvoiceList(pageNo);
+    }
+
     public class InvoiceListAdapter extends RecyclerView.Adapter<InvoiceListAdapter.MyViewHolder> {
 
         private ArrayList<InvoiceListModel.datalist> invoiceList;
@@ -292,7 +319,7 @@ public class InvoiceListActivity extends AppCompatActivity {
 //                else
 //                    holder.amount.setText("$ "+invoiceList.get(position).TotalAmount);
 //                holder.amount.setText(invoiceList.get(position).CurrencyCode+" "+invoiceList.get(position).TotalAmount);
-                if(invoiceList.get(position).FactoringCompany.equalsIgnoreCase(""))
+                if(invoiceList.get(position).FactoringCompany==null ||invoiceList.get(position).FactoringCompany.equalsIgnoreCase(""))
                     holder.factoring.setText("NA");
                 else
                 holder.factoring.setText(invoiceList.get(position).FactoringCompany);

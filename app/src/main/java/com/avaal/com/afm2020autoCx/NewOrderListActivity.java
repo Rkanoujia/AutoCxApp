@@ -48,7 +48,7 @@ public class NewOrderListActivity extends AppCompatActivity {
 //        bg_image.setAlpha(0.6f
         title.setText("Orders");
         adapter = new TabAdapter(getSupportFragmentManager());
-        adapter.addFragment(new LoadsFragment(), "Pending");
+        adapter.addFragment(new LoadsFragment(), "My Loads");
         adapter.addFragment(new AfmOrderFragment(), "Accepted ");
 //        adapter.addFragment(new FragmentOne(), "Shipment");
         viewPager.setAdapter(adapter);

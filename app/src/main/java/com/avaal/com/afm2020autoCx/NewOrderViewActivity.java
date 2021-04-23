@@ -397,6 +397,7 @@ public class NewOrderViewActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<GetVehicleIdListModel> call, Throwable t) {
                 call.cancel();
+                hideAnimation();
                 new Util().sendSMTPMail(NewOrderViewActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
@@ -443,6 +444,7 @@ public class NewOrderViewActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<GetVehicleIdListModel> call, Throwable t) {
                 call.cancel();
+                hideAnimation();
                 new Util().sendSMTPMail(NewOrderViewActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
@@ -674,6 +676,7 @@ public class NewOrderViewActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<GetVehicleIdModel> call, Throwable t) {
                 call.cancel();
+                hideAnimation();
                 new Util().sendSMTPMail(NewOrderViewActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
@@ -717,6 +720,7 @@ public class NewOrderViewActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<GetVehicleIdModel> call, Throwable t) {
                 call.cancel();
+                hideAnimation();
                 new Util().sendSMTPMail(NewOrderViewActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
@@ -773,6 +777,7 @@ public class NewOrderViewActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<InventoryOrderModel> call, Throwable t) {
                     call.cancel();
+                    hideAnimation();
                     new Util().sendSMTPMail(NewOrderViewActivity.this,t,"CxE001",null,""+call.request().url().toString());
                 }
             });

@@ -7,6 +7,10 @@
         android:id="@+id/list_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <RelativeLayout
             android:background="@color/gray"
             android:orientation="vertical"
@@ -37,6 +41,6 @@
 
         </RelativeLayout>
 
-
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

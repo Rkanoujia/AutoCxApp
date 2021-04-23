@@ -3,6 +3,7 @@ package com.avaal.com.afm2020autoCx.frahment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +68,7 @@ public class LoadsFragment extends Fragment {
     LinearLayout new_vehicle;
     APIInterface apiInterface;
     String filterString="";
+    private long mLastClickTime = 0;
     public LoadsFragment() {
     }
 
@@ -118,9 +120,9 @@ public class LoadsFragment extends Fragment {
             @Override
             public void onResponse(Call<OrderListModel> call, Response<OrderListModel> response) {
                 swipeRefreshLayout.setRefreshing(false);
-                OrderListModel getdata = response.body();
                 hideAnimation();
                 try {
+                    OrderListModel getdata = response.body();
                     if (getdata.satus) {
                         if(getdata.dataValue.size()==0){
                             new_vehicle.setVisibility(View.VISIBLE);
@@ -170,41 +172,68 @@ public class LoadsFragment extends Fragment {
     }
 @OnClick(R.id.ship_li)
 void shipfilter(){
-
-
+    if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
+        return;
+    }
+    mLastClickTime = SystemClock.elapsedRealtime();
     mBottomSheetLayout.contractFab();
     filterString="Shipped";
     allIcon.setVisibility(View.INVISIBLE);
     saveIcon.setVisibility(View.INVISIBLE);
     shipIcon.setVisibility(View.VISIBLE);
+    if(!new Util().isNetworkAvailable(getActivity())) {
+        MDToast mdToast = MDToast.makeText(getActivity(), "Check Your Internet connection", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
+        mdToast.show();
+        return;
+    }
     getSaveLoads();
 }
     @OnClick(R.id.save_li)
     void savefilter(){
-
+        if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
+            return;
+        }
+        mLastClickTime = SystemClock.elapsedRealtime();
         mBottomSheetLayout.contractFab();
         filterString="Saved";
         allIcon.setVisibility(View.INVISIBLE);
         saveIcon.setVisibility(View.VISIBLE);
         shipIcon.setVisibility(View.INVISIBLE);
-        getSaveLoads();
-    }
-    @OnClick(R.id.all_li)
-    void allfilter(){
-
-        mBottomSheetLayout.contractFab();
-        filterString="";
-        allIcon.setVisibility(View.VISIBLE);
-        saveIcon.setVisibility(View.INVISIBLE);
-        shipIcon.setVisibility(View.INVISIBLE);
-        getSaveLoads();
-    }
-    @OnClick(R.id.add_trip) void onFabClick() {
         if(!new Util().isNetworkAvailable(getActivity())) {
             MDToast mdToast = MDToast.makeText(getActivity(), "Check Your Internet connection", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
             mdToast.show();
             return;
         }
+        getSaveLoads();
+    }
+    @OnClick(R.id.all_li)
+    void allfilter(){
+        if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
+            return;
+        }
+        mLastClickTime = SystemClock.elapsedRealtime();
+        mBottomSheetLayout.contractFab();
+        filterString="";
+        allIcon.setVisibility(View.VISIBLE);
+        saveIcon.setVisibility(View.INVISIBLE);
+        shipIcon.setVisibility(View.INVISIBLE);
+        if(!new Util().isNetworkAvailable(getActivity())) {
+            MDToast mdToast = MDToast.makeText(getActivity(), "Check Your Internet connection", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
+            mdToast.show();
+            return;
+        }
+        getSaveLoads();
+    }
+    @OnClick(R.id.add_trip) void onFabClick() {
+        if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
+            return;
+        }
+        mLastClickTime = SystemClock.elapsedRealtime();
+//        if(!new Util().isNetworkAvailable(getActivity())) {
+//            MDToast mdToast = MDToast.makeText(getActivity(), "Check Your Internet connection", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
+//            mdToast.show();
+//            return;
+//        }
         mBottomSheetLayout.expandFab();
     }
 

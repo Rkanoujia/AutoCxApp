@@ -307,10 +307,10 @@ public class VehicleListActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<GetVehicleIdListModel> call, Response<GetVehicleIdListModel> response) {
 
-                GetVehicleIdListModel getdata = response.body();
+
                 hideAnimation();
                 try {
-
+                    GetVehicleIdListModel getdata = response.body();
 //                    if (getdata.satus) {
 // GetVehicleIdListModel tripDetails;
                         getdata3 = getdata.dataV;
@@ -354,10 +354,10 @@ public class VehicleListActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<GetVehicleIdListModel> call, Response<GetVehicleIdListModel> response) {
 
-                GetVehicleIdListModel getdata = response.body();
+
                 hideAnimation();
                 try {
-
+                    GetVehicleIdListModel getdata = response.body();
 //                    if (getdata.satus) {
 // GetVehicleIdListModel tripDetails;
                     getdata3 = getdata.dataV;
@@ -605,9 +605,10 @@ public class VehicleListActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<GetVehicleIdModel> call, Response<GetVehicleIdModel> response) {
 
-                GetVehicleIdModel getdata = response.body();
+
                 hideAnimation();
                 try {
+                    GetVehicleIdModel getdata = response.body();
                     if (getdata.satus) {
                         MDToast mdToast = MDToast.makeText(VehicleListActivity.this, "Load Saved", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                         mdToast.show();
@@ -644,10 +645,11 @@ public class VehicleListActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<GetVehicleIdModel> call, Response<GetVehicleIdModel> response) {
 
-                GetVehicleIdModel getdata = response.body();
+
 
                 hideAnimation();
                 try {
+                    GetVehicleIdModel getdata = response.body();
                     if (getdata.satus) {
                         if (prf.getStringData("OrderStatus").equalsIgnoreCase("Shipped")){
                             MDToast mdToast = MDToast.makeText(VehicleListActivity.this, "Order Updated", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
@@ -712,10 +714,11 @@ public class VehicleListActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<InventoryOrderModel> call, Response<InventoryOrderModel> response) {
 
-                    InventoryOrderModel getdata1 = response.body();
+
 
                     hideAnimation();
                     try {
+                        InventoryOrderModel getdata1 = response.body();
                         if (getdata1.status) {
                             if (type.equalsIgnoreCase("forsave"))
                                 forsave();
@@ -770,9 +773,10 @@ public class VehicleListActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<GetVehicleIdListModel> call, Response<GetVehicleIdListModel> response) {
 
-                GetVehicleIdListModel getdata = response.body();
+
                 hideAnimation();
                 try {
+                    GetVehicleIdListModel getdata = response.body();
                     if (getdata.satus) {
 // GetVehicleIdListModel tripDetails;
 //                        getdata3 = getdata.dataV;

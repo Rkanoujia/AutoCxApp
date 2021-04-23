@@ -1111,8 +1111,9 @@ public class RouteSelectionActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<DropDownModel> call, Response<DropDownModel> response) {
 
-                DropDownModel dropdata = response.body();
+
                 try {
+                    DropDownModel dropdata = response.body();
                     if (dropdata.status) {
                         yardLocationId.clear();
                         yardLocationName.clear();
@@ -1305,11 +1306,11 @@ public class RouteSelectionActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<RouteSelectionModel> call, Response<RouteSelectionModel> response) {
 
-                RouteSelectionModel getRespone = response.body();
-                Log.e("get JSon",getRespone.toString());
+
+
                 hideAnimation();
                 try {
-
+                    RouteSelectionModel getRespone = response.body();
 
                     if (getRespone.satus) {
 
@@ -1480,9 +1481,9 @@ public class RouteSelectionActivity extends AppCompatActivity {
            @Override
            public void onResponse(Call<MilesModel> call, Response<MilesModel> response) {
            hideAnimation();
-               MilesModel getdata = response.body();
-               try{
 
+               try{
+                   MilesModel getdata = response.body();
                        if(getdata.status) {
 //                   SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
                            distanceUnit=getdata.dataValuer.DistanceUnit;
@@ -1606,8 +1607,9 @@ public class RouteSelectionActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<CustOrderModel> call, Response<CustOrderModel> response) {
                 hideAnimation();
-                CustOrderModel getdata = response.body();
+
                 try{
+                    CustOrderModel getdata = response.body();
                   if(getdata.staus){
                       if(!getdata.Value.staus){
                           cust_order_number.setError("Already Exist");

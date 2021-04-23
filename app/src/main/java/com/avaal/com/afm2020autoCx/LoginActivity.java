@@ -510,8 +510,9 @@ void forget(){
             @Override
             public void onResponse(Call<ProfileDataModel> call, Response<ProfileDataModel> response) {
 
-                ProfileDataModel getdata = response.body();
+
                 try {
+                    ProfileDataModel getdata = response.body();
                     if (getdata.status) {
                         hideAnimation();
                         prf.saveStringData("CompnyCode",getdata.data.CompanyCode);

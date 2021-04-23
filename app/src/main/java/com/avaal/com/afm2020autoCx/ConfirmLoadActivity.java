@@ -109,8 +109,9 @@ public class ConfirmLoadActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<OrderListModel> call, Response<OrderListModel> response) {
                 swipeRefreshLayout.setRefreshing(false);
-                OrderListModel getdata = response.body();
+
                 try{
+                    OrderListModel getdata = response.body();
                 if(getdata.satus) {
 // GetVehicleIdListModel tripDetails;
                     ArrayList<OrderListModel.datavalue1> getdata3=getdata.dataValue;

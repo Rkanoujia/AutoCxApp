@@ -41,6 +41,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -51,11 +52,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ReceiptListActivity extends AppCompatActivity {
+public class ReceiptListActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     @BindView(R.id.title)
     TextView title;
     @BindView(R.id._vehicle_list)
     RecyclerView recyclerView;
+    @BindView(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout swipeLayout;
     PreferenceManager prf;
     APIInterface apiInterface;
     private boolean loading = true;
@@ -83,7 +86,6 @@ public class ReceiptListActivity extends AppCompatActivity {
         showAnimation();
         getAFMReceiptList(pageNo);
 
-
     }
 
     @Override
@@ -98,6 +100,11 @@ public class ReceiptListActivity extends AppCompatActivity {
         setContentView(R.layout.invoice_list_activity);
         ButterKnife.bind(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        swipeLayout.setOnRefreshListener(this);
+        swipeLayout.setColorScheme(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
         title.setText("Receipt List");
         prf = new PreferenceManager(this);
         apiInterface = APIClient.getClient().create(APIInterface.class);
@@ -160,10 +167,11 @@ public class ReceiptListActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ReceiptListModel> call, Response<ReceiptListModel> response) {
 
-                ReceiptListModel getdata = response.body();
-                hideAnimation();
-                try {
 
+                hideAnimation();
+                swipeLayout.setRefreshing(false);
+                try {
+                    ReceiptListModel getdata = response.body();
                     getdata3.addAll(getdata.datalist);
                     adapterd.notifyDataSetChanged();
                     if(getdata.satus) {
@@ -192,6 +200,8 @@ public class ReceiptListActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ReceiptListModel> call, Throwable t) {
                 call.cancel();
+                swipeLayout.setRefreshing(false);
+                hideAnimation();
                 new Util().sendSMTPMail(ReceiptListActivity.this,t,"CxE001",null,""+call.request().url().toString());
             }
         });
@@ -234,6 +244,22 @@ public class ReceiptListActivity extends AppCompatActivity {
             loaderScreen = null;
         }
     }
+
+    @Override
+    public void onRefresh() {
+        if(!new Util().isNetworkAvailable(ReceiptListActivity.this)) {
+            swipeLayout.setRefreshing(false);
+            MDToast mdToast = MDToast.makeText(ReceiptListActivity.this, "Check Your Internet connection", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
+            mdToast.show();
+            return;
+        }
+        pageNo=1;
+        getdata3.clear();
+        adapterd.notifyDataSetChanged();
+        showAnimation();
+        getAFMReceiptList(pageNo);
+    }
+
     public class ReceiptListAdapter extends RecyclerView.Adapter<ReceiptListAdapter.MyViewHolder> {
 
         private ArrayList<ReceiptListModel.datalist> invoiceList;

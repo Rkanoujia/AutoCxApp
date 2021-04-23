@@ -634,27 +634,69 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
     }
     @OnClick(R.id.back_left)
     void  back_left(){
-        popUp(backLeftfileUrl,backLeftfileId,"BackLeftAngleView");
+        if(backLeftfileUrl.equalsIgnoreCase(""))
+            return;
+        try {
+            popUpList(backLeftfileUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//        popUp(backLeftfileUrl,backLeftfileId,"BackLeftAngleView");
     }
     @OnClick(R.id.back_right)
     void  back_right(){
-        popUp(backRightfileUrl,backRightfileId,"BackRightAngleView");
+        if(backRightfileUrl.equalsIgnoreCase(""))
+            return;
+        try {
+            popUpList(backRightfileUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//        popUp(backRightfileUrl,backRightfileId,"BackRightAngleView");
     }
     @OnClick(R.id.front_left)
     void  front_left(){
-        popUp(frontLeftfileUrl,frontLeftfileId,"FrontLeftAngleView");
+        if(frontLeftfileUrl.equalsIgnoreCase(""))
+            return;
+        try {
+            popUpList(frontLeftfileUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//        popUp(frontLeftfileUrl,frontLeftfileId,"FrontLeftAngleView");
     }
     @OnClick(R.id.front_right)
     void  front_right(){
-        popUp(frontRightfileUrl,frontRightfileId,"FrontRightAngleView");
+        if(frontRightfileUrl.equalsIgnoreCase(""))
+            return;
+        try {
+            popUpList(frontRightfileUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//        popUp(frontRightfileUrl,frontRightfileId,"FrontRightAngleView");
     }
     @OnClick(R.id.windshield)
     void  windshield_img(){
-        popUp(windshieldfileUrl,windshieldfileId,"Windshield");
+        if(windshieldfileUrl.equalsIgnoreCase(""))
+            return;
+        try {
+            popUpList(windshieldfileUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//        popUp(windshieldfileUrl,windshieldfileId,"Windshield");
     }
     @OnClick(R.id.roof)
     void  roof_img(){
-        popUp(rooffileUrl,rooffileId,"Roof");
+        if(rooffileUrl.equalsIgnoreCase(""))
+            return;
+        try {
+            popUpList(rooffileUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//        popUp(rooffileUrl,rooffileId,"Roof");
     }
 
 
@@ -662,35 +704,47 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
     void   front_left_imageview_reload()
     {
 //        popUp(frontLeftfileUrl,"FrontLeftAngleView");
+        if(frontLeftfileUrl.equalsIgnoreCase(""))
+            return;
         Glide.with(AddImageActivity.this).load(frontLeftfileUrl).apply(options).diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true).into(front_left);
     }
     @OnClick(R.id.front_right_imageview)
     void   front_right_imageview_reload(){
 //        popUp(frontRightfileUrl,"FrontRightAngleView");
+        if(frontRightfileUrl.equalsIgnoreCase(""))
+            return;
         Glide.with(AddImageActivity.this).load(frontRightfileUrl).apply(options).diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true).into(front_right);
     }
     @OnClick(R.id.back_left_imageview)
     void back_left_imageview_reload(){
 //        popUp(backLeftfileUrl,"BackLeftAngleView");
+        if(backLeftfileUrl.equalsIgnoreCase(""))
+            return;
         Glide.with(AddImageActivity.this).load(backLeftfileUrl).apply(options).diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true).into(back_left);
     }
     @OnClick(R.id.back_right_imageview)
     void back_right_imageview_reload(){
 //        popUp(backRightfileUrl,"BackRightAngleView");
+        if(backRightfileUrl.equalsIgnoreCase(""))
+            return;
         Glide.with(AddImageActivity.this).load(backRightfileUrl).apply(options).diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true).into(back_right);
     }
     @OnClick(R.id.windshield_imageview)
     void windshield_imageview_reload(){
 //        popUp(windshieldfileUrl,"Windshield");
+        if(windshieldfileUrl.equalsIgnoreCase(""))
+            return;
         Glide.with(AddImageActivity.this).load(windshieldfileUrl).apply(options).diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true).into(windshield);
     }
     @OnClick(R.id.roof_imageview)
     void roof_imgview_reload(){
+        if(rooffileUrl.equalsIgnoreCase(""))
+            return;
         Glide.with(AddImageActivity.this).load(rooffileUrl).apply(options).diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true).into(roof);
 //        popUp(rooffileUrl,"Roof");
@@ -699,7 +753,8 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
 
     @OnClick(R.id.back_left_imagedelete)
     void  back_left_delete(){
-
+              if(backLeftfileId.equalsIgnoreCase("0"))
+                  return;
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.custome_alert_dialog);
         dialog.setCancelable(false);
@@ -740,7 +795,8 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
     }
     @OnClick(R.id.back_right_imagedelete)
     void  back_right_delete(){
-
+        if(backRightfileId.equalsIgnoreCase("0"))
+            return;
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.custome_alert_dialog);
         dialog.setCancelable(false);
@@ -775,6 +831,8 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
     }
     @OnClick(R.id.front_left_imagedelete)
     void  front_left_delete(){
+        if(frontLeftfileId.equalsIgnoreCase("0"))
+            return;
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.custome_alert_dialog);
         dialog.setCancelable(false);
@@ -809,6 +867,8 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
     }
     @OnClick(R.id.front_right_imagedelete)
     void  front_right_delete(){
+        if(frontRightfileId.equalsIgnoreCase("0"))
+            return;
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.custome_alert_dialog);
         dialog.setCancelable(false);
@@ -843,6 +903,8 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
     }
     @OnClick(R.id.windshield_imagedelete)
     void  windshield_img_delete(){
+        if(windshieldfileId.equalsIgnoreCase("0"))
+            return;
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.custome_alert_dialog);
         dialog.setCancelable(false);
@@ -876,6 +938,8 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
     }
     @OnClick(R.id.roof_imagedelete)
     void  roof_img_delete(){
+        if(rooffileId.equalsIgnoreCase("0"))
+            return;
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.custome_alert_dialog);
         dialog.setCancelable(false);
@@ -1427,8 +1491,9 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
         call1.enqueue(new Callback<GetImageModel>() {
             @Override
             public void onResponse(Call<GetImageModel> call, Response<GetImageModel> response) {
-                GetImageModel getdata = response.body();
+
                 try {
+                    GetImageModel getdata = response.body();
                     front_left_imagedelete.setVisibility(View.GONE);
                     front_right_imagedelete.setVisibility(View.GONE);
                     back_left_imagedelete.setVisibility(View.GONE);
@@ -1591,8 +1656,9 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
         call1.enqueue(new Callback<GetImageModel>() {
             @Override
             public void onResponse(Call<GetImageModel> call, Response<GetImageModel> response) {
-                GetImageModel getdata = response.body();
+
                 try {
+                    GetImageModel getdata = response.body();
                     if (getdata.status) {
                         ExtraImageList = new ArrayList<>();
                         ExtraImageList.clear();
@@ -1824,66 +1890,66 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
         call1.enqueue(new Callback<RemoveImageModel>() {
             @Override
             public void onResponse(Call<RemoveImageModel> call, Response<RemoveImageModel> response) {
-
-                RemoveImageModel getdata = response.body();
-                if(getdata.status!=null) {
-                    if (getdata.status) {
+                try {
+                    RemoveImageModel getdata = response.body();
+                    if (getdata.status != null) {
+                        if (getdata.status) {
 //                    Intent i=new Intent(VehicleListActivity.this,AddVehicleActivity.class);
 //                    i.putExtra("VehicleId",getdata.data.temOdId);
 ////                    i.putExtra("orderType",orderType);
 //                    startActivity(i);
-                        if(type.equalsIgnoreCase("BackRightAngleView")){
-                            backRightfileUrl="";
-                            back_right_imageview.setVisibility(View.GONE);
-                            back_right_imagedelete.setVisibility(View.GONE);
-                            backRightfileId="0";
-                            Picasso.with(AddImageActivity.this).load(R.drawable.car_d).error(R.drawable.no_img_found).into(back_right);
+                            if (type.equalsIgnoreCase("BackRightAngleView")) {
+                                backRightfileUrl = "";
+                                back_right_imageview.setVisibility(View.GONE);
+                                back_right_imagedelete.setVisibility(View.GONE);
+                                backRightfileId = "0";
+                                Picasso.with(AddImageActivity.this).load(R.drawable.car_d).error(R.drawable.car_d).into(back_right);
 
-                        }
-                        else if(type.equalsIgnoreCase("BackLeftAngleView")){
-                            backLeftfileUrl="";
-                            back_left_imageview.setVisibility(View.GONE);
-                            back_left_imagedelete.setVisibility(View.GONE);
-                            backLeftfileId="0";
-                            Picasso.with(AddImageActivity.this).load(R.drawable.car_f).error(R.drawable.no_img_found).into(back_left);
+                            } else if (type.equalsIgnoreCase("BackLeftAngleView")) {
+                                backLeftfileUrl = "";
+                                back_left_imageview.setVisibility(View.GONE);
+                                back_left_imagedelete.setVisibility(View.GONE);
+                                backLeftfileId = "0";
+                                Picasso.with(AddImageActivity.this).load(R.drawable.car_f).error(R.drawable.car_f).into(back_left);
 
-                        }else if(type.equalsIgnoreCase("FrontRightAngleView")){
-                            frontRightfileUrl="";
+                            } else if (type.equalsIgnoreCase("FrontRightAngleView")) {
+                                frontRightfileUrl = "";
 
-                            front_right_imageview.setVisibility(View.GONE);
-                            front_right_imagedelete.setVisibility(View.GONE);
-                            frontRightfileId="0";
-                            Picasso.with(AddImageActivity.this).load(R.drawable.car_a).error(R.drawable.no_img_found).into(front_right);
+                                front_right_imageview.setVisibility(View.GONE);
+                                front_right_imagedelete.setVisibility(View.GONE);
+                                frontRightfileId = "0";
+                                Picasso.with(AddImageActivity.this).load(R.drawable.car_c).error(R.drawable.car_c).into(front_right);
 
-                        }else if(type.equalsIgnoreCase("FrontLeftAngleView")){
-                             frontLeftfileUrl="";
+                            } else if (type.equalsIgnoreCase("FrontLeftAngleView")) {
+                                frontLeftfileUrl = "";
 
-                            front_left_imageview.setVisibility(View.GONE);
-                            front_left_imagedelete.setVisibility(View.GONE);
-                       frontLeftfileId="0";
-                            Picasso.with(AddImageActivity.this).load(R.drawable.car_c).error(R.drawable.no_img_found).into(front_left);
+                                front_left_imageview.setVisibility(View.GONE);
+                                front_left_imagedelete.setVisibility(View.GONE);
+                                frontLeftfileId = "0";
+                                Picasso.with(AddImageActivity.this).load(R.drawable.car_a).error(R.drawable.car_a).into(front_left);
 
-                        }else if(type.equalsIgnoreCase("Windshield")){
-                            windshieldfileUrl="";
-                            windshieldfileId="0";
-                            windshield_imageview.setVisibility(View.GONE);
-                            windshield_imagedelete.setVisibility(View.GONE);
-                            Picasso.with(AddImageActivity.this).load(R.drawable.car_b).error(R.drawable.no_img_found).into(windshield);
+                            } else if (type.equalsIgnoreCase("Windshield")) {
+                                windshieldfileUrl = "";
+                                windshieldfileId = "0";
+                                windshield_imageview.setVisibility(View.GONE);
+                                windshield_imagedelete.setVisibility(View.GONE);
+                                Picasso.with(AddImageActivity.this).load(R.drawable.car_b).error(R.drawable.car_b).into(windshield);
 
-                        }
-                        else if(type.equalsIgnoreCase("Roof")){
-                            rooffileUrl="";
-                            rooffileId="0";
-                            roof_imageview.setVisibility(View.GONE);
-                            roof_imagedelete.setVisibility(View.GONE);
+                            } else if (type.equalsIgnoreCase("Roof")) {
+                                rooffileUrl = "";
+                                rooffileId = "0";
+                                roof_imageview.setVisibility(View.GONE);
+                                roof_imagedelete.setVisibility(View.GONE);
 
-                            Picasso.with(AddImageActivity.this).load(R.drawable.car_e).error(R.drawable.no_img_found).into(roof);
+                                Picasso.with(AddImageActivity.this).load(R.drawable.car_e).error(R.drawable.car_e).into(roof);
 
+                            }
                         }
                     }
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
             }
-
             @Override
             public void onFailure(Call<RemoveImageModel> call, Throwable t) {
                 call.cancel();

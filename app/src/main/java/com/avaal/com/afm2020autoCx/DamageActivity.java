@@ -284,23 +284,58 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
                 .setPreSelectedUrls(returnValue)
                 .setScreenOrientation(Options.SCREEN_ORIENTATION_PORTRAIT)
                 .setPath("/AFM");
-        if(getIntent().getStringExtra("IsGallery")!=null){
-            imagesFix.put(R.drawable.car_c, "IsGallery");
-            imagesFix.put(R.drawable.car_a, "IsGallery");
-            imagesFix.put(R.drawable.car_f, "IsGallery");
-            imagesFix.put(R.drawable.car_d, "IsGallery");
-            imagesFix.put(R.drawable.car_e, "IsGallery");
-            imagesFix.put(R.drawable.car_b, "IsGallery");
+
+
+                if(getIntent().getStringExtra("IsGallery")!=null){
+                    imagesFix.put(R.drawable.car_c, "IsGallery");
+                    imagesFix.put(R.drawable.car_a, "IsGallery");
+                    imagesFix.put(R.drawable.car_f, "IsGallery");
+                    imagesFix.put(R.drawable.car_d, "IsGallery");
+                    imagesFix.put(R.drawable.car_e, "IsGallery");
+                    imagesFix.put(R.drawable.car_b, "IsGallery");
 //            returnValue.clear();
-            Pix.start(DamageActivity.this, options);
-        }else
-      {
-          Intent intent=new Intent(DamageActivity.this, CameraDemoActivity.class);
-          intent.putExtra("images",imagesFix);
-          startActivityForResult(intent,1222);
-      }
+                    Pix.start(DamageActivity.this, options);
+                }else
+                {
+                    showAnimation();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            hideAnimation();
+                    Intent intent=new Intent(DamageActivity.this, CameraDemoActivity.class);
+                    intent.putExtra("images",imagesFix);
+                    startActivityForResult(intent,1222);
+                        }
+                    },2000);
+                }
+           ;
+
+
 
     }
+//    @Override
+//    protected void onRestoreInstanceState (Bundle savedInstanceState) {
+//        super.onRestoreInstanceState (savedInstanceState);
+//// Restore our variable by key
+//        itemId=savedInstanceState.getString("VehicleId");
+//        if(savedInstanceState.getString("IsEdit")!=null){
+//            imagesFix = (HashMap<Integer, String>)savedInstanceState.getSerializable("images");
+//        }
+//
+//
+//// We can also set the default value after the key, separated by commas
+//    }
+//    // Save the variable before completing the activity
+//    @Override
+//    protected void onSaveInstanceState (Bundle outState) {
+//        super.onSaveInstanceState (outState);
+//// Write the variable with the key in the Bundle
+//        outState.putSerializable ("images", imagesFix);
+//        outState.putString ("VehicleId", itemId);
+//        outState.putString ("IsEdit", tripId);
+//
+//
+//    }
 
 
     @OnClick(R.id.cancel)
@@ -671,22 +706,26 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
                     }
                     break;
                 case 1222:
-                    imagesList.clear();
-                    int k=0;
-                    imagesFix = (HashMap<Integer, String>) data.getSerializableExtra("images");
-                    orignalimagesFix.putAll(imagesFix);
-                    Map<Integer, String> getImagemap = new TreeMap<Integer, String>(imagesFix);
-                    for (Map.Entry<Integer, String> entry : getImagemap.entrySet()) {
-                        if(orignalimagesFix.get(entry.getKey())!=null) {
-                            if (orignalimagesFix.get(entry.getKey()).equalsIgnoreCase(""))
-                                orignalimagesFix.put(entry.getKey(),entry.getValue());
-                        }
-                               if(getIntent().getStringExtra("IsEdit")!=null){
-                                   if (!entry.getValue().equalsIgnoreCase("IsGallery") && !entry.getValue().equalsIgnoreCase("uploaded") && !entry.getValue().equalsIgnoreCase("")) {
-                                       if(fixName.get(entry.getKey())!=null) {
-                                           DamageImageModel damageImageModel = new DamageImageModel(fixName.get(entry.getKey()), entry.getValue(), entry.getKey(),fixName.get(entry.getKey()),fixViewName.get(entry.getKey()));
-                                           imagesList.add(damageImageModel);
-                                       }else{
+                    showAnimation();
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            imagesList.clear();
+                            int k=0;
+                            imagesFix = (HashMap<Integer, String>) data.getSerializableExtra("images");
+                            orignalimagesFix.putAll(imagesFix);
+                            Map<Integer, String> getImagemap = new TreeMap<Integer, String>(imagesFix);
+                            for (Map.Entry<Integer, String> entry : getImagemap.entrySet()) {
+                                if(orignalimagesFix.get(entry.getKey())!=null) {
+                                    if (orignalimagesFix.get(entry.getKey()).equalsIgnoreCase(""))
+                                        orignalimagesFix.put(entry.getKey(),entry.getValue());
+                                }
+                                if(getIntent().getStringExtra("IsEdit")!=null){
+                                    if (!entry.getValue().equalsIgnoreCase("IsGallery") && !entry.getValue().equalsIgnoreCase("uploaded") && !entry.getValue().equalsIgnoreCase("")) {
+                                        if(fixName.get(entry.getKey())!=null) {
+                                            DamageImageModel damageImageModel = new DamageImageModel(fixName.get(entry.getKey()), entry.getValue(), entry.getKey(),fixName.get(entry.getKey()),fixViewName.get(entry.getKey()));
+                                            imagesList.add(damageImageModel);
+                                        }else{
 //                                if(getIntent().getStringExtra("Isupdate")!=null){
 //                                    if(imageName.equalsIgnoreCase("")){
 //                                        ++k;
@@ -697,49 +736,52 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
 //                                        imagesList.add(damageImageModel);
 //                                    }
 //                                }else {
-                                           ++k;
-                                           DamageImageModel damageImageModel = new DamageImageModel("extra_" + new Date().getTime()+""+k, entry.getValue(), entry.getKey(),"InspectionExtraImages","extra_"+new Date().getTime()+""+k);
-                                           imagesList.add(damageImageModel);
+                                            ++k;
+                                            DamageImageModel damageImageModel = new DamageImageModel("extra_" + new Date().getTime()+""+k, entry.getValue(), entry.getKey(),"InspectionExtraImages","extra_"+new Date().getTime()+""+k);
+                                            imagesList.add(damageImageModel);
 //                                }
 
-                                       }
+                                        }
 
 
-                                   }
-                               }else {
+                                    }
+                                }else {
 
-                                   if(getIntent().getStringExtra("IsGallery")!=null){
-                                       if (!entry.getValue().equals("uploaded") &&!entry.getValue().equals("") && !entry.getValue().equals("IsGallery")) {
+                                    if(getIntent().getStringExtra("IsGallery")!=null){
+                                        if (!entry.getValue().equals("uploaded") &&!entry.getValue().equals("") && !entry.getValue().equals("IsGallery")) {
                                             if (fixName.get(entry.getKey()) != null) {
-                                               DamageImageModel damageImageModel = new DamageImageModel(fixName.get(entry.getKey()), entry.getValue(), entry.getKey(), fixName.get(entry.getKey()), fixViewName.get(entry.getKey()));
-                                               imagesList.add(damageImageModel);
-                                           } else {
-                                               ++k;
-                                               DamageImageModel damageImageModel = new DamageImageModel("extra_" + new Date().getTime() + "" + k, entry.getValue(), entry.getKey(), "InspectionExtraImages", "extra_" + new Date().getTime() + "" + k);
-                                               imagesList.add(damageImageModel);
+                                                DamageImageModel damageImageModel = new DamageImageModel(fixName.get(entry.getKey()), entry.getValue(), entry.getKey(), fixName.get(entry.getKey()), fixViewName.get(entry.getKey()));
+                                                imagesList.add(damageImageModel);
+                                            } else {
+                                                ++k;
+                                                DamageImageModel damageImageModel = new DamageImageModel("extra_" + new Date().getTime() + "" + k, entry.getValue(), entry.getKey(), "InspectionExtraImages", "extra_" + new Date().getTime() + "" + k);
+                                                imagesList.add(damageImageModel);
 
-                                           }
+                                            }
 
-                                       }
-                                   }
-                                   else{
-                                       if (!entry.getValue().equals("")) {
-                                           if (fixName.get(entry.getKey()) != null) {
-                                               DamageImageModel damageImageModel = new DamageImageModel(fixName.get(entry.getKey()), entry.getValue(), entry.getKey(), fixName.get(entry.getKey()), fixViewName.get(entry.getKey()));
-                                               imagesList.add(damageImageModel);
-                                           } else {
-                                               ++k;
-                                               DamageImageModel damageImageModel = new DamageImageModel("extra_" + new Date().getTime() + "" + k, entry.getValue(), entry.getKey(), "InspectionExtraImages", "extra_" + new Date().getTime() + "" + k);
-                                               imagesList.add(damageImageModel);
+                                        }
+                                    }
+                                    else{
+                                        if (!entry.getValue().equals("")) {
+                                            if (fixName.get(entry.getKey()) != null) {
+                                                DamageImageModel damageImageModel = new DamageImageModel(fixName.get(entry.getKey()), entry.getValue(), entry.getKey(), fixName.get(entry.getKey()), fixViewName.get(entry.getKey()));
+                                                imagesList.add(damageImageModel);
+                                            } else {
+                                                ++k;
+                                                DamageImageModel damageImageModel = new DamageImageModel("extra_" + new Date().getTime() + "" + k, entry.getValue(), entry.getKey(), "InspectionExtraImages", "extra_" + new Date().getTime() + "" + k);
+                                                imagesList.add(damageImageModel);
 
-                                           }
+                                            }
 
-                                       }
-                                   }
+                                        }
+                                    }
 
 
-                               }
-                    }
+                                }
+                            }
+                        }
+                    }).start();
+
                    new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -757,7 +799,14 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
                             imagesAdapte.notifyDataSetChanged();
                             image.scrollToPosition(IssaveImg);
                         }
-                    }, 100);
+                    }, 2500);
+                   new Handler().postDelayed(new Runnable() {
+                       @Override
+                       public void run() {
+                           hideAnimation();
+
+                       }
+                   },3000);
 
                     break;
                 case 100:
@@ -792,7 +841,7 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
                             imagesAdapte.notifyDataSetChanged();
                             image.scrollToPosition(IssaveImg);
                         }
-                    }, 300);
+                    }, 1500);
                     break;
             }
         }

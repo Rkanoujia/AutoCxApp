@@ -106,6 +106,8 @@ public class OrderListModel {
         public String DeliveryNumber;
         @SerializedName("CustomerOrderNo")
         public String CustomerOrderNo;
+        @SerializedName("CustAppOrderId")
+        public String CustAppOrderId;
 
 
 

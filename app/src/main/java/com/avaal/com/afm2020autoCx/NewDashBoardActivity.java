@@ -241,8 +241,9 @@ public class NewDashBoardActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<DashBoardModel> call, Response<DashBoardModel> response) {
 
-                final DashBoardModel getdata = response.body();
+
                 try {
+                     DashBoardModel getdata = response.body();
                     swipeRefreshLayout.setRefreshing(false);
                     if (getdata.status) {
 // GetVehicleIdListModel tripDetails;

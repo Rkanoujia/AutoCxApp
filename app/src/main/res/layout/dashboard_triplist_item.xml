@@ -64,8 +64,7 @@
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
                     android:background="@android:color/white">
 
                     <LinearLayout
@@ -117,7 +116,29 @@
                                     android:textSize="14dp" />
                             </LinearLayout>
 
+                            <LinearLayout
+                                android:id="@+id/temp_li"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:visibility="gone">
 
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:text="TempOrder# "
+                                    android:textColor="@color/colorPrimary"
+                                    android:textSize="14dp" />
+
+                                <TextView
+                                    android:id="@+id/temp_order_id"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:textColor="@color/colorPrimary"
+                                    android:textSize="14dp" />
+                            </LinearLayout>
                         </LinearLayout>
 
                         <LinearLayout
@@ -169,8 +190,7 @@
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:background="@android:color/white"
                     android:padding="10dp">
 
@@ -410,7 +430,7 @@
                                             android:layout_height="wrap_content"
                                             android:gravity="center"
                                             android:maxLines="2"
-                                            android:text="125 Calixa-Lavallee Quebec H1S 3E8"
+                                            android:text=""
                                             android:textColor="@android:color/black"
                                             android:textSize="12dp" />
                                     </LinearLayout>

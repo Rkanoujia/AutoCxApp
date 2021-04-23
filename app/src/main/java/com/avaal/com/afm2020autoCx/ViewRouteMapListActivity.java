@@ -196,8 +196,9 @@ public class ViewRouteMapListActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<TripListModel> call, Response<TripListModel> response) {
 
-                TripListModel getdata = response.body();
+
                 try {
+                    TripListModel getdata = response.body();
                     if (getdata.status) {
 // GetVehicleIdListModel tripDetails;
                          getdata3 = getdata.getData;
@@ -248,8 +249,9 @@ public class ViewRouteMapListActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ItemListModel> call, Response<ItemListModel> response) {
 
-                ItemListModel getdata = response.body();
+
                 try {
+                    ItemListModel getdata = response.body();
                     if (getdata.status) {
 // GetVehicleIdListModel tripDetails;
 

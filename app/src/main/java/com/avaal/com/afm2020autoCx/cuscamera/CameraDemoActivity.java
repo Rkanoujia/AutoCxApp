@@ -43,6 +43,7 @@ import com.bumptech.glide.Glide;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -513,6 +514,16 @@ public class CameraDemoActivity extends AppCompatActivity implements PictureCall
         String imageFileName = "image_" + timeStamp;
         File storageDir =
                 getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+//        String path = getApplicationContext().getDir("AFM", Context.MODE_PRIVATE)+ File.separator;
+////                    f.delete();
+//        OutputStream outFile = null;
+//        final String name=String.valueOf(System.currentTimeMillis()) + ".png";
+//        File file = new File(path, name);
+
+
+        if(!storageDir.isDirectory())
+            storageDir.mkdir();
+
         File image = null;
         try {
             image = File.createTempFile(
@@ -537,7 +548,7 @@ public class CameraDemoActivity extends AppCompatActivity implements PictureCall
             FileOutputStream outStream = null;
             try {
                 outStream = new FileOutputStream(file);
-                if (!bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outStream)) {
+                if (!bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outStream)) {
                     Toast.makeText(CameraDemoActivity.this, "Unable to save image to file.",
                             Toast.LENGTH_LONG).show();
                 } else {

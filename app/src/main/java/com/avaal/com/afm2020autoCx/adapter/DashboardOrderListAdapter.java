@@ -47,58 +47,6 @@ public class DashboardOrderListAdapter extends RecyclerView.Adapter<DashboardOrd
     Boolean isSet=true;
     PreferenceManager prf;
     APIInterface apiInterface;
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView id, from,to,title,from_address,to_address,vehicle_num,from_date,to_date,from_time,to_time,typ_,track,cancelation,pickup_name,delivery_name,order_lbl;
-        LinearLayout full_item;
-        FrameLayout fram_cancel;
-        View view1;
-//        public ImageView typeicon;
-
-        public MyViewHolder(View view) {
-            super(view);
-            title = (TextView) view.findViewById(R.id.status);
-            id = (TextView) view.findViewById(R.id.order_id);
-            from=(TextView)view.findViewById(R.id._from);
-            to=(TextView)view.findViewById(R.id._to);
-            from_address=(TextView)view.findViewById(R.id.from_address);
-            to_address=(TextView)view.findViewById(R.id.to_address);
-            vehicle_num=(TextView)view.findViewById(R.id.vehicle_num);
-            full_item=(LinearLayout)view.findViewById(R.id.full_item1);
-            from_date=(TextView)view.findViewById(R.id.from_date);
-            to_date=(TextView)view.findViewById(R.id.to_date);
-            from_time=(TextView)view.findViewById(R.id.from_time);
-            to_time=(TextView)view.findViewById(R.id.to_time);
-            typ_=(TextView)view.findViewById(R.id.type_);
-            track=(TextView)view.findViewById(R.id.track);
-            cancelation=(TextView)view.findViewById(R.id.cancelation);
-            fram_cancel=(FrameLayout)view.findViewById(R.id.fram_cancel);
-            pickup_name=(TextView)view.findViewById(R.id.pickup_name);
-            delivery_name=(TextView)view.findViewById(R.id.delivery_name);
-            order_lbl=(TextView) view.findViewById(R.id.order_lbl);
-            view1=(View)view.findViewById(R.id.view1);
-//            typeicon=(ImageView)view.findViewById(R.id.vehicle_img);
-
-        }
-    }
-
-
-    public DashboardOrderListAdapter(ArrayList<OrderListModel.datavalue1> tripList, Context context) {
-        this.tripList = tripList;
-        this.context=context;
-        prf = new PreferenceManager(context);
-        //        orderType=prf.getStringData("OrderType");
-//         vehicleId=getIntent().getStringExtra("VehicleId");
-        apiInterface = APIClient.getClient().create(APIInterface.class);
-    }
-
-    @Override
-    public DashboardOrderListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.dashboard_triplist_item, parent, false);
-
-        return new DashboardOrderListAdapter.MyViewHolder(itemView);
-    }
-
     @Override
     public void onBindViewHolder(final DashboardOrderListAdapter.MyViewHolder holder, final int position) {
 
@@ -134,7 +82,8 @@ public class DashboardOrderListAdapter extends RecyclerView.Adapter<DashboardOrd
         }
 
         holder.order_lbl.setText("Order# ");
-
+         holder.temp_li.setVisibility(View.VISIBLE);
+         holder.temp_order_id.setText(tripList.get(position).CustAppOrderId);
         holder.pickup_name.setText(tripList.get(position).PickupName);
         holder.delivery_name.setText(tripList.get(position).dropName);
         holder.from.setText(tripList.get(position).pickupCity+", "+tripList.get(position).pickupstateCode +", "+tripList.get(position).PickupCountryCode);
@@ -365,6 +314,59 @@ public class DashboardOrderListAdapter extends RecyclerView.Adapter<DashboardOrd
             }
         });
 
+    }
+
+
+    public DashboardOrderListAdapter(ArrayList<OrderListModel.datavalue1> tripList, Context context) {
+        this.tripList = tripList;
+        this.context=context;
+        prf = new PreferenceManager(context);
+        //        orderType=prf.getStringData("OrderType");
+//         vehicleId=getIntent().getStringExtra("VehicleId");
+        apiInterface = APIClient.getClient().create(APIInterface.class);
+    }
+
+    @Override
+    public DashboardOrderListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.dashboard_triplist_item, parent, false);
+
+        return new DashboardOrderListAdapter.MyViewHolder(itemView);
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        public TextView id, from,to,title,from_address,to_address,vehicle_num,from_date,to_date,from_time,to_time,typ_,track,cancelation,pickup_name,delivery_name,order_lbl,temp_order_id;
+        LinearLayout full_item,temp_li;
+        FrameLayout fram_cancel;
+        View view1;
+//        public ImageView typeicon;
+
+        public MyViewHolder(View view) {
+            super(view);
+            title = (TextView) view.findViewById(R.id.status);
+            id = (TextView) view.findViewById(R.id.order_id);
+            from=(TextView)view.findViewById(R.id._from);
+            to=(TextView)view.findViewById(R.id._to);
+            from_address=(TextView)view.findViewById(R.id.from_address);
+            to_address=(TextView)view.findViewById(R.id.to_address);
+            vehicle_num=(TextView)view.findViewById(R.id.vehicle_num);
+            full_item=(LinearLayout)view.findViewById(R.id.full_item1);
+            from_date=(TextView)view.findViewById(R.id.from_date);
+            to_date=(TextView)view.findViewById(R.id.to_date);
+            from_time=(TextView)view.findViewById(R.id.from_time);
+            to_time=(TextView)view.findViewById(R.id.to_time);
+            typ_=(TextView)view.findViewById(R.id.type_);
+            track=(TextView)view.findViewById(R.id.track);
+            cancelation=(TextView)view.findViewById(R.id.cancelation);
+            fram_cancel=(FrameLayout)view.findViewById(R.id.fram_cancel);
+            pickup_name=(TextView)view.findViewById(R.id.pickup_name);
+            delivery_name=(TextView)view.findViewById(R.id.delivery_name);
+            order_lbl=(TextView) view.findViewById(R.id.order_lbl);
+            view1=(View)view.findViewById(R.id.view1);
+            temp_order_id=(TextView)view.findViewById(R.id.temp_order_id);
+            temp_li=(LinearLayout)view.findViewById(R.id.temp_li);
+
+        }
     }
 
     @Override

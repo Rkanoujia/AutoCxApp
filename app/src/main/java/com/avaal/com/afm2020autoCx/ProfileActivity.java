@@ -122,8 +122,9 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ProfileDataModel> call, Response<ProfileDataModel> response) {
 
-                ProfileDataModel getdata = response.body();
+
                 try {
+                    ProfileDataModel getdata = response.body();
                     if (getdata.status) {
                         _name.setText(getdata.data.Name);
                         _address.setText(getdata.data.AddressOne);

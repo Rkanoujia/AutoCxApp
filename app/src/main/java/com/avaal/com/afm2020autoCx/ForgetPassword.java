@@ -110,11 +110,13 @@ public class ForgetPassword extends AppCompatActivity {
     void home(){
         new Util().myIntent(this,NewDashBoardActivity.class);
     }
-    @Override
-    public void onBackPressed() {
-        // Write your code here
-
-        super.onBackPressed();
+    public static void hideSoftKeyboard(Activity activity) throws Exception{
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        if(activity.getCurrentFocus().getWindowToken()!=null)
+            inputMethodManager.hideSoftInputFromWindow(
+                    activity.getCurrentFocus().getWindowToken(), 0);
     }
     @OnClick(R.id.back)
     void back(){
@@ -235,12 +237,15 @@ public class ForgetPassword extends AppCompatActivity {
             loaderScreen = null;
         }
     }
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        Log.e("fghgh", "value 1");
-        inputMethodManager.hideSoftInputFromWindow(
-                activity.getCurrentFocus().getWindowToken(), 0);
+
+    @Override
+    public void onBackPressed() {
+        // Write your code here
+        try {
+            hideSoftKeyboard(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        super.onBackPressed();
     }
 }

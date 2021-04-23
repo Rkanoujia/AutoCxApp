@@ -1503,12 +1503,22 @@ public class NewAddVehicleActivity extends AppCompatActivity implements OnMapRea
 
     @OnClick(R.id.home_)
     void home() {
+        try {
+            hideSoftKeyboard(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         new Util().myIntent(this,NewDashBoardActivity.class);
 
     }
 
     @OnClick(R.id.back)
     void back() {
+        try {
+            hideSoftKeyboard(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 //        ArrayList<String> myList = (ArrayList<String>) getIntent().getSerializableExtra("vihiclevinList");
 //        if(myList!=null){
 //            if(myList.size()==0){
@@ -1560,6 +1570,11 @@ public class NewAddVehicleActivity extends AppCompatActivity implements OnMapRea
     @Override
     public void onBackPressed() {
         // Write your code here
+        try {
+            hideSoftKeyboard(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         prf.saveStringData("When", "back");
         finish();
         super.onBackPressed();
@@ -1725,10 +1740,10 @@ public class NewAddVehicleActivity extends AppCompatActivity implements OnMapRea
             @Override
             public void onResponse(Call<VinDetailModel> call, Response<VinDetailModel> response) {
                 hideAnimation();
-                VinDetailModel dropdata = response.body();
-                try {
-//                        vinNo.setText(dropdata.data.vin);
 
+                try {
+                    VinDetailModel dropdata = response.body();
+//                        vinNo.setText(dropdata.data.vin);
                     if(dropdata.make==null){
                         MDToast mdToast = MDToast.makeText(NewAddVehicleActivity.this, "VIN Number does not exists", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
                         mdToast.show();
@@ -1969,9 +1984,10 @@ public class NewAddVehicleActivity extends AppCompatActivity implements OnMapRea
             @Override
             public void onResponse(Call<VehicleInfoModel> call, Response<VehicleInfoModel> response) {
 
-                VehicleInfoModel dropdata = response.body();
+
                 hideAnimation();
                 try {
+                    VehicleInfoModel dropdata = response.body();
                     if (dropdata.status) {
                         if (orderId.equalsIgnoreCase("0")) {
                             MDToast mdToast = MDToast.makeText(NewAddVehicleActivity.this, "vehicle added successfully", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
@@ -2027,9 +2043,10 @@ public class NewAddVehicleActivity extends AppCompatActivity implements OnMapRea
             @Override
             public void onResponse(Call<VehicleInfoModel> call, Response<VehicleInfoModel> response) {
 
-                VehicleInfoModel dropdata = response.body();
+
                 hideAnimation();
                 try {
+                    VehicleInfoModel dropdata = response.body();
                     if (dropdata.status) {
                         if(IsNew){
                             myList.add(""+vinNo.getText());

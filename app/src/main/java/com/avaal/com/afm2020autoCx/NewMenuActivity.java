@@ -222,8 +222,9 @@ j.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             @Override
             public void onResponse(Call<LogoutModel> call, Response<LogoutModel> response) {
 
-                LogoutModel getdata = response.body();
+
                 try {
+                    LogoutModel getdata = response.body();
                     if (getdata.status) {
                         MDToast mdToast = MDToast.makeText(NewMenuActivity.this, "Logout Successfully", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                         mdToast.show();

@@ -142,14 +142,23 @@ public class AddLocationActivity extends AppCompatActivity {
 ////Remove notification bar
 //        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
+    public static void hideSoftKeyboard(Activity activity) throws Exception{
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        if(activity.getCurrentFocus().getWindowToken()!=null)
+            inputMethodManager.hideSoftInputFromWindow(
+                    activity.getCurrentFocus().getWindowToken(), 0);
+    }
+
     @Override
     public void onBackPressed() {
         // Write your code here
-
-        super.onBackPressed();
-    }
-    @OnClick(R.id.back)
-    void back(){
+        try {
+            hideSoftKeyboard(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         super.onBackPressed();
     }
     @OnClick(R.id.home_)
@@ -437,13 +446,15 @@ public class AddLocationActivity extends AppCompatActivity {
             loaderScreen = null;
         }
     }
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        Log.e("fghgh","value 1");
-        inputMethodManager.hideSoftInputFromWindow(
-                activity.getCurrentFocus().getWindowToken(), 0);
+
+    @OnClick(R.id.back)
+    void back(){
+        try {
+            hideSoftKeyboard(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        super.onBackPressed();
     }
     void getLocation(String id){
 

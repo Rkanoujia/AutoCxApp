@@ -260,11 +260,12 @@
             android:text=" Change Password"
             android:textColor="@color/colorWhite" />
     </LinearLayout>
-        <View
-            android:background="@android:color/white"
-            android:layout_width="0.5dp"
-            android:layout_height="match_parent"/>
+<!--        <View-->
+<!--            android:background="@android:color/white"-->
+<!--            android:layout_width="0.5dp"-->
+<!--            android:layout_height="match_parent"/>-->
         <LinearLayout
+            android:visibility="gone"
             android:gravity="center"
             android:layout_weight="1"
             android:layout_width="match_parent"

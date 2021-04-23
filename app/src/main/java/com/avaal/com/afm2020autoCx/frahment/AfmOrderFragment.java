@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,6 +71,7 @@ public class AfmOrderFragment extends Fragment {
     @BindView(R.id.bottom_sheet1)
     BottomSheetLayout mBottomSheetLayout;
     APIInterface apiInterface;
+    private long mLastClickTime = 0;
     public AfmOrderFragment() {
     }
 
@@ -106,6 +109,10 @@ public class AfmOrderFragment extends Fragment {
 
     }
     @OnClick(R.id.add_trip) void onFabClick() {
+        if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
+            return;
+        }
+        mLastClickTime = SystemClock.elapsedRealtime();
         if(!new Util().isNetworkAvailable(getActivity())) {
             MDToast mdToast = MDToast.makeText(getActivity(), "Check Your Internet connection", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
             mdToast.show();
@@ -123,7 +130,10 @@ public class AfmOrderFragment extends Fragment {
 
     @OnClick(R.id.all_li)
     void alafilter(){
-
+        if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
+            return;
+        }
+        mLastClickTime = SystemClock.elapsedRealtime();
         mBottomSheetLayout.contractFab();
         filterString="";
         allIcon.setVisibility(View.VISIBLE);
@@ -136,6 +146,10 @@ public class AfmOrderFragment extends Fragment {
     }
     @OnClick(R.id.confirm_li)
     void confirmfilter(){
+        if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
+            return;
+        }
+        mLastClickTime = SystemClock.elapsedRealtime();
         mBottomSheetLayout.contractFab();
         filterString="Confirmed";
         allIcon.setVisibility(View.INVISIBLE);
@@ -148,6 +162,10 @@ public class AfmOrderFragment extends Fragment {
     }
     @OnClick(R.id.dispatch_li)
     void dispatchfilter(){
+        if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
+            return;
+        }
+        mLastClickTime = SystemClock.elapsedRealtime();
         mBottomSheetLayout.contractFab();
         filterString="Dispatched";
         allIcon.setVisibility(View.INVISIBLE);
@@ -160,6 +178,10 @@ public class AfmOrderFragment extends Fragment {
     }
     @OnClick(R.id.enroute_li)
     void enroutefilter(){
+        if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
+            return;
+        }
+        mLastClickTime = SystemClock.elapsedRealtime();
         mBottomSheetLayout.contractFab();
         filterString="Enroute";
         allIcon.setVisibility(View.INVISIBLE);
@@ -172,6 +194,10 @@ public class AfmOrderFragment extends Fragment {
     }
     @OnClick(R.id.delivered_li)
     void deliveredfilter(){
+        if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
+            return;
+        }
+        mLastClickTime = SystemClock.elapsedRealtime();
         mBottomSheetLayout.contractFab();
         filterString="Delivered";
         allIcon.setVisibility(View.INVISIBLE);
@@ -184,6 +210,10 @@ public class AfmOrderFragment extends Fragment {
     }
     @OnClick(R.id.canceled_li)
     void canceledfilter(){
+        if (SystemClock.elapsedRealtime() - mLastClickTime < 2000) {
+            return;
+        }
+        mLastClickTime = SystemClock.elapsedRealtime();
         mBottomSheetLayout.contractFab();
         filterString="Cancelled";
         allIcon.setVisibility(View.INVISIBLE);
@@ -202,9 +232,10 @@ public class AfmOrderFragment extends Fragment {
             @Override
             public void onResponse(Call<OrderListModel> call, Response<OrderListModel> response) {
                 swipeRefreshLayout.setRefreshing(false);
-                OrderListModel getdata = response.body();
+
                 hideAnimation();
                 try {
+                    OrderListModel getdata = response.body();
                     if (getdata.satus) {
 // GetVehicleIdListModel tripDetails;
                         ArrayList<OrderListModel.datavalue1> getdata3 = getdata.dataValue;

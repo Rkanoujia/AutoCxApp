@@ -106,8 +106,9 @@ String Phn_call;
             @Override
             public void onResponse(Call<CompanyProfileModel> call, Response<CompanyProfileModel> response) {
 
-                final CompanyProfileModel getdata = response.body();
+
                 try {
+                     CompanyProfileModel getdata = response.body();
                     if (getdata.status) {
                         runOnUiThread(new Runnable() {
                             @Override

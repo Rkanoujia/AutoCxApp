@@ -94,11 +94,20 @@ public class ChangePassword extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         // Write your code here
-
+        try {
+            hideSoftKeyboard(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         super.onBackPressed();
     }
     @OnClick(R.id.back)
     void back(){
+        try {
+            hideSoftKeyboard(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 //        Intent j = new Intent(this, LoginActivity.class);
 ////        overridePendingTransition(R.anim.trans_left_in, R.anim.trans_left_out);
 ////        j.putExtra("open","home");
@@ -153,9 +162,10 @@ public class ChangePassword extends AppCompatActivity {
         call1.enqueue(new Callback<ChangePasswordModel>() {
             @Override
             public void onResponse(Call<ChangePasswordModel> call, Response<ChangePasswordModel> response) {
-                final ChangePasswordModel getdata = response.body();
+
                 hideAnimation();
                 try {
+                     ChangePasswordModel getdata = response.body();
                 if(getdata.status) {
                     MDToast mdToast = MDToast.makeText(ChangePassword.this, "Update Successfully", MDToast.LENGTH_LONG, MDToast.TYPE_SUCCESS);
                     mdToast.show();

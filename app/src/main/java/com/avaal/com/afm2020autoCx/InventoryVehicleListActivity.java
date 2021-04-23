@@ -271,9 +271,10 @@ public class InventoryVehicleListActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<GetVehicleIdListModel> call, Response<GetVehicleIdListModel> response) {
 
-                GetVehicleIdListModel getdata = response.body();
+
                 hideAnimation();
                 try {
+                    GetVehicleIdListModel getdata = response.body();
                     if (getdata.satus) {
 // GetVehicleIdListModel tripDetails;
                         getdata3 = getdata.dataV;

@@ -100,34 +100,33 @@ TextView resutText,done;
                     mdToast.show();
                     return;
                 }
+                if(getIntent().getStringExtra("Isupdate")!=null) {
+                    Gson gson = new Gson();
+                    GetVehicleIdListModel.datavalue localObject = gson.fromJson(getIntent().getStringExtra("vehicle"), new TypeToken<GetVehicleIdListModel.datavalue>() {}.getType());
+                    if(localObject!=null){
+                        localObject.Latitude=SelectlatLng.latitude;
+                        localObject.Longitude=SelectlatLng.longitude;
 
+                            try {
+                                showAnimation();
+                                new Util().save(localObject, NewMapsActivity.this);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
 
-                Gson gson = new Gson();
-
-                GetVehicleIdListModel.datavalue localObject = gson.fromJson(getIntent().getStringExtra("vehicle"), new TypeToken<GetVehicleIdListModel.datavalue>() {}.getType());
-                if(localObject!=null){
-                    localObject.Latitude=SelectlatLng.latitude;
-                    localObject.Longitude=SelectlatLng.longitude;
-                    if(getIntent().getStringExtra("Isupdate")!=null) {
-                        try {
-                            showAnimation();
-                            new Util().save(localObject, NewMapsActivity.this);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
                     }
+                }else{
+                            Intent data = new Intent();
+                            data.putExtra("location","true");
+                            data.putExtra("Latitude",""+SelectlatLng.latitude);
+                            data.putExtra("Longitude",""+SelectlatLng.longitude);
+                            setResult(RESULT_OK,data);
+                            finish();    //add your code here
+
                 }
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent data = new Intent();
-                        data.putExtra("location","true");
-                        data.putExtra("Latitude",""+SelectlatLng.latitude);
-                        data.putExtra("Longitude",""+SelectlatLng.longitude);
-                        setResult(RESULT_OK,data);
-                        finish();    //add your code here
-                    }
-                }, 4000);
+
+
+
 
             }
         });
