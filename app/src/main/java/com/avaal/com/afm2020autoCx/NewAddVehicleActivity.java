@@ -319,7 +319,7 @@ public class NewAddVehicleActivity extends AppCompatActivity implements OnMapRea
     @Override
     protected void onResume() {
         super.onResume();
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED && (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             boolean statusOfGPS = manager.isProviderEnabled(LocationManager.GPS_PROVIDER);
             if (!statusOfGPS)
@@ -358,7 +358,6 @@ public class NewAddVehicleActivity extends AppCompatActivity implements OnMapRea
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
                                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                                 Manifest.permission.ACCESS_FINE_LOCATION,
-                                Manifest.permission.ACCESS_BACKGROUND_LOCATION,
                                 Manifest.permission.ACCESS_COARSE_LOCATION,
                                 Manifest.permission.CAMERA}, 1);
             } else {
@@ -781,6 +780,8 @@ public class NewAddVehicleActivity extends AppCompatActivity implements OnMapRea
 //                .icon(BitmapDescriptorFactory.fromResource(R.drawable.car_marker)));
                         if (!locality.isEmpty() && !country.isEmpty())
                             resultText.setText(locality + "  " + country);
+//                          prf.saveStringData("address",locality);
+
                         Log.e("Lat/Long", "" + SelectlatLng.latitude + "," + SelectlatLng.longitude);
 //                        longitude=SelectlatLng.longitude;
 //                        latitude=SelectlatLng.latitude;

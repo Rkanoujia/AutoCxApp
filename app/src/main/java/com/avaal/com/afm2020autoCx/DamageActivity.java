@@ -471,7 +471,10 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
     }
     @OnClick(R.id.upload)
     void  upload(){
-
+        if (SystemClock.elapsedRealtime() - mLastClickTime < 4000) {
+            return;
+        }
+        mLastClickTime = SystemClock.elapsedRealtime();
         if(!new Util().isNetworkAvailable(this)){
             MDToast mdToast = MDToast.makeText(this, "NO InternetConnection", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
             mdToast.show();
@@ -803,6 +806,7 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
                    new Handler().postDelayed(new Runnable() {
                        @Override
                        public void run() {
+
                            hideAnimation();
 
                        }
@@ -810,6 +814,7 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
 
                     break;
                 case 100:
+                    showAnimation();
                     imagesList.clear();
                     returnValue = data.getStringArrayListExtra(Pix.IMAGE_RESULTS);
                     Random rand = new Random();
@@ -842,6 +847,15 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
                             image.scrollToPosition(IssaveImg);
                         }
                     }, 1500);
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            hideAnimation();
+
+                        }
+                    },3000);
                     break;
             }
         }
@@ -1268,7 +1282,7 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
             public void onResponse(Call<SaveImageModel> call, Response<SaveImageModel> response) {
 
 
-                Log.e("message ", response.message());
+//                Log.e("message ", response.message());
 
 
                 try {
@@ -1334,18 +1348,8 @@ public class DamageActivity extends ImageBaseActivity implements OnPhotoEditorLi
 
             @Override
             public void onFailure(Call<SaveImageModel> call, Throwable t) {
-
+                 hideAnimation();
                 new Util().sendSMTPMail(DamageActivity.this,t,"DrvE001",null,""+call.request().url().toString());
-
-
-
-
-
-
-
-
-
-
                 call.cancel();
 
             }

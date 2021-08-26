@@ -420,7 +420,8 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
             mdToast.show();
             return;
         }
-
+        fixName.put(R.drawable.car_b, "uploaded");
+        fixName.put(R.drawable.car_a, "uploaded");
         fixName.put(R.drawable.car_c, "");
 
       opencamera();
@@ -508,7 +509,11 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
             mdToast.show();
             return;
         }
-
+        fixName.put(R.drawable.car_d, "uploaded");
+        fixName.put(R.drawable.car_b, "uploaded");
+        fixName.put(R.drawable.car_c, "uploaded");
+        fixName.put(R.drawable.car_a, "uploaded");
+        fixName.put(R.drawable.car_e, "uploaded");
         fixName.put(R.drawable.car_f, "");
         opencamera();
     }
@@ -522,6 +527,7 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
             return;
         }
 
+        fixName.put(R.drawable.car_a, "uploaded");
         fixName.put(R.drawable.car_b, "");
 
         opencamera();
@@ -535,7 +541,10 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
             mdToast.show();
             return;
         }
-
+        fixName.put(R.drawable.car_d, "uploaded");
+        fixName.put(R.drawable.car_b, "uploaded");
+        fixName.put(R.drawable.car_c, "uploaded");
+        fixName.put(R.drawable.car_a, "uploaded");
         fixName.put(R.drawable.car_e, "");
         opencamera();
     }
@@ -984,7 +993,12 @@ public class AddImageActivity extends AppCompatActivity implements LatLongCheckL
             mdToast.show();
             return;
         }
-  opencamera();
+        fixName.put(R.drawable.car_b, "uploaded");
+        fixName.put(R.drawable.car_a, "uploaded");
+        fixName.put(R.drawable.car_c, "uploaded");
+        fixName.put(R.drawable.car_d, "");
+
+        opencamera();
 
 //        MarshMallowPermission marshMallowPermission = new MarshMallowPermission(this);
 //        if (!marshMallowPermission.checkPermissionForCamera()) {

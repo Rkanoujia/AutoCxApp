@@ -34,7 +34,115 @@
             android:layout_width="138dp"
             android:layout_height="59dp" />
     </LinearLayout>
-                    <RelativeLayout
+                    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:gravity="bottom"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+                <LinearLayout
+                    android:id="@+id/driver_app"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
+                            android:src="@drawable/driver_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="AFM Driver"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="11dp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
+                            android:src="@drawable/afm2020_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="AFM Suite"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="11dp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/emanifest_app"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:background="@drawable/circle"
+                        android:backgroundTint="@color/colorWhite">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="8dp"
+                            android:src="@drawable/emanifest_icon" />
+
+                    </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="AEM Driver"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="11dp" />
+                </LinearLayout>
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/more_apps_for_avaal"
+                android:textColor="@color/colorWhite" />
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Powered by AVAAL"
+            android:textColor="@android:color/white"
+            android:textSize="8dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
+            android:gravity="center"
+            android:text="@string/copyright_2017_avaal_technology_solution_inc_all_right_reserved"
+            android:textColor="@android:color/white"
+            android:textSize="8dp" />
+    </LinearLayout>
+
+    <RelativeLayout
                         android:layout_weight=".6"
                         android:layout_gravity="center"
                         android:layout_width="match_parent"
@@ -160,6 +268,7 @@
                                         android:background="@android:color/darker_gray" />
 
                                     <EditText
+                                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
                                         android:id="@+id/corporate_id"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
@@ -327,107 +436,6 @@
 
 
                     </RelativeLayout>
-
-    <LinearLayout
-        android:layout_weight="1"
-        android:gravity="bottom"
-        android:orientation="vertical"
-        android:layout_gravity="bottom"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_marginBottom="10dp"
-            android:orientation="vertical"
-            android:gravity="center_horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:text="@string/more_apps_for_avaal"
-                android:textColor="@color/colorWhite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <LinearLayout
-                android:layout_margin="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <LinearLayout
-                    android:id="@+id/driver_app"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical"
-                    android:layout_marginEnd="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:src="@drawable/driver_icon"
-                            android:layout_width="52dp"
-                            android:layout_height="52dp" />
-
-                    <TextView
-                        android:textSize="11dp"
-                        android:textColor="@color/colorWhite"
-                        android:text="Driver App"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-                <LinearLayout
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginStart="30dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:src="@drawable/afm2020_icon"
-                            android:layout_width="52dp"
-                            android:layout_height="52dp" />
-
-                    <TextView
-                        android:textSize="11dp"
-                        android:textColor="@color/colorWhite"
-                        android:text="AFM 2020"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/emanifest_app"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical"
-                    android:layout_marginStart="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <LinearLayout
-                        android:backgroundTint="@color/colorWhite"
-                        android:background="@drawable/circle"
-                        android:layout_width="52dp"
-                        android:layout_height="52dp">
-                        <ImageView
-                            android:padding="8dp"
-                            android:src="@drawable/emanifest_icon"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
-
-                    </LinearLayout>
-                    <TextView
-                        android:textSize="11dp"
-                        android:textColor="@color/colorWhite"
-                        android:text="e-Manifest"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-        <TextView
-            android:layout_marginBottom="10dp"
-            android:textSize="8dp"
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/copyright_2017_avaal_technology_solution_inc_all_right_reserved"
-            android:textColor="@android:color/white" />
-    </LinearLayout>
 </LinearLayout>
 
     <!--</ScrollView>-->

@@ -58,14 +58,28 @@
                 />
         </LinearLayout>
     </FrameLayout>
-
-    <TextView
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:gravity="center_horizontal"
         android:layout_gravity="bottom"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="@android:color/white"
-        android:fontFamily="sans-serif"
-        android:gravity="center"
-        android:text="@string/copyright_2017_avaal_technology_solution_inc_all_right_reserved"
-        android:textSize="10dp" />
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Powered by AVAAL"
+            android:textSize="10dp" />
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:text="@string/copyright_2017_avaal_technology_solution_inc_all_right_reserved"
+            android:textSize="10dp" />
+    </LinearLayout>
+
+
 </FrameLayout>

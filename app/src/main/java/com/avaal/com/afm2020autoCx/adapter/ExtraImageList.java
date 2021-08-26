@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.avaal.com.afm2020autoCx.APIClient;
 import com.avaal.com.afm2020autoCx.APIInterface;
 import com.avaal.com.afm2020autoCx.AddImageActivity;
+import com.avaal.com.afm2020autoCx.ImageViewActivity;
 import com.avaal.com.afm2020autoCx.R;
 import com.avaal.com.afm2020autoCx.models.RemoveImageModel;
 import com.bumptech.glide.Glide;
@@ -229,6 +231,14 @@ public class ExtraImageList extends RecyclerView.Adapter<ExtraImageList.MyViewHo
             public void onClick(View v) {
 //                    Glide.with(InspectionsActivity.this).load(model.FilePath.replace("DelhiServer", "192.168.1.20")).apply(options).diskCacheStrategy(DiskCacheStrategy.NONE)
 //                            .skipMemoryCache(true).into(holder.image);
+                if(tripList.get(position).get("imageUrl").equalsIgnoreCase(""))
+                    return;
+                try {
+                    popUpList(tripList.get(position).get("imageUrl"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 popUp(""+tripList.get(position).get("imageUrl"),""+tripList.get(position).get("imageName"),position,tripList.get(position).get("imageId"),isDelete);
             }
         });
@@ -241,7 +251,14 @@ public class ExtraImageList extends RecyclerView.Adapter<ExtraImageList.MyViewHo
 
 
     }
+    void popUpList(String url) throws Exception {
 
+        Intent intent = new Intent(context, ImageViewActivity.class);
+        intent.putExtra("Url", "" + url);
+        intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+        context.startActivity(intent);
+
+    }
     void popUp(String url, String name, final int pos, final String id,boolean isDelete1){
         Log.e("url",url);
         final Dialog settingsDialog = new Dialog(context);

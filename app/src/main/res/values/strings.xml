@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AFM Cx</string>
+    <string name="app_name">AFM Customer</string>
     <string name="next">NEXT</string>
     <string name="skip">SKIP</string>
     <string name="start">GOT IT</string>
@@ -24,7 +24,7 @@
     <string name="barcode_success">Barcode read successfully</string>
     <string name="barcode_failure">No barcode captured</string>
     <string name="barcode_error">"Error reading barcode: %1$s"</string>
-    <string name="name">AFM CX App \n \n</string>
+    <string name="name">AFM Customer App \n \n</string>
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
     <string name="title_activity_maps">Map</string>
     <string name="shortcut_label_create_new_task">Create Load</string>
