@@ -162,16 +162,16 @@
                                         android:background="@android:color/darker_gray" />
 
                                     <EditText
-                                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
                                         android:id="@+id/corporate_id"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
+                                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
                                         android:hint="Corporate Id"
                                         android:inputType="text"
                                         android:maxLines="1"
                                         android:textColor="@color/colorPrimary"
                                         android:textColorHint="@color/blue"
-                                        android:textSize="13dp" />
+                                        android:textSize="13sp" />
 
                                 </LinearLayout>
                             </FrameLayout>
@@ -216,7 +216,7 @@
                                         android:maxLines="1"
                                         android:textColor="@color/colorPrimary"
                                         android:textColorHint="@color/blue"
-                                        android:textSize="13dp" />
+                                        android:textSize="13sp" />
 
                                 </LinearLayout>
                             </FrameLayout>
