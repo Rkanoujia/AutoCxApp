@@ -26,12 +26,15 @@ import android.widget.Toast;
 
 import com.avaal.com.afm2020autoCx.models.LoginModel;
 import com.avaal.com.afm2020autoCx.models.ProfileDataModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
 import org.json.JSONObject;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -45,6 +48,8 @@ import extra.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.content.ContentValues.TAG;
 
 
 /**
@@ -100,7 +105,22 @@ public class LoginActivity extends AppCompatActivity implements FingerprintHelpe
              new Util().sendSMTPMail(LoginActivity.this,null,"CxE004",e,"");
          }
         FirebaseApp.initializeApp(this);
-        token = FirebaseInstanceId.getInstance().getToken();
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        token = task.getResult();
+                        Log.e("token", "fcmToken" + token);
+                        // Log and toast
+//                            Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 //            marshmallow.checkLocationPermission();
 //               marshmallow.checkPermissionForExternalStorage();
@@ -278,7 +298,7 @@ void driverApp(){
 
    showAnimation();
 
-        Call<LoginModel> call1 = apiInterface.userLogin(corporateId.getText().toString().trim()+"~"+userName.getText().toString()+"~regular~"+FirebaseInstanceId.getInstance().getToken()+"~PRI~Android~"+Build.BRAND+" "+Build.MODEL+"~"+Build.VERSION.RELEASE,password.getText().toString(),"password","application/json");
+        Call<LoginModel> call1 = apiInterface.userLogin(corporateId.getText().toString().trim()+"~"+userName.getText().toString()+"~regular~"+token+"~PRI~Android~"+Build.BRAND+" "+Build.MODEL+"~"+Build.VERSION.RELEASE,password.getText().toString(),"password","application/json");
         call1.enqueue(new Callback<LoginModel>() {
             @Override
             public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {

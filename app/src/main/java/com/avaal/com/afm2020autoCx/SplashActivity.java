@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -26,13 +27,16 @@ import android.widget.Toast;
 
 import com.avaal.com.afm2020autoCx.models.LoginModel;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
 import org.jsoup.Jsoup;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import extra.LoaderScreen;
 import extra.MyImage;
@@ -41,6 +45,8 @@ import extra.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by dell pc on 11-01-2018.
@@ -72,7 +78,22 @@ public class SplashActivity extends AppCompatActivity {
                 Settings.Secure.ANDROID_ID);
         apiInterface = APIClient.getClient().create(APIInterface.class);
         FirebaseApp.initializeApp(this);
-        token = FirebaseInstanceId.getInstance().getToken();
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        token = task.getResult();
+                        Log.e("token", "fcmToken" + token);
+                        // Log and toast
+//                            Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
         PackageInfo packageInfo = null;
         try {
             packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
