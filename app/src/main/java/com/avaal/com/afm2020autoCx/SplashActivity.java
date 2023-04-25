@@ -60,7 +60,7 @@ public class SplashActivity extends AppCompatActivity {
     PreferenceManager prf;
     APIInterface apiInterface;
     boolean isLoaded = false;
-    String token="dfdgfdgb";
+    String token = "dfdgfdgb";
     private static int CODE_AUTHENTICATION_VERIFICATION = 241;
 
     @Override
@@ -177,7 +177,7 @@ public class SplashActivity extends AppCompatActivity {
 //                }
 //            }, 3000);
 
-            //oncheck(packageInfo.packageName, androidDeviceId);
+        //oncheck(packageInfo.packageName, androidDeviceId);
 //        } else
 //            snackbar.show();
 
@@ -216,25 +216,24 @@ public class SplashActivity extends AppCompatActivity {
 //            }
 //        }, 5000);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode==RESULT_OK && requestCode==CODE_AUTHENTICATION_VERIFICATION)
-        {
+        if (resultCode == RESULT_OK && requestCode == CODE_AUTHENTICATION_VERIFICATION) {
             login();
 //            Toast.makeText(this, "Success: Verified user's identity", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
+        } else {
             Intent j = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(j);
             finish();
             Toast.makeText(this, "Failure: Unable to verify user's identity", Toast.LENGTH_SHORT).show();
         }
     }
-    void login(){
-        Util util=new Util();
-        if(!util.isNetworkAvailable(this)) {
+
+    void login() {
+        Util util = new Util();
+        if (!util.isNetworkAvailable(this)) {
             MDToast mdToast = MDToast.makeText(SplashActivity.this, "Check Your Internet", MDToast.LENGTH_LONG, MDToast.TYPE_WARNING);
             mdToast.show();
             return;
@@ -242,7 +241,7 @@ public class SplashActivity extends AppCompatActivity {
         showAnimation();
 
 
-        Call<LoginModel> call1 = apiInterface.userLogin(prf.getStringData("corporateId")+"~"+prf.getStringData("userName")+"~regular~"+token+"~PRI~Android~"+Build.BRAND+" "+Build.MODEL+"~"+Build.VERSION.RELEASE,prf.getStringData("password"),"password","application/json");
+        Call<LoginModel> call1 = apiInterface.userLogin(prf.getStringData("corporateId") + "~" + prf.getStringData("userName") + "~regular~" + token + "~PRI~Android~" + Build.BRAND + " " + Build.MODEL + "~" + Build.VERSION.RELEASE, prf.getStringData("password"), "password", "application/json");
         call1.enqueue(new Callback<LoginModel>() {
             @Override
             public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
@@ -283,9 +282,9 @@ public class SplashActivity extends AppCompatActivity {
                         startActivity(j);
                         finish();
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
-                    new Util().sendSMTPMail(SplashActivity.this,null,"CxE001",e,"");
+                    new Util().sendSMTPMail(SplashActivity.this, null, "CxE001", e, "");
                     Intent j = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(j);
                     finish();
@@ -299,7 +298,7 @@ public class SplashActivity extends AppCompatActivity {
                 Intent j = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(j);
                 finish();
-                new Util().sendSMTPMail(SplashActivity.this,t,"CxE001",null,""+call.request().url().toString());
+                new Util().sendSMTPMail(SplashActivity.this, t, "CxE001", null, "" + call.request().url().toString());
             }
         });
 
@@ -359,7 +358,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private void isSuccess(String authKey) {
         Intent j = new Intent(getApplicationContext(), LoginActivity.class);
-       // j.putExtra("AuthKey", authKey);
+        // j.putExtra("AuthKey", authKey);
         startActivity(j);
         finish();
     }
@@ -370,6 +369,7 @@ public class SplashActivity extends AppCompatActivity {
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
+
     private void showAnimation() {
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
@@ -389,6 +389,7 @@ public class SplashActivity extends AppCompatActivity {
             }
         }
     }
+
     private void hideAnimation() {
         if (loaderView != null) {
             loaderView.setVisibility(View.GONE);
@@ -399,12 +400,13 @@ public class SplashActivity extends AppCompatActivity {
             loaderScreen = null;
         }
     }
+
     @Override
     protected void onResume() {
         super.onResume();
         showAnimation();
         new Handler().postDelayed(new Runnable() {
-//            //            //
+            //            //            //
 //////            /*
 //////             * Showing splash screen with a timer. This will be useful when you
 //////             * want to show case your app logo / company
@@ -423,7 +425,8 @@ public class SplashActivity extends AppCompatActivity {
             }
         }, 500);
     }
-    void forUpdate(){
+
+    void forUpdate() {
 
         new GetVersionCode().execute();
 
@@ -448,102 +451,8 @@ public class SplashActivity extends AppCompatActivity {
 //                        finish();
 //                    }
     }
-    @SuppressLint("StaticFieldLeak")
-    private class GetVersionCode extends AsyncTask<Void, String, String> {
 
-        @Override
-
-        protected String doInBackground(Void... voids) {
-
-            String newVersion = null;
-
-            try {
-
-//                newVersion = Jsoup.connect("https://play.google.com/store/apps/details?id=" + LoginActivity.this.getPackageName() + "&hl=it").timeout(30000)
-//
-//                        .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
-//                        .referrer("http://www.google.com")
-//                        .get()
-//                        .select("div[itemprop=softwareVersion]")
-//                        .first()
-//                        .ownText();
-                newVersion = Jsoup.connect("https://play.google.com/store/apps/details?id="+SplashActivity.this.getPackageName())
-                        .timeout(30000)
-                        .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
-                        .referrer("http://www.google.com")
-                        .get()
-                        .select(".hAyfc .htlgb")
-                        .get(7)
-                        .ownText();
-
-                return newVersion;
-
-            } catch (Exception e) {
-
-                return newVersion;
-
-            }
-
-        }
-
-
-        @Override
-
-        protected void onPostExecute(String onlineVersion) {
-
-            super.onPostExecute(onlineVersion);
-
-            if (onlineVersion != null && !onlineVersion.isEmpty()) {
-                PackageInfo pInfo = null;
-                try {
-                    pInfo = SplashActivity.this.getPackageManager().getPackageInfo(getPackageName(), 0);
-                } catch (PackageManager.NameNotFoundException e) {
-                    e.printStackTrace();
-                }
-                if (!pInfo.versionName.equalsIgnoreCase(onlineVersion)) {
-                    hideAnimation();
-                    //show dialog
-                    showUpdateAlert();
-
-                }else{
-                    if(prf.getStringData("userName")!=null) {
-//            userName.setText(prf.getStringData("userName"));
-//            corporateId.setText(prf.getStringData("corporateId"));
-                        if(prf.getBoolData("remember")) {
-//                remember.setChecked(true);
-//                password.setText(prf.getStringData("password"));
-                            if(prf.getBoolData("logout")) {
-//                                if (prf.getBoolData("IsFingerprint")) {
-//                                    Intent j = new Intent(getApplicationContext(), FingerprintActivity.class);
-//                                    j.addFlags(j.FLAG_ACTIVITY_NEW_TASK);
-//                                    startActivity(j);
-//                                    finish();
-//                                }else
-                                login();
-                            } else{
-                                Intent j = new Intent(getApplicationContext(), LoginActivity.class);
-                                startActivity(j);
-                                finish();
-                            }
-                        }else{
-                            Intent j = new Intent(getApplicationContext(), LoginActivity.class);
-                            startActivity(j);
-                            finish();
-                        }
-                    }else{
-                        Intent j = new Intent(getApplicationContext(), LoginActivity.class);
-                        startActivity(j);
-                        finish();
-                    }
-                }
-
-            }
-
-//            Log.e("update", "Current version " + currentVersion + "playstore version " + onlineVersion);
-
-        }
-    }
-    void showUpdateAlert(){
+    void showUpdateAlert() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(SplashActivity.this);
         alertDialog.setTitle("Please update your app");
         alertDialog.setCancelable(false);
@@ -559,6 +468,103 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
         alertDialog.show();
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private class GetVersionCode extends AsyncTask<Void, String, String> {
+
+        @Override
+
+        protected String doInBackground(Void... voids) {
+
+            String newVersion = null;
+//
+//            try {
+//
+////                newVersion = Jsoup.connect("https://play.google.com/store/apps/details?id=" + LoginActivity.this.getPackageName() + "&hl=it").timeout(30000)
+////
+////                        .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+////                        .referrer("http://www.google.com")
+////                        .get()
+////                        .select("div[itemprop=softwareVersion]")
+////                        .first()
+////                        .ownText();
+//                newVersion = Jsoup.connect("https://play.google.com/store/apps/details?id=" + SplashActivity.this.getPackageName())
+//                        .timeout(30000)
+//                        .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+//                        .referrer("http://www.google.com")
+//                        .get()
+//                        .select(".hAyfc .htlgb")
+//                        .get(7)
+//                        .ownText();
+
+                return newVersion;
+
+//            } catch (Exception e) {
+//
+//                return newVersion;
+//
+//            }
+
+        }
+
+
+        @Override
+
+        protected void onPostExecute(String onlineVersion) {
+
+            super.onPostExecute(onlineVersion);
+
+//            if (onlineVersion != null && !onlineVersion.isEmpty()) {
+//                PackageInfo pInfo = null;
+//                try {
+//                    pInfo = SplashActivity.this.getPackageManager().getPackageInfo(getPackageName(), 0);
+//                } catch (PackageManager.NameNotFoundException e) {
+//                    e.printStackTrace();
+//                }
+//                if (!pInfo.versionName.equalsIgnoreCase(onlineVersion)) {
+//                    hideAnimation();
+//                    //show dialog
+//                    showUpdateAlert();
+//
+//                }else{
+            hideAnimation();
+            if (prf.getStringData("userName") != null) {
+//            userName.setText(prf.getStringData("userName"));
+//            corporateId.setText(prf.getStringData("corporateId"));
+                if (prf.getBoolData("remember")) {
+//                remember.setChecked(true);
+//                password.setText(prf.getStringData("password"));
+                    if (prf.getBoolData("logout")) {
+//                                if (prf.getBoolData("IsFingerprint")) {
+//                                    Intent j = new Intent(getApplicationContext(), FingerprintActivity.class);
+//                                    j.addFlags(j.FLAG_ACTIVITY_NEW_TASK);
+//                                    startActivity(j);
+//                                    finish();
+//                                }else
+                        login();
+                    } else {
+                        Intent j = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(j);
+                        finish();
+                    }
+                } else {
+                    Intent j = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(j);
+                    finish();
+                }
+            } else {
+                Intent j = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(j);
+                finish();
+            }
+            //   }
+
+            //  }
+
+//            Log.e("update", "Current version " + currentVersion + "playstore version " + onlineVersion);
+
+        }
     }
 
 }
